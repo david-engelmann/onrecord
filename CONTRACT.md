@@ -127,3 +127,35 @@ the repair code).
   line with the missing newline first, then appends
   its own line; earlier bytes are never rewritten and
   claims are never glued. Test, tests/test_store.py.
+
+## Round 2. The due view (OR-13 to OR-16)
+
+- OR-13. The store gains a due view: given a date the
+  caller supplies, it answers which live claims have
+  come due. The date is an ISO calendar date, validated
+  like a claim's due date; anything else is a named
+  refusal. The store never invents a time here either:
+  no date supplied, no answer. Test,
+  tests/test_store.py.
+- OR-14. A claim is due when it is live (no claim
+  supersedes it) and carries a due date on or before
+  the supplied date. A superseded claim never appears,
+  whatever its due date said: its successor answers
+  for the chain, with its own due date or none. A live
+  claim with no due date never appears. Test,
+  tests/test_store.py.
+- OR-15. The answer is a document naming the supplied
+  date and the due claims in order: due date
+  ascending, then record position ascending. Each due
+  claim arrives as its retrieval document, the claim
+  and its full chain, exactly as get returns it
+  (OR-3, OR-8). Date comparison is calendar
+  comparison: ISO dates order as strings. Test,
+  tests/test_store.py.
+- OR-16. The due view never resolves a conflict and
+  never hides one. When two live claims sharing a
+  subject are both due, both appear with their
+  receipts, and the document names the shared subject
+  in a conflicts list, present only when non-empty,
+  so the conflict is part of the answer (OR-4). Test,
+  tests/test_store.py.
