@@ -100,3 +100,28 @@ ahead of wallofwrong, whose confessions are stored here.
   Reads (add, get, subject) on a record with defects
   refuse, naming the defects; check is the tool that
   reports them all. Test, tests/test_store.py.
+
+## Round 1 amendments, after the reviews (recorded before the repair code)
+
+- OR-5c. The evidence list holds at least one entry,
+  and each entry's source and reference are non-empty
+  strings. OR-1 stores nothing as a bare fact, so an
+  empty list is a defect at read time and a refusal at
+  add time. Test, tests/test_store.py.
+- OR-8b. A chain answers for the subjects its claims
+  carry. A live head carrying a subject answers for
+  that subject alone; a live head carrying none
+  answers for every subject named along its chain.
+  Superseding a claim without repeating its subject
+  therefore keeps the subject answered by the head.
+  Test, tests/test_store.py.
+- OR-11b. A claim that cannot be rendered under
+  canonical form 1 is a named defect: its id cannot
+  be verified, and an unverifiable id is never
+  silently passed over. Test, tests/test_store.py.
+- OR-12a. A record whose final line lacks its
+  terminating newline is still sound when the line
+  itself is a sound claim. An append completes that
+  line with the missing newline first, then appends
+  its own line; earlier bytes are never rewritten and
+  claims are never glued. Test, tests/test_store.py.
