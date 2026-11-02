@@ -159,3 +159,31 @@ the repair code).
   in a conflicts list, present only when non-empty,
   so the conflict is part of the answer (OR-4). Test,
   tests/test_store.py.
+
+## Round 2 post-review amendments, recorded before the repairs
+
+- OR-13a. A date in this store is exactly one form:
+  four digits, a hyphen, two digits, a hyphen, two
+  digits, and a real calendar day. The basic form
+  without hyphens and the week forms are not dates
+  here, at add time, at read time, or as the due
+  view's supplied date. The parser alone accepts
+  those forms, and the due view compares dates as
+  strings, so an alien form stored silently answered
+  wrongly, due on no day or due early. Test,
+  tests/test_store.py.
+- OR-13b. The due view refuses a missing record by
+  name, like check does. An existing record, empty
+  included, answers with an empty list; a mistyped
+  path must never read as nothing due. Test,
+  tests/test_store.py.
+- OR-16a. The due view's conflicts are counted over
+  the subjects each due claim answers for under
+  OR-8b: its own subject when it carries one, else
+  every subject named along its chain. One answering
+  rule, shared with subject retrieval, so a conflict
+  the store itself recognises is never hidden by the
+  due view. A subject one due claim alone answers
+  for is no conflict, and a chain repeating a subject
+  does not conflict with itself. Test,
+  tests/test_store.py.
