@@ -68,11 +68,16 @@ def claim_defects(claim, line_no: int, position: int) -> list[str]:
         evidence = claim["evidence"]
         if not isinstance(evidence, list):
             defects.append(f"{where}: evidence must be a list")
+        elif not evidence:
+            defects.append(
+                f"{where}: evidence must hold at least one entry")
         else:
             for i, entry in enumerate(evidence):
                 if not isinstance(entry, dict) \
                         or not isinstance(entry.get("source"), str) \
-                        or not isinstance(entry.get("reference"), str):
+                        or not entry.get("source") \
+                        or not isinstance(entry.get("reference"), str) \
+                        or not entry.get("reference"):
                     defects.append(
                         f"{where}: evidence[{i}] must name a source "
                         f"and a reference")
@@ -91,6 +96,9 @@ def claim_defects(claim, line_no: int, position: int) -> list[str]:
         try:
             expected = derive_id(without, position)
         except (DigestError, RecursionError):
+            defects.append(
+                f"{where}: the claim cannot be rendered under "
+                f"canonical form 1, so its id cannot be verified")
             expected = None
         if expected is not None and claim["id"] != expected:
             defects.append(
@@ -110,12 +118,20 @@ def load_record(path: Path):
     if not raw:
         return [], []
     try:
-        text = raw.decode("utf-8")
+        text = raw.decode("utf-8-sig")
     except UnicodeDecodeError:
         return [], ["the record is not valid UTF-8"]
     lines = text.split("\n")
     if lines and lines[-1] == "":
         lines.pop()
+    def no_duplicate_keys(pairs):
+        seen = set()
+        for key, _ in pairs:
+            if key in seen:
+                raise ValueError(f"duplicate key {key}")
+            seen.add(key)
+        return dict(pairs)
+
     parsed: list = []
     for index, line in enumerate(lines):
         line_no = index + 1
@@ -124,37 +140,55 @@ def load_record(path: Path):
             parsed.append(None)
             continue
         try:
-            claim = json.loads(line)
-        except ValueError:
-            defects.append(f"line {line_no}: not JSON")
+            claim = json.loads(line,
+                               object_pairs_hook=no_duplicate_keys)
+        except RecursionError:
+            defects.append(
+                f"line {line_no}: nesting too deep to read")
             parsed.append(None)
             continue
-        parsed.append(claim)
+        except ValueError as error:
+            if "duplicate key" in str(error):
+                defects.append(f"line {line_no}: {error}")
+            else:
+                defects.append(f"line {line_no}: not JSON")
+            parsed.append(None)
+            continue
+        parsed.append((line_no, claim))
         defects.extend(claim_defects(claim, line_no, index))
-    # Chain level defects need the whole record.
-    claims = [c for c in parsed if isinstance(c, dict)]
+    # Chain level defects need the whole record, and they
+    # carry the line number of the claim at fault.
+    numbered = [entry for entry in parsed
+                if entry is not None
+                and isinstance(entry[1], dict)]
+    claims = [claim for _, claim in numbered]
+    line_of = {}
     ids = {}
-    for claim in claims:
+    for line_no, claim in numbered:
         cid = claim.get("id")
         if isinstance(cid, str):
             if cid in ids:
-                defects.append(f"id {cid} appears twice")
+                defects.append(
+                    f"line {line_no}: id {cid} appears twice")
             ids[cid] = claim
-    superseded_by: dict[str, list[str]] = {}
-    for claim in claims:
+            line_of[cid] = line_no
+    superseded_by: dict[str, list] = {}
+    for line_no, claim in numbered:
         target = claim.get("supersedes")
         if isinstance(target, str):
             if target not in ids:
                 defects.append(
-                    f"claim {claim.get('id')}: supersedes names "
-                    f"no claim in the record, {target}")
+                    f"line {line_no}: supersedes names no claim "
+                    f"in the record, {target}")
             superseded_by.setdefault(target, []).append(
-                claim.get("id"))
+                (line_no, claim.get("id")))
     for target, sources in superseded_by.items():
         if len(sources) > 1:
             defects.append(
-                f"claim {target} is superseded by two claims, "
-                f"{sources[0]} and {sources[1]}, a fork")
+                f"line {sources[1][0]}: claim {target} (line "
+                f"{line_of.get(target, '?')}) is superseded by "
+                f"two claims, {sources[0][1]} and "
+                f"{sources[1][1]}, a fork")
     return claims, defects
 
 
@@ -178,11 +212,6 @@ class Store:
             supersedes=None, subject=None, due=None,
             extra=None) -> str:
         claims = self._load()
-        if not _is_iso_timestamp(asserted_at):
-            raise StoreError(
-                f"asserted_at is not an ISO timestamp, {asserted_at}")
-        if due is not None and not _is_iso_date(due):
-            raise StoreError(f"due is not an ISO date, {due}")
         if supersedes is not None:
             by_id = {c["id"]: c for c in claims}
             if supersedes not in by_id:
@@ -201,16 +230,41 @@ class Store:
             claim["due"] = due
         if extra:
             for key, value in extra.items():
-                if key not in claim and key != "id":
-                    claim[key] = value
+                if key == "id" or key in claim:
+                    raise StoreError(
+                        f"extra field {key} collides with a claim "
+                        f"field")
+                claim[key] = value
+        # Position is the count of lines in the record; a sound
+        # record holds one claim per line, so the loaded claims
+        # are that count (the invariant OR-6a stands on).
         position = len(claims)
-        claim_id = derive_id(claim, position)
+        try:
+            claim_id = derive_id(claim, position)
+        except (DigestError, RecursionError):
+            raise StoreError(
+                "the claim cannot be rendered under canonical "
+                "form 1") from None
         stored = {"id": claim_id, **claim}
+        defects = claim_defects(stored, position + 1, position)
+        if defects:
+            raise StoreError(defects[0].split(": ", 1)[1])
         line = json.dumps(stored, ensure_ascii=False,
                           separators=(",", ":")) + "\n"
-        with open(self.path, "a", encoding="utf-8") as handle:
-            handle.write(line)
-            handle.flush()
+        prefix = ""
+        try:
+            if self.path.exists() and self.path.stat().st_size:
+                with open(self.path, "rb") as handle:
+                    handle.seek(-1, 2)
+                    if handle.read(1) != b"\n":
+                        prefix = "\n"
+            with open(self.path, "a", encoding="utf-8") as handle:
+                handle.write(prefix + line)
+                handle.flush()
+        except OSError as error:
+            raise StoreError(
+                f"cannot append to the record, {self.path}: "
+                f"{error.strerror or error}") from None
         return claim_id
 
     def _chain(self, claims, claim) -> list[dict]:
@@ -240,20 +294,30 @@ class Store:
         claims = self._load()
         superseded = {c["supersedes"] for c in claims
                       if c.get("supersedes")}
-        live = [c for c in claims
-                if c.get("subject") == key
-                and c["id"] not in superseded]
+        live = []
+        for claim in claims:
+            if claim["id"] in superseded:
+                continue
+            chain = self._chain(claims, claim)
+            own = claim.get("subject")
+            if own is not None:
+                answers = {own}
+            else:
+                answers = {c.get("subject") for c in chain
+                           if c.get("subject") is not None}
+            if key in answers:
+                live.append((claim, chain))
         if not live:
             raise StoreError(f"no live claim on subject {key}")
         if len(live) == 1:
-            return {"claim": live[0],
-                    "chain": self._chain(claims, live[0])}
+            claim, chain = live[0]
+            return {"claim": claim, "chain": chain}
         return {"conflict": True, "subject": key,
-                "claims": [{"claim": c,
-                            "chain": self._chain(claims, c)}
-                           for c in live]}
+                "claims": [{"claim": c, "chain": chain}
+                           for c, chain in live]}
 
     def check(self) -> list[str]:
-        _, defects = load_record(self.path) \
-            if self.path.exists() else ([], [])
+        if not self.path.exists():
+            raise StoreError(f"no such record, {self.path}")
+        _, defects = load_record(self.path)
         return defects

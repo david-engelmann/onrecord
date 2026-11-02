@@ -87,7 +87,7 @@ def test_subject_retrieval_and_the_conflict_answer(tmp_path):
         store.subject("nothing-here")
 
 
-def test_superseding_one_side_resolves_the_conflict(tmp_path):
+def test_superseding_one_side_leaves_the_other_claim_live(tmp_path):
     store = Store(tmp_path / "r.jsonl")
     first = add(store, subject="deploy")
     add(store, text="An independent reading", subject="deploy")
@@ -174,3 +174,118 @@ def test_the_cli_round_trip(tmp_path, capsys):
                  "--at", "2026-01-01T09:00:00Z",
                  "--evidence", "nocolon"]) == 1
     assert "source and a reference" in capsys.readouterr().err
+
+
+def test_derive_id_pins_both_factors():
+    from onrecord.store import derive_id
+    claim = {"text": "x", "asserter": "a",
+             "asserted_at": "2026-01-01T00:00:00Z",
+             "evidence": [{"source": "s", "reference": "r"}],
+             "supersedes": None}
+    assert derive_id(claim, 0) != derive_id(claim, 1)
+    changed = dict(claim, text="y")
+    assert derive_id(claim, 0) != derive_id(changed, 0)
+
+
+def test_twin_appends_get_distinct_ids_and_a_sound_record(tmp_path):
+    store = Store(tmp_path / "r.jsonl")
+    first = add(store)
+    second = add(store)
+    assert first != second
+    assert store.check() == []
+
+
+def test_a_refused_add_leaves_the_file_byte_identical(tmp_path):
+    path = tmp_path / "r.jsonl"
+    store = Store(path)
+    add(store)
+    before = path.read_bytes()
+    for kwargs in ({"text": ""}, {"asserter": ""},
+                   {"evidence": []},
+                   {"evidence": [{"source": "", "reference": "r"}]},
+                   {"supersedes": "claim-ghost"}):
+        with pytest.raises(StoreError):
+            add(store, **kwargs)
+    assert path.read_bytes() == before
+
+
+def test_an_unterminated_final_line_is_completed_never_glued(tmp_path):
+    path = tmp_path / "r.jsonl"
+    store = Store(path)
+    first = add(store)
+    path.write_bytes(path.read_bytes().rstrip(b"\n"))
+    assert store.check() == []
+    second = add(store, text="The next claim")
+    lines = path.read_text().splitlines()
+    assert len(lines) == 2
+    assert store.get(first)["claim"]["id"] == first
+    assert store.get(second)["claim"]["id"] == second
+
+
+def test_a_forged_id_hiding_behind_nan_is_a_named_defect(tmp_path):
+    path = tmp_path / "r.jsonl"
+    add(Store(path))
+    forged = {"id": "claim-attackerchosen", "text": "forged",
+              "asserter": "mallory",
+              "asserted_at": "2026-01-01T00:00:00Z",
+              "evidence": [{"source": "s", "reference": "r"}],
+              "supersedes": None, "reading": float("nan")}
+    with open(path, "a", encoding="utf-8") as handle:
+        handle.write(json.dumps(forged) + "\n")
+    defects = Store(path).check()
+    assert any("cannot be verified" in d for d in defects)
+    with pytest.raises(StoreError, match="defects"):
+        Store(path).get("claim-attackerchosen")
+
+
+def test_check_names_deep_nesting_instead_of_dying(tmp_path):
+    path = tmp_path / "r.jsonl"
+    deep = "1"
+    for _ in range(30000):
+        deep = "[" + deep + "]"
+    path.write_text('{"id": ' + deep + "}\n")
+    defects = Store(path).check()
+    assert any("nesting too deep" in d for d in defects)
+
+
+def test_a_duplicate_key_in_a_line_is_a_defect(tmp_path):
+    path = tmp_path / "r.jsonl"
+    path.write_text('{"id": "claim-a", "id": "claim-b", '
+                    '"text": "t"}\n')
+    defects = Store(path).check()
+    assert any("duplicate key" in d for d in defects)
+
+
+def test_a_record_with_a_bom_reads(tmp_path):
+    path = tmp_path / "r.jsonl"
+    store = Store(path)
+    cid = add(store)
+    path.write_bytes(b"\xef\xbb\xbf" + path.read_bytes())
+    assert Store(path).get(cid)["claim"]["id"] == cid
+
+
+def test_check_on_a_missing_record_is_a_refusal(tmp_path, capsys):
+    assert main(["check", str(tmp_path / "nope.jsonl")]) == 1
+    assert "no such record" in capsys.readouterr().err
+
+
+def test_a_chain_head_answers_for_its_chains_subject(tmp_path):
+    store = Store(tmp_path / "r.jsonl")
+    first = add(store, subject="deploy")
+    add(store, text="The head carries no subject",
+        supersedes=first)
+    document = store.subject("deploy")
+    assert document["claim"]["text"] == "The head carries no subject"
+
+
+def test_the_canonical_bytes_battery():
+    from onrecord.digest import canonical_bytes
+    cases = [
+        ({"b": 1, "a": 2}, b'{"a":2,"b":1}'),
+        ({"x": 1.5}, b'{"x":1.5}'),
+        ({"x": 1e21}, b'{"x":1e+21}'),
+        ({"x": 2 ** 60 + 1}, b'{"x":1152921504606846977}'),
+        ({"\u00e9": 1, "e": 2}, b'{"e":2,"\xc3\xa9":1}'),
+    ]
+    for value, expected in cases:
+        assert canonical_bytes(value) == expected

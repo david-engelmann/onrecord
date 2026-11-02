@@ -22,15 +22,29 @@ def _parse_evidence(items) -> list[dict]:
     return evidence
 
 
-def _emit(document) -> int:
-    text = json.dumps(document, indent=2, ensure_ascii=False) + "\n"
+def _emit_text(text: str) -> int:
     try:
         sys.stdout.write(text)
         sys.stdout.flush()
     except (OSError, UnicodeEncodeError):
         print("error, cannot write to stdout", file=sys.stderr)
+        # The broken stream would fail again at interpreter
+        # shutdown and mask this refusal with exit 120 and
+        # an ignored-exception dump, so it is replaced
+        # with a sink before returning.
+        try:
+            sys.stdout.close()
+        except OSError:
+            pass
+        import os
+        sys.stdout = open(os.devnull, "w", encoding="utf-8")
         return 1
     return 0
+
+
+def _emit(document) -> int:
+    text = json.dumps(document, indent=2, ensure_ascii=False) + "\n"
+    return _emit_text(text)
 
 
 def main(argv: list[str] | None = None) -> int:
@@ -63,8 +77,7 @@ def main(argv: list[str] | None = None) -> int:
                 evidence=_parse_evidence(args.evidence),
                 supersedes=args.supersedes,
                 subject=args.subject, due=args.due)
-            print(claim_id)
-            return 0
+            return _emit_text(claim_id + "\n")
         if args.command == "get":
             return _emit(store.get(args.id))
         if args.command == "subject":
@@ -78,6 +91,9 @@ def main(argv: list[str] | None = None) -> int:
             print("the record is sound")
             return 0
     except StoreError as exc:
+        print(f"error, {exc}", file=sys.stderr)
+        return 1
+    except OSError as exc:
         print(f"error, {exc}", file=sys.stderr)
         return 1
     return 1
