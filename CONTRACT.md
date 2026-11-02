@@ -65,3 +65,38 @@ ahead of wallofwrong, whose confessions are stored here.
   operation, and a crash mid-append is detectable by
   check as a defective final line, never as silent
   corruption of earlier claims. Test, tests/test_store.py.
+
+## Round 1 amendments, the pinned shapes (recorded before code)
+
+- OR-5a. A claim's fields: id, text, asserter,
+  asserted_at (an ISO timestamp string), evidence (a
+  list of objects with source and reference strings),
+  supersedes (a claim id or null), and optionally
+  subject and due (an ISO date string). Fields beyond
+  these are part of the claim and are kept verbatim;
+  missing or mistyped required fields are defects.
+  Test, tests/test_store.py.
+- OR-6a. The id is the word claim, a dash, and the
+  first 16 hex characters of the canonical form 1
+  digest of the claim without its id, together with
+  its position, the count of lines already in the
+  record. Check recomputes every id and flags a
+  mismatch as a defect. Test, tests/test_store.py.
+- OR-8a. Retrieval returns an object with the claim
+  under claim and its chain under chain, the chain
+  being every claim it supersedes back to the root,
+  oldest first, ending with the claim itself. Test,
+  tests/test_store.py.
+- OR-9a. A conflict answer is an object with conflict
+  set to true, the subject, and under claims one
+  retrieval object per live claim, in record order.
+  Test, tests/test_store.py.
+- OR-11a. Check names, with line numbers: a line that
+  is not JSON, a line that is not a claim object, a
+  missing or mistyped field, an id that does not match
+  its derivation, a supersedes naming no claim in the
+  record, a claim superseded by two others (a fork),
+  and a timestamp or due date that does not parse.
+  Reads (add, get, subject) on a record with defects
+  refuse, naming the defects; check is the tool that
+  reports them all. Test, tests/test_store.py.
