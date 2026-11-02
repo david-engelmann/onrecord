@@ -12,9 +12,11 @@ on it lands.
 
 ## Round 1. The claim store (OR-5 to OR-12)
 
-Contract preparation only in this pass. The build opens
-when this repo's turn in the line's build order arrives,
-ahead of wallofwrong, whose confessions are stored here.
+Built in Round 1, ahead of wallofwrong, whose
+confessions are stored here. The round also added the
+amendments below (OR-5a to OR-11a before code, OR-5c,
+OR-8b, OR-11b, and OR-12a after the reviews, before
+the repair code).
 
 - OR-5. A record is an append-only JSON lines file. Each
   line is one claim object: an id, the claim text, who
