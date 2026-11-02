@@ -127,3 +127,63 @@ the repair code).
   line with the missing newline first, then appends
   its own line; earlier bytes are never rewritten and
   claims are never glued. Test, tests/test_store.py.
+
+## Round 2. The due view (OR-13 to OR-16)
+
+- OR-13. The store gains a due view: given a date the
+  caller supplies, it answers which live claims have
+  come due. The date is an ISO calendar date, validated
+  like a claim's due date; anything else is a named
+  refusal. The store never invents a time here either:
+  no date supplied, no answer. Test,
+  tests/test_store.py.
+- OR-14. A claim is due when it is live (no claim
+  supersedes it) and carries a due date on or before
+  the supplied date. A superseded claim never appears,
+  whatever its due date said: its successor answers
+  for the chain, with its own due date or none. A live
+  claim with no due date never appears. Test,
+  tests/test_store.py.
+- OR-15. The answer is a document naming the supplied
+  date and the due claims in order: due date
+  ascending, then record position ascending. Each due
+  claim arrives as its retrieval document, the claim
+  and its full chain, exactly as get returns it
+  (OR-3, OR-8). Date comparison is calendar
+  comparison: ISO dates order as strings. Test,
+  tests/test_store.py.
+- OR-16. The due view never resolves a conflict and
+  never hides one. When two live claims sharing a
+  subject are both due, both appear with their
+  receipts, and the document names the shared subject
+  in a conflicts list, present only when non-empty,
+  so the conflict is part of the answer (OR-4). Test,
+  tests/test_store.py.
+
+## Round 2 post-review amendments, recorded before the repairs
+
+- OR-13a. A date in this store is exactly one form:
+  four digits, a hyphen, two digits, a hyphen, two
+  digits, and a real calendar day. The basic form
+  without hyphens and the week forms are not dates
+  here, at add time, at read time, or as the due
+  view's supplied date. The parser alone accepts
+  those forms, and the due view compares dates as
+  strings, so an alien form stored silently answered
+  wrongly, due on no day or due early. Test,
+  tests/test_store.py.
+- OR-13b. The due view refuses a missing record by
+  name, like check does. An existing record, empty
+  included, answers with an empty list; a mistyped
+  path must never read as nothing due. Test,
+  tests/test_store.py.
+- OR-16a. The due view's conflicts are counted over
+  the subjects each due claim answers for under
+  OR-8b: its own subject when it carries one, else
+  every subject named along its chain. One answering
+  rule, shared with subject retrieval, so a conflict
+  the store itself recognises is never hidden by the
+  due view. A subject one due claim alone answers
+  for is no conflict, and a chain repeating a subject
+  does not conflict with itself. Test,
+  tests/test_store.py.

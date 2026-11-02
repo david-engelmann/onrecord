@@ -1,4 +1,4 @@
-"""OR-5 to OR-12. The claim store."""
+"""OR-5 to OR-16. The claim store and its due view."""
 import json
 from pathlib import Path
 
@@ -289,3 +289,187 @@ def test_the_canonical_bytes_battery():
     ]
     for value, expected in cases:
         assert canonical_bytes(value) == expected
+
+
+def test_the_due_view_answers_live_claims_by_date(tmp_path):
+    store = Store(tmp_path / "r.jsonl")
+    early = add(store, text="Due early", due="2026-02-01")
+    add(store, text="Due later", due="2026-03-01")
+    add(store, text="No date at all")
+    document = store.due("2026-02-01")
+    assert document["as_of"] == "2026-02-01"
+    assert [d["claim"]["id"] for d in document["due"]] == [early]
+    assert document["due"][0]["chain"][0]["id"] == early
+    assert "conflicts" not in document
+    document = store.due("2026-01-01")
+    assert document["due"] == []
+
+
+def test_the_due_view_orders_by_date_then_position(tmp_path):
+    store = Store(tmp_path / "r.jsonl")
+    third = add(store, text="Third", due="2026-02-10")
+    first = add(store, text="First", due="2026-02-01")
+    second = add(store, text="Second", due="2026-02-10")
+    document = store.due("2026-02-10")
+    assert [d["claim"]["id"] for d in document["due"]] == [
+        first, third, second]
+
+
+def test_a_superseded_claims_due_date_dies_with_it(tmp_path):
+    store = Store(tmp_path / "r.jsonl")
+    old = add(store, text="Old promise", due="2026-02-01")
+    new = add(store, text="New promise", supersedes=old,
+              due="2026-04-01")
+    document = store.due("2026-03-01")
+    assert document["due"] == []
+    document = store.due("2026-04-01")
+    assert [d["claim"]["id"] for d in document["due"]] == [new]
+    assert [c["id"] for c in document["due"][0]["chain"]] == [
+        old, new]
+
+
+def test_the_due_view_names_its_conflicts(tmp_path):
+    store = Store(tmp_path / "r.jsonl")
+    add(store, text="Side one", subject="deploy",
+        due="2026-02-01")
+    add(store, text="Side two", subject="deploy",
+        due="2026-02-01")
+    add(store, text="Unrelated", subject="other",
+        due="2026-02-01")
+    document = store.due("2026-02-01")
+    assert len(document["due"]) == 3
+    assert document["conflicts"] == ["deploy"]
+
+
+def test_the_due_view_refuses_a_bad_date_by_name(tmp_path):
+    store = Store(tmp_path / "r.jsonl")
+    add(store, due="2026-02-01")
+    for bad in ("next Friday", "2026-02-30",
+                "2026-02-01T09:00:00Z", ""):
+        with pytest.raises(StoreError, match="not an ISO date"):
+            store.due(bad)
+
+
+def test_the_due_command_prints_the_document(
+        tmp_path, capsys):
+    record = tmp_path / "r.jsonl"
+    store = Store(record)
+    dated = add(store, text="Dated", due="2026-02-01")
+    add(store, text="Undated")
+    assert main(["due", str(record), "2026-02-15"]) == 0
+    document = json.loads(capsys.readouterr().out)
+    assert document["as_of"] == "2026-02-15"
+    assert [d["claim"]["id"] for d in document["due"]] == [dated]
+    assert main(["due", str(record), "whenever"]) == 1
+    assert "not an ISO date" in capsys.readouterr().err
+
+
+def test_an_undated_successor_silences_the_chain(tmp_path):
+    store = Store(tmp_path / "r.jsonl")
+    old = add(store, text="Promised", due="2026-02-01")
+    add(store, text="Withdrawn", supersedes=old)
+    assert store.due("2026-06-01")["due"] == []
+
+
+def test_a_due_claims_document_is_gets_document(tmp_path):
+    store = Store(tmp_path / "r.jsonl")
+    dated = add(store, text="Dated", due="2026-02-01")
+    document = store.due("2026-02-01")
+    assert document["due"] == [store.get(dated)]
+
+
+def test_a_conflict_needs_both_sides_due(tmp_path):
+    store = Store(tmp_path / "r.jsonl")
+    add(store, text="Side one", subject="deploy",
+        due="2026-02-01")
+    add(store, text="Side two", subject="deploy",
+        due="2026-09-01")
+    document = store.due("2026-03-01")
+    assert len(document["due"]) == 1
+    assert "conflicts" not in document
+
+
+def test_inherited_subjects_conflict_in_the_due_view(
+        tmp_path):
+    store = Store(tmp_path / "r.jsonl")
+    root = add(store, text="Root", subject="deploy")
+    add(store, text="Head without a subject",
+        supersedes=root, due="2026-02-01")
+    add(store, text="Direct", subject="deploy",
+        due="2026-02-01")
+    document = store.due("2026-02-01")
+    assert document["conflicts"] == ["deploy"]
+    assert store.subject("deploy")["conflict"] is True
+
+
+def test_answering_never_self_conflicts(tmp_path):
+    store = Store(tmp_path / "r.jsonl")
+    root = add(store, text="Root", subject="deploy")
+    mid = add(store, text="Mid", supersedes=root,
+              subject="deploy")
+    add(store, text="Head", supersedes=mid,
+        due="2026-02-01")
+    add(store, text="Quiet one", due="2026-02-01")
+    add(store, text="Quiet two", due="2026-02-01")
+    document = store.due("2026-02-01")
+    assert len(document["due"]) == 3
+    assert "conflicts" not in document
+
+
+def test_a_head_with_its_own_subject_does_not_inherit(
+        tmp_path):
+    store = Store(tmp_path / "r.jsonl")
+    root = add(store, text="Root", subject="deploy")
+    add(store, text="Head on another subject",
+        supersedes=root, subject="billing",
+        due="2026-02-01")
+    add(store, text="Direct", subject="deploy",
+        due="2026-02-01")
+    document = store.due("2026-02-01")
+    assert "conflicts" not in document
+
+
+def test_dates_are_exactly_one_form(tmp_path):
+    store = Store(tmp_path / "r.jsonl")
+    for bad in ("20260201", "2026-W05-1", "2026-W05"):
+        with pytest.raises(StoreError):
+            add(store, due=bad)
+        with pytest.raises(StoreError,
+                           match="not an ISO date"):
+            store.due(bad)
+    dated = add(store, due="2026-02-01")
+    document = store.due("2026-02-01")
+    assert [d["claim"]["id"] for d in document["due"]] == [
+        dated]
+
+
+def test_the_due_view_refuses_a_missing_record(tmp_path):
+    store = Store(tmp_path / "missing.jsonl")
+    with pytest.raises(StoreError,
+                       match="cannot read the record"):
+        store.due("2026-02-01")
+    with pytest.raises(StoreError,
+                       match="cannot read the record"):
+        Store(tmp_path).due("2026-02-01")
+    assert main(["due", str(tmp_path / "missing.jsonl"),
+                 "2026-02-01"]) == 1
+
+
+def test_check_names_an_alien_due_date_at_read_time(
+        tmp_path):
+    from onrecord.store import derive_id
+    path = tmp_path / "r.jsonl"
+    claim = {"text": "Hand written",
+             "asserter": "agent-a",
+             "asserted_at": "2026-01-01T09:00:00Z",
+             "evidence": [{"source": "trace",
+                           "reference": "run-17"}],
+             "supersedes": None, "due": "20260201"}
+    stored = {"id": derive_id(claim, 0), **claim}
+    path.write_text(json.dumps(stored) + "\n",
+                    encoding="utf-8")
+    store = Store(path)
+    defects = store.check()
+    assert any("due" in defect for defect in defects)
+    with pytest.raises(StoreError):
+        store.due("2026-12-31")
