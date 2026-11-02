@@ -1,0 +1,71 @@
+{
+  "tape_version": "1.0",
+  "run": {
+    "harness": "claude-code",
+    "session_id": "synthetic-session-001",
+    "source_format": "claude-code-jsonl",
+    "skipped_lines": {
+      "system": 1
+    },
+    "redacted_values": 0,
+    "totals": {
+      "input_tokens": 150,
+      "output_tokens": 50,
+      "cache_creation_input_tokens": 0,
+      "cache_read_input_tokens": 0,
+      "tool_calls": 1,
+      "messages": 3
+    },
+    "started_at": "2026-01-01T09:00:00.000Z"
+  },
+  "events": [
+    {
+      "seq": 0,
+      "kind": "message",
+      "sidechain": false,
+      "timestamp": "2026-01-01T09:00:00.000Z",
+      "role": "user",
+      "text": "Synthetic prompt, fix the widget counter."
+    },
+    {
+      "seq": 1,
+      "kind": "message",
+      "sidechain": false,
+      "timestamp": "2026-01-01T09:00:05.000Z",
+      "role": "assistant",
+      "text": "Synthetic reply, reading the counter first."
+    },
+    {
+      "seq": 2,
+      "kind": "tool_call",
+      "sidechain": false,
+      "timestamp": "2026-01-01T09:00:05.000Z",
+      "call_id": "toolu_synth_1",
+      "tool": "Read",
+      "input": {
+        "path": "widget.py"
+      }
+    },
+    {
+      "seq": 3,
+      "kind": "tool_result",
+      "sidechain": false,
+      "timestamp": "2026-01-01T09:00:06.000Z",
+      "call_id": "toolu_synth_1",
+      "is_error": false,
+      "content": "counter = 0"
+    },
+    {
+      "seq": 4,
+      "kind": "message",
+      "sidechain": true,
+      "timestamp": "2026-01-01T09:01:00.000Z",
+      "role": "assistant",
+      "text": "Synthetic sidechain note, checking a hunch."
+    }
+  ],
+  "outcome": {
+    "status": "unknown",
+    "basis": "unresolved-ending"
+  }
+}
