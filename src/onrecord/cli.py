@@ -1,5 +1,6 @@
-"""OR-11. A thin command line over the store: add, get,
-subject, check. Failures are named errors with exit 1."""
+"""OR-11, OR-13. A thin command line over the store:
+add, get, subject, check, due. Failures are named
+errors with exit 1."""
 from __future__ import annotations
 
 import argparse
@@ -67,6 +68,10 @@ def main(argv: list[str] | None = None) -> int:
     subj.add_argument("key")
     chk = sub.add_parser("check", help="name every defect")
     chk.add_argument("record")
+    due = sub.add_parser("due",
+                         help="the live claims due by a date")
+    due.add_argument("record")
+    due.add_argument("date")
     args = parser.parse_args(argv)
     store = Store(Path(args.record))
     try:
@@ -82,6 +87,8 @@ def main(argv: list[str] | None = None) -> int:
             return _emit(store.get(args.id))
         if args.command == "subject":
             return _emit(store.subject(args.key))
+        if args.command == "due":
+            return _emit(store.due(args.date))
         if args.command == "check":
             defects = store.check()
             for defect in defects:

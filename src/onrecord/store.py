@@ -316,6 +316,40 @@ class Store:
                 "claims": [{"claim": c, "chain": chain}
                            for c, chain in live]}
 
+    def due(self, as_of: str) -> dict:
+        """OR-13 to OR-16: the live claims due by as_of,
+        each with its receipts, conflicts named."""
+        if not _is_iso_date(as_of):
+            raise StoreError(
+                f"the due date is not an ISO date, {as_of}")
+        claims = self._load()
+        superseded = {c["supersedes"] for c in claims
+                      if c.get("supersedes")}
+        due = []
+        for position, claim in enumerate(claims):
+            if claim["id"] in superseded:
+                continue
+            date = claim.get("due")
+            if date is None or date > as_of:
+                continue
+            due.append((date, position, claim))
+        due.sort(key=lambda item: (item[0], item[1]))
+        documents = [{"claim": claim,
+                      "chain": self._chain(claims, claim)}
+                     for _date, _pos, claim in due]
+        by_subject: dict[str, int] = {}
+        for _date, _pos, claim in due:
+            subject = claim.get("subject")
+            if subject is not None:
+                by_subject[subject] = \
+                    by_subject.get(subject, 0) + 1
+        conflicts = sorted(key for key, count
+                           in by_subject.items() if count > 1)
+        document = {"as_of": as_of, "due": documents}
+        if conflicts:
+            document["conflicts"] = conflicts
+        return document
+
     def check(self) -> list[str]:
         if not self.path.exists():
             raise StoreError(f"no such record, {self.path}")

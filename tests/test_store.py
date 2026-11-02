@@ -289,3 +289,76 @@ def test_the_canonical_bytes_battery():
     ]
     for value, expected in cases:
         assert canonical_bytes(value) == expected
+
+
+def test_the_due_view_answers_live_claims_by_date(tmp_path):
+    store = Store(tmp_path / "r.jsonl")
+    early = add(store, text="Due early", due="2026-02-01")
+    add(store, text="Due later", due="2026-03-01")
+    add(store, text="No date at all")
+    document = store.due("2026-02-01")
+    assert document["as_of"] == "2026-02-01"
+    assert [d["claim"]["id"] for d in document["due"]] == [early]
+    assert document["due"][0]["chain"][0]["id"] == early
+    assert "conflicts" not in document
+    document = store.due("2026-01-01")
+    assert document["due"] == []
+
+
+def test_the_due_view_orders_by_date_then_position(tmp_path):
+    store = Store(tmp_path / "r.jsonl")
+    third = add(store, text="Third", due="2026-02-10")
+    first = add(store, text="First", due="2026-02-01")
+    second = add(store, text="Second", due="2026-02-10")
+    document = store.due("2026-02-10")
+    assert [d["claim"]["id"] for d in document["due"]] == [
+        first, third, second]
+
+
+def test_a_superseded_claims_due_date_dies_with_it(tmp_path):
+    store = Store(tmp_path / "r.jsonl")
+    old = add(store, text="Old promise", due="2026-02-01")
+    new = add(store, text="New promise", supersedes=old,
+              due="2026-04-01")
+    document = store.due("2026-03-01")
+    assert document["due"] == []
+    document = store.due("2026-04-01")
+    assert [d["claim"]["id"] for d in document["due"]] == [new]
+    assert [c["id"] for c in document["due"][0]["chain"]] == [
+        old, new]
+
+
+def test_the_due_view_names_its_conflicts(tmp_path):
+    store = Store(tmp_path / "r.jsonl")
+    add(store, text="Side one", subject="deploy",
+        due="2026-02-01")
+    add(store, text="Side two", subject="deploy",
+        due="2026-02-01")
+    add(store, text="Unrelated", subject="other",
+        due="2026-02-01")
+    document = store.due("2026-02-01")
+    assert len(document["due"]) == 3
+    assert document["conflicts"] == ["deploy"]
+
+
+def test_the_due_view_refuses_a_bad_date_by_name(tmp_path):
+    store = Store(tmp_path / "r.jsonl")
+    add(store, due="2026-02-01")
+    for bad in ("next Friday", "2026-02-30",
+                "2026-02-01T09:00:00Z", ""):
+        with pytest.raises(StoreError, match="not an ISO date"):
+            store.due(bad)
+
+
+def test_the_due_command_prints_the_document(
+        tmp_path, capsys):
+    record = tmp_path / "r.jsonl"
+    store = Store(record)
+    dated = add(store, text="Dated", due="2026-02-01")
+    add(store, text="Undated")
+    assert main(["due", str(record), "2026-02-15"]) == 0
+    document = json.loads(capsys.readouterr().out)
+    assert document["as_of"] == "2026-02-15"
+    assert [d["claim"]["id"] for d in document["due"]] == [dated]
+    assert main(["due", str(record), "whenever"]) == 1
+    assert "not an ISO date" in capsys.readouterr().err
