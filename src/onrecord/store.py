@@ -333,9 +333,12 @@ class Store:
             raise StoreError(
                 f"the supplied date is not an ISO date, "
                 f"{as_of}")
-        if not self.path.exists():
-            raise StoreError(f"no such record, {self.path}")
-        claims = self._load()
+        # OR-13b, without a race: the load itself reports
+        # an unreadable record as a defect, so a record
+        # missing at load time, for any reason, refuses
+        # here by name instead of answering empty.
+        claims, defects = load_record(self.path)
+        _require_sound(claims, defects)
         superseded = {c["supersedes"] for c in claims
                       if c.get("supersedes")}
         due = []

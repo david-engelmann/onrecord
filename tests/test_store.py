@@ -445,7 +445,31 @@ def test_dates_are_exactly_one_form(tmp_path):
 
 def test_the_due_view_refuses_a_missing_record(tmp_path):
     store = Store(tmp_path / "missing.jsonl")
-    with pytest.raises(StoreError, match="no such record"):
+    with pytest.raises(StoreError,
+                       match="cannot read the record"):
         store.due("2026-02-01")
+    with pytest.raises(StoreError,
+                       match="cannot read the record"):
+        Store(tmp_path).due("2026-02-01")
     assert main(["due", str(tmp_path / "missing.jsonl"),
                  "2026-02-01"]) == 1
+
+
+def test_check_names_an_alien_due_date_at_read_time(
+        tmp_path):
+    from onrecord.store import derive_id
+    path = tmp_path / "r.jsonl"
+    claim = {"text": "Hand written",
+             "asserter": "agent-a",
+             "asserted_at": "2026-01-01T09:00:00Z",
+             "evidence": [{"source": "trace",
+                           "reference": "run-17"}],
+             "supersedes": None, "due": "20260201"}
+    stored = {"id": derive_id(claim, 0), **claim}
+    path.write_text(json.dumps(stored) + "\n",
+                    encoding="utf-8")
+    store = Store(path)
+    defects = store.check()
+    assert any("due" in defect for defect in defects)
+    with pytest.raises(StoreError):
+        store.due("2026-12-31")
