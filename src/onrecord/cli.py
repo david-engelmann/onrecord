@@ -66,12 +66,12 @@ def main(argv: list[str] | None = None) -> int:
     subj = sub.add_parser("subject", help="retrieve a subject")
     subj.add_argument("record")
     subj.add_argument("key")
-    chk = sub.add_parser("check", help="name every defect")
-    chk.add_argument("record")
-    due = sub.add_parser("due",
-                         help="the live claims due by a date")
+    due = sub.add_parser(
+        "due", help="list the live claims due by a date")
     due.add_argument("record")
     due.add_argument("date")
+    chk = sub.add_parser("check", help="name every defect")
+    chk.add_argument("record")
     args = parser.parse_args(argv)
     store = Store(Path(args.record))
     try:

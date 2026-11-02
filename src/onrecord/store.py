@@ -1,4 +1,4 @@
-"""OR-5 to OR-12. The append-only claim store."""
+"""OR-5 to OR-16. The append-only claim store."""
 from __future__ import annotations
 
 import json
@@ -31,7 +31,13 @@ def _is_iso_timestamp(value) -> bool:
 
 
 def _is_iso_date(value) -> bool:
-    if not isinstance(value, str):
+    # OR-13a: exactly YYYY-MM-DD and a real day. The
+    # parser alone also accepts the basic and week
+    # forms, which string comparison then misreads.
+    if not isinstance(value, str) or len(value) != 10 \
+            or value[4] != "-" or value[7] != "-" \
+            or not (value[:4] + value[5:7]
+                    + value[8:]).isdigit():
         return False
     try:
         date.fromisoformat(value)
@@ -267,6 +273,16 @@ class Store:
                 f"{error.strerror or error}") from None
         return claim_id
 
+    def _answers(self, claim, chain) -> set:
+        """OR-8b: the subjects a live head answers for:
+        its own subject, or every subject along its
+        chain when it carries none."""
+        own = claim.get("subject")
+        if own is not None:
+            return {own}
+        return {c.get("subject") for c in chain
+                if c.get("subject") is not None}
+
     def _chain(self, claims, claim) -> list[dict]:
         by_id = {c["id"]: c for c in claims}
         chain = [claim]
@@ -299,13 +315,7 @@ class Store:
             if claim["id"] in superseded:
                 continue
             chain = self._chain(claims, claim)
-            own = claim.get("subject")
-            if own is not None:
-                answers = {own}
-            else:
-                answers = {c.get("subject") for c in chain
-                           if c.get("subject") is not None}
-            if key in answers:
+            if key in self._answers(claim, chain):
                 live.append((claim, chain))
         if not live:
             raise StoreError(f"no live claim on subject {key}")
@@ -321,7 +331,10 @@ class Store:
         each with its receipts, conflicts named."""
         if not _is_iso_date(as_of):
             raise StoreError(
-                f"the due date is not an ISO date, {as_of}")
+                f"the supplied date is not an ISO date, "
+                f"{as_of}")
+        if not self.path.exists():
+            raise StoreError(f"no such record, {self.path}")
         claims = self._load()
         superseded = {c["supersedes"] for c in claims
                       if c.get("supersedes")}
@@ -329,22 +342,21 @@ class Store:
         for position, claim in enumerate(claims):
             if claim["id"] in superseded:
                 continue
-            date = claim.get("due")
-            if date is None or date > as_of:
+            due_date = claim.get("due")
+            if due_date is None or due_date > as_of:
                 continue
-            due.append((date, position, claim))
+            due.append((due_date, position, claim))
         due.sort(key=lambda item: (item[0], item[1]))
         documents = [{"claim": claim,
                       "chain": self._chain(claims, claim)}
                      for _date, _pos, claim in due]
-        by_subject: dict[str, int] = {}
-        for _date, _pos, claim in due:
-            subject = claim.get("subject")
-            if subject is not None:
-                by_subject[subject] = \
-                    by_subject.get(subject, 0) + 1
+        counts: dict[str, int] = {}
+        for document in documents:
+            for subject in self._answers(
+                    document["claim"], document["chain"]):
+                counts[subject] = counts.get(subject, 0) + 1
         conflicts = sorted(key for key, count
-                           in by_subject.items() if count > 1)
+                           in counts.items() if count > 1)
         document = {"as_of": as_of, "due": documents}
         if conflicts:
             document["conflicts"] = conflicts
