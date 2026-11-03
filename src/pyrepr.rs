@@ -3,12 +3,16 @@
 //! id of the wrong shape in a fork defect (where the
 //! Python's f-string renders the value's repr for
 //! anything that is not already a string).
-//! The flighttape crate's repr derives printability
-//! from its own table, which disagrees with CPython at
-//! U+0378, U+0379, U+1AFF, and U+E0001; the phrases
-//! here are onrecord's own output, so this module
-//! carries CPython's table (repr_table) and emit's
-//! exact float rendering.
+//! When this module was ported, the flighttape
+//! crate's repr derived printability from a table
+//! that disagreed with CPython at U+0378, U+0379,
+//! U+1AFF, and U+E0001; flighttape Round 12 (FT-59)
+//! made the crate's table exact. The phrases here
+//! are onrecord's own output and were pinned
+//! against this module's own copy of CPython's
+//! table (repr_table) in Round 3, so the module
+//! keeps its table, with emit's exact float
+//! rendering.
 
 use flighttape::value::{Text, Value};
 
