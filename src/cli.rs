@@ -174,7 +174,10 @@ enum ParseOutcome {
 }
 
 fn parse_error(usage: &str, prog: &str, message: &str) -> ParseOutcome {
-    eprintln!("{usage}\n{prog}: error: {message}");
+    // The usage constants carry their trailing
+    // newline; the Python prints the error line
+    // directly under the usage block.
+    eprint!("{usage}{prog}: error: {message}\n");
     ParseOutcome::Exit(2)
 }
 
