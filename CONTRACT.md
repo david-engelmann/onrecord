@@ -213,6 +213,13 @@ the repair code).
   phrase, each surfacing as that line's named defect.
   The port closes the differences in its loader and
   names them in the dossier.
+- OR-18a. Amendment, recorded before the port code:
+  sha2 is a second direct dependency, the very crate
+  and version the pinned flighttape tree already
+  brings (0.10), because claim ids hash this port's
+  own canonical rendering under OR-18 and no other
+  surface consumes it. OR-18's only-direct-dependency
+  sentence reads with this amendment.
 - OR-20. Appended lines and views reproduce the
   Python's rendering byte for byte: appended claims in
   the compact separators with insertion key order,
