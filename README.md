@@ -27,7 +27,7 @@ flighttape crate at a pinned revision.
 
 ## Programme status
 
-- Closed perfection rounds, 3 of 100. A round counts only when a
+- Closed perfection rounds, 4 of 100. A round counts only when a
   full cycle of work, audit, review, red team, and approval has
   closed.
 - Contract, OR-1 to OR-12 as amended, met for the Round 1 scope.
