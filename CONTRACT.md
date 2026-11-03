@@ -240,3 +240,30 @@ the repair code).
   Python line share on the landing tree, the bindings
   determination, and the non-Rust remainder register
   with a justification per item.
+- OR-24. Round 4 re-pins the flighttape crate from
+  ba8d4b550850179722f48b8f9c909e199efe3548 to
+  eebce0be75a9c2ffa534635e37160c7cbef5d96e, the
+  Round 12 merge. No onrecord behavior changes
+  except what the crate's timestamp grammar
+  carries: the stray digit at end of string now
+  refuses (FT-60) and the one-character separator
+  skip before the offset now accepts (FT-60a).
+- OR-25. The named deviation for the timestamp
+  stray digit (Round 3 dossier, deviation 6)
+  retires: the differential harness's cells for
+  the four recorded shapes now expect agreement,
+  and cells for the FT-60a shapes (a space before
+  Z, a space before an offset, the component
+  colon before the sign) assert the new grammar
+  flows through asserted_at validation with the
+  interpreter's instants. No other deviation
+  moves.
+- OR-26. The round's verification is the full
+  local gate plus the differential harness re-run
+  over its standing corpus at zero failures,
+  with the timestamp cells of OR-25 included.
+  CodeRabbit's advisory pass on Round 3's PR 4
+  posted no findings (its summary shell and an
+  action-not-completed notice stand on the PR;
+  the review endpoint returns zero entries), so
+  no disposition is owed from it.
