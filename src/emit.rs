@@ -1,8 +1,9 @@
-//! The registry's rendering: Python's json.dumps in
+//! The record's rendering: Python's json.dumps in
 //! both shapes the Python writes, a compact line for
-//! appended events (the default separators) and an
-//! indent of two for the views, both with
-//! ensure_ascii=False (VL-16). The bytes follow the
+//! appended claims (the explicit separators ","
+//! and ":") and an indent of two for the views, both
+//! with ensure_ascii=False (OR-20). The bytes follow
+//! the
 //! destination's law, which the caller picks: stdout
 //! writes with surrogateescape, so a lone surrogate
 //! in DC80 to DCFF writes as its raw byte and any
@@ -87,8 +88,10 @@ pub fn py_float(value: f64) -> String {
 /// value being 0.digits * 10^point. The expansion is
 /// finite (the double is m * 2^e), built digit by
 /// digit with small integer arithmetic. Callers use
-/// it where a comparison must be exact rather than
-/// shortest (the suggestion rule's margins).
+/// it where the digits must be exact rather than
+/// shortest (the float renderer below, which searches
+/// the shortest string that parses back to the same
+/// double over this expansion).
 pub fn exact_decimal(value: f64) -> (String, i64) {
     let bits = value.to_bits();
     let biased = ((bits >> 52) & 0x7FF) as i32;

@@ -1,16 +1,10 @@
 //! Shared constructions: argument and path text in
-//! CPython's filesystem decoding, the JSON text
-//! scans the loader's refusals turn on, and the
-//! exact integer arithmetic the suggestion rule's
-//! comparisons need (the Python computes them over
-//! integers of any size, and its float pipeline must
-//! be matched bit for bit, not approximated).
-
-use std::cmp::Ordering;
+//! CPython's filesystem decoding, the messages the
+//! store's phrases are built from, the strerror
+//! table the OS error phrases read, and the Unicode
+//! decimal digit table the argument matcher uses.
 
 use flighttape::value::Text;
-
-use crate::emit::exact_decimal;
 
 /// Decode OS bytes the way CPython decodes file system
 /// and argument strings: valid UTF-8 decodes normally,
@@ -202,10 +196,10 @@ pub fn normalize_path_display(units: &[u16]) -> Vec<u16> {
 }
 
 /// A message under construction, held as text units
-/// so a name the Python inserts raw (an experiment
-/// id, a path) keeps its exact units until the
-/// message is rendered for its destination: stderr
-/// renders backslashreplace, stdout surrogateescape.
+/// so a name the Python inserts raw (a claim id, a
+/// path) keeps its exact units until the message is
+/// rendered for its destination: stderr renders
+/// backslashreplace, stdout surrogateescape.
 #[derive(Clone, Debug, PartialEq)]
 pub struct Msg(pub Vec<u16>);
 
@@ -260,48 +254,37 @@ pub fn join_msgs(items: &[Msg], separator: &str) -> Msg {
     out
 }
 
-/// The container nesting depths of a JSON text,
-/// counted over brackets outside strings: the
-/// maximum depth of any container, and the maximum
-/// depth at which an object opens. The Python
-/// reader's recursion turns on both measures (the
-/// registry loader's hook spends stack as each
-/// object closes, so a deep object refuses where a
-/// deep array still parses). A scalar text has
-/// depth 0.
-pub fn json_text_depths(text: &str) -> (usize, usize) {
-    let mut depth = 0usize;
-    let mut max = 0usize;
-    let mut max_object = 0usize;
-    let mut in_string = false;
-    let mut escaped = false;
-    for ch in text.chars() {
-        if in_string {
-            if escaped {
-                escaped = false;
-            } else if ch == '\\' {
-                escaped = true;
-            } else if ch == '"' {
-                in_string = false;
+/// The bare strerror text for an OS error, as the
+/// Python's OSError.strerror reads. One table serves
+/// the store's phrases and the CLI's "[Errno N]"
+/// renderings. Errnos outside the table fall back
+/// to the standard library's rendering, a named
+/// deviation.
+pub fn strerror_text(err: &std::io::Error) -> String {
+    match err.raw_os_error() {
+        Some(errno) => {
+            let text = match errno {
+                1 => "Operation not permitted",
+                2 => "No such file or directory",
+                13 => "Permission denied",
+                20 => "Not a directory",
+                21 => "Is a directory",
+                24 => "Too many open files",
+                28 => "No space left on device",
+                30 => "Read-only file system",
+                32 => "Broken pipe",
+                36 => "File name too long",
+                40 => "Too many levels of symbolic links",
+                _ => "",
+            };
+            if text.is_empty() {
+                err.to_string()
+            } else {
+                text.to_string()
             }
-            continue;
         }
-        match ch {
-            '"' => in_string = true,
-            '[' => {
-                depth += 1;
-                max = max.max(depth);
-            }
-            '{' => {
-                depth += 1;
-                max = max.max(depth);
-                max_object = max_object.max(depth);
-            }
-            ']' | '}' => depth = depth.saturating_sub(1),
-            _ => {}
-        }
+        None => err.to_string(),
     }
-    (max, max_object)
 }
 
 /// The OS path for a normalized display path: the
@@ -315,548 +298,6 @@ pub fn os_path_from_units(units: &[u16]) -> std::path::PathBuf {
     #[cfg(not(unix))]
     {
         std::path::PathBuf::from(String::from_utf16_lossy(units))
-    }
-}
-
-/// What a registry line's own parse refuses beyond
-/// the crate reader's acceptance (VL-15): duplicate
-/// object keys at any level, and the NaN and
-/// Infinity constants the Python's reader is told
-/// to reject. The scan runs only on lines the crate
-/// reader already accepted, so it may assume the
-/// grammar held; every refusal it finds surfaces as
-/// the same not-valid-JSON defect as a parse error.
-pub struct LineScan {
-    pub duplicate_key: bool,
-    pub constant: bool,
-}
-
-pub fn scan_line(text: &str) -> LineScan {
-    let chars: Vec<char> = text.chars().collect();
-    let mut scan = LineScan {
-        duplicate_key: false,
-        constant: false,
-    };
-    let mut pos = 0usize;
-    scan_value(&chars, &mut pos, &mut scan);
-    scan
-}
-
-fn skip_ws(chars: &[char], pos: &mut usize) {
-    while *pos < chars.len() && matches!(chars[*pos], ' ' | '\t' | '\n' | '\r') {
-        *pos += 1;
-    }
-}
-
-fn scan_string(chars: &[char], pos: &mut usize) -> Vec<u16> {
-    // chars[*pos] is the opening quote.
-    let mut units = Vec::new();
-    *pos += 1;
-    while *pos < chars.len() {
-        let ch = chars[*pos];
-        *pos += 1;
-        match ch {
-            '"' => break,
-            '\\' => {
-                if *pos >= chars.len() {
-                    break;
-                }
-                let esc = chars[*pos];
-                *pos += 1;
-                match esc {
-                    'u' => {
-                        let mut unit = 0u16;
-                        for _ in 0..4 {
-                            if *pos < chars.len() {
-                                unit = unit * 16 + chars[*pos].to_digit(16).unwrap_or(0) as u16;
-                                *pos += 1;
-                            }
-                        }
-                        units.push(unit);
-                    }
-                    'n' => units.push('\n' as u16),
-                    'r' => units.push('\r' as u16),
-                    't' => units.push('\t' as u16),
-                    'b' => units.push('\u{8}' as u16),
-                    'f' => units.push('\u{C}' as u16),
-                    other => units.push(other as u16),
-                }
-            }
-            _ => {
-                let mut buf = [0u16; 2];
-                units.extend_from_slice(ch.encode_utf16(&mut buf));
-            }
-        }
-    }
-    units
-}
-
-fn scan_value(chars: &[char], pos: &mut usize, scan: &mut LineScan) {
-    skip_ws(chars, pos);
-    if *pos >= chars.len() {
-        return;
-    }
-    match chars[*pos] {
-        '{' => {
-            *pos += 1;
-            let mut keys: Vec<Vec<u16>> = Vec::new();
-            loop {
-                skip_ws(chars, pos);
-                if *pos >= chars.len() {
-                    return;
-                }
-                if chars[*pos] == '}' {
-                    *pos += 1;
-                    return;
-                }
-                if chars[*pos] == '"' {
-                    let key = scan_string(chars, pos);
-                    if keys.contains(&key) {
-                        scan.duplicate_key = true;
-                    } else {
-                        keys.push(key);
-                    }
-                }
-                skip_ws(chars, pos);
-                if *pos < chars.len() && chars[*pos] == ':' {
-                    *pos += 1;
-                }
-                scan_value(chars, pos, scan);
-                skip_ws(chars, pos);
-                if *pos < chars.len() && chars[*pos] == ',' {
-                    *pos += 1;
-                }
-            }
-        }
-        '[' => {
-            *pos += 1;
-            loop {
-                skip_ws(chars, pos);
-                if *pos >= chars.len() {
-                    return;
-                }
-                if chars[*pos] == ']' {
-                    *pos += 1;
-                    return;
-                }
-                scan_value(chars, pos, scan);
-                skip_ws(chars, pos);
-                if *pos < chars.len() && chars[*pos] == ',' {
-                    *pos += 1;
-                }
-            }
-        }
-        '"' => {
-            scan_string(chars, pos);
-        }
-        _ => {
-            // A bare token: a number or one of the
-            // literal words. Only NaN and the two
-            // Infinities are refusals.
-            let mut word = String::new();
-            while *pos < chars.len()
-                && (chars[*pos].is_ascii_alphanumeric() || matches!(chars[*pos], '+' | '-' | '.'))
-            {
-                word.push(chars[*pos]);
-                *pos += 1;
-            }
-            if word == "NaN" || word == "Infinity" || word == "-Infinity" {
-                scan.constant = true;
-            }
-        }
-    }
-}
-
-/// An exact integer: a sign and a magnitude held as
-/// decimal digits, most significant first, no leading
-/// zeros; zero has an empty magnitude and no sign.
-#[derive(Clone, Debug, PartialEq)]
-pub struct Big {
-    pub neg: bool,
-    pub mag: Vec<u8>,
-}
-
-impl Big {
-    pub fn zero() -> Big {
-        Big {
-            neg: false,
-            mag: Vec::new(),
-        }
-    }
-
-    /// From the crate's canonical integer form (an
-    /// optional minus and digits).
-    pub fn from_int_str(text: &str) -> Big {
-        let (neg, digits) = match text.strip_prefix('-') {
-            Some(rest) => (true, rest),
-            None => (false, text),
-        };
-        let mut mag: Vec<u8> = digits.bytes().map(|byte| byte - b'0').collect();
-        let lead = mag.iter().take_while(|digit| **digit == 0).count();
-        mag.drain(..lead.min(mag.len()));
-        if mag.is_empty() {
-            return Big::zero();
-        }
-        Big { neg, mag }
-    }
-
-    pub fn is_zero(&self) -> bool {
-        self.mag.is_empty()
-    }
-
-    fn cmp_mag(a: &[u8], b: &[u8]) -> Ordering {
-        if a.len() != b.len() {
-            return a.len().cmp(&b.len());
-        }
-        a.cmp(b)
-    }
-
-    pub fn compare(&self, other: &Big) -> Ordering {
-        match (self.neg, other.neg) {
-            (false, true) => Ordering::Greater,
-            (true, false) => Ordering::Less,
-            (false, false) => Big::cmp_mag(&self.mag, &other.mag),
-            (true, true) => Big::cmp_mag(&other.mag, &self.mag),
-        }
-    }
-
-    fn add_mag(a: &[u8], b: &[u8]) -> Vec<u8> {
-        let mut out = Vec::with_capacity(a.len().max(b.len()) + 1);
-        let mut carry = 0u16;
-        let mut i = a.len();
-        let mut j = b.len();
-        while i > 0 || j > 0 || carry > 0 {
-            let mut sum = carry;
-            if i > 0 {
-                i -= 1;
-                sum += a[i] as u16;
-            }
-            if j > 0 {
-                j -= 1;
-                sum += b[j] as u16;
-            }
-            out.push((sum % 10) as u8);
-            carry = sum / 10;
-        }
-        out.reverse();
-        let lead = out.iter().take_while(|digit| **digit == 0).count();
-        out.drain(..lead.min(out.len()));
-        out
-    }
-
-    /// a - b, for a >= b as magnitudes.
-    fn sub_mag(a: &[u8], b: &[u8]) -> Vec<u8> {
-        let mut out = vec![0u8; a.len()];
-        let mut borrow = 0i16;
-        let mut i = a.len();
-        let mut j = b.len();
-        while i > 0 {
-            i -= 1;
-            let mut digit = a[i] as i16 - borrow;
-            if j > 0 {
-                j -= 1;
-                digit -= b[j] as i16;
-            }
-            if digit < 0 {
-                digit += 10;
-                borrow = 1;
-            } else {
-                borrow = 0;
-            }
-            out[i] = digit as u8;
-        }
-        let lead = out.iter().take_while(|digit| **digit == 0).count();
-        out.drain(..lead.min(out.len()));
-        out
-    }
-
-    pub fn add(&self, other: &Big) -> Big {
-        if self.neg == other.neg {
-            let mag = Big::add_mag(&self.mag, &other.mag);
-            if mag.is_empty() {
-                return Big::zero();
-            }
-            return Big { neg: self.neg, mag };
-        }
-        match Big::cmp_mag(&self.mag, &other.mag) {
-            Ordering::Equal => Big::zero(),
-            Ordering::Greater => Big {
-                neg: self.neg,
-                mag: Big::sub_mag(&self.mag, &other.mag),
-            },
-            Ordering::Less => Big {
-                neg: other.neg,
-                mag: Big::sub_mag(&other.mag, &self.mag),
-            },
-        }
-    }
-
-    pub fn sub(&self, other: &Big) -> Big {
-        let flipped = Big {
-            neg: !other.neg && !other.is_zero(),
-            mag: other.mag.clone(),
-        };
-        self.add(&flipped)
-    }
-
-    pub fn mul(&self, other: &Big) -> Big {
-        if self.is_zero() || other.is_zero() {
-            return Big::zero();
-        }
-        let mut acc = vec![0u32; self.mag.len() + other.mag.len()];
-        for (i, a) in self.mag.iter().enumerate() {
-            for (j, b) in other.mag.iter().enumerate() {
-                acc[i + j + 1] += *a as u32 * *b as u32;
-            }
-        }
-        for k in (1..acc.len()).rev() {
-            acc[k - 1] += acc[k] / 10;
-            acc[k] %= 10;
-        }
-        let mut mag: Vec<u8> = acc.iter().map(|digit| *digit as u8).collect();
-        let lead = mag.iter().take_while(|digit| **digit == 0).count();
-        mag.drain(..lead.min(mag.len()));
-        Big {
-            neg: self.neg != other.neg,
-            mag,
-        }
-    }
-
-    pub fn mul_small(&self, factor: u32) -> Big {
-        if factor == 0 || self.is_zero() {
-            return Big::zero();
-        }
-        let mut mag = self.mag.clone();
-        let mut carry = 0u32;
-        for digit in mag.iter_mut().rev() {
-            let product = *digit as u32 * factor + carry;
-            *digit = (product % 10) as u8;
-            carry = product / 10;
-        }
-        let mut prefix = Vec::new();
-        while carry > 0 {
-            prefix.push((carry % 10) as u8);
-            carry /= 10;
-        }
-        prefix.reverse();
-        prefix.extend(mag);
-        Big {
-            neg: self.neg,
-            mag: prefix,
-        }
-    }
-
-    /// Multiply by 10^zeros: zeros append to the
-    /// magnitude. Zero stays zero.
-    pub fn shifted(&self, zeros: usize) -> Big {
-        if self.is_zero() || zeros == 0 {
-            return self.clone();
-        }
-        let mut mag = self.mag.clone();
-        mag.extend(std::iter::repeat_n(0u8, zeros));
-        Big { neg: self.neg, mag }
-    }
-
-    pub fn abs(&self) -> Big {
-        Big {
-            neg: false,
-            mag: self.mag.clone(),
-        }
-    }
-
-    fn digit_string(&self) -> String {
-        self.mag.iter().map(|d| (b'0' + d) as char).collect()
-    }
-}
-
-/// Integer division and remainder of non-negative
-/// magnitudes, by decimal long division.
-fn divmod_mag(a: &Big, b: &Big) -> (Big, Big) {
-    debug_assert!(!a.neg && !b.neg && !b.is_zero());
-    if Big::cmp_mag(&a.mag, &b.mag) == Ordering::Less {
-        return (Big::zero(), a.clone());
-    }
-    let mut quotient: Vec<u8> = Vec::new();
-    let mut remainder = Big::zero();
-    for digit in a.mag.iter() {
-        remainder = remainder.shifted(1);
-        if *digit > 0 {
-            remainder = remainder.add(&Big {
-                neg: false,
-                mag: vec![*digit],
-            });
-        }
-        let mut q = 0u8;
-        for cand in (1..=9u8).rev() {
-            let product = b.mul_small(cand as u32);
-            if Big::cmp_mag(&product.mag, &remainder.mag) != Ordering::Greater {
-                q = cand;
-                remainder = Big {
-                    neg: false,
-                    mag: Big::sub_mag(&remainder.mag, &product.mag),
-                };
-                break;
-            }
-        }
-        quotient.push(q);
-    }
-    let lead = quotient.iter().take_while(|digit| **digit == 0).count();
-    quotient.drain(..lead.min(quotient.len()));
-    (
-        Big {
-            neg: false,
-            mag: quotient,
-        },
-        remainder,
-    )
-}
-
-/// The correctly rounded double of the exact rational
-/// num / den (den positive and nonzero): the value
-/// CPython's integer true division produces. The
-/// quotient's decimal digits are taken by long
-/// division; as many are taken as the rounding needs
-/// (a truncated and an incremented reading that agree
-/// on a double settle it, and an exact remainder
-/// settles it at once).
-pub fn rational_to_f64(num: &Big, den: &Big) -> f64 {
-    if num.is_zero() {
-        return 0.0;
-    }
-    let sign = if num.neg { -1.0 } else { 1.0 };
-    let a = num.abs();
-    let b = den.abs();
-    // The decimal exponent: 10^e <= a/b < 10^(e+1).
-    let mut e: i64 = a.mag.len() as i64 - b.mag.len() as i64;
-    let at_least = |e: i64| -> bool {
-        if e >= 0 {
-            Big::cmp_mag(&a.mag, &b.shifted(e as usize).mag) != Ordering::Less
-        } else {
-            Big::cmp_mag(&a.shifted((-e) as usize).mag, &b.mag) != Ordering::Less
-        }
-    };
-    if !at_least(e) {
-        e -= 1;
-    }
-    let mut want = 25usize;
-    loop {
-        // q = floor(a * 10^(want-1-e) / b), exactly
-        // `want` digits, with the remainder as sticky.
-        let shift = want as i64 - 1 - e;
-        let (dividend, divisor) = if shift >= 0 {
-            (a.shifted(shift as usize), b.clone())
-        } else {
-            (a.clone(), b.shifted((-shift) as usize))
-        };
-        let (q, r) = divmod_mag(&dividend, &divisor);
-        let digits = q.digit_string();
-        debug_assert_eq!(digits.len(), want);
-        let parse = |digits: &str| -> f64 {
-            let text = format!("0.{}e{}", digits, e + 1);
-            text.parse::<f64>().expect("a decimal reading")
-        };
-        let low = parse(&digits);
-        if r.is_zero() {
-            return sign * low;
-        }
-        let bumped = {
-            let mut bytes: Vec<u8> = digits.bytes().collect();
-            let mut i = bytes.len();
-            let mut done = false;
-            while i > 0 {
-                i -= 1;
-                if bytes[i] == b'9' {
-                    bytes[i] = b'0';
-                } else {
-                    bytes[i] += 1;
-                    done = true;
-                    break;
-                }
-            }
-            if done {
-                String::from_utf8(bytes).expect("digits")
-            } else {
-                "1".to_string()
-            }
-        };
-        let high = if bumped == "1" {
-            format!("0.1e{}", e + 2)
-                .parse::<f64>()
-                .expect("a decimal reading")
-        } else {
-            parse(&bumped)
-        };
-        if low == high {
-            return sign * low;
-        }
-        want *= 4;
-        if want > 6400 {
-            // Far past any double midpoint's decimal
-            // length; the low reading stands.
-            return sign * low;
-        }
-    }
-}
-
-/// Compare a finite double against an exact integer,
-/// exactly, the way CPython compares a float with an
-/// int.
-pub fn cmp_f64_int(x: f64, digits: &str) -> Ordering {
-    let m = Big::from_int_str(digits);
-    if x == 0.0 {
-        return match (m.neg, m.is_zero()) {
-            (_, true) => Ordering::Equal,
-            (false, false) => Ordering::Less,
-            (true, false) => Ordering::Greater,
-        };
-    }
-    let x_neg = x < 0.0;
-    if x_neg != m.neg {
-        return if x_neg {
-            Ordering::Less
-        } else {
-            Ordering::Greater
-        };
-    }
-    let ord = cmp_f64_abs_int(x.abs(), &m.abs());
-    if x_neg {
-        ord.reverse()
-    } else {
-        ord
-    }
-}
-
-fn cmp_f64_abs_int(x: f64, m: &Big) -> Ordering {
-    // x = 0.digits * 10^point, exactly.
-    let (digits, point) = exact_decimal(x);
-    let d: Vec<u8> = digits.bytes().map(|byte| byte - b'0').collect();
-    let int_part: Vec<u8> = if point <= 0 {
-        Vec::new()
-    } else if (point as usize) >= d.len() {
-        let mut part = d.clone();
-        part.extend(std::iter::repeat_n(0u8, point as usize - d.len()));
-        part
-    } else {
-        d[..point as usize].to_vec()
-    };
-    let frac_nonzero = if point <= 0 {
-        true // x is a nonzero fraction below 1 with empty int part; digits are nonzero
-    } else if (point as usize) >= d.len() {
-        false
-    } else {
-        d[point as usize..].iter().any(|digit| *digit != 0)
-    };
-    let lead = int_part.iter().take_while(|digit| **digit == 0).count();
-    let int_part = &int_part[lead.min(int_part.len())..];
-    match Big::cmp_mag(int_part, &m.mag) {
-        Ordering::Equal => {
-            if frac_nonzero {
-                Ordering::Greater
-            } else {
-                Ordering::Equal
-            }
-        }
-        other => other,
     }
 }
 
@@ -888,31 +329,4 @@ pub fn decimal_digit(scalar: u32) -> Option<u32> {
     } else {
         None
     }
-}
-
-/// The exact overflow threshold of CPython's integer
-/// conversion and true division: 2^1024 - 2^970, the
-/// rounding midpoint above the largest double. An
-/// exact integer or quotient reaching it rounds to
-/// an infinite double and CPython raises
-/// OverflowError; below it, the largest double is
-/// the correctly rounded result.
-pub fn overflow_threshold() -> Big {
-    let mut power = Big::from_int_str("1");
-    for _ in 0..970 {
-        power = power.mul_small(2);
-    }
-    // 2^970 * (2^54 - 1) = 2^1024 - 2^970.
-    power.mul(&Big::from_int_str("18014398509481983"))
-}
-
-/// CPython's float(int): the correctly rounded
-/// double of an exact integer, or None where the
-/// conversion raises OverflowError.
-pub fn int_to_f64(digits: &str) -> Option<f64> {
-    let m = Big::from_int_str(digits);
-    if Big::cmp_mag(&m.mag, &overflow_threshold().mag) != Ordering::Less {
-        return None;
-    }
-    digits.parse::<f64>().ok()
 }

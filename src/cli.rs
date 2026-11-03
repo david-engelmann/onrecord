@@ -177,8 +177,31 @@ fn parse_error(usage: &str, prog: &str, message: &str) -> ParseOutcome {
     // The usage constants carry their trailing
     // newline; the Python prints the error line
     // directly under the usage block.
-    eprint!("{usage}{prog}: error: {message}\n");
+    eprintln!("{usage}{prog}: error: {message}");
     ParseOutcome::Exit(2)
+}
+
+/// Print a help text the guarded way: the Python's
+/// argparse prints help to a buffered stdout whose
+/// failure surfaces only at interpreter shutdown
+/// (exit 120 with an ignored exception dump), so a
+/// broken stream here is the port's named shape for
+/// that class, a caught write error with exit 1,
+/// never a panic.
+fn print_help(text: &str) -> ParseOutcome {
+    use std::io::Write;
+    let stdout = std::io::stdout();
+    let mut handle = stdout.lock();
+    match handle
+        .write_all(text.as_bytes())
+        .and_then(|_| handle.flush())
+    {
+        Ok(()) => ParseOutcome::Exit(0),
+        Err(error) => {
+            eprintln!("error, {}", os_error_text(&error));
+            ParseOutcome::Exit(1)
+        }
+    }
 }
 
 struct SubParsed {
@@ -342,6 +365,54 @@ fn take_value(
 }
 
 /// Parse one subcommand's tokens.
+/// A short cluster token's outcome: the token
+/// becomes an extra, it is consumed silently, or it
+/// ends the parse.
+enum ClusterFlow {
+    Extra,
+    Skip,
+    Exit(ParseOutcome),
+}
+
+/// Read a short cluster: only h is known here. A
+/// first letter the command does not know makes the
+/// whole token an extra; help fires when the token
+/// ends, unless a scan error in it fired first.
+fn short_cluster(spec: &SubSpec, token: &Token) -> ClusterFlow {
+    let cluster = &token.scalars[1..];
+    if cluster[0] != 'h' as u32 {
+        return ClusterFlow::Extra;
+    }
+    let mut help_pending = false;
+    let mut at = 0usize;
+    while at < cluster.len() {
+        if cluster[at] == 'h' as u32 {
+            if cluster.get(at + 1) == Some(&('=' as u32)) {
+                // A flag that takes no value, given
+                // one: argparse refuses the explicit
+                // argument.
+                let value = text_from_scalar(token, at + 3);
+                return ClusterFlow::Exit(parse_error(
+                    spec.usage,
+                    spec.prog,
+                    &format!(
+                        "argument -h/--help: ignored explicit argument {}",
+                        repr_text(&value)
+                    ),
+                ));
+            }
+            help_pending = true;
+            at += 1;
+        } else {
+            break;
+        }
+    }
+    if help_pending {
+        return ClusterFlow::Exit(print_help(spec.help));
+    }
+    ClusterFlow::Skip
+}
+
 fn parse_sub(command: &'static str, tokens: &[Token], top_extras: &[Text]) -> ParseOutcome {
     let spec = spec_for(command);
     let candidates: Vec<&'static str> = spec.options.iter().map(|opt| opt.canonical).collect();
@@ -423,8 +494,7 @@ fn parse_sub(command: &'static str, tokens: &[Token], top_extras: &[Text]) -> Pa
                         ),
                     );
                 }
-                print!("{}", spec.help);
-                return ParseOutcome::Exit(0);
+                return print_help(spec.help);
             }
             match take_value(spec, tokens, &mut index, glued, opt) {
                 Ok(value) => values.push((opt.canonical, value)),
@@ -434,47 +504,18 @@ fn parse_sub(command: &'static str, tokens: &[Token], top_extras: &[Text]) -> Pa
             continue;
         }
         if option_shaped(token) {
-            // A short cluster: only h is known here. A
-            // first letter the command does not know
-            // makes the whole token an extra; help fires
-            // when the token ends, unless a scan error
-            // in it fired first.
-            let cluster = &token.scalars[1..];
-            if cluster[0] != 'h' as u32 {
-                extras.push(token.text.clone());
-                index += 1;
-                continue;
-            }
-            let mut help_pending = false;
-            let mut at = 0usize;
-            while at < cluster.len() {
-                if cluster[at] == 'h' as u32 {
-                    if cluster.get(at + 1) == Some(&('=' as u32)) {
-                        // A flag that takes no value, given
-                        // one: argparse refuses the
-                        // explicit argument.
-                        let value = text_from_scalar(token, at + 3);
-                        return parse_error(
-                            spec.usage,
-                            spec.prog,
-                            &format!(
-                                "argument -h/--help: ignored explicit argument {}",
-                                repr_text(&value)
-                            ),
-                        );
-                    }
-                    help_pending = true;
-                    at += 1;
-                } else {
-                    break;
+            match short_cluster(spec, token) {
+                ClusterFlow::Extra => {
+                    extras.push(token.text.clone());
+                    index += 1;
+                    continue;
                 }
+                ClusterFlow::Skip => {
+                    index += 1;
+                    continue;
+                }
+                ClusterFlow::Exit(outcome) => return outcome,
             }
-            if help_pending {
-                print!("{}", spec.help);
-                return ParseOutcome::Exit(0);
-            }
-            index += 1;
-            continue;
         }
         push_positional(&token.text, spec, &mut positionals, &mut extras);
         index += 1;
@@ -549,8 +590,7 @@ fn parse_top(tokens: &[Token]) -> ParseOutcome {
                             ),
                         );
                     }
-                    print!("{TOP_HELP}");
-                    return ParseOutcome::Exit(0);
+                    return print_help(TOP_HELP);
                 }
                 _ => {
                     extras.push(token.text.clone());
@@ -582,8 +622,7 @@ fn parse_top(tokens: &[Token]) -> ParseOutcome {
             );
         }
         if token.scalars[1] == 'h' as u32 {
-            print!("{TOP_HELP}");
-            return ParseOutcome::Exit(0);
+            return print_help(TOP_HELP);
         }
         extras.push(token.text.clone());
         index += 1;
@@ -739,27 +778,17 @@ fn execute(command: &str, parsed: &SubParsed) -> i32 {
 
 /// An operating system error's CPython rendering,
 /// "[Errno N] message", for the CLI's stream
-/// failures (verdictloop's table, shared by the
-/// family).
+/// failures; the strerror table itself lives in
+/// util, shared with the store's phrases.
 fn os_error_text(err: &std::io::Error) -> String {
     match err.raw_os_error() {
         Some(errno) => {
-            let text = match errno {
-                1 => "Operation not permitted",
-                2 => "No such file or directory",
-                13 => "Permission denied",
-                20 => "Not a directory",
-                21 => "Is a directory",
-                24 => "Too many open files",
-                28 => "No space left on device",
-                30 => "Read-only file system",
-                32 => "Broken pipe",
-                36 => "File name too long",
-                40 => "Too many levels of symbolic links",
-                _ => "",
-            };
-            if text.is_empty() {
-                err.to_string()
+            let bare = err.to_string();
+            let text = crate::util::strerror_text(err);
+            if text == bare {
+                // Outside the table, the library's own
+                // rendering already carries the errno.
+                bare
             } else {
                 format!("[Errno {errno}] {text}")
             }

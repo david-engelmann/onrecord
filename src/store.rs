@@ -2,16 +2,20 @@
 //! mirroring the Python store of Rounds 1 and 2
 //! phrase for phrase.
 //!
-//! Three derive sites exist in the Python, each
-//! with the interpreter stack of its own call chain,
+//! The derive sites in the Python each run with
+//! the interpreter stack of their own call chain,
 //! and each was probed for its render budget (see
 //! the digest module): claim_defects at read time
-//! (990, 988), claim_defects inside add (993, 991),
-//! and add's own derive_id (994, 992). A line's
-//! parse has its own pair of caps, (9994 total,
-//! 9991 to the deepest object), probed through the
-//! shipped CLI: the loader's duplicate key hook
-//! spends stack as each object closes.
+//! runs (990, 988) from check and due, which call
+//! the loader directly, and (989, 987) from get,
+//! subject and add, whose loads pass through the
+//! store's soundness gate one frame deeper;
+//! claim_defects inside add runs (993, 991), and
+//! add's own derive_id (994, 992). A line's parse
+//! has its own pair of caps, (9994 total, 9991 to
+//! the deepest object), probed through the shipped
+//! CLI and decided by the line scan below in the
+//! parser's own order.
 
 use std::collections::{HashMap, HashSet};
 use std::io::{Read, Seek, SeekFrom, Write};
@@ -24,6 +28,7 @@ use crate::emit::{self, Mode};
 use crate::util::{self, Msg};
 
 pub const BUDGET_READ: Budget = (990, 988);
+pub const BUDGET_READ_NARROW: Budget = (989, 987);
 pub const BUDGET_ADD_CHECK: Budget = (993, 991);
 pub const BUDGET_ADD_DERIVE: Budget = (994, 992);
 const LINE_DEPTH_CAP: usize = 9994;
@@ -76,36 +81,15 @@ fn msg_with(prefix: &str, text: &Text, suffix: &str) -> Msg {
     out
 }
 
-/// The bare strerror text for an OS error, as the
-/// Python's OSError.strerror reads (the append
-/// phrase interpolates it). Errnos outside the
-/// table fall back to the standard library's
-/// rendering, a named deviation.
-fn strerror_text(err: &std::io::Error) -> String {
-    match err.raw_os_error() {
-        Some(errno) => {
-            let text = match errno {
-                1 => "Operation not permitted",
-                2 => "No such file or directory",
-                13 => "Permission denied",
-                20 => "Not a directory",
-                21 => "Is a directory",
-                24 => "Too many open files",
-                28 => "No space left on device",
-                30 => "Read-only file system",
-                32 => "Broken pipe",
-                36 => "File name too long",
-                40 => "Too many levels of symbolic links",
-                _ => "",
-            };
-            if text.is_empty() {
-                err.to_string()
-            } else {
-                text.to_string()
-            }
-        }
-        None => err.to_string(),
-    }
+/// An OS error the way the Python's main renders a
+/// raw OSError: "[Errno N] strerror: 'path'", the
+/// path the failing call carried, repr quoted.
+fn os_error_with_path(errno: i32, error: &std::io::Error, display: &Msg) -> Msg {
+    let mut message = Msg::str(&format!("[Errno {errno}] {}", util::strerror_text(error)));
+    message.push_str(": ");
+    let text = Text::from_units(display.0.clone());
+    message.push_str(&crate::pyrepr::repr_text(&text));
+    message
 }
 
 /// The record's path: the OS spelling the syscalls
@@ -356,27 +340,54 @@ pub fn claim_defects(claim: &Value, line_no: usize, position: usize, budget: Bud
     defects
 }
 
-/// The duplicate key a line's parse reports, if
-/// any. The Python's object pairs hook raises the
-/// repeated key as the object holding it closes, so
-/// the scan mirrors close order: a nested object's
-/// duplicate fires inside its value, ahead of a
-/// pending duplicate in any enclosing object, and a
-/// structural error met before the close hides the
-/// duplicate behind the parse failure, exactly as
-/// the interpreter's does.
-enum Scan {
+/// How a record line's parse ends, decided in the
+/// order the Python's parser meets its own endings.
+/// The interpreter runs one recursive descent: the
+/// object pairs hook raises a repeated key as the
+/// object holding it closes, a lexical or structural
+/// error ends the parse where it stands, and the
+/// recursion limit ends it where the nesting passes
+/// the caps. One strict iterative scan over the line
+/// decides all three in that order: tokens are
+/// validated as the Python's scanner validates them
+/// (strict escapes, strict numbers, the literal
+/// words and the NaN and Infinity constants this
+/// loader accepts, no raw control characters in
+/// strings), so a duplicate is named only when the
+/// hook would have fired before any error, and the
+/// depth refusal is measured on the value the parser
+/// actually reads, never on trailing text it never
+/// reaches. A clean scan hands the line to the crate
+/// reader for the value itself.
+enum LineScan {
     Clean,
     Duplicate(Text),
-    Bad,
+    NotJson,
+    TooDeep,
 }
 
-fn first_duplicate_key(text: &str) -> Option<Text> {
-    let chars: Vec<char> = text.chars().collect();
-    let mut pos = 0usize;
-    match scan_value(&chars, &mut pos) {
-        Scan::Duplicate(key) => Some(key),
-        _ => None,
+struct ScanFrame {
+    object: bool,
+    seen: Vec<Text>,
+    pending: Option<Text>,
+}
+
+#[derive(Clone, Copy, PartialEq)]
+enum ScanState {
+    Value,
+    ValueOrArrayEnd,
+    KeyOrEnd,
+    Key,
+    Colon,
+    Sep,
+    TopEnd,
+}
+
+fn scan_done(stack: &[ScanFrame]) -> ScanState {
+    if stack.is_empty() {
+        ScanState::TopEnd
+    } else {
+        ScanState::Sep
     }
 }
 
@@ -386,10 +397,12 @@ fn scan_ws(chars: &[char], pos: &mut usize) {
     }
 }
 
-fn scan_string(chars: &[char], pos: &mut usize) -> Option<Text> {
-    // chars[*pos] is the opening quote; returns the
-    // decoded key text, or None if the string does
-    // not close.
+/// Scan a string strictly. With decode, the string's
+/// text comes back (the object key case); without,
+/// only its validity. A bad escape, a raw control
+/// character, or an unterminated string is invalid.
+fn scan_string(chars: &[char], pos: &mut usize, decode: bool) -> Option<Option<Text>> {
+    // chars[*pos] is the opening quote.
     *pos += 1;
     let mut units: Vec<u16> = Vec::new();
     while *pos < chars.len() {
@@ -397,7 +410,11 @@ fn scan_string(chars: &[char], pos: &mut usize) -> Option<Text> {
         match ch {
             '"' => {
                 *pos += 1;
-                return Some(Text::from_units(units));
+                return Some(if decode {
+                    Some(Text::from_units(units))
+                } else {
+                    None
+                });
             }
             '\\' => {
                 *pos += 1;
@@ -406,7 +423,15 @@ fn scan_string(chars: &[char], pos: &mut usize) -> Option<Text> {
                 }
                 let esc = chars[*pos];
                 *pos += 1;
-                match esc {
+                let unit = match esc {
+                    '"' => '"' as u16,
+                    '\\' => '\\' as u16,
+                    '/' => '/' as u16,
+                    'b' => 8,
+                    'f' => 12,
+                    'n' => '\n' as u16,
+                    'r' => '\r' as u16,
+                    't' => '\t' as u16,
                     'u' => {
                         let mut value: u32 = 0;
                         for _ in 0..4 {
@@ -416,22 +441,22 @@ fn scan_string(chars: &[char], pos: &mut usize) -> Option<Text> {
                             value = value * 16 + chars[*pos].to_digit(16)?;
                             *pos += 1;
                         }
-                        units.push(value as u16);
+                        value as u16
                     }
-                    'n' => units.push(b'\n' as u16),
-                    't' => units.push(b'\t' as u16),
-                    'r' => units.push(b'\r' as u16),
-                    'b' => units.push(8),
-                    'f' => units.push(12),
-                    _ => {
-                        let mut buf = [0u16; 2];
-                        units.extend_from_slice(esc.encode_utf16(&mut buf));
-                    }
+                    _ => return None,
+                };
+                if decode {
+                    units.push(unit);
                 }
             }
             _ => {
-                let mut buf = [0u16; 2];
-                units.extend_from_slice(ch.encode_utf16(&mut buf));
+                if (ch as u32) < 0x20 {
+                    return None;
+                }
+                if decode {
+                    let mut buf = [0u16; 2];
+                    units.extend_from_slice(ch.encode_utf16(&mut buf));
+                }
                 *pos += 1;
             }
         }
@@ -439,117 +464,244 @@ fn scan_string(chars: &[char], pos: &mut usize) -> Option<Text> {
     None
 }
 
-fn scan_value(chars: &[char], pos: &mut usize) -> Scan {
-    scan_ws(chars, pos);
-    if *pos >= chars.len() {
-        return Scan::Bad;
+/// Scan a number in the Python's strict grammar: an
+/// optional minus, an integer part with no leading
+/// zeros, and optional fraction and exponent parts
+/// that each demand at least one digit.
+fn scan_number(chars: &[char], pos: &mut usize) -> bool {
+    let mut at = *pos;
+    if at < chars.len() && chars[at] == '-' {
+        at += 1;
+    }
+    if at >= chars.len() {
+        return false;
+    }
+    if chars[at] == '0' {
+        at += 1;
+    } else if chars[at].is_ascii_digit() {
+        while at < chars.len() && chars[at].is_ascii_digit() {
+            at += 1;
+        }
+    } else {
+        return false;
+    }
+    if at < chars.len() && chars[at] == '.' {
+        at += 1;
+        if at >= chars.len() || !chars[at].is_ascii_digit() {
+            return false;
+        }
+        while at < chars.len() && chars[at].is_ascii_digit() {
+            at += 1;
+        }
+    }
+    if at < chars.len() && (chars[at] == 'e' || chars[at] == 'E') {
+        at += 1;
+        if at < chars.len() && (chars[at] == '+' || chars[at] == '-') {
+            at += 1;
+        }
+        if at >= chars.len() || !chars[at].is_ascii_digit() {
+            return false;
+        }
+        while at < chars.len() && chars[at].is_ascii_digit() {
+            at += 1;
+        }
+    }
+    *pos = at;
+    true
+}
+
+/// Scan a scalar: a literal word, one of the
+/// constants the loader accepts (NaN and the two
+/// Infinities; a negated NaN is not among them,
+/// probed), or a strict number.
+fn scan_scalar(chars: &[char], pos: &mut usize) -> bool {
+    fn word(chars: &[char], pos: &mut usize, text: &str) -> bool {
+        let want: Vec<char> = text.chars().collect();
+        let rest = &chars[*pos..];
+        if rest.len() >= want.len() && rest[..want.len()] == want[..] {
+            *pos += want.len();
+            true
+        } else {
+            false
+        }
     }
     match chars[*pos] {
-        '{' => {
-            *pos += 1;
-            let mut seen: Vec<Text> = Vec::new();
-            let mut pending: Option<Text> = None;
-            scan_ws(chars, pos);
-            if *pos < chars.len() && chars[*pos] == '}' {
-                *pos += 1;
-                return Scan::Clean;
+        't' => word(chars, pos, "true"),
+        'f' => word(chars, pos, "false"),
+        'n' => word(chars, pos, "null"),
+        'N' => word(chars, pos, "NaN"),
+        'I' => word(chars, pos, "Infinity"),
+        '-' => {
+            if chars.get(*pos + 1) == Some(&'I') {
+                word(chars, pos, "-Infinity")
+            } else {
+                scan_number(chars, pos)
             }
-            loop {
-                scan_ws(chars, pos);
-                if *pos >= chars.len() || chars[*pos] != '"' {
-                    return Scan::Bad;
-                }
-                let key = match scan_string(chars, pos) {
-                    Some(key) => key,
-                    None => return Scan::Bad,
+        }
+        '0'..='9' => scan_number(chars, pos),
+        _ => false,
+    }
+}
+
+fn scan_line(line: &str) -> LineScan {
+    let chars: Vec<char> = line.chars().collect();
+    let mut pos = 0usize;
+    let mut stack: Vec<ScanFrame> = Vec::new();
+    let mut objects = 0usize;
+    let mut state = ScanState::Value;
+    loop {
+        match state {
+            ScanState::TopEnd => {
+                scan_ws(&chars, &mut pos);
+                return if pos == chars.len() {
+                    LineScan::Clean
+                } else {
+                    LineScan::NotJson
                 };
-                scan_ws(chars, pos);
-                if *pos >= chars.len() || chars[*pos] != ':' {
-                    return Scan::Bad;
+            }
+            ScanState::Value | ScanState::ValueOrArrayEnd => {
+                scan_ws(&chars, &mut pos);
+                if pos >= chars.len() {
+                    return LineScan::NotJson;
                 }
-                *pos += 1;
-                match scan_value(chars, pos) {
-                    Scan::Clean => {}
-                    other => return other,
+                let ch = chars[pos];
+                if ch == ']' && state == ScanState::ValueOrArrayEnd {
+                    pos += 1;
+                    stack.pop();
+                    state = scan_done(&stack);
+                    continue;
                 }
-                if seen.iter().any(|held: &Text| held.units() == key.units()) {
-                    if pending.is_none() {
-                        pending = Some(key);
+                match ch {
+                    '{' | '[' => {
+                        let object = ch == '{';
+                        if stack.len() + 1 > LINE_DEPTH_CAP
+                            || (object && objects + 1 > LINE_OBJECT_DEPTH_CAP)
+                        {
+                            return LineScan::TooDeep;
+                        }
+                        if object {
+                            objects += 1;
+                        }
+                        stack.push(ScanFrame {
+                            object,
+                            seen: Vec::new(),
+                            pending: None,
+                        });
+                        pos += 1;
+                        state = if object {
+                            ScanState::KeyOrEnd
+                        } else {
+                            ScanState::ValueOrArrayEnd
+                        };
+                    }
+                    '"' => {
+                        if scan_string(&chars, &mut pos, false).is_none() {
+                            return LineScan::NotJson;
+                        }
+                        state = scan_done(&stack);
+                    }
+                    _ => {
+                        if !scan_scalar(&chars, &mut pos) {
+                            return LineScan::NotJson;
+                        }
+                        state = scan_done(&stack);
+                    }
+                }
+            }
+            ScanState::KeyOrEnd | ScanState::Key => {
+                scan_ws(&chars, &mut pos);
+                if pos >= chars.len() {
+                    return LineScan::NotJson;
+                }
+                if chars[pos] == '}' && state == ScanState::KeyOrEnd {
+                    pos += 1;
+                    let frame = stack.pop().expect("an open object");
+                    objects -= 1;
+                    if let Some(key) = frame.pending {
+                        return LineScan::Duplicate(key);
+                    }
+                    state = scan_done(&stack);
+                    continue;
+                }
+                if chars[pos] != '"' {
+                    return LineScan::NotJson;
+                }
+                let key = match scan_string(&chars, &mut pos, true) {
+                    Some(Some(key)) => key,
+                    _ => return LineScan::NotJson,
+                };
+                let frame = stack.last_mut().expect("an open object");
+                if frame.seen.iter().any(|held| held.units() == key.units()) {
+                    if frame.pending.is_none() {
+                        frame.pending = Some(key);
                     }
                 } else {
-                    seen.push(key);
+                    frame.seen.push(key);
                 }
-                scan_ws(chars, pos);
-                if *pos >= chars.len() {
-                    return Scan::Bad;
-                }
-                if chars[*pos] == ',' {
-                    *pos += 1;
-                    continue;
-                }
-                if chars[*pos] == '}' {
-                    *pos += 1;
-                    return match pending {
-                        Some(key) => Scan::Duplicate(key),
-                        None => Scan::Clean,
-                    };
-                }
-                return Scan::Bad;
+                state = ScanState::Colon;
             }
-        }
-        '[' => {
-            *pos += 1;
-            scan_ws(chars, pos);
-            if *pos < chars.len() && chars[*pos] == ']' {
-                *pos += 1;
-                return Scan::Clean;
+            ScanState::Colon => {
+                scan_ws(&chars, &mut pos);
+                if pos < chars.len() && chars[pos] == ':' {
+                    pos += 1;
+                    state = ScanState::Value;
+                } else {
+                    return LineScan::NotJson;
+                }
             }
-            loop {
-                match scan_value(chars, pos) {
-                    Scan::Clean => {}
-                    other => return other,
+            ScanState::Sep => {
+                scan_ws(&chars, &mut pos);
+                if pos >= chars.len() {
+                    return LineScan::NotJson;
                 }
-                scan_ws(chars, pos);
-                if *pos >= chars.len() {
-                    return Scan::Bad;
+                let top_object = stack.last().map(|frame| frame.object).unwrap_or(false);
+                match chars[pos] {
+                    ',' => {
+                        pos += 1;
+                        state = if top_object {
+                            ScanState::Key
+                        } else {
+                            ScanState::Value
+                        };
+                    }
+                    '}' if top_object => {
+                        pos += 1;
+                        let frame = stack.pop().expect("an open object");
+                        objects -= 1;
+                        if let Some(key) = frame.pending {
+                            return LineScan::Duplicate(key);
+                        }
+                        state = scan_done(&stack);
+                    }
+                    ']' if !top_object => {
+                        pos += 1;
+                        stack.pop();
+                        state = scan_done(&stack);
+                    }
+                    _ => return LineScan::NotJson,
                 }
-                if chars[*pos] == ',' {
-                    *pos += 1;
-                    continue;
-                }
-                if chars[*pos] == ']' {
-                    *pos += 1;
-                    return Scan::Clean;
-                }
-                return Scan::Bad;
-            }
-        }
-        '"' => match scan_string(chars, pos) {
-            Some(_) => Scan::Clean,
-            None => Scan::Bad,
-        },
-        _ => {
-            // A literal or number: skip its token. The
-            // scan only arbitrates duplicate against
-            // error; token validity is the reader's.
-            let start = *pos;
-            while *pos < chars.len()
-                && !matches!(chars[*pos], ',' | ']' | '}' | ' ' | '\t' | '\n' | '\r')
-            {
-                *pos += 1;
-            }
-            if *pos == start {
-                Scan::Bad
-            } else {
-                Scan::Clean
             }
         }
     }
 }
 
 /// The claims superseding one target, in record
-/// order: (line number, the superseding claim's id).
-type ForkSources = Vec<(usize, Option<Text>)>;
+/// order: (line number, the superseding claim's id,
+/// held as the value it is; the fork phrase renders
+/// it the way the Python's f-string renders
+/// claim.get("id")).
+type ForkSources = Vec<(usize, Value)>;
+
+/// A fork source's id in the phrase: a string names
+/// itself, a missing id is None, and anything else
+/// renders as its repr.
+fn fork_source(id: &Value) -> Msg {
+    match id {
+        Value::Str(text) => Msg(text.units().to_vec()),
+        Value::Null => Msg::str("None"),
+        other => Msg::str(&crate::pyrepr::repr_value(other)),
+    }
+}
 
 fn is_blank_line(line: &str) -> bool {
     line.chars()
@@ -558,8 +710,11 @@ fn is_blank_line(line: &str) -> bool {
 
 /// Return (claims, defects): every claim in order
 /// and every defect in the record, line numbers
-/// attached.
-pub fn load_record(path: &RecPath) -> (Vec<Value>, Vec<Msg>) {
+/// attached. The budget is the calling entry's:
+/// check and due load directly under BUDGET_READ,
+/// the store's gated loads run one frame deeper
+/// under BUDGET_READ_NARROW.
+pub fn load_record(path: &RecPath, budget: Budget) -> (Vec<Value>, Vec<Msg>) {
     let raw = match std::fs::read(&path.os) {
         Ok(raw) => raw,
         Err(_) => {
@@ -593,40 +748,35 @@ pub fn load_record(path: &RecPath) -> (Vec<Value>, Vec<Msg>) {
             parsed.push(None);
             continue;
         }
-        let (max_depth, max_object) = util::json_text_depths(line);
-        if max_depth > LINE_DEPTH_CAP || max_object > LINE_OBJECT_DEPTH_CAP {
-            defects.push(Msg::str(&format!(
-                "line {line_no}: nesting too deep to read"
-            )));
-            parsed.push(None);
-            continue;
-        }
-        match flighttape::json::parse(line) {
-            Ok(claim) => {
-                if let Some(dup) = first_duplicate_key(line) {
-                    defects.push(msg_with(
-                        &format!("line {line_no}: duplicate key "),
-                        &dup,
-                        "",
-                    ));
-                    parsed.push(None);
-                    continue;
-                }
-                defects.extend(claim_defects(&claim, line_no, index, BUDGET_READ));
-                parsed.push(Some((line_no, claim)));
-            }
-            Err(_) => {
-                if let Some(dup) = first_duplicate_key(line) {
-                    defects.push(msg_with(
-                        &format!("line {line_no}: duplicate key "),
-                        &dup,
-                        "",
-                    ));
-                } else {
-                    defects.push(Msg::str(&format!("line {line_no}: not JSON")));
-                }
+        match scan_line(line) {
+            LineScan::TooDeep => {
+                defects.push(Msg::str(&format!(
+                    "line {line_no}: nesting too deep to read"
+                )));
                 parsed.push(None);
             }
+            LineScan::Duplicate(key) => {
+                defects.push(msg_with(
+                    &format!("line {line_no}: duplicate key "),
+                    &key,
+                    "",
+                ));
+                parsed.push(None);
+            }
+            LineScan::NotJson => {
+                defects.push(Msg::str(&format!("line {line_no}: not JSON")));
+                parsed.push(None);
+            }
+            LineScan::Clean => match flighttape::json::parse(line) {
+                Ok(claim) => {
+                    defects.extend(claim_defects(&claim, line_no, index, budget));
+                    parsed.push(Some((line_no, claim)));
+                }
+                Err(_) => {
+                    defects.push(Msg::str(&format!("line {line_no}: not JSON")));
+                    parsed.push(None);
+                }
+            },
         }
     }
     let numbered: Vec<(usize, &Value)> = parsed
@@ -659,10 +809,7 @@ pub fn load_record(path: &RecPath) -> (Vec<Value>, Vec<Msg>) {
                     "",
                 ));
             }
-            let source = (
-                *line_no,
-                as_text(field(claim, "id").unwrap_or(&Value::Null)).cloned(),
-            );
+            let source = (*line_no, field(claim, "id").cloned().unwrap_or(Value::Null));
             match superseded_by
                 .iter_mut()
                 .find(|(held, _)| held.units() == target.units())
@@ -683,15 +830,9 @@ pub fn load_record(path: &RecPath) -> (Vec<Value>, Vec<Msg>) {
             message.push_str(&format!(
                 " (line {target_line}) is superseded by two claims, "
             ));
-            match &sources[0].1 {
-                Some(id) => message.push_text(id),
-                None => message.push_str("None"),
-            }
+            message.push_msg(&fork_source(&sources[0].1));
             message.push_str(" and ");
-            match &sources[1].1 {
-                Some(id) => message.push_text(id),
-                None => message.push_str("None"),
-            }
+            message.push_msg(&fork_source(&sources[1].1));
             message.push_str(", a fork");
             defects.push(message);
         }
@@ -798,15 +939,29 @@ impl Store {
         Store { path }
     }
 
-    fn exists(&self) -> bool {
-        std::fs::metadata(&self.path.os).is_ok()
+    /// pathlib's exists(): a missing path is false,
+    /// and so are the errnos CPython's ignore set
+    /// names (ENOENT, ENOTDIR, EBADF, ELOOP); any
+    /// other OS error propagates the way the
+    /// interpreter's does, with the path in its
+    /// rendering (a file name past the OS limit is
+    /// the case that reaches it, probed).
+    fn exists(&self) -> Result<bool, StoreError> {
+        match std::fs::metadata(&self.path.os) {
+            Ok(_) => Ok(true),
+            Err(error) => match error.raw_os_error() {
+                Some(2) | Some(20) | Some(9) | Some(40) => Ok(false),
+                Some(errno) => Err(named(os_error_with_path(errno, &error, &self.path.display))),
+                None => Err(named(Msg::str(&error.to_string()))),
+            },
+        }
     }
 
     fn load(&self) -> Result<Vec<Value>, StoreError> {
-        if !self.exists() {
+        if !self.exists()? {
             return Ok(Vec::new());
         }
-        let (claims, defects) = load_record(&self.path);
+        let (claims, defects) = load_record(&self.path, BUDGET_READ_NARROW);
         require_sound(&defects)?;
         Ok(claims)
     }
@@ -895,8 +1050,9 @@ impl Store {
 
     fn append(&self, stored: &Value) -> Result<(), StoreError> {
         let mut prefix: &[u8] = b"";
+        let exists = self.exists()?;
         let opened = (|| -> Result<std::fs::File, std::io::Error> {
-            if self.exists() {
+            if exists {
                 let metadata = std::fs::metadata(&self.path.os)?;
                 if metadata.len() > 0 {
                     let mut handle = std::fs::File::open(&self.path.os)?;
@@ -928,11 +1084,12 @@ impl Store {
             Err(_) => return Err(StoreError::Crash),
         };
         line.push(b'\n');
-        let written = (|| -> Result<(), std::io::Error> {
-            handle.write_all(prefix)?;
-            handle.write_all(&line)?;
-            handle.flush()
-        })();
+        // OR-12: the write itself is one operation,
+        // the prefix and the line in a single call,
+        // the way the Python writes prefix + line.
+        let mut bytes = prefix.to_vec();
+        bytes.extend_from_slice(&line);
+        let written = handle.write_all(&bytes).and_then(|_| handle.flush());
         match written {
             Ok(()) => Ok(()),
             Err(error) => Err(self.append_error(&error)),
@@ -943,7 +1100,7 @@ impl Store {
         let mut message = Msg::str("cannot append to the record, ");
         message.push_msg(&self.path.display);
         message.push_str(": ");
-        message.push_str(&strerror_text(error));
+        message.push_str(&util::strerror_text(error));
         named(message)
     }
 
@@ -1008,7 +1165,7 @@ impl Store {
         // reports an unreadable record as a defect, so
         // a record missing at load time refuses here
         // by name instead of answering empty.
-        let (claims, defects) = load_record(&self.path);
+        let (claims, defects) = load_record(&self.path, BUDGET_READ);
         require_sound(&defects)?;
         let superseded = superseded_set(&claims);
         let mut due: Vec<(&Text, usize, &Value)> = Vec::new();
@@ -1064,12 +1221,12 @@ impl Store {
     }
 
     pub fn check(&self) -> Result<Vec<Msg>, StoreError> {
-        if !self.exists() {
+        if !self.exists()? {
             let mut message = Msg::str("no such record, ");
             message.push_msg(&self.path.display);
             return Err(named(message));
         }
-        let (_, defects) = load_record(&self.path);
+        let (_, defects) = load_record(&self.path, BUDGET_READ);
         Ok(defects)
     }
 }

@@ -1,5 +1,8 @@
-//! CPython's repr for the values the defect phrases
-//! name (an unknown event type, a judged measure).
+//! CPython's repr for the values the phrases name:
+//! an argument in an argparse refusal, and a claim
+//! id of the wrong shape in a fork defect (where the
+//! Python's f-string renders the value's repr for
+//! anything that is not already a string).
 //! The flighttape crate's repr derives printability
 //! from its own table, which disagrees with CPython at
 //! U+0378, U+0379, U+1AFF, and U+E0001; the phrases
@@ -89,9 +92,11 @@ pub fn repr_text(text: &Text) -> String {
     out
 }
 
-/// CPython's repr of any JSON value, recursively: the
-/// form the unknown event type and judged measure
-/// phrases use.
+/// CPython's repr of any JSON value, recursively:
+/// the form a fork defect's source id takes when the
+/// id is not a string (the Python's f-string renders
+/// str of the value, which for containers and
+/// numbers is the repr).
 pub fn repr_value(value: &Value) -> String {
     match value {
         Value::Null => "None".to_string(),

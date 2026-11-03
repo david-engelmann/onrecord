@@ -9,6 +9,7 @@ use std::process::Command;
 
 use flighttape::value::{Text, Value};
 use onrecord::digest::{canonical_bytes, digest_of};
+use onrecord::emit::{dumps_line, Mode};
 use onrecord::store::{AddClaim, RecPath, Store, StoreError, BUDGET_ADD_DERIVE, BUDGET_READ};
 use onrecord::{claim_defects, derive_id, load_record};
 
@@ -307,9 +308,11 @@ fn a_crash_mid_append_is_a_detectable_final_line() {
     assert!(defects
         .iter()
         .any(|d| d.render_stderr().contains("not JSON")));
-    assert!(add(&store, |r| r.text =
-        text("Cannot append to a broken record"))
-    .is_err());
+    let error = add(&store, |r| {
+        r.text = text("Cannot append to a broken record")
+    })
+    .expect_err("the add refuses a defective record");
+    assert!(error.text().contains("defects"), "{}", error.text());
 }
 
 #[test]
@@ -478,7 +481,10 @@ fn a_forged_id_hiding_behind_nan_is_a_named_defect() {
     assert!(defects
         .iter()
         .any(|d| d.render_stderr().contains("cannot be verified")));
-    assert!(store.get(&text("claim-attackerchosen")).is_err());
+    let error = store
+        .get(&text("claim-attackerchosen"))
+        .expect_err("the get refuses a defective record");
+    assert!(error.text().contains("defects"), "{}", error.text());
 }
 
 #[test]
@@ -988,7 +994,7 @@ fn loader_depth_caps_body() {
     let path = tmp.path("r.jsonl");
     let defects_at = |content: &str| {
         write(&path, content);
-        let (_, defects) = load_record(&RecPath::new(path.to_str().expect("utf8")));
+        let (_, defects) = load_record(&RecPath::new(path.to_str().expect("utf8")), BUDGET_READ);
         defects
             .iter()
             .map(|d| d.render_stderr())
@@ -1019,8 +1025,7 @@ fn digest_budget_body() {
     // this shape is 987 nested arrays accepted (the
     // refusal then is the id mismatch) and 988
     // refused as unverifiable.
-    let tmp = Tmp::new("digest-caps");
-    let path = tmp.path("r.jsonl");
+    let _tmp = Tmp::new("digest-caps");
     let verdict = |n: usize| {
         let mut deep = Value::Int("1".into());
         for _ in 0..n {
@@ -1055,5 +1060,151 @@ fn digest_budget_body() {
         "{}",
         verdict(988)
     );
-    write(&path, "");
+}
+
+#[test]
+fn the_line_scan_arbitrates_in_the_parsers_order() {
+    let tmp = Tmp::new("scan-order");
+    let path = tmp.path("r.jsonl");
+    let store = store_at(&path);
+    let defects_at = |content: &str| {
+        write(&path, content);
+        store
+            .check()
+            .expect("check")
+            .iter()
+            .map(|d| d.render_stderr())
+            .collect::<Vec<_>>()
+            .join("\n")
+    };
+    // A lexical error ahead of the close hides a
+    // pending duplicate behind the parse failure:
+    // an invalid escape, a bad literal, a raw
+    // control character in a string.
+    assert!(defects_at("{\"a\": 1, \"a\": 2, \"b\": \"\\x\"}\n").contains("not JSON"));
+    assert!(defects_at("{\"a\": tru, \"b\": {\"x\": 1, \"x\": 2}}\n").contains("not JSON"));
+    assert!(defects_at("{\"a\": 1, \"a\": 2, \"b\": \"x\u{1}y\"}\n").contains("not JSON"));
+    // The object that closes first names its
+    // duplicate, ahead of an enclosing object's.
+    assert!(
+        defects_at("{\"a\": 1, \"a\": 2, \"b\": {\"x\": 1, \"x\": 2}}\n")
+            .contains("duplicate key x")
+    );
+    assert!(defects_at("{\"a\": {\"x\": 1, \"x\": 2}, \"a\": 3}\n").contains("duplicate key x"));
+    // Depth is measured on the value being read:
+    // trailing depth the parser never reaches does
+    // not decide the phrase.
+    let trailing = "[".repeat(10000) + &"]".repeat(10000);
+    assert!(defects_at(&format!("[1] {trailing}\n")).contains("not JSON"));
+    assert!(defects_at(&format!("{{\"a\":1,\"a\":2}} {trailing}\n")).contains("duplicate key a"));
+    // A negated NaN is not a constant this loader
+    // accepts.
+    assert!(defects_at("{\"reading\": -NaN}\n").contains("not JSON"));
+}
+
+#[test]
+fn the_read_budget_splits_by_entry() {
+    let child = std::thread::Builder::new()
+        .stack_size(512 * 1024 * 1024)
+        .spawn(read_budget_split_body)
+        .expect("thread");
+    child.join().expect("the split holds");
+}
+
+fn read_budget_split_body() {
+    // At 987 nested arrays the record verifies
+    // through check and due, which load directly,
+    // and refuses through get and subject, whose
+    // loads pass through the store's gate one frame
+    // deeper (probed at the shipped CLI).
+    let tmp = Tmp::new("budget-split");
+    let path = tmp.path("r.jsonl");
+    let mut deep = Value::Int("1".into());
+    for _ in 0..987 {
+        deep = Value::Array(vec![deep]);
+    }
+    let claim = Value::Object(vec![
+        (text("text"), Value::Str(text("t"))),
+        (text("asserter"), Value::Str(text("a"))),
+        (
+            text("asserted_at"),
+            Value::Str(text("2026-01-01T00:00:00Z")),
+        ),
+        (text("evidence"), evidence()),
+        (text("supersedes"), Value::Null),
+        (text("reading"), deep),
+    ]);
+    let id = derive_id(&claim, 0, BUDGET_READ).expect("derive");
+    let mut entries = vec![(text("id"), Value::Str(text(&id)))];
+    if let Value::Object(fields) = &claim {
+        entries.extend(fields.iter().cloned());
+    }
+    let stored = Value::Object(entries);
+    let line = dumps_line(&stored, Mode::Strict).expect("render");
+    std::fs::write(&path, line).expect("write");
+    let store = store_at(&path);
+    assert!(store.check().expect("check").is_empty());
+    assert!(store.due(&text("2027-01-01")).is_ok());
+    let error = store.get(&text(&id)).expect_err("get refuses");
+    assert!(
+        error.text().contains("cannot be rendered"),
+        "{}",
+        error.text()
+    );
+    let error = store.subject(&text("k")).expect_err("subject refuses");
+    assert!(
+        error.text().contains("cannot be rendered"),
+        "{}",
+        error.text()
+    );
+}
+
+#[test]
+fn a_name_past_the_os_limit_surfaces_its_os_error() {
+    let tmp = Tmp::new("long-name");
+    let path = tmp.path(&"x".repeat(300));
+    let store = store_at(&path);
+    let error = store.check().expect_err("check surfaces the OS error");
+    assert!(
+        error.text().starts_with("[Errno 36] File name too long"),
+        "{}",
+        error.text()
+    );
+    let error = store
+        .get(&text("claim-x"))
+        .expect_err("get surfaces it too");
+    assert!(error.text().starts_with("[Errno 36]"), "{}", error.text());
+    // due never gates on exists: its load reports
+    // the unreadable record as a defect instead.
+    let error = store
+        .due(&text("2027-01-01"))
+        .expect_err("due refuses by defect");
+    assert!(
+        error.text().contains("cannot read the record"),
+        "{}",
+        error.text()
+    );
+}
+
+#[test]
+fn a_fork_names_a_non_string_source_id_by_its_repr() {
+    let tmp = Tmp::new("fork-repr");
+    let path = tmp.path("r.jsonl");
+    let store = store_at(&path);
+    let first = add_ok(&store, |_| {});
+    let mut content = lines(&path);
+    content.push(format!(
+        "{{\"id\":[1,2],\"text\":\"t\",\"asserter\":\"a\",\"asserted_at\":\"2026-01-01T00:00:00Z\",\"evidence\":[{{\"source\":\"s\",\"reference\":\"r\"}}],\"supersedes\":\"{first}\"}}"
+    ));
+    content.push(format!(
+        "{{\"id\":{{\"k\":1}},\"text\":\"t\",\"asserter\":\"a\",\"asserted_at\":\"2026-01-01T00:00:00Z\",\"evidence\":[{{\"source\":\"s\",\"reference\":\"r\"}}],\"supersedes\":\"{first}\"}}"
+    ));
+    write(&path, &(content.join("\n") + "\n"));
+    let defects = store.check().expect("check");
+    let joined = defects
+        .iter()
+        .map(|d| d.render_stderr())
+        .collect::<Vec<_>>()
+        .join("\n");
+    assert!(joined.contains("[1, 2] and {'k': 1}"), "{joined}");
 }
