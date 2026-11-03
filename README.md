@@ -17,16 +17,28 @@ as the answer.
 Round 2 is closed. The due view over the stored due
 dates. Setup landed earlier in October 2026.
 
+Round 3 is closed. The claim store ported to Rust:
+a library crate with the same thin command line,
+behavior reproduced byte for byte against the
+Python it replaces, which stands as the round's
+specification. The JSON reader, the value model,
+and the timestamp grammar are consumed from the
+flighttape crate at a pinned revision.
+
 ## Programme status
 
-- Closed perfection rounds, 2 of 100. A round counts only when a
+- Closed perfection rounds, 3 of 100. A round counts only when a
   full cycle of work, audit, review, red team, and approval has
   closed.
 - Contract, OR-1 to OR-12 as amended, met for the Round 1 scope.
   OR-13 to OR-16 with amendments OR-13a, OR-13b, and
   OR-16a, written ahead of the code and met in Round 2.
-- Local gate, python3 scripts/codepoint_scan.py and
-  python3 -m pytest tests -q. CI runs the same commands.
+  OR-17 to OR-23 with OR-18a, the port obligations,
+  written ahead of the code and met in Round 3.
+- Local gate, python3 scripts/codepoint_scan.py,
+  cargo fmt --check, cargo clippy --all-targets with
+  warnings denied, and cargo test. CI runs the same
+  commands.
 
 ## Licence
 

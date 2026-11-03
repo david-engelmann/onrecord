@@ -187,3 +187,56 @@ the repair code).
   for is no conflict, and a chain repeating a subject
   does not conflict with itself. Test,
   tests/test_store.py.
+
+## Round 3. The Rust port (OR-17 to OR-23)
+
+- OR-17. The port reproduces the Python's behavior
+  exactly: every command, refusal, defect phrase,
+  rendered byte, and exit code. Deviations are named
+  in the round dossier, never silent. Test, the
+  differential harness of OR-22.
+- OR-18. A Rust library crate plus a thin onrecord
+  binary. The flighttape crate at pinned revision
+  ba8d4b550850179722f48b8f9c909e199efe3548 is the only
+  direct dependency: the JSON reader, the value model,
+  the timestamp grammar, and canonical form 1 come
+  from the crate, never re-implemented. Claim ids are
+  derived under OR-6a from the crate's canonical form;
+  where the crate's float digits are shown by probe to
+  differ from the Python digest's, the port renders
+  the digest with the Python's digit source and names
+  it here and in the dossier.
+- OR-19. Where the record's reading differs from the
+  crate reader, the Python governs: duplicate keys in
+  a record line are refused by name, and a line past
+  the Python's parse depth is refused with its own
+  phrase, each surfacing as that line's named defect.
+  The port closes the differences in its loader and
+  names them in the dossier.
+- OR-18a. Amendment, recorded before the port code:
+  sha2 is a second direct dependency, the very crate
+  and version the pinned flighttape tree already
+  brings (0.10), because claim ids hash this port's
+  own canonical rendering under OR-18 and no other
+  surface consumes it. OR-18's only-direct-dependency
+  sentence reads with this amendment.
+- OR-20. Appended lines and views reproduce the
+  Python's rendering byte for byte: appended claims in
+  the compact separators with insertion key order,
+  views at an indent of two, ensure_ascii=False, and
+  exact float rendering.
+- OR-21. The Python tests port to cargo tests file for
+  file, and the Python package, its tests, and
+  pyproject leave the tree only in the landing state.
+  Cargo tests are the suite.
+- OR-22. A differential harness over the whole command
+  surface byte-compares stdout, stderr, exit codes,
+  record bytes, and view output against the Python:
+  the happy path, the defect catalogue, every refusal,
+  the due view's orderings and conflicts, and an argv
+  battery across both argparse levels.
+- OR-23. The round dossier carries the port report:
+  port or full rewrite with reasons, the Rust versus
+  Python line share on the landing tree, the bindings
+  determination, and the non-Rust remainder register
+  with a justification per item.
