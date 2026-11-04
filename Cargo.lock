@@ -49,7 +49,7 @@ dependencies = [
 [[package]]
 name = "flighttape"
 version = "1.0.0"
-source = "git+https://github.com/david-engelmann/flighttape?rev=eebce0be75a9c2ffa534635e37160c7cbef5d96e#eebce0be75a9c2ffa534635e37160c7cbef5d96e"
+source = "git+https://github.com/david-engelmann/flighttape?rev=74a83298aeb31c82e62b9fb0c613f5bc8600799e#74a83298aeb31c82e62b9fb0c613f5bc8600799e"
 dependencies = [
  "sha2",
 ]

@@ -267,3 +267,26 @@ the repair code).
   action-not-completed notice stand on the PR;
   the review endpoint returns zero entries), so
   no disposition is owed from it.
+- OR-27. Round 5 re-pins flighttape at 74a83298,
+  the Round 13 merge, in every table that names
+  it. Nothing else in the crate's behavior
+  changes.
+- OR-28. Deviation 6's successors retire with
+  the re-pin: the FT-63 to FT-66 colon-group
+  and tail shapes and the FT-68 lone-NUL
+  terminator shapes, divergent under the old
+  pin because the crate's parse_timestamp moved,
+  agree with the Python original once the pin
+  moves, proven by control evidence: the
+  unmodified harness against the re-pinned
+  binary fails exactly the cells the harness
+  carries for those shapes, if any; new harness
+  cells carry representative shapes of both
+  families (colon fraction, time-side leftover,
+  NUL terminator at a completion point, NUL
+  refused inside a window) through the add,
+  subject, and due surfaces, and the final
+  harness is clean.
+- OR-29. README records 5 of 100 only in the
+  closure commit written after this round's
+  three reviews, fixes, and owner verification.
