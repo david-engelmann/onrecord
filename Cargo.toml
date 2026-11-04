@@ -14,5 +14,5 @@ name = "onrecord"
 path = "src/main.rs"
 
 [dependencies]
-flighttape = { git = "https://github.com/david-engelmann/flighttape", rev = "eebce0be75a9c2ffa534635e37160c7cbef5d96e" }
+flighttape = { git = "https://github.com/david-engelmann/flighttape", rev = "74a83298aeb31c82e62b9fb0c613f5bc8600799e" }
 sha2 = "0.10"
