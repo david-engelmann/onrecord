@@ -290,3 +290,38 @@ the repair code).
 - OR-29. README records 5 of 100 only in the
   closure commit written after this round's
   three reviews, fixes, and owner verification.
+- OR-30. The CodeRabbit disposition owed from
+  Round 5 discharges here on evidence: the
+  Round 5 pull request's late findings were
+  read back in the 2026-11-04 rotation sweep
+  and numbered zero, so there is nothing to
+  fix and the absence is the disposition.
+- OR-31. Round 6 takes the two write-seam
+  probes the rotation has not yet run on this
+  crate. First, temp placement at every seam
+  that writes through a temp: the oracle's
+  mkstemp absolutizes the given parent
+  lexically, and a port creating its temp
+  under the spelled parent diverges exactly
+  where a popped symlink makes the lexical
+  and physical parents differ in existence.
+  The view seam (get, subject, due, check
+  writing to an output path) and the append
+  seam (add) are each measured on their own
+  oracle call structure, convicted shapes
+  repaired per the measured law, agreement
+  shapes pinned. Second, the temp suffix:
+  mkstemp's suffix is exactly eight
+  characters of its own alphabet; this crate's
+  generator is measured for width, and any
+  name-length boundary that moves with the
+  generator's width is convicted and repaired
+  to the oracle's fixed width or filed with
+  its measurement if the seam proves to carry
+  no temp. Whichever arms convict, the repair
+  keeps the rename target and the
+  raw-spelling cannot-write message as they
+  stand, unless the probes convict them too.
+- OR-32. README records 6 of 100 only in the
+  closure commit written after this round's
+  three reviews, fixes, and owner verification.
