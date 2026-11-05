@@ -290,3 +290,90 @@ the repair code).
 - OR-29. README records 5 of 100 only in the
   closure commit written after this round's
   three reviews, fixes, and owner verification.
+- OR-30. The CodeRabbit disposition owed from
+  Round 5 discharges here on evidence: the
+  Round 5 pull request's late findings were
+  read back in the 2026-11-04 rotation sweep
+  and numbered zero, so there is nothing to
+  fix and the absence is the disposition.
+- OR-31. Round 6 takes the two write-seam
+  probes the rotation has not yet run on this
+  crate. First, temp placement at every seam
+  that writes through a temp: the oracle's
+  mkstemp absolutizes the given parent
+  lexically, and a port creating its temp
+  under the spelled parent diverges exactly
+  where a popped symlink makes the lexical
+  and physical parents differ in existence.
+  The view seam (get, subject, due, check
+  writing to an output path) and the append
+  seam (add) are each measured on their own
+  oracle call structure, convicted shapes
+  repaired per the measured law, agreement
+  shapes pinned. Second, the temp suffix:
+  mkstemp's suffix is exactly eight
+  characters of its own alphabet; this crate's
+  generator is measured for width, and any
+  name-length boundary that moves with the
+  generator's width is convicted and repaired
+  to the oracle's fixed width or filed with
+  its measurement if the seam proves to carry
+  no temp. Whichever arms convict, the repair
+  keeps the rename target and the
+  raw-spelling cannot-write message as they
+  stand, unless the probes convict them too.
+- OR-32. README records 6 of 100 only in the
+  closure commit written after this round's
+  three reviews, fixes, and owner verification.
+- OR-33. The temp-placement arm of OR-31 is
+  measured absent, on source and on behavior.
+  The oracle's only file write is Store.add's
+  plain append, open(path, "a") at the
+  pathlib-constructed spelling; grep finds no
+  mkstemp or tempfile anywhere in the oracle's
+  source. The port's only file write is the
+  matching append in Store::append; grep finds
+  no temp or rename machinery anywhere in its
+  source. One correction to OR-31's premise:
+  neither CLI carries an output-path argument,
+  so there is no view seam writing to a file;
+  the views write to stdout only. The append
+  seam was probed twin over the family's shapes
+  (18 shapes, no divergences), including the
+  two discriminators: the existence split (a
+  symlink component popped by a following
+  dotdot whose target component is missing,
+  where a lexical absolutization would land in
+  the root) refuses identically on both sides,
+  and the record's inode is unchanged across an
+  append while a hardlink witness sees the
+  appended line, which a temp and rename write
+  could not do. The shapes are pinned
+  executably in section 15 of the differential
+  harness. There is nothing to repair.
+- OR-34. The suffix arm of OR-31 is measured
+  absent with it: no temp exists on either
+  side, so there is no temp-name generator
+  whose width could move a name-length
+  boundary, and no pid-namespace measurement
+  applies. The crate's only name-length
+  boundary is the record name's own OS limit,
+  already pinned in section 11 of the harness.
+  The probe family closes for this crate,
+  with nothing filed forward.
+- OR-35. One sentence of OR-33 is narrowed on
+  the spec review's measurement: of the 18
+  probed shapes, 15 are pinned executably in
+  section 15 of the harness (13 cases, 42
+  steps, the plain shape among them and
+  pinned earlier besides). The inode and
+  hardlink witness stands in the probe record
+  only, as the harness header discloses,
+  because the step model cannot stat between
+  steps. Absolute spellings stand in the
+  probe record only, because the harness's
+  roots are created at runtime and an
+  absolute spelling cannot be written as
+  static argv. The behavior is proven by the
+  probe record; the pin sentence claims
+  exactly the fifteen.
