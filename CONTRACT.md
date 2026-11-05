@@ -361,3 +361,19 @@ the repair code).
   already pinned in section 11 of the harness.
   The probe family closes for this crate,
   with nothing filed forward.
+- OR-35. One sentence of OR-33 is narrowed on
+  the spec review's measurement: of the 18
+  probed shapes, 15 are pinned executably in
+  section 15 of the harness (13 cases, 42
+  steps, the plain shape among them and
+  pinned earlier besides). The inode and
+  hardlink witness stands in the probe record
+  only, as the harness header discloses,
+  because the step model cannot stat between
+  steps. Absolute spellings stand in the
+  probe record only, because the harness's
+  roots are created at runtime and an
+  absolute spelling cannot be written as
+  static argv. The behavior is proven by the
+  probe record; the pin sentence claims
+  exactly the fifteen.
