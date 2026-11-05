@@ -325,3 +325,39 @@ the repair code).
 - OR-32. README records 6 of 100 only in the
   closure commit written after this round's
   three reviews, fixes, and owner verification.
+- OR-33. The temp-placement arm of OR-31 is
+  measured absent, on source and on behavior.
+  The oracle's only file write is Store.add's
+  plain append, open(path, "a") at the
+  pathlib-constructed spelling; grep finds no
+  mkstemp or tempfile anywhere in the oracle's
+  source. The port's only file write is the
+  matching append in Store::append; grep finds
+  no temp or rename machinery anywhere in its
+  source. One correction to OR-31's premise:
+  neither CLI carries an output-path argument,
+  so there is no view seam writing to a file;
+  the views write to stdout only. The append
+  seam was probed twin over the family's shapes
+  (18 shapes, no divergences), including the
+  two discriminators: the existence split (a
+  symlink component popped by a following
+  dotdot whose target component is missing,
+  where a lexical absolutization would land in
+  the root) refuses identically on both sides,
+  and the record's inode is unchanged across an
+  append while a hardlink witness sees the
+  appended line, which a temp and rename write
+  could not do. The shapes are pinned
+  executably in section 15 of the differential
+  harness. There is nothing to repair.
+- OR-34. The suffix arm of OR-31 is measured
+  absent with it: no temp exists on either
+  side, so there is no temp-name generator
+  whose width could move a name-length
+  boundary, and no pid-namespace measurement
+  applies. The crate's only name-length
+  boundary is the record name's own OS limit,
+  already pinned in section 11 of the harness.
+  The probe family closes for this crate,
+  with nothing filed forward.
