@@ -12,7 +12,7 @@ on it lands.
 
 ## Round 1. The claim store (OR-5 to OR-12)
 
-Built in Round 1, ahead of wallofwrong, whose
+Built in Round 1, ahead of tetlock, whose
 confessions are stored here. The round also added the
 amendments below (OR-5a to OR-11a before code, OR-5c,
 OR-8b, OR-11b, and OR-12a after the reviews, before
@@ -53,7 +53,7 @@ the repair code).
   tests/test_store.py.
 - OR-10. A claim may carry a due date. Nothing in Round 1
   acts on due dates; they are stored and retrieved, and
-  wallofwrong's confessions will use them. Storing them
+  tetlock's confessions will use them. Storing them
   is this round's whole obligation. Test,
   tests/test_store.py.
 - OR-11. The store is a library plus a thin command line:
