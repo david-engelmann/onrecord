@@ -1208,3 +1208,50 @@ fn a_fork_names_a_non_string_source_id_by_its_repr() {
         .join("\n");
     assert!(joined.contains("[1, 2] and {'k': 1}"), "{joined}");
 }
+
+// OR-36. The Round 6 append witnesses move from
+// the probe record into the suite: an append
+// writes in place, so the record keeps its inode
+// and a hardlink taken before the append sees the
+// appended line. An append through a temp and a
+// rename would fail both assertions.
+#[cfg(unix)]
+#[test]
+fn an_append_keeps_the_inode_and_the_hardlinks() {
+    use std::os::unix::fs::MetadataExt;
+    let tmp = Tmp::new("inode");
+    let path = tmp.path("r.jsonl");
+    let store = store_at(&path);
+    add_ok(&store, |_| {});
+    let before = std::fs::metadata(&path).expect("stat the record").ino();
+    let witness = tmp.path("witness.jsonl");
+    std::fs::hard_link(&path, &witness).expect("hardlink the record");
+    add_ok(&store, |claim| {
+        claim.text = text("A second claim");
+    });
+    let after = std::fs::metadata(&path).expect("stat the record").ino();
+    assert_eq!(before, after, "the append replaced the file");
+    assert_eq!(lines(&witness).len(), 2, "the hardlink missed the append");
+    assert_eq!(lines(&path), lines(&witness));
+}
+
+// OR-36. The existence split in its absolute
+// form: a symlink component popped by a following
+// dotdot, its target missing, refuses the add,
+// and no record appears at the lexical location
+// a lexical absolutization would have written to.
+#[cfg(unix)]
+#[test]
+fn an_append_through_a_popped_missing_link_is_refused() {
+    let tmp = Tmp::new("split");
+    let link = tmp.path("link");
+    std::os::unix::fs::symlink("void", &link).expect("plant the link");
+    let spelling = format!("{}/../record.jsonl", link.display());
+    let store = Store::new(RecPath::new(&spelling));
+    let refused = add(&store, |_| {});
+    assert!(refused.is_err(), "the add through the split was accepted");
+    assert!(
+        !tmp.path("record.jsonl").exists(),
+        "a record landed at the lexical location"
+    );
+}

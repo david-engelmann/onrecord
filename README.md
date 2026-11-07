@@ -1,45 +1,149 @@
 # onrecord
 
-Cross-session memory where nothing is stored as a bare fact, every memory is a claim on the record, carrying who asserted it, when, the evidence behind it, and the chain of claims it superseded.
+Cross-session memory where nothing is stored as a bare fact: every memory is a claim on the record, carrying who asserted it, when, the evidence behind it, and the chain of claims it superseded.
 
-## What this is
+Onrecord is an append-only claim store for agent memory. Every memory is stored as a claim with its receipts, who asserted it, when, and the evidence behind it, entry by entry. Claims are never edited, only superseded, and the record keeps the whole chain, so a later session can inspect or argue with what an earlier one believed. The store is a Rust library with a thin command line over a JSON lines file, and its own check recomputes every claim id and names any line that does not belong.
 
-Agent memory tools store conclusions without their evidence, so a fresh session inherits beliefs it cannot inspect or argue with. Onrecord stores claims with receipts instead, asserted by a named agent or human, with the evidence named entry by entry, source and reference. Claims are never edited, only superseded, and the supersession chain is part of the record. When two live claims conflict, the conflict itself is the answer retrieval returns, with both receipts attached, instead of a blended fiction. The boundary with its sibling is one sentence. Flighttape records the run, onrecord remembers across runs.
+[![ci](https://github.com/david-engelmann/onrecord/actions/workflows/ci.yml/badge.svg)](https://github.com/david-engelmann/onrecord/actions/workflows/ci.yml)
 
-The store is a library plus a thin command line, add, get, subject, due, and check, over an append-only JSON lines file. A claim's id is derived from its content and its position, so the record's own check can recompute every id and name any line that does not belong. Superseding a claim that does not exist, or one already superseded, is refused by name: supersession is a chain, never a fork. A claim may carry a subject key and a due date. Round 1 stored and retrieved both and acted on neither. Round 2 acts on the due dates: the due view answers the live claims that have come due by a date the caller supplies, each with its receipts, conflicts named rather than resolved, and tetlock's confessions remain the due dates' other consumer.
+```console
+$ onrecord add record.jsonl --text "The staging deploy is broken" --asserter agent-a --at 2026-01-01T09:00:00Z --evidence trace:run-17 --subject deploy --due 2026-02-01
+claim-2946b699934e0f6b
+$ onrecord check record.jsonl
+the record is sound
+```
+
+## Install
+
+A Rust toolchain is the only prerequisite. Clone the repo and install the command from it.
+
+```console
+$ git clone https://github.com/david-engelmann/onrecord
+$ cd onrecord
+$ cargo install --path .
+```
+
+The same build gives the library. The crate is named onrecord and other crates in this fleet consume it as a library, tetlock among them.
+
+## Quickstart
+
+Add a claim and read it back. The add prints the claim id, which the store derives from the claim content and its position in the record.
+
+```console
+$ onrecord add record.jsonl --text "The staging deploy is broken" --asserter agent-a --at 2026-01-01T09:00:00Z --evidence trace:run-17 --subject deploy --due 2026-02-01
+claim-2946b699934e0f6b
+$ onrecord get record.jsonl claim-2946b699934e0f6b
+{
+  "claim": {
+    "id": "claim-2946b699934e0f6b",
+    "text": "The staging deploy is broken",
+    "asserter": "agent-a",
+    "asserted_at": "2026-01-01T09:00:00Z",
+    "evidence": [
+      {
+        "source": "trace",
+        "reference": "run-17"
+      }
+    ],
+    "supersedes": null,
+    "subject": "deploy",
+    "due": "2026-02-01"
+  },
+  "chain": [
+    {
+      "id": "claim-2946b699934e0f6b",
+      "text": "The staging deploy is broken",
+      "asserter": "agent-a",
+      "asserted_at": "2026-01-01T09:00:00Z",
+      "evidence": [
+        {
+          "source": "trace",
+          "reference": "run-17"
+        }
+      ],
+      "supersedes": null,
+      "subject": "deploy",
+      "due": "2026-02-01"
+    }
+  ]
+}
+```
+
+The get view returns the claim with its supersession chain, oldest first. A claim that nothing has superseded is its own chain of one.
+
+## Usage
+
+The command line carries five commands. Add appends a claim. Get reads one claim back with its chain. Subject answers a subject key with the live claims on it, and when two live claims conflict on a subject, the conflict itself is the answer, with both receipts attached. Due lists the live claims that have come due by a date. Check recomputes every id in the record and names every defect it finds.
+
+Superseding is how a claim changes. The new claim names the one it replaces, and the chain stays in the record.
+
+```console
+$ onrecord add record.jsonl --text "The staging deploy is fixed" --asserter agent-b --at 2026-01-02T09:00:00Z --evidence trace:run-19 --supersedes claim-2946b699934e0f6b --subject deploy
+claim-b7d8a8f8fdeebc2d
+```
+
+Superseding a claim that does not exist, or one already superseded, is refused by name. Supersession is a chain, never a fork.
+
+The due view answers the live claims whose due dates have arrived by the date given. A claim whose due date passed to a superseding claim no longer answers, because the live head carries no due date.
+
+```console
+$ onrecord add record.jsonl --text "The deploy checklist needs a second reader" --asserter agent-a --at 2026-01-03T09:00:00Z --evidence review:checklist-4 --subject deploy --due 2026-01-20
+claim-32510ef27c144013
+$ onrecord due record.jsonl 2026-02-01
+{
+  "as_of": "2026-02-01",
+  "due": [
+    {
+      "claim": {
+        "id": "claim-32510ef27c144013",
+        "text": "The deploy checklist needs a second reader",
+        "asserter": "agent-a",
+        "asserted_at": "2026-01-03T09:00:00Z",
+        "evidence": [
+          {
+            "source": "review",
+            "reference": "checklist-4"
+          }
+        ],
+        "supersedes": null,
+        "subject": "deploy",
+        "due": "2026-01-20"
+      },
+      "chain": [
+        {
+          "id": "claim-32510ef27c144013",
+          "text": "The deploy checklist needs a second reader",
+          "asserter": "agent-a",
+          "asserted_at": "2026-01-03T09:00:00Z",
+          "evidence": [
+            {
+              "source": "review",
+              "reference": "checklist-4"
+            }
+          ],
+          "supersedes": null,
+          "subject": "deploy",
+          "due": "2026-01-20"
+        }
+      ]
+    }
+  ]
+}
+```
+
+Check is the record's self audit. It walks every line, recomputes each id from the claim and its position, and reports the record sound or names the defects by line.
+
+```console
+$ onrecord check record.jsonl
+the record is sound
+```
+
+The store never invents a time. Every timestamp in a claim is one the caller supplied, and a timestamp the grammar refuses is refused by name at add time. Flighttape records the run and onrecord remembers across runs, and the timestamp grammar and the canonical digest the ids rest on are consumed from the flighttape crate at a pinned revision, never forked.
 
 ## Status
 
-Round 1 is closed. The claim store: append-only
-claims with receipts, supersession chains, conflict
-as the answer.
+The claim store is complete at its contracted scope and in daily use by its sibling tools. Closed perfection rounds, 7 of 100. A round counts only when a full cycle of work, audit, review, red team, and approval has closed.
 
-Round 2 is closed. The due view over the stored due
-dates. Setup landed earlier in October 2026.
+## License
 
-Round 3 is closed. The claim store ported to Rust:
-a library crate with the same thin command line,
-behavior reproduced byte for byte against the
-Python it replaces, which stands as the round's
-specification. The JSON reader, the value model,
-and the timestamp grammar are consumed from the
-flighttape crate at a pinned revision.
-
-## Programme status
-
-- Closed perfection rounds, 6 of 100. A round counts only when a
-  full cycle of work, audit, review, red team, and approval has
-  closed.
-- Contract, OR-1 to OR-12 as amended, met for the Round 1 scope.
-  OR-13 to OR-16 with amendments OR-13a, OR-13b, and
-  OR-16a, written ahead of the code and met in Round 2.
-  OR-17 to OR-23 with OR-18a, the port obligations,
-  written ahead of the code and met in Round 3.
-- Local gate, python3 scripts/codepoint_scan.py,
-  cargo fmt --check, cargo clippy --all-targets with
-  warnings denied, and cargo test. CI runs the same
-  commands.
-
-## Licence
-
-MIT. See LICENSE.
+MIT. See the LICENSE file.
