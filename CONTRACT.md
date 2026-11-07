@@ -490,3 +490,34 @@ the repair code).
   closure commit written after this round's
   three reviews, fixes, and owner
   verification.
+- OR-41. One sentence of OR-38 is narrowed on
+  the harness's own evidence, and the named
+  deviation grows a second arm. Section 16's
+  first run convicted its closed-2 add-bad
+  cell: launched with descriptor 2 closed,
+  the interpreter's sys.stderr is None, and a
+  print addressed to a None stream falls back
+  to stdout, so every stderr-bound message
+  the oracle issues lands on its stdout
+  instead, the named refusals at exit 1 and
+  the argparse usage reports at exit 2, while
+  the port's runtime has replaced the closed
+  descriptor with a sink and its refusals are
+  simply gone. Exits agree in every such
+  cell, success output is untouched, and no
+  file ever differs; OR-38's agreement
+  sentence for descriptor 2 closed alone
+  holds for exits and for success output, and
+  the refusal rerouting stands as the second
+  arm of OR-37's named deviation, for the
+  same reasons: the launch state is
+  unobservable from inside the port, and the
+  only detectable proxy is shared with
+  postures that agree. Section 16 asserts the
+  rerouting directly on three refusal shapes,
+  a missing claim, a missing record, and a
+  bare invocation. The lane's probe had run
+  this posture with stderr discarded, so it
+  measured agreement; the harness, comparing
+  stdout, caught what the probe could not
+  see, and the harness's measurement stands.
