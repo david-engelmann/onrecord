@@ -377,3 +377,116 @@ the repair code).
   static argv. The behavior is proven by the
   probe record; the pin sentence claims
   exactly the fifteen.
+- OR-36. The CodeRabbit disposition owed from
+  Round 6 discharges here on evidence. Read
+  back through the list endpoints, the Round 6
+  pull request carries no review comments and
+  one review (5791350290) holding two nitpick
+  findings, both on this contract's OR-35
+  lines and both valid. The first asks for a
+  cargo test pinning the inode and hardlink
+  witnesses of OR-33, which stood in the probe
+  record only because the harness step model
+  cannot stat between steps; a unit test can,
+  so the pin moves into tests/test_store.rs.
+  The second asks for a cargo regression test
+  of the existence split's absolute form, a
+  symlink to a missing target with a following
+  dotdot, refused with no record created at
+  the lexical location. Both tests land in
+  this round, and each must fail against an
+  append that writes through a temp and a
+  rename, the implementation both findings
+  exist to exclude.
+- OR-37. The closed-descriptor startup posture
+  filed by the Round 6 red team is decided
+  here: it stands as a named deviation, not a
+  repair. The measured matrix (eight commands
+  over four launch postures, no file
+  divergence in any cell) is this. Launched
+  with descriptor 1 closed, add, get, subject,
+  and due split: the interpreter's sys.stdout
+  is None, its write raises an AttributeError
+  its error net does not catch, and it exits 1
+  behind a traceback, while the port's runtime
+  has already replaced the closed descriptor
+  with a sink, so the port exits 0 silent.
+  Check agrees in that posture, sound and
+  defective alike, and --help agrees in exit
+  while the interpreter's help text lands on
+  stderr and the port's lands in the sink.
+  The reasons the deviation stands are three.
+  The launch state is unobservable from
+  inside the port, because the runtime
+  sanitizes a closed standard descriptor
+  before main; the only detectable proxy, a
+  stdout that is the null device, is shared
+  with an explicit redirect, and the redirect
+  posture agrees on both sides today, so a
+  refusal keyed on it would manufacture a new
+  divergence on the common posture to chase
+  an exotic one. The interpreter's own
+  posture is three-way across commands, a
+  crash for the emit commands, agreement for
+  check, a rerouted help, so there is no
+  single crash class to reproduce. And no
+  data is ever at risk: the append lands
+  before the emit on both sides, identically,
+  in every measured cell; the divergence is
+  confined to exit code and stderr form for
+  commands launched with descriptor 1 already
+  closed, plus the help text's stream
+  placement in that one posture.
+- OR-38. The deviation is pinned executably so
+  drift fails the harness. Section 16 of the
+  differential harness asserts the matrix of
+  OR-37 directly, in the shape sections 6 and
+  13 assert theirs: the closed-at-launch split
+  for the emit commands (exit 1 with the
+  traceback on the interpreter's side, exit 0
+  silent on the port's, the record files equal
+  after), check's agreement in that posture,
+  the help text's placement, the same exits
+  with descriptors 1 and 2 both closed, full
+  agreement with descriptor 2 closed alone,
+  and the bounding cell, descriptor 1
+  redirected to the null device, agreeing with
+  the append landed. The section also extends
+  sections 6 and 13 to the pipe form: with
+  descriptor 1 a pipe with no reader, the emit
+  commands agree in full (exit 1, the named
+  cannot-write refusal, the append landed),
+  while check and --help carry the named
+  deviation on a second errno, the
+  interpreter exiting 120 with its
+  ignored-exception shutdown dump and the port
+  exiting 1 with the named error, [Errno 32].
+- OR-39. The README is brought to the fleet
+  README standard in this same pull request,
+  and only README.md changes for this clause.
+  The first screen carries, in order, the
+  title, a one line lede identical to the
+  repo description, one short paragraph, one
+  badge set, and one block of captured output
+  from a run actually made. The badge is the
+  CI workflow's badge; it ships because its
+  rendered state was verified against reality
+  before the rewrite, the badge rendering
+  passing and the workflow's latest run on
+  main at this round's base completed with
+  success. Install and quickstart commands
+  run verbatim from a clean state, the
+  quickstart adds a claim and reads it back,
+  and usage examples show captured real
+  output. The lede's one colon is part of the
+  pinned description line itself, carried
+  verbatim; the prose written around it
+  follows the copy bar. Cargo.toml's
+  description is a third variant of the line
+  and stands outside this clause's bound,
+  which is README.md only; the difference is
+  recorded here rather than silently left.
+- OR-40. README records 7 of 100 only in the
+  closure commit written after this round's
+  three reviews, fixes, and owner
+  verification.
