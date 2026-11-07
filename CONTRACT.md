@@ -521,3 +521,64 @@ the repair code).
   measured agreement; the harness, comparing
   stdout, caught what the probe could not
   see, and the harness's measurement stands.
+- OR-42. Amendment, on the two wording
+  Minors the Round 7 reviews returned, one
+  against OR-36 and one against OR-41.
+  Both narrow a sentence to the reach of
+  the measurement behind it; no code,
+  test, or README line changes.
+  First, OR-36's closing sentence credits
+  each of its two tests with failing
+  against any append that writes through
+  a temp and a rename. The measured reach
+  is narrower, per test. The inode test
+  kills the whole temp-and-rename family
+  outright, since a rename installs a new
+  inode and the hardlink taken before the
+  append keeps pointing at the old file.
+  The existence-split test kills only the
+  family's lexically absolutizing member,
+  the shape the lane built and killed. An
+  append of that family creating its temp
+  through the spelled parent would refuse
+  on its own, the spelled parent not
+  resolving, and so pass the split test,
+  while still failing the inode test.
+  Together the pair excludes the family,
+  and neither test alone carries the
+  pair's reach.
+  Second, OR-41's mechanism sentence says
+  every stderr-bound message the oracle
+  issues lands on its stdout when
+  descriptor 2 is closed at launch. For
+  the named refusals that is exact, and
+  the rerouting is byte-identical, on
+  five refusal shapes the red team
+  measured (get on a missing claim, add
+  on a bad timestamp, add on bad
+  evidence, check on a missing record,
+  due on a bad date). For the usage
+  reports it holds only in part. Nine
+  usage-error shapes (a bare invocation,
+  an unknown subcommand, add missing its
+  required options, get missing its id,
+  get with an extra argument, subject
+  missing its key, due missing its date,
+  check missing its path, add with an
+  unknown flag) behave uniformly, byte
+  compared on four of them. The exit is 2
+  on both sides and the port is silent,
+  as OR-41 states, but on the oracle the
+  usage block alone reroutes to stdout,
+  argparse's print_usage defaulting a
+  None file to sys.stdout, while the
+  "onrecord: error: ..." line travels
+  through argparse's own message printer,
+  which defaults a None file to
+  sys.stderr itself, so the line lands on
+  neither stream and dies with the None
+  stream on the oracle too. OR-41's
+  sentence stands narrowed to that split.
+  The named refusals reroute whole, the
+  usage block reroutes, and the error
+  line is lost on both sides.
