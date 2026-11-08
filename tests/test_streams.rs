@@ -309,8 +309,10 @@ fn render_failure_with_stderr_closed_lands_the_refusal_on_stdout() {
             &bad_text,
             std::ffi::OsStr::new("--asserter"),
             std::ffi::OsStr::new("agent-a"),
-            std::ffi::OsStr::new("--asserted-at"),
+            std::ffi::OsStr::new("--at"),
             std::ffi::OsStr::new("2026-01-01T09:00:00Z"),
+            std::ffi::OsStr::new("--evidence"),
+            std::ffi::OsStr::new("note:seed"),
         ])
         .current_dir(&tmp.0)
         .output()
