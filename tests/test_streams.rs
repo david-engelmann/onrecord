@@ -344,3 +344,42 @@ fn boundary_at_dev_full() {
         }
     }
 }
+
+#[test]
+fn boundary_at_exact_capacity() {
+    // The buffer law at its exact point, measured
+    // against the oracle at /dev/full: a check whose
+    // defect output totals 8,191 bytes defers its
+    // failure to the shutdown flush (exit 120, the
+    // dump on stderr), while exactly 8,192 bytes
+    // flushes at fullness inside the run (exit 1,
+    // the failure named on stderr). The construction
+    // is the measured one: 43 bogus lines and a
+    // duplicated claim whose id length tunes the
+    // duplicate defect's echo to the byte.
+    for (idlen, want) in [(87usize, 120), (88, 1)] {
+        let tmp = Tmp::new("exact-capacity");
+        let id = format!("claim-{}", "x".repeat(idlen));
+        let mut line = String::from(
+            "{\"asserter\": \"agent-a\", \"asserted_at\": \
+             \"2026-01-01T09:00:00Z\", \"evidence\": [{\"reference\": \
+             \"seed\", \"source\": \"note\"}], \"id\": \"",
+        );
+        line.push_str(&id);
+        line.push_str("\", \"supersedes\": null, \"text\": \"clean text\"}\n");
+        let mut record = Vec::new();
+        for _ in 0..43 {
+            record.extend_from_slice(b"{\"bogus\": true}\n");
+        }
+        record.extend_from_slice(line.as_bytes());
+        record.extend_from_slice(line.as_bytes());
+        std::fs::write(tmp.path("many.jsonl"), &record).expect("many");
+        let out = run_full(&["check", "many.jsonl"], &tmp.0, true);
+        assert_eq!(out.code, want, "exact capacity idlen={idlen}");
+        if want == 120 {
+            assert_eq!(out.stderr, DUMP_28.as_bytes());
+        } else {
+            assert_eq!(out.stderr, b"error, [Errno 28] No space left on device\n");
+        }
+    }
+}

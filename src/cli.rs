@@ -57,9 +57,16 @@ const BUFFER_CAPACITY: usize = 8192;
 /// buffer over a real standard descriptor. A write
 /// that would overflow the buffer flushes it first; a
 /// single write at or past the capacity flushes and
-/// then writes directly. A failed flush discards the
-/// buffered bytes, as the interpreter's does, and the
-/// error surfaces to the writer class that catches it.
+/// then writes directly. A write that fills the
+/// buffer exactly flushes it at once: the oracle's
+/// writer flushes at fullness, so a run whose output
+/// totals exactly the capacity fails inside the run
+/// with the named error, not at the shutdown (the
+/// 8,191-byte twin defers to the shutdown instead;
+/// both measured at /dev/full). A failed flush
+/// discards the buffered bytes, as the interpreter's
+/// does, and the error surfaces to the writer class
+/// that catches it.
 struct Channel {
     buffer: Vec<u8>,
     /// A channel replaced by the null sink, the shape
@@ -88,6 +95,9 @@ impl Channel {
             }
         }
         self.buffer.extend_from_slice(bytes);
+        if self.buffer.len() >= BUFFER_CAPACITY {
+            self.flush(fd)?;
+        }
         Ok(())
     }
 
