@@ -154,8 +154,7 @@ impl Streams {
     /// chain with it: a None stderr reroutes the bytes
     /// to stdout, buffered there like any print.
     fn print_err(&mut self, bytes: &[u8]) -> std::io::Result<()> {
-        if self.err.is_some() {
-            let channel = self.err.as_mut().expect("checked");
+        if let Some(channel) = &mut self.err {
             channel.write(2, bytes)
         } else {
             self.print_out(bytes)
@@ -176,8 +175,7 @@ impl Streams {
     /// back to stderr when stdout is None, and to
     /// nothing when both are.
     fn print_help_text(&mut self, bytes: &[u8]) {
-        if self.out.is_some() {
-            let channel = self.out.as_mut().expect("checked");
+        if let Some(channel) = &mut self.out {
             let _ = channel.write(1, bytes);
         } else if let Some(channel) = &mut self.err {
             let _ = channel.write(2, bytes);
