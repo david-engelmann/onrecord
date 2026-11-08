@@ -689,9 +689,11 @@ the repair code).
   including the sink: nested
   get-missing 120, nested get of an
   existing claim 1, nested check of a
-  sound record 120. Pinned in
-  tests/test_streams.rs; harness
-  section 17 asserts the composition.
+  sound record 120. The first two
+  cells are pinned in
+  tests/test_streams.rs; the third
+  is asserted by harness section 17,
+  which asserts the composition.
 
 - OR-47. The view render failure a
   lone surrogate was expected to
@@ -728,13 +730,30 @@ the repair code).
 
 - OR-48. CodeRabbit dispositions for
   this round. PR 9's standing finding
-  (4499472639) is not repaired, on the
-  ground recorded in the reply on its
-  thread: the shipped posture is
-  unix, and the constructor witness
-  of OR-43 has no non-unix form in
-  this design. PR 11 carried eleven
-  items. Three were repaired during
+  (4499472639) is not repaired. The
+  finding is a Minor about ci.yml:
+  the merge_group trigger landed with
+  no exclusion for the queue branches
+  a merge queue creates, so matching
+  push and merge-group runs could
+  duplicate work. The ground recorded
+  in the reply on its thread is that
+  the workflow is the fleet's uniform
+  CI shaping step across the line's
+  ten repositories; merge queues
+  cannot be enabled on user-owned
+  repositories, so no merge group can
+  form and the duplicate cannot
+  occur; the exclusion belongs to
+  the fleet pass that lands when
+  queues land, the same filing as
+  tetlock's WW-60 and secondtake's
+  ST-48. The reply filed that
+  follow-up as OR-46 before this
+  round's items were numbered; this
+  item, OR-48, is its landed home.
+  PR 11 carried eleven items in its
+  first review. Three were repaired during
   the landing: the execute arms'
   borrow restructure and its
   formatting; the --asserted-at test
@@ -747,8 +766,9 @@ the repair code).
   nitpick in the review body, which
   convicted the buffer law at 8,192
   bytes (OR-45). The rest are
-  dismissed with reasons in the
-  round's dossier: the two-layer
+  dismissed with reasons on their
+  threads and in the round's
+  dossier: the two-layer
   buffer reading and the
   flush-retention reading, both
   answered by the boundary
@@ -757,7 +777,20 @@ the repair code).
   readings, outside the contracted
   platform and launch posture; the
   /dev/full fixture, the fleet's
-  standing instrument.
+  standing instrument. A follow-up
+  review (5818998271) added one
+  further item, its failed Docstring
+  Coverage pre-merge check. It is
+  dismissed on the ST-61 basis: it
+  names no function, the repository
+  carries no docstring configuration
+  or threshold of its own, and the
+  check applies the review tool's
+  default profile, so there is no
+  repo rule for it to enforce. No
+  reply thread exists for a
+  review-body item; this item is
+  the record.
 
 - OR-49. The standing differential
   harness is brought to the repaired

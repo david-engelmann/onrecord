@@ -1,4 +1,4 @@
-//! OR-43 to OR-50. The closed-stream matrix, pinned
+//! OR-43 to OR-47. The closed-stream matrix, pinned
 //! at the binary: launch-closed descriptors are
 //! closed in a shell before exec, never redirected,
 //! and the broken-stream cells write at /dev/full,
@@ -7,7 +7,6 @@
 //! harness, whose section 17 asserts them against
 //! the oracle in the same run.
 
-use std::io::Write;
 use std::path::{Path, PathBuf};
 use std::process::{Command, Stdio};
 
@@ -286,7 +285,6 @@ fn refusal_with_stderr_closed_and_stdout_full_exits_120() {
         .output()
         .expect("run the binary");
     assert_eq!(output.status.code(), Some(120));
-    let _ = std::io::stdout().flush();
 }
 
 #[test]
