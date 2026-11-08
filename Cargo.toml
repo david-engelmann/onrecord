@@ -2,7 +2,7 @@
 name = "onrecord"
 version = "0.1.0"
 edition = "2021"
-description = "An append-only claim store: nothing stored as a bare fact"
+description = "Cross-session memory where nothing is stored as a bare fact: every memory is a claim on the record, carrying who asserted it, when, the evidence behind it, and the chain of claims it superseded."
 license = "MIT"
 
 [lib]

@@ -1,4 +1,4 @@
-//! OR-43 to OR-48. The closed-stream matrix, pinned
+//! OR-43 to OR-50. The closed-stream matrix, pinned
 //! at the binary: launch-closed descriptors are
 //! closed in a shell before exec, never redirected,
 //! and the broken-stream cells write at /dev/full,
