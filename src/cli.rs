@@ -965,34 +965,46 @@ fn parse_evidence(items: &[Text]) -> Result<Value, StoreError> {
 fn execute(streams: &mut Streams, command: &str, parsed: &SubParsed) -> i32 {
     let store = Store::new(RecPath::from_units(parsed.positionals[0].units()));
     match command {
-        "add" => report(streams, (|| {
-            let evidence = parse_evidence(&parsed.get_all("--evidence"))?;
-            let claim_id = store.add(AddClaim {
-                text: text_arg(parsed, "--text"),
-                asserter: text_arg(parsed, "--asserter"),
-                asserted_at: text_arg(parsed, "--at"),
-                evidence,
-                supersedes: parsed.get_text("--supersedes"),
-                subject: parsed.get_text("--subject"),
-                due: parsed.get_text("--due"),
-                extra: Vec::new(),
-            })?;
-            let mut bytes = claim_id.into_bytes();
-            bytes.push(b'\n');
-            Ok(emit_text(streams, &bytes))
-        })()),
-        "get" => report(streams, (|| {
-            let document = store.get(&parsed.positionals[1])?;
-            Ok(emit_document(streams, &document))
-        })()),
-        "subject" => report(streams, (|| {
-            let document = store.subject(&parsed.positionals[1])?;
-            Ok(emit_document(streams, &document))
-        })()),
-        "due" => report(streams, (|| {
-            let document = store.due(&parsed.positionals[1])?;
-            Ok(emit_document(streams, &document))
-        })()),
+        "add" => report(
+            streams,
+            (|| {
+                let evidence = parse_evidence(&parsed.get_all("--evidence"))?;
+                let claim_id = store.add(AddClaim {
+                    text: text_arg(parsed, "--text"),
+                    asserter: text_arg(parsed, "--asserter"),
+                    asserted_at: text_arg(parsed, "--at"),
+                    evidence,
+                    supersedes: parsed.get_text("--supersedes"),
+                    subject: parsed.get_text("--subject"),
+                    due: parsed.get_text("--due"),
+                    extra: Vec::new(),
+                })?;
+                let mut bytes = claim_id.into_bytes();
+                bytes.push(b'\n');
+                Ok(emit_text(streams, &bytes))
+            })(),
+        ),
+        "get" => report(
+            streams,
+            (|| {
+                let document = store.get(&parsed.positionals[1])?;
+                Ok(emit_document(streams, &document))
+            })(),
+        ),
+        "subject" => report(
+            streams,
+            (|| {
+                let document = store.subject(&parsed.positionals[1])?;
+                Ok(emit_document(streams, &document))
+            })(),
+        ),
+        "due" => report(
+            streams,
+            (|| {
+                let document = store.due(&parsed.positionals[1])?;
+                Ok(emit_document(streams, &document))
+            })(),
+        ),
         _ => {
             // check: defects print to stdout through
             // its buffered channel, one per line. A
@@ -1017,8 +1029,8 @@ fn execute(streams: &mut Streams, command: &str, parsed: &SubParsed) -> i32 {
                     .print_out(&bytes)
                     .and_then(|_| streams.print_out(b"\n"));
                 if let Err(error) = written {
-                    let _ = streams
-                        .print_err(format!("error, {}\n", os_error_text(&error)).as_bytes());
+                    let _ =
+                        streams.print_err(format!("error, {}\n", os_error_text(&error)).as_bytes());
                     return 1;
                 }
             }

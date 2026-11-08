@@ -20,7 +20,8 @@ struct Tmp(PathBuf);
 
 impl Tmp {
     fn new(name: &str) -> Tmp {
-        let dir = std::env::temp_dir().join(format!("onrecord-streams-{}-{name}", std::process::id()));
+        let dir =
+            std::env::temp_dir().join(format!("onrecord-streams-{}-{name}", std::process::id()));
         let _ = std::fs::remove_dir_all(&dir);
         std::fs::create_dir_all(&dir).expect("temp dir");
         Tmp(dir)
@@ -105,15 +106,25 @@ fn run_full(args: &[&str], cwd: &Path, full1: bool) -> Out {
 }
 
 const ADD: &[&str] = &[
-    "add", "r.jsonl", "--text", "The staging deploy is broken",
-    "--asserter", "agent-a", "--at", "2026-01-01T09:00:00Z",
-    "--evidence", "trace:run-17",
+    "add",
+    "r.jsonl",
+    "--text",
+    "The staging deploy is broken",
+    "--asserter",
+    "agent-a",
+    "--at",
+    "2026-01-01T09:00:00Z",
+    "--evidence",
+    "trace:run-17",
 ];
 
 fn seed(tmp: &Tmp) -> String {
     let out = run(ADD, &tmp.0);
     assert_eq!(out.code, 0);
-    String::from_utf8(out.stdout).expect("id").trim().to_string()
+    String::from_utf8(out.stdout)
+        .expect("id")
+        .trim()
+        .to_string()
 }
 
 #[test]
@@ -233,8 +244,15 @@ fn emit_with_stderr_closed_and_stdout_full_exits_1() {
         .open("/dev/full")
         .expect("open /dev/full");
     let output = Command::new("/bin/sh")
-        .args(["-c", "exec 2>&-; exec \"$@\"", "sh", BIN,
-               "get", "r.jsonl", &id])
+        .args([
+            "-c",
+            "exec 2>&-; exec \"$@\"",
+            "sh",
+            BIN,
+            "get",
+            "r.jsonl",
+            &id,
+        ])
         .current_dir(&tmp.0)
         .stdout(Stdio::from(full))
         .output()
@@ -254,8 +272,15 @@ fn refusal_with_stderr_closed_and_stdout_full_exits_120() {
         .open("/dev/full")
         .expect("open /dev/full");
     let output = Command::new("/bin/sh")
-        .args(["-c", "exec 2>&-; exec \"$@\"", "sh", BIN,
-               "get", "r.jsonl", "claim-nope"])
+        .args([
+            "-c",
+            "exec 2>&-; exec \"$@\"",
+            "sh",
+            BIN,
+            "get",
+            "r.jsonl",
+            "claim-nope",
+        ])
         .current_dir(&tmp.0)
         .stdout(Stdio::from(full))
         .output()
@@ -291,7 +316,10 @@ fn render_failure_with_stderr_closed_lands_the_refusal_on_stdout() {
         .output()
         .expect("add the surrogate claim");
     assert_eq!(added.status.code(), Some(0));
-    let id = String::from_utf8(added.stdout).expect("id").trim().to_string();
+    let id = String::from_utf8(added.stdout)
+        .expect("id")
+        .trim()
+        .to_string();
     let out = run_closed(&["get", "r.jsonl", &id], &tmp.0, false, true);
     assert_eq!(out.code, 1);
     assert_eq!(out.stdout, b"error, cannot write to stdout\n");
