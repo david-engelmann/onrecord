@@ -290,41 +290,31 @@ fn refusal_with_stderr_closed_and_stdout_full_exits_120() {
 }
 
 #[test]
-fn render_failure_with_stderr_closed_lands_the_refusal_on_stdout() {
-    // A claim whose text carries a lone surrogate
-    // (an argv byte sequence the interpreter decodes
-    // with surrogateescape) makes the view render
-    // fail inside _emit_text: the refusal prints,
-    // rerouted to stdout because stderr is closed,
-    // and the close of the old stdout flushes it
-    // there before the sink replaces the channel.
-    use std::os::unix::ffi::OsStringExt;
-    let tmp = Tmp::new("render-closed2");
-    let bad_text = std::ffi::OsString::from_vec(b"bad \xed\xa0\x80 text".to_vec());
-    let added = Command::new(BIN)
-        .args([
-            std::ffi::OsStr::new("add"),
-            std::ffi::OsStr::new("r.jsonl"),
-            std::ffi::OsStr::new("--text"),
-            &bad_text,
-            std::ffi::OsStr::new("--asserter"),
-            std::ffi::OsStr::new("agent-a"),
-            std::ffi::OsStr::new("--at"),
-            std::ffi::OsStr::new("2026-01-01T09:00:00Z"),
-            std::ffi::OsStr::new("--evidence"),
-            std::ffi::OsStr::new("note:seed"),
-        ])
-        .current_dir(&tmp.0)
-        .output()
-        .expect("add the surrogate claim");
-    assert_eq!(added.status.code(), Some(0));
-    let id = String::from_utf8(added.stdout)
-        .expect("id")
-        .trim()
-        .to_string();
-    let out = run_closed(&["get", "r.jsonl", &id], &tmp.0, false, true);
+fn check_defect_echo_with_a_surrogate_id_exits_1_after_the_renderable_defects() {
+    // A hand-written record whose claim id carries a
+    // lone surrogate (a JSON escape in the line) makes
+    // check's duplicate defect echo the id itself. The
+    // interpreter's print of that defect raises
+    // UnicodeEncodeError uncaught after the renderable
+    // defects have landed; the port answers the crash
+    // class with its silent exit 1. The view render
+    // failure a surrogate was first aimed at is
+    // unreachable through the CLI: add refuses such a
+    // claim at its canonical render, and a stored one
+    // makes the record defective at load, so no view
+    // ever carries one.
+    let tmp = Tmp::new("check-surrogate-id");
+    let line: &[u8] = b"{\"asserter\": \"agent-a\", \"asserted_at\": \"2026-01-01T09:00:00Z\", \"evidence\": [{\"reference\": \"seed\", \"source\": \"note\"}], \"id\": \"claim-\\ud800x\", \"supersedes\": null, \"text\": \"clean text\"}\n";
+    let mut seeded = line.to_vec();
+    seeded.extend_from_slice(line);
+    std::fs::write(tmp.path("dup.jsonl"), seeded).expect("seed the record");
+    let out = run(&["check", "dup.jsonl"], &tmp.0);
     assert_eq!(out.code, 1);
-    assert_eq!(out.stdout, b"error, cannot write to stdout\n");
+    assert_eq!(
+        out.stdout,
+        b"line 1: id does not match its derivation\nline 2: id does not match its derivation\n"
+    );
+    assert!(out.stderr.is_empty());
 }
 
 #[test]
