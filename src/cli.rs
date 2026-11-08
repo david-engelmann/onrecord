@@ -14,6 +14,7 @@
 //! bytes survive as the Python's do.
 
 use std::io::Write;
+use std::os::unix::io::FromRawFd;
 
 use flighttape::value::{Text, Value};
 
@@ -22,6 +23,226 @@ use crate::helptext::*;
 use crate::pyrepr::repr_text;
 use crate::store::{AddClaim, RecPath, Store, StoreError};
 use crate::util::{fsdecode_units, stderr_render, Msg};
+
+/// Whether a standard descriptor was closed at launch,
+/// from the facts the binary's pre-init constructor
+/// recorded before the runtime sanitized anything
+/// (see main.rs): the Python in the same posture has
+/// the corresponding sys.stdout or sys.stderr set to
+/// None, which is the state the stream model below
+/// reproduces. No post-init fact separates the
+/// sanitized descriptor from an explicit /dev/null
+/// redirect: the runtime opens the null device O_RDWR
+/// with no CLOEXEC, byte-identical in every observable
+/// to a shell's `<> /dev/null` (measured under strace
+/// on this runtime), so the pre-init record is the
+/// only exact witness.
+fn fd_closed_at_launch(fd: i32) -> bool {
+    crate::launch_fd_closed(fd)
+}
+
+/// Write bytes to a raw standard descriptor, ignoring
+/// the descriptor's ownership.
+fn raw_write(fd: i32, bytes: &[u8]) -> std::io::Result<()> {
+    let mut file = std::mem::ManuallyDrop::new(unsafe { std::fs::File::from_raw_fd(fd) });
+    file.write_all(bytes)
+}
+
+/// The interpreter's buffered writer capacity: a
+/// channel accumulates this many bytes before a write
+/// forces a flush.
+const BUFFER_CAPACITY: usize = 8192;
+
+/// One emulated TextIOWrapper channel: an 8192-byte
+/// buffer over a real standard descriptor. A write
+/// that would overflow the buffer flushes it first; a
+/// single write at or past the capacity flushes and
+/// then writes directly. A write that fills the
+/// buffer exactly flushes it at once: the oracle's
+/// writer flushes at fullness, so a run whose output
+/// totals exactly the capacity fails inside the run
+/// with the named error, not at the shutdown (the
+/// 8,191-byte twin defers to the shutdown instead;
+/// both measured at /dev/full). A failed flush
+/// discards the buffered bytes, as the interpreter's
+/// does, and the error surfaces to the writer class
+/// that catches it.
+struct Channel {
+    buffer: Vec<u8>,
+    /// A channel replaced by the null sink, the shape
+    /// _emit_text leaves behind: writes vanish and
+    /// flushes succeed, so nothing the channel held
+    /// can surface at the shutdown.
+    sink: bool,
+}
+
+impl Channel {
+    fn new() -> Channel {
+        Channel {
+            buffer: Vec::new(),
+            sink: false,
+        }
+    }
+
+    fn write(&mut self, fd: i32, bytes: &[u8]) -> std::io::Result<()> {
+        if self.sink {
+            return Ok(());
+        }
+        if self.buffer.len() + bytes.len() > BUFFER_CAPACITY {
+            self.flush(fd)?;
+            if bytes.len() >= BUFFER_CAPACITY {
+                return raw_write(fd, bytes);
+            }
+        }
+        self.buffer.extend_from_slice(bytes);
+        if self.buffer.len() >= BUFFER_CAPACITY {
+            self.flush(fd)?;
+        }
+        Ok(())
+    }
+
+    fn flush(&mut self, fd: i32) -> std::io::Result<()> {
+        if self.sink || self.buffer.is_empty() {
+            return Ok(());
+        }
+        let result = raw_write(fd, &self.buffer);
+        self.buffer.clear();
+        result
+    }
+}
+
+/// The two standard channels with their launch state.
+/// A None channel is the Python's None stream: writes
+/// routed to it follow the interpreter's routing rules
+/// per writer class, spelled out on each method.
+struct Streams {
+    out: Option<Channel>,
+    err: Option<Channel>,
+}
+
+impl Streams {
+    fn new() -> Streams {
+        Streams {
+            out: if fd_closed_at_launch(1) {
+                None
+            } else {
+                Some(Channel::new())
+            },
+            err: if fd_closed_at_launch(2) {
+                None
+            } else {
+                Some(Channel::new())
+            },
+        }
+    }
+
+    fn stdout_closed(&self) -> bool {
+        self.out.is_none()
+    }
+
+    /// Replace the stdout channel with the null sink,
+    /// discarding whatever it held: _emit_text's own
+    /// move after a failed emit, so the broken stream
+    /// cannot mask the refusal at the shutdown.
+    fn sink_stdout(&mut self) {
+        self.out = Some(Channel {
+            buffer: Vec::new(),
+            sink: true,
+        });
+    }
+
+    /// print() to stdout: a None stdout swallows the
+    /// write silently; the exit stands.
+    fn print_out(&mut self, bytes: &[u8]) -> std::io::Result<()> {
+        match &mut self.out {
+            None => Ok(()),
+            Some(channel) => channel.write(1, bytes),
+        }
+    }
+
+    /// print(..., file=sys.stderr), and print_usage's
+    /// chain with it: a None stderr reroutes the bytes
+    /// to stdout, buffered there like any print.
+    fn print_err(&mut self, bytes: &[u8]) -> std::io::Result<()> {
+        if let Some(channel) = &mut self.err {
+            channel.write(2, bytes)
+        } else {
+            self.print_out(bytes)
+        }
+    }
+
+    /// argparse's exit message through _print_message:
+    /// addressed to sys.stderr with no reroute; a None
+    /// stderr swallows it whole.
+    fn message_err(&mut self, bytes: &[u8]) {
+        if let Some(channel) = &mut self.err {
+            let _ = channel.write(2, bytes);
+        }
+    }
+
+    /// argparse's help chain (print_help then
+    /// _print_message): addressed to stdout, falling
+    /// back to stderr when stdout is None, and to
+    /// nothing when both are.
+    fn print_help_text(&mut self, bytes: &[u8]) {
+        if let Some(channel) = &mut self.out {
+            let _ = channel.write(1, bytes);
+        } else if let Some(channel) = &mut self.err {
+            let _ = channel.write(2, bytes);
+        }
+    }
+
+    /// The interpreter's shutdown: flush stdout, then
+    /// stderr. A failed stdout flush writes the
+    /// ignored-exception dump to the second
+    /// descriptor's raw fd and the exit becomes 120;
+    /// a failed stderr flush makes the exit 120 with
+    /// nothing observable.
+    fn shutdown(mut self, code: i32) -> i32 {
+        let mut result = code;
+        if let Some(channel) = &mut self.out {
+            if let Err(error) = channel.flush(1) {
+                let dump = format!(
+                    "Exception ignored in: <_io.TextIOWrapper name='<stdout>' \
+                     mode='w' encoding='utf-8'>\n{}: {}\n",
+                    os_error_class(&error),
+                    os_error_text(&error)
+                );
+                let _ = raw_write(2, dump.as_bytes());
+                result = 120;
+            }
+        }
+        if let Some(channel) = &mut self.err {
+            if channel.flush(2).is_err() {
+                result = 120;
+            }
+        }
+        result
+    }
+}
+
+/// The exception class name the interpreter's shutdown
+/// dump prints for an OS error: the OSError subclass
+/// CPython selects by errno, OSError itself when no
+/// subclass applies.
+fn os_error_class(error: &std::io::Error) -> &'static str {
+    match error.raw_os_error() {
+        Some(2) => "FileNotFoundError",
+        Some(3) => "ProcessLookupError",
+        Some(4) => "InterruptedError",
+        Some(10) => "ChildProcessError",
+        Some(11) => "BlockingIOError",
+        Some(1) | Some(13) => "PermissionError",
+        Some(17) => "FileExistsError",
+        Some(20) => "NotADirectoryError",
+        Some(21) => "IsADirectoryError",
+        Some(32) => "BrokenPipeError",
+        Some(103) => "ConnectionAbortedError",
+        Some(104) => "ConnectionResetError",
+        Some(110) => "TimeoutError",
+        _ => "OSError",
+    }
+}
 
 /// One argument token: its text, and its decoded
 /// scalars for the parser's character work.
@@ -173,35 +394,29 @@ enum ParseOutcome {
     Exit(i32),
 }
 
-fn parse_error(usage: &str, prog: &str, message: &str) -> ParseOutcome {
-    // The usage constants carry their trailing
-    // newline; the Python prints the error line
-    // directly under the usage block.
-    eprintln!("{usage}{prog}: error: {message}");
+fn parse_error(streams: &mut Streams, usage: &str, prog: &str, message: &str) -> ParseOutcome {
+    // The Python's argparse error report is two writes
+    // with different routing: the usage block goes
+    // through print_usage, which reroutes to stdout
+    // when sys.stderr is None, and the error line goes
+    // through _print_message, which a None stderr
+    // swallows whole. On an open stderr the two land
+    // in order in its buffer, byte-identical to the
+    // single report the port used to print.
+    let _ = streams.print_err(usage.as_bytes());
+    streams.message_err(format!("{prog}: error: {message}\n").as_bytes());
     ParseOutcome::Exit(2)
 }
 
-/// Print a help text the guarded way: the Python's
-/// argparse prints help to a buffered stdout whose
-/// failure surfaces only at interpreter shutdown
-/// (exit 120 with an ignored exception dump), so a
-/// broken stream here is the port's named shape for
-/// that class, a caught write error with exit 1,
-/// never a panic.
-fn print_help(text: &str) -> ParseOutcome {
-    use std::io::Write;
-    let stdout = std::io::stdout();
-    let mut handle = stdout.lock();
-    match handle
-        .write_all(text.as_bytes())
-        .and_then(|_| handle.flush())
-    {
-        Ok(()) => ParseOutcome::Exit(0),
-        Err(error) => {
-            eprintln!("error, {}", os_error_text(&error));
-            ParseOutcome::Exit(1)
-        }
-    }
+/// Print a help text the argparse way: the text is
+/// addressed to stdout through the buffered channel,
+/// falling back to stderr when stdout was closed at
+/// launch. A broken stream surfaces only at the
+/// shutdown flush, as exit 120 with the
+/// ignored-exception dump, never as a caught refusal.
+fn print_help(streams: &mut Streams, text: &str) -> ParseOutcome {
+    streams.print_help_text(text.as_bytes());
+    ParseOutcome::Exit(0)
 }
 
 struct SubParsed {
@@ -342,6 +557,7 @@ fn spec_for(command: &str) -> &'static SubSpec {
 /// can never be. On success `index` still points at
 /// the option token; the caller advances past both.
 fn take_value(
+    streams: &mut Streams,
     spec: &SubSpec,
     tokens: &[Token],
     index: &mut usize,
@@ -357,6 +573,7 @@ fn take_value(
             Ok(next.text.clone())
         }
         _ => Err(parse_error(
+            streams,
             spec.usage,
             spec.prog,
             &format!("argument {}: expected one argument", opt.label),
@@ -378,7 +595,7 @@ enum ClusterFlow {
 /// first letter the command does not know makes the
 /// whole token an extra; help fires when the token
 /// ends, unless a scan error in it fired first.
-fn short_cluster(spec: &SubSpec, token: &Token) -> ClusterFlow {
+fn short_cluster(streams: &mut Streams, spec: &SubSpec, token: &Token) -> ClusterFlow {
     let cluster = &token.scalars[1..];
     if cluster[0] != 'h' as u32 {
         return ClusterFlow::Extra;
@@ -393,6 +610,7 @@ fn short_cluster(spec: &SubSpec, token: &Token) -> ClusterFlow {
                 // argument.
                 let value = text_from_scalar(token, at + 3);
                 return ClusterFlow::Exit(parse_error(
+                    streams,
                     spec.usage,
                     spec.prog,
                     &format!(
@@ -408,12 +626,17 @@ fn short_cluster(spec: &SubSpec, token: &Token) -> ClusterFlow {
         }
     }
     if help_pending {
-        return ClusterFlow::Exit(print_help(spec.help));
+        return ClusterFlow::Exit(print_help(streams, spec.help));
     }
     ClusterFlow::Skip
 }
 
-fn parse_sub(command: &'static str, tokens: &[Token], top_extras: &[Text]) -> ParseOutcome {
+fn parse_sub(
+    streams: &mut Streams,
+    command: &'static str,
+    tokens: &[Token],
+    top_extras: &[Text],
+) -> ParseOutcome {
     let spec = spec_for(command);
     let candidates: Vec<&'static str> = spec.options.iter().map(|opt| opt.canonical).collect();
     let mut positionals: Vec<Text> = Vec::new();
@@ -463,6 +686,7 @@ fn parse_sub(command: &'static str, tokens: &[Token], top_extras: &[Text]) -> Pa
                 LongMatch::Exact(option) | LongMatch::Unique(option) => option,
                 LongMatch::Ambiguous(matches) => {
                     return parse_error(
+                        streams,
                         spec.usage,
                         spec.prog,
                         &format!(
@@ -486,6 +710,7 @@ fn parse_sub(command: &'static str, tokens: &[Token], top_extras: &[Text]) -> Pa
             if opt.kind == OptKind::Help {
                 if let Some(value) = glued {
                     return parse_error(
+                        streams,
                         spec.usage,
                         spec.prog,
                         &format!(
@@ -494,9 +719,9 @@ fn parse_sub(command: &'static str, tokens: &[Token], top_extras: &[Text]) -> Pa
                         ),
                     );
                 }
-                return print_help(spec.help);
+                return print_help(streams, spec.help);
             }
-            match take_value(spec, tokens, &mut index, glued, opt) {
+            match take_value(streams, spec, tokens, &mut index, glued, opt) {
                 Ok(value) => values.push((opt.canonical, value)),
                 Err(outcome) => return outcome,
             }
@@ -504,7 +729,7 @@ fn parse_sub(command: &'static str, tokens: &[Token], top_extras: &[Text]) -> Pa
             continue;
         }
         if option_shaped(token) {
-            match short_cluster(spec, token) {
+            match short_cluster(streams, spec, token) {
                 ClusterFlow::Extra => {
                     extras.push(token.text.clone());
                     index += 1;
@@ -538,6 +763,7 @@ fn parse_sub(command: &'static str, tokens: &[Token], top_extras: &[Text]) -> Pa
     }
     if !missing.is_empty() {
         return parse_error(
+            streams,
             spec.usage,
             spec.prog,
             &format!(
@@ -549,6 +775,7 @@ fn parse_sub(command: &'static str, tokens: &[Token], top_extras: &[Text]) -> Pa
     if !extras.is_empty() {
         let rendered: Vec<String> = extras.iter().map(|t| stderr_render(t.units())).collect();
         return parse_error(
+            streams,
             TOP_USAGE,
             "onrecord",
             &format!("unrecognized arguments: {}", rendered.join(" ")),
@@ -567,7 +794,7 @@ const COMMANDS: [&str; 5] = ["add", "get", "subject", "due", "check"];
 
 /// Parse the top level: help, the command word, and
 /// the held extras an unknown token becomes.
-fn parse_top(tokens: &[Token]) -> ParseOutcome {
+fn parse_top(streams: &mut Streams, tokens: &[Token]) -> ParseOutcome {
     let mut extras: Vec<Text> = Vec::new();
     let mut index = 0usize;
     while index < tokens.len() {
@@ -582,6 +809,7 @@ fn parse_top(tokens: &[Token]) -> ParseOutcome {
                 LongMatch::Exact("--help") | LongMatch::Unique("--help") => {
                     if let Some(value) = glued {
                         return parse_error(
+                            streams,
                             TOP_USAGE,
                             "onrecord",
                             &format!(
@@ -590,7 +818,7 @@ fn parse_top(tokens: &[Token]) -> ParseOutcome {
                             ),
                         );
                     }
-                    return print_help(TOP_HELP);
+                    return print_help(streams, TOP_HELP);
                 }
                 _ => {
                     extras.push(token.text.clone());
@@ -609,10 +837,11 @@ fn parse_top(tokens: &[Token]) -> ParseOutcome {
             for command in COMMANDS {
                 if token.text.units() == Text::from_str(command).units() {
                     let command: &'static str = command;
-                    return parse_sub(command, &tokens[index + 1..], &extras);
+                    return parse_sub(streams, command, &tokens[index + 1..], &extras);
                 }
             }
             return parse_error(
+                streams,
                 TOP_USAGE,
                 "onrecord",
                 &format!(
@@ -622,30 +851,62 @@ fn parse_top(tokens: &[Token]) -> ParseOutcome {
             );
         }
         if token.scalars[1] == 'h' as u32 {
-            return print_help(TOP_HELP);
+            return print_help(streams, TOP_HELP);
         }
         extras.push(token.text.clone());
         index += 1;
     }
     parse_error(
+        streams,
         TOP_USAGE,
         "onrecord",
         "the following arguments are required: command",
     )
 }
 
+/// The named refusal for a stdout the emit cannot
+/// use, printed the way the Python's except arm
+/// prints it: through stderr's channel, rerouting
+/// to stdout when stderr was closed at launch. The
+/// Python then replaces its stdout with a sink, so
+/// whatever the rerouted refusal joined in the
+/// stdout buffer is discarded with it.
+fn cannot_write(streams: &mut Streams) -> i32 {
+    let _ = streams.print_err(b"error, cannot write to stdout\n");
+    // The Python then closes the old stdout before
+    // replacing it: the close flushes whatever the
+    // wrapper holds, so a refusal rerouted into the
+    // stdout buffer (stderr closed at launch, stdout
+    // itself working, the render-failure cell) lands
+    // before the sink replaces the channel. A failed
+    // close-flush discards, as the channel's flush
+    // already does.
+    if let Some(channel) = &mut streams.out {
+        let _ = channel.flush(1);
+    }
+    streams.sink_stdout();
+    1
+}
+
 /// Write text to stdout the way the Python's
-/// _emit_text does: a failure is the named refusal
-/// "error, cannot write to stdout" and exit 1.
-fn emit_text(bytes: &[u8]) -> i32 {
-    let stdout = std::io::stdout();
-    let mut handle = stdout.lock();
-    match handle.write_all(bytes).and_then(|_| handle.flush()) {
+/// _emit_text does: an explicit write and flush, a
+/// failure the named refusal "error, cannot write to
+/// stdout" and exit 1. When stdout was closed at
+/// launch the Python's write meets a None stream and
+/// the failure is its uncaught crash class instead: a
+/// bare exit 1 after the operation, the append for
+/// add already landed, with no refusal printed.
+fn emit_text(streams: &mut Streams, bytes: &[u8]) -> i32 {
+    if streams.stdout_closed() {
+        return 1;
+    }
+    let step = {
+        let channel = streams.out.as_mut().expect("stdout open");
+        channel.write(1, bytes).and_then(|_| channel.flush(1))
+    };
+    match step {
         Ok(()) => 0,
-        Err(_) => {
-            eprintln!("error, cannot write to stdout");
-            1
-        }
+        Err(_) => cannot_write(streams),
     }
 }
 
@@ -653,24 +914,28 @@ fn emit_text(bytes: &[u8]) -> i32 {
 /// two plus a newline, through emit_text. A document
 /// the stream cannot take (a lone surrogate outside
 /// the escape band) fails the same way.
-fn emit_document(document: &Value) -> i32 {
+fn emit_document(streams: &mut Streams, document: &Value) -> i32 {
     match dumps_view(document, Mode::Stdout) {
-        Ok(bytes) => emit_text(&bytes),
+        Ok(bytes) => emit_text(streams, &bytes),
         Err(_) => {
-            eprintln!("error, cannot write to stdout");
-            1
+            if streams.stdout_closed() {
+                1
+            } else {
+                cannot_write(streams)
+            }
         }
     }
 }
 
 /// Report a store failure the way the Python's main
-/// does: a named refusal after "error, ", and the
-/// crash class as a bare exit 1.
-fn report(result: Result<i32, StoreError>) -> i32 {
+/// does: a named refusal after "error, " printed to
+/// stderr's channel, and the crash class as a bare
+/// exit 1.
+fn report(streams: &mut Streams, result: Result<i32, StoreError>) -> i32 {
     match result {
         Ok(code) => code,
         Err(StoreError::Named(error)) => {
-            eprintln!("error, {}", error.render_stderr());
+            let _ = streams.print_err(format!("error, {}\n", error.render_stderr()).as_bytes());
             1
         }
         Err(StoreError::Crash) => 1,
@@ -705,70 +970,81 @@ fn parse_evidence(items: &[Text]) -> Result<Value, StoreError> {
     Ok(Value::Array(evidence))
 }
 
-fn execute(command: &str, parsed: &SubParsed) -> i32 {
+fn execute(streams: &mut Streams, command: &str, parsed: &SubParsed) -> i32 {
     let store = Store::new(RecPath::from_units(parsed.positionals[0].units()));
     match command {
-        "add" => report((|| {
-            let evidence = parse_evidence(&parsed.get_all("--evidence"))?;
-            let claim_id = store.add(AddClaim {
-                text: text_arg(parsed, "--text"),
-                asserter: text_arg(parsed, "--asserter"),
-                asserted_at: text_arg(parsed, "--at"),
-                evidence,
-                supersedes: parsed.get_text("--supersedes"),
-                subject: parsed.get_text("--subject"),
-                due: parsed.get_text("--due"),
-                extra: Vec::new(),
-            })?;
-            let mut bytes = claim_id.into_bytes();
-            bytes.push(b'\n');
-            Ok(emit_text(&bytes))
-        })()),
-        "get" => report((|| {
-            let document = store.get(&parsed.positionals[1])?;
-            Ok(emit_document(&document))
-        })()),
-        "subject" => report((|| {
-            let document = store.subject(&parsed.positionals[1])?;
-            Ok(emit_document(&document))
-        })()),
-        "due" => report((|| {
-            let document = store.due(&parsed.positionals[1])?;
-            Ok(emit_document(&document))
-        })()),
+        "add" => {
+            let result = (|| {
+                let evidence = parse_evidence(&parsed.get_all("--evidence"))?;
+                let claim_id = store.add(AddClaim {
+                    text: text_arg(parsed, "--text"),
+                    asserter: text_arg(parsed, "--asserter"),
+                    asserted_at: text_arg(parsed, "--at"),
+                    evidence,
+                    supersedes: parsed.get_text("--supersedes"),
+                    subject: parsed.get_text("--subject"),
+                    due: parsed.get_text("--due"),
+                    extra: Vec::new(),
+                })?;
+                let mut bytes = claim_id.into_bytes();
+                bytes.push(b'\n');
+                Ok(emit_text(streams, &bytes))
+            })();
+            report(streams, result)
+        }
+        "get" => {
+            let result = (|| {
+                let document = store.get(&parsed.positionals[1])?;
+                Ok(emit_document(streams, &document))
+            })();
+            report(streams, result)
+        }
+        "subject" => {
+            let result = (|| {
+                let document = store.subject(&parsed.positionals[1])?;
+                Ok(emit_document(streams, &document))
+            })();
+            report(streams, result)
+        }
+        "due" => {
+            let result = (|| {
+                let document = store.due(&parsed.positionals[1])?;
+                Ok(emit_document(streams, &document))
+            })();
+            report(streams, result)
+        }
         _ => {
-            // check: defects print to stdout, one per
-            // line; a stream failure writing them is
-            // the Python's caught OSError, reported
-            // with its OS text.
+            // check: defects print to stdout through
+            // its buffered channel, one per line. A
+            // flush failure partway is the Python's
+            // caught OSError, reported with its OS
+            // text and exit 1; a failure of the final
+            // flush is the shutdown's, exit 120 with
+            // the dump, decided in Streams::shutdown.
             let defects = match store.check() {
                 Ok(defects) => defects,
-                Err(error) => return report(Err(error)),
+                Err(error) => return report(streams, Err(error)),
             };
-            let stdout = std::io::stdout();
-            let mut handle = stdout.lock();
             for defect in &defects {
-                let mut bytes = match defect.render_stdout() {
+                let bytes = match defect.render_stdout() {
                     Some(bytes) => bytes,
                     None => return 1,
                 };
-                bytes.push(b'\n');
-                if let Err(err) = handle.write_all(&bytes) {
-                    eprintln!("error, {}", os_error_text(&err));
+                // print() writes the text and its
+                // newline as two buffer writes; the
+                // pair is the flush boundary's unit.
+                let written = streams
+                    .print_out(&bytes)
+                    .and_then(|_| streams.print_out(b"\n"));
+                if let Err(error) = written {
+                    let _ =
+                        streams.print_err(format!("error, {}\n", os_error_text(&error)).as_bytes());
                     return 1;
                 }
             }
             if defects.is_empty() {
-                match handle
-                    .write_all(b"the record is sound\n")
-                    .and_then(|_| handle.flush())
-                {
-                    Ok(()) => 0,
-                    Err(err) => {
-                        eprintln!("error, {}", os_error_text(&err));
-                        1
-                    }
-                }
+                let _ = streams.print_out(b"the record is sound\n");
+                0
             } else {
                 1
             }
@@ -798,6 +1074,7 @@ fn os_error_text(err: &std::io::Error) -> String {
 }
 
 pub fn run_cli() -> i32 {
+    let mut streams = Streams::new();
     let tokens: Vec<Token> = std::env::args_os()
         .skip(1)
         .map(|arg| {
@@ -808,8 +1085,9 @@ pub fn run_cli() -> i32 {
             Token::from_units(fsdecode_units(&bytes))
         })
         .collect();
-    match parse_top(&tokens) {
-        ParseOutcome::Run(command, parsed) => execute(command, &parsed),
+    let code = match parse_top(&mut streams, &tokens) {
+        ParseOutcome::Run(command, parsed) => execute(&mut streams, command, &parsed),
         ParseOutcome::Exit(code) => code,
-    }
+    };
+    streams.shutdown(code)
 }

@@ -582,3 +582,237 @@ the repair code).
   The named refusals reroute whole, the
   usage block reroutes, and the error
   line is lost on both sides.
+
+- OR-43. OR-37 is repaired, both arms, on
+  a new witness. A constructor that runs
+  before the runtime's own initialization
+  (an .init_array entry in the binary)
+  records fcntl F_GETFD for descriptors
+  0, 1, and 2; a descriptor recorded
+  closed at launch is the oracle's None
+  stream for that channel. No post-init
+  observable carries the fact: the
+  runtime sanitizes a launch-closed
+  descriptor with openat("/dev/null",
+  O_RDWR) and no O_CLOEXEC (measured
+  under strace), indistinguishable from
+  an explicit null redirect, so the
+  pre-init record is the only exact
+  witness and OR-37's "unobservable"
+  premise stands falsified by it. With
+  the witness in place the closed1 cells
+  agree byte for byte: help lands on
+  stderr with exit 0, and an emit over a
+  closed stdout is the oracle's crash
+  class, a bare exit 1 after the
+  operation with nothing printed, the
+  add append already landed identical
+  to a twin run. Its crash-class
+  scoping in OR-37 stands. Pinned in
+  tests/test_streams.rs; harness
+  section 16 asserts the family.
+
+- OR-44. The broken-but-open second
+  descriptor is its own family, new in
+  this round. With descriptor 2 a
+  readerless pipe or /dev/full and
+  descriptor 1 working, the oracle's
+  refusal and usage shapes exit 120 in
+  silence: its stderr channel buffers
+  the message and the shutdown flush
+  fails. The pre-round port printed
+  through eprintln, panicked on the
+  broken descriptor, and exited a
+  silent 1. The repair routes every
+  stderr-bound write through the
+  buffered channels of OR-45, and a
+  failed stderr flush at shutdown
+  makes the exit 120 with nothing
+  observable. Help under the same
+  postures agrees untouched; it never
+  writes to descriptor 2 while
+  descriptor 1 is open. Pinned in
+  tests/test_streams.rs; harness
+  section 17 asserts the family.
+
+- OR-45. The standard channels are
+  buffered writers of 8,192 bytes in
+  the captured-output posture, and the
+  buffer law is pinned at its flip and
+  at its exact point. A write that
+  would overflow the buffer flushes
+  it first; a single write at or past
+  the capacity flushes and writes
+  directly; a write that fills the
+  buffer exactly flushes at fullness.
+  A failed flush discards the buffered
+  bytes: a caught mid-run failure
+  keeps its exit and no shutdown dump
+  follows. For check the flip is total
+  rendered bytes against the capacity:
+  8,174 bytes (44 bogus lines) ride to
+  the shutdown flush, exit 120 with
+  the verbatim ignored-exception
+  dump; 8,361 bytes (45 lines) fail
+  mid-run on the first defect write
+  past the boundary, exit 1 with the
+  OS error named on the other stream;
+  exactly 8,192 bytes flush at
+  fullness inside the run (exit 1,
+  named) and 8,191 defer to the
+  shutdown (exit 120, the dump). Both
+  errnos are measured, 32 on a
+  readerless pipe and 28 on /dev/full.
+  Pinned in tests/test_streams.rs
+  (boundary_at_dev_full and
+  boundary_at_exact_capacity);
+  harness section 17 asserts the
+  same cells against the oracle.
+
+- OR-46. The nested posture (descriptor
+  2 closed at launch, descriptor 1
+  broken) composes per writer class,
+  never per stream. The oracle exits
+  120 in every write-free cell
+  measured. The record cells split on
+  the writer: a refusal or usage
+  message rerouted into the stdout
+  buffer dies with the failed
+  shutdown flush (120, nothing
+  observable), while an _emit_text
+  failure exits 1 in silence, the
+  oracle printing its refusal into
+  the buffer, closing the old stdout,
+  and replacing the stream with a
+  sink before returning. The port
+  reproduces the split exactly,
+  including the sink: nested
+  get-missing 120, nested get of an
+  existing claim 1, nested check of a
+  sound record 120. The first two
+  cells are pinned in
+  tests/test_streams.rs; the third
+  is asserted by harness section 17,
+  which asserts the composition.
+
+- OR-47. The view render failure a
+  lone surrogate was expected to
+  produce is unreachable through the
+  CLI, measured three ways. Add
+  refuses such a claim at its
+  canonical render (the named
+  refusal, exit 1). A hand-seeded
+  record carrying one makes the
+  record defective at load (the claim
+  cannot be rendered under canonical
+  form 1, so its id cannot be
+  verified), so no view ever carries
+  one. The surrogate's one reachable
+  echo is check's duplicate defect,
+  which names the stored id: over a
+  duplicated claim whose id carries
+  the surrogate, the oracle prints
+  the two derivation defects and its
+  print of the duplicate defect
+  raises UnicodeEncodeError uncaught;
+  the port prints the same two
+  defects and exits 1 in silence, its
+  standing crash-class answer. The
+  port's emit-side render arm and
+  the refusal's closing flush are
+  kept as the oracle's source shapes
+  them (cli.py lines 26 to 44),
+  contracted here as source-faithful
+  and unreachable, not as measured
+  agreement. Pinned in
+  tests/test_streams.rs
+  (check_defect_echo_with_a_surrogate_id).
+
+- OR-48. CodeRabbit dispositions for
+  this round. PR 9's standing finding
+  (4499472639) is not repaired. The
+  finding is a Minor about ci.yml:
+  the merge_group trigger landed with
+  no exclusion for the queue branches
+  a merge queue creates, so matching
+  push and merge-group runs could
+  duplicate work. The ground recorded
+  in the reply on its thread is that
+  the workflow is the fleet's uniform
+  CI shaping step across the line's
+  ten repositories; merge queues
+  cannot be enabled on user-owned
+  repositories, so no merge group can
+  form and the duplicate cannot
+  occur; the exclusion belongs to
+  the fleet pass that lands when
+  queues land, the same filing as
+  tetlock's WW-60 and secondtake's
+  ST-48. The reply filed that
+  follow-up as OR-46 before this
+  round's items were numbered; this
+  item, OR-48, is its landed home.
+  PR 11 carried eleven items in its
+  first review. Three were repaired during
+  the landing: the execute arms'
+  borrow restructure and its
+  formatting; the --asserted-at test
+  token, which the oracle's grammar
+  refuses (its add_argument names
+  --at alone); the render pin,
+  reseeded to OR-47's reachable cell.
+  One was repaired on its own
+  measurement: the exact-capacity
+  nitpick in the review body, which
+  convicted the buffer law at 8,192
+  bytes (OR-45). The rest are
+  dismissed with reasons on their
+  threads and in the round's
+  dossier: the two-layer
+  buffer reading and the
+  flush-retention reading, both
+  answered by the boundary
+  measurements; the PYTHONUNBUFFERED,
+  non-unix, and platform-errno
+  readings, outside the contracted
+  platform and launch posture; the
+  /dev/full fixture, the fleet's
+  standing instrument. A follow-up
+  review (5818998271) added one
+  further item, its failed Docstring
+  Coverage pre-merge check. It is
+  dismissed on the ST-61 basis: it
+  names no function, the repository
+  carries no docstring configuration
+  or threshold of its own, and the
+  check applies the review tool's
+  default profile, so there is no
+  repo rule for it to enforce. No
+  reply thread exists for a
+  review-body item; this item is
+  the record.
+
+- OR-49. The standing differential
+  harness is brought to the repaired
+  law: section 16 rewritten to the
+  streams model, section 17 added
+  (the OR-44 family, the OR-46
+  composition, the OR-45 boundary at
+  its flip and its exact point, the
+  OR-47 echo cell), and the two
+  sections that asserted OR-38's
+  devfull deviations as splits now
+  assert agreement. Run in full
+  against the shipped binary and the
+  final Python tree (0c25a9a, the
+  last state before the Python
+  left): 118 cases, 382 steps,
+  0 failures.
+
+- OR-50. OR-39's open item closes.
+  Cargo.toml's description now
+  carries the canonical line byte
+  for byte, the same sentence as
+  the repository description and
+  the README lede, so the three
+  homes of the description agree.
