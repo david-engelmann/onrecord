@@ -965,9 +965,8 @@ fn parse_evidence(items: &[Text]) -> Result<Value, StoreError> {
 fn execute(streams: &mut Streams, command: &str, parsed: &SubParsed) -> i32 {
     let store = Store::new(RecPath::from_units(parsed.positionals[0].units()));
     match command {
-        "add" => report(
-            streams,
-            (|| {
+        "add" => {
+            let result = (|| {
                 let evidence = parse_evidence(&parsed.get_all("--evidence"))?;
                 let claim_id = store.add(AddClaim {
                     text: text_arg(parsed, "--text"),
@@ -982,29 +981,30 @@ fn execute(streams: &mut Streams, command: &str, parsed: &SubParsed) -> i32 {
                 let mut bytes = claim_id.into_bytes();
                 bytes.push(b'\n');
                 Ok(emit_text(streams, &bytes))
-            })(),
-        ),
-        "get" => report(
-            streams,
-            (|| {
+            })();
+            report(streams, result)
+        }
+        "get" => {
+            let result = (|| {
                 let document = store.get(&parsed.positionals[1])?;
                 Ok(emit_document(streams, &document))
-            })(),
-        ),
-        "subject" => report(
-            streams,
-            (|| {
+            })();
+            report(streams, result)
+        }
+        "subject" => {
+            let result = (|| {
                 let document = store.subject(&parsed.positionals[1])?;
                 Ok(emit_document(streams, &document))
-            })(),
-        ),
-        "due" => report(
-            streams,
-            (|| {
+            })();
+            report(streams, result)
+        }
+        "due" => {
+            let result = (|| {
                 let document = store.due(&parsed.positionals[1])?;
                 Ok(emit_document(streams, &document))
-            })(),
-        ),
+            })();
+            report(streams, result)
+        }
         _ => {
             // check: defects print to stdout through
             // its buffered channel, one per line. A
