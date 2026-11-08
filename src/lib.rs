@@ -24,6 +24,34 @@ pub mod util;
 
 pub use store::{claim_defects, derive_id, load_record, Store, StoreError};
 
+/// Launch-descriptor facts recorded by the binary's
+/// pre-init constructor (see main.rs): for each of
+/// descriptors 0, 1, 2, the fcntl F_GETFD result from
+/// before the runtime replaced a launch-closed
+/// descriptor with the null device. A recorded -1 is
+/// a descriptor closed at launch; anything else,
+/// including the never-recorded sentinel, is the
+/// open posture. A library caller that never records
+/// gets the open posture throughout, the behavior
+/// every round before Round 8 shipped.
+static LAUNCH_FDS: std::sync::OnceLock<[i32; 3]> = std::sync::OnceLock::new();
+
+/// Record the launch-descriptor facts. Called once
+/// by the binary's main before run_cli; later calls
+/// are ignored.
+pub fn note_launch_fds(fds: [i32; 3]) {
+    let _ = LAUNCH_FDS.set(fds);
+}
+
+/// Whether the descriptor was closed at launch, on
+/// the recorded facts.
+pub(crate) fn launch_fd_closed(fd: i32) -> bool {
+    match LAUNCH_FDS.get() {
+        Some(fds) => fds[fd as usize] == -1,
+        None => false,
+    }
+}
+
 /// The command line entry, in the cli module.
 pub fn run_cli() -> i32 {
     // A generous stack, on the flighttape crate's own
