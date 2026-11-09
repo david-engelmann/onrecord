@@ -816,3 +816,234 @@ the repair code).
   the repository description and
   the README lede, so the three
   homes of the description agree.
+
+- OR-51. Round 9 read PR 11 back
+  whole: 23 reviews (three
+  substantive CodeRabbit shells,
+  ten owner reply shells, ten bot
+  acknowledgment shells, every bot
+  reply closing in withdrawal,
+  acceptance, or verification),
+  30 review comments in ten
+  threads, and 5 issue comments,
+  the rate-limit auto-reply among
+  them, which carries no findings.
+  OR-48's accounting verified
+  thread by thread, and its
+  corrected text (repair a0294015,
+  correction reply 4507376070)
+  verified exact against standing
+  finding 4499472639 on PR 9: the
+  merge_group trigger landed with
+  no exclusion for the queue
+  branches a merge queue creates,
+  so matching push and merge-group
+  runs could duplicate work; the
+  ground is the fleet-uniform
+  workflow, merge queues cannot be
+  enabled on user-owned
+  repositories, and the exclusion
+  belongs to the fleet pass that
+  lands when queues land, the same
+  filing as tetlock's WW-60 and
+  secondtake's ST-48. Two items
+  OR-48's enumeration does not
+  name are disposed here. The
+  Mach-O constructor-section item
+  (PR 11, the src/main.rs thread)
+  stands noted and not repaired:
+  the contracted platform is
+  Linux, a Mach-O section arm
+  cannot be compiled or verified
+  in this gate, and the
+  constructor seam is where a
+  future platform pass starts; it
+  stands in the round's dossier
+  as a named limitation. The
+  final-head shell 5819201141,
+  posted three seconds before the
+  merge, carries no actionable
+  items, only the same Docstring
+  Coverage failed check the
+  follow-up shell carried; it is
+  dismissed on the ground
+  secondtake's ST-61 states: the
+  check names no function, the
+  repo carries no docstring
+  configuration or threshold of
+  its own, and the check applies
+  the tool's default profile, so
+  there is no repo rule for it to
+  enforce. The bot's
+  follow-up-issue offers stand
+  unaccepted and are not findings.
+  Nothing else was owed.
+
+- OR-52. The README's Install
+  section now states why the
+  build pulls the flighttape
+  crate in: onrecord takes the
+  timestamp grammar behind every
+  asserted_at value and the
+  canonical digest its claim ids
+  rest on from flighttape, at the
+  pinned revision in Cargo.toml,
+  defined once in the crate that
+  owns them and never forked. The
+  purpose clause left the Usage
+  section, which keeps the
+  boundary sentence (flighttape
+  records the run, onrecord
+  remembers across runs). The pin
+  and the dependency did not
+  change.
+
+- OR-53. Duplicate detection
+  measured at scale. A synthetic
+  record of 3,000 claims (739,337
+  bytes, ids from the oracle's
+  own derive_id) checks sound. A
+  verbatim copy of the head,
+  middle, or tail claim appended
+  at the end draws exactly two
+  defects at the copy's line, the
+  derivation mismatch first and
+  the appears-twice defect
+  second. A claim standing three
+  times draws two appears-twice
+  defects. A copy inserted at
+  line 2 shifts every later
+  position, and every later id
+  mismatches. The subject
+  conflict and due views render
+  identical at that scale. Pinned
+  in the store suite at 120
+  claims and in harness section
+  18 at 600.
+
+- OR-54. A 24-line record holding
+  every defect class the loader
+  names at once (a blank line, a
+  line that is not JSON, a
+  duplicate key, nesting too
+  deep, a line that is not a
+  claim object, a missing field,
+  an empty id, an empty text, a
+  non-string asserter, a refused
+  asserted_at, empty evidence,
+  evidence that is not a list, an
+  evidence entry missing its
+  reference, a supersedes of the
+  wrong type, a subject of the
+  wrong type, a refused due date,
+  an unrenderable claim, an id
+  that does not match, a
+  supersedes naming no claim, a
+  fork, and a duplicate id)
+  renders from check and from a
+  refused get byte for byte
+  identical on both sides. Lines
+  whose ids were set by hand
+  carry the derivation mismatch
+  beside their own defect; lines
+  derived exactly carry the
+  single defect. Harness section
+  18 carries the same record.
+
+- OR-55. The budgets measured
+  through the CLI at their exact
+  constants, alike on both
+  binaries. Arrays nested in an
+  extra field: check verifies
+  through 987 and refuses at 988
+  under the read budget's node
+  measure (990), and the store
+  gate splits one nest earlier,
+  verifying through 986 and
+  refusing at 987. Objects nested
+  in an extra field: check
+  verifies through 986 and
+  refuses at 987 under the object
+  measure (988), and the gate
+  splits one nest earlier,
+  verifying through 985 and
+  refusing at 986. The array
+  points stood pinned already;
+  the object points and the
+  object split are pinned now
+  (the_digest_budget_object_
+  measure_at_read_is_the_probed_
+  point, the_entry_split_holds_
+  on_the_object_measure_too).
+
+- OR-56. The stderr refusal law.
+  A refusal whose joined defect
+  message runs past the stderr
+  channel's buffer capacity (600
+  bogus lines, 3,600 defects, a
+  message of 118,781 bytes) meets
+  a broken descriptor 2, at
+  /dev/full or a readerless pipe:
+  the write fails inside the run,
+  the Python's print of the
+  refusal stands inside its
+  except arm where nothing
+  catches the failure, the
+  reporting dies on the same
+  descriptor, the interpreter
+  loses sys.stderr, and the run
+  ends at 120 with nothing on
+  stdout. A refusal that fits the
+  buffer reaches 120 by the
+  shutdown flush instead (OR-46's
+  cell). The port swallowed the
+  failed write and answered a
+  bare 1. Streams now records a
+  stderr lost inside the run, and
+  the shutdown honors the loss at
+  120; a refusal rerouted into
+  the stdout channel (descriptor
+  2 closed at launch) keeps the
+  crash class at 1. The family is
+  bounded to the past-capacity
+  refusal through the command
+  layer: the emit, check, and
+  cannot-write prints are short
+  and always fit the buffer, and
+  their broken-stream cells agree
+  unmodified. Pinned at the
+  binary (refusal_past_capacity_
+  with_stderr_at_dev_full_exits_
+  120) and in harness section 18.
+  This answers the caveat
+  CodeRabbit's acknowledgment
+  4507313636 left standing in
+  Round 8, whose flush example
+  used stderr while the K=45 pin
+  covered stdout.
+
+- OR-57. The closed-stream matrix
+  re-ran whole against this
+  round's binary and the final
+  oracle tree: 14 postures by 15
+  labels, 210 cells a side. No
+  cell moved; the only stderr
+  differences are the four
+  launch-closed crash-class cells
+  OR-43 already records, where
+  the oracle's traceback text
+  stands in place of silence,
+  with exits, stdout, and files
+  in agreement. The boundary arms
+  at K=44 and K=45 stand where
+  OR-45 put them, byte for byte.
+  The differential harness,
+  extended in place with section
+  18, stands at 126 cases, 400
+  steps, 0 failures.
+
+- OR-58. README records 9 of 100
+  only in the closure commit
+  written after this round's
+  three reviews, fixes, and owner
+  verification.

@@ -23,6 +23,8 @@ $ cd onrecord
 $ cargo install --path .
 ```
 
+The build pulls in one more crate from this fleet, flighttape, at a pinned revision in Cargo.toml. Onrecord takes the timestamp grammar behind every asserted_at value and the canonical digest its claim ids rest on from flighttape, so both are defined once in the crate that owns them and never forked into this repo.
+
 The same build gives the library. The crate is named onrecord and other crates in this fleet consume it as a library, tetlock among them.
 
 ## Quickstart
@@ -138,11 +140,11 @@ $ onrecord check record.jsonl
 the record is sound
 ```
 
-The store never invents a time. Every timestamp in a claim is one the caller supplied, and a timestamp the grammar refuses is refused by name at add time. Flighttape records the run and onrecord remembers across runs, and the timestamp grammar and the canonical digest the ids rest on are consumed from the flighttape crate at a pinned revision, never forked.
+The store never invents a time. Every timestamp in a claim is one the caller supplied, and a timestamp the grammar refuses is refused by name at add time. Flighttape records the run and onrecord remembers across runs.
 
 ## Status
 
-The claim store is complete at its contracted scope and in daily use by its sibling tools. Closed perfection rounds, 8 of 100. A round counts only when a full cycle of work, audit, review, red team, and approval has closed.
+The claim store is complete at its contracted scope and in daily use by its sibling tools. Closed perfection rounds, 9 of 100. A round counts only when a full cycle of work, audit, review, red team, and approval has closed.
 
 ## License
 

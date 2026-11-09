@@ -118,6 +118,15 @@ impl Channel {
 struct Streams {
     out: Option<Channel>,
     err: Option<Channel>,
+    /// The refusal print met a real stderr channel
+    /// whose write failed inside the run (OR-56):
+    /// the Python's print raises inside its except
+    /// arm, nothing catches it, reporting the
+    /// exception dies on the same descriptor, and
+    /// the interpreter loses sys.stderr, which ends
+    /// the run at 120 in silence. The shutdown
+    /// honors the loss.
+    stderr_lost: bool,
 }
 
 impl Streams {
@@ -133,6 +142,7 @@ impl Streams {
             } else {
                 Some(Channel::new())
             },
+            stderr_lost: false,
         }
     }
 
@@ -171,6 +181,27 @@ impl Streams {
         }
     }
 
+    /// The refusal print of report(): the Python
+    /// prints it inside its except arm, where a
+    /// failed write is caught by nothing. When the
+    /// stderr channel is real and its write fails
+    /// inside the run (a message past the buffer's
+    /// reach meeting a broken descriptor), the loss
+    /// is recorded for the shutdown. A failure
+    /// through the reroute, stderr closed at launch
+    /// and the bytes in the stdout channel, is the
+    /// crash class instead, a bare exit 1, as the
+    /// nested cells of OR-46 hold.
+    fn print_refusal(&mut self, bytes: &[u8]) {
+        if let Some(channel) = &mut self.err {
+            if channel.write(2, bytes).is_err() {
+                self.stderr_lost = true;
+            }
+        } else {
+            let _ = self.print_out(bytes);
+        }
+    }
+
     /// argparse's exit message through _print_message:
     /// addressed to sys.stderr with no reroute; a None
     /// stderr swallows it whole.
@@ -197,7 +228,8 @@ impl Streams {
     /// ignored-exception dump to the second
     /// descriptor's raw fd and the exit becomes 120;
     /// a failed stderr flush makes the exit 120 with
-    /// nothing observable.
+    /// nothing observable, and so does a stderr lost
+    /// inside the run (OR-56).
     fn shutdown(mut self, code: i32) -> i32 {
         let mut result = code;
         if let Some(channel) = &mut self.out {
@@ -216,6 +248,9 @@ impl Streams {
             if channel.flush(2).is_err() {
                 result = 120;
             }
+        }
+        if self.stderr_lost {
+            result = 120;
         }
         result
     }
@@ -935,7 +970,7 @@ fn report(streams: &mut Streams, result: Result<i32, StoreError>) -> i32 {
     match result {
         Ok(code) => code,
         Err(StoreError::Named(error)) => {
-            let _ = streams.print_err(format!("error, {}\n", error.render_stderr()).as_bytes());
+            streams.print_refusal(format!("error, {}\n", error.render_stderr()).as_bytes());
             1
         }
         Err(StoreError::Crash) => 1,
