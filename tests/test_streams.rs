@@ -381,3 +381,35 @@ fn boundary_at_exact_capacity() {
         }
     }
 }
+
+#[test]
+fn refusal_past_capacity_with_stderr_at_dev_full_exits_120() {
+    // OR-56. A refusal whose joined defect message
+    // runs far past the stderr buffer's capacity
+    // (600 bogus lines, 3,600 defects, a message of
+    // some 119,000 bytes) meets /dev/full on
+    // descriptor 2. The write fails inside the run,
+    // and the Python's print of the refusal stands
+    // inside its except arm, where nothing catches
+    // the failure: reporting the exception dies on
+    // the same descriptor, the interpreter loses
+    // sys.stderr, and the run ends at 120 with
+    // nothing on stdout. A refusal that fits the
+    // buffer ends at 120 by the other route, the
+    // shutdown flush (refusal_with_stderr_at_dev_full
+    // above); this pin is the one that tells the two
+    // routes apart, and the port's earlier shape,
+    // which swallowed the failed write and answered
+    // a bare 1, fails it. The readerless-pipe twin
+    // (errno 32 in place of 28) is the differential
+    // harness's to assert, in section 18.
+    let tmp = Tmp::new("refusal-past-capacity");
+    let mut record = Vec::new();
+    for _ in 0..600 {
+        record.extend_from_slice(b"{\"bogus\": true}\n");
+    }
+    std::fs::write(tmp.path("many.jsonl"), &record).expect("many");
+    let out = run_full(&["get", "many.jsonl", "claim-x"], &tmp.0, false);
+    assert_eq!(out.code, 120);
+    assert!(out.stdout.is_empty());
+}

@@ -1160,6 +1160,163 @@ fn read_budget_split_body() {
 }
 
 #[test]
+fn the_digest_budget_object_measure_at_read_is_the_probed_point() {
+    let child = std::thread::Builder::new()
+        .stack_size(512 * 1024 * 1024)
+        .spawn(digest_object_budget_body)
+        .expect("thread");
+    child.join().expect("the budget holds");
+}
+
+fn digest_object_budget_body() {
+    // A claim whose extra field nests objects: the
+    // read budget's second measure (the deepest
+    // object node, BUDGET_READ's 988) binds before
+    // the node measure does. In this shape 986
+    // nested objects render, so the refusal a wrong
+    // id draws is the mismatch, and 987 are refused
+    // as unverifiable, one nest before the array
+    // shape's flip in
+    // the_digest_budget_at_read_is_the_probed_pair.
+    // The CLI probe of Round 9 measured the same
+    // points on both binaries.
+    let _tmp = Tmp::new("digest-object-caps");
+    let verdict = |n: usize| {
+        let mut deep = Value::Int("1".into());
+        for _ in 0..n {
+            deep = Value::Object(vec![(text("a"), deep)]);
+        }
+        let claim = Value::Object(vec![
+            (text("id"), Value::Str(text("claim-0000000000000000"))),
+            (text("text"), Value::Str(text("t"))),
+            (text("asserter"), Value::Str(text("a"))),
+            (
+                text("asserted_at"),
+                Value::Str(text("2026-01-01T09:00:00Z")),
+            ),
+            (text("evidence"), evidence()),
+            (text("supersedes"), Value::Null),
+            (text("deep"), deep),
+        ]);
+        let defects = claim_defects(&claim, 1, 0, BUDGET_READ);
+        defects
+            .iter()
+            .map(|defect| defect.render_stderr())
+            .collect::<Vec<_>>()
+            .join("\n")
+    };
+    assert!(
+        verdict(986).contains("id does not match"),
+        "{}",
+        verdict(986)
+    );
+    assert!(
+        verdict(987).contains("cannot be rendered"),
+        "{}",
+        verdict(987)
+    );
+}
+
+#[test]
+fn the_entry_split_holds_on_the_object_measure_too() {
+    let child = std::thread::Builder::new()
+        .stack_size(512 * 1024 * 1024)
+        .spawn(object_split_body)
+        .expect("thread");
+    child.join().expect("the split holds");
+}
+
+fn object_split_body() {
+    // The same split as the_read_budget_splits_by_entry,
+    // on the object measure: a claim nesting 986
+    // objects in its extra field renders under
+    // BUDGET_READ, so check verifies it, and the
+    // store gate's narrower budget refuses it at the
+    // same nest, so get and subject refuse.
+    let tmp = Tmp::new("object-split");
+    let path = tmp.path("r.jsonl");
+    let mut deep = Value::Int("1".into());
+    for _ in 0..986 {
+        deep = Value::Object(vec![(text("a"), deep)]);
+    }
+    let claim = Value::Object(vec![
+        (text("text"), Value::Str(text("t"))),
+        (text("asserter"), Value::Str(text("a"))),
+        (
+            text("asserted_at"),
+            Value::Str(text("2026-01-01T09:00:00Z")),
+        ),
+        (text("evidence"), evidence()),
+        (text("supersedes"), Value::Null),
+        (text("reading"), deep),
+    ]);
+    let id = derive_id(&claim, 0, BUDGET_READ).expect("derive");
+    let mut entries = vec![(text("id"), Value::Str(text(&id)))];
+    if let Value::Object(fields) = &claim {
+        entries.extend(fields.iter().cloned());
+    }
+    let stored = Value::Object(entries);
+    let line = dumps_line(&stored, Mode::Strict).expect("render");
+    std::fs::write(&path, line).expect("write");
+    let store = store_at(&path);
+    assert!(store.check().expect("check runs").is_empty());
+    let error = store.get(&text(&id)).expect_err("get refuses");
+    assert!(
+        error.text().contains("cannot be rendered"),
+        "{}",
+        error.text()
+    );
+    let error = store.subject(&text("k")).expect_err("subject refuses");
+    assert!(
+        error.text().contains("cannot be rendered"),
+        "{}",
+        error.text()
+    );
+}
+
+#[test]
+fn a_duplicated_line_deep_in_a_record_is_named_at_its_own_line() {
+    // A verbatim copy of the first line appended at
+    // the tail of a 120-claim record draws exactly
+    // two defects, both at the copy's own line: the
+    // id no longer matches its derivation, because
+    // the position moved, and the id appears twice.
+    // The original line keeps no defect. Round 9's
+    // CLI battery measured the same law at 3,000
+    // claims (OR-53).
+    let tmp = Tmp::new("dup-at-scale");
+    let path = tmp.path("r.jsonl");
+    let store = store_at(&path);
+    let mut first_id = String::new();
+    for i in 0..120 {
+        let id = add_ok(&store, |claim| {
+            claim.text = text(&format!("Synthetic claim {i}"));
+        });
+        if i == 0 {
+            first_id = id;
+        }
+    }
+    let bytes = std::fs::read(&path).expect("read the record");
+    let first_line = bytes.split(|b| *b == b'\n').next().expect("first line");
+    let mut grown = bytes.clone();
+    grown.extend_from_slice(first_line);
+    grown.push(b'\n');
+    std::fs::write(&path, &grown).expect("append the copy");
+    let (_, defects) = load_record(&RecPath::new(path.to_str().expect("utf8")), BUDGET_READ);
+    let rendered: Vec<String> = defects
+        .iter()
+        .map(|defect| defect.render_stderr())
+        .collect();
+    assert_eq!(
+        rendered,
+        vec![
+            "line 121: id does not match its derivation".to_string(),
+            format!("line 121: id {first_id} appears twice"),
+        ]
+    );
+}
+
+#[test]
 fn a_name_past_the_os_limit_surfaces_its_os_error() {
     let tmp = Tmp::new("long-name");
     let path = tmp.path(&"x".repeat(300));
