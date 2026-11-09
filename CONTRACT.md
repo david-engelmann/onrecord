@@ -1041,3 +1041,9 @@ the repair code).
   extended in place with section
   18, stands at 126 cases, 400
   steps, 0 failures.
+
+- OR-58. README records 9 of 100
+  only in the closure commit
+  written after this round's
+  three reviews, fixes, and owner
+  verification.
