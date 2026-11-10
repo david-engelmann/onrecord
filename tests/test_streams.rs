@@ -10,6 +10,10 @@
 use std::path::{Path, PathBuf};
 use std::process::{Command, Stdio};
 
+use flighttape::value::{Text, Value};
+use onrecord::emit::{dumps_line, Mode};
+use onrecord::store::BUDGET_READ;
+
 const BIN: &str = env!("CARGO_BIN_EXE_onrecord");
 const DUMP_28: &str = "Exception ignored in: <_io.TextIOWrapper \
     name='<stdout>' mode='w' encoding='utf-8'>\n\
@@ -412,4 +416,148 @@ fn refusal_past_capacity_with_stderr_at_dev_full_exits_120() {
     let out = run_full(&["get", "many.jsonl", "claim-x"], &tmp.0, false);
     assert_eq!(out.code, 120);
     assert!(out.stdout.is_empty());
+}
+
+const REFUSAL_PREFIX: &str = "error, the record has defects: \
+    line 1: supersedes names no claim in the record, ";
+const DEFECT_PREFIX: &str = "line 1: supersedes names no claim \
+    in the record, ";
+
+/// A one-claim record whose only defect echoes a
+/// supersedes target sized so the named print
+/// (prefix + target + newline) totals exactly
+/// `total` bytes. The claim's id is derived exactly,
+/// so the supersedes defect is the line's only one.
+fn tuned_record(total: usize, prefix: &str) -> Vec<u8> {
+    let fill = total - prefix.len() - 1;
+    let target = "x".repeat(fill);
+    let claim = Value::Object(vec![
+        (
+            Text::from_str("text"),
+            Value::Str(Text::from_str("The staging deploy is broken")),
+        ),
+        (
+            Text::from_str("asserter"),
+            Value::Str(Text::from_str("agent-a")),
+        ),
+        (
+            Text::from_str("asserted_at"),
+            Value::Str(Text::from_str("2026-01-01T09:00:00Z")),
+        ),
+        (
+            Text::from_str("evidence"),
+            Value::Array(vec![Value::Object(vec![
+                (
+                    Text::from_str("source"),
+                    Value::Str(Text::from_str("trace")),
+                ),
+                (
+                    Text::from_str("reference"),
+                    Value::Str(Text::from_str("run-17")),
+                ),
+            ])]),
+        ),
+        (
+            Text::from_str("supersedes"),
+            Value::Str(Text::from_str(&target)),
+        ),
+        (
+            Text::from_str("subject"),
+            Value::Str(Text::from_str("deploy")),
+        ),
+    ]);
+    let id = onrecord::derive_id(&claim, 0, BUDGET_READ).expect("derive");
+    let mut entries = vec![(Text::from_str("id"), Value::Str(Text::from_str(&id)))];
+    if let Value::Object(pairs) = claim {
+        entries.extend(pairs);
+    }
+    let mut line = dumps_line(&Value::Object(entries), Mode::Strict).expect("render");
+    line.push(b'\n');
+    line
+}
+
+/// Run with descriptor 2 closed at launch and
+/// descriptor 1 aimed at /dev/full.
+fn run_closed2_full1(args: &[&str], cwd: &Path) -> Out {
+    let full = std::fs::OpenOptions::new()
+        .write(true)
+        .open("/dev/full")
+        .expect("open /dev/full");
+    let output = Command::new("/bin/sh")
+        .args(["-c", "exec 2>&-; exec \"$@\"", "sh", BIN])
+        .args(args)
+        .current_dir(cwd)
+        .stdout(Stdio::from(full))
+        .output()
+        .expect("run the binary");
+    Out {
+        code: output.status.code().unwrap_or(-1),
+        stdout: output.stdout,
+        stderr: output.stderr,
+    }
+}
+
+#[test]
+fn check_single_defect_at_the_exact_points() {
+    // Round 10. One defect, printed by check on
+    // descriptor 1, tuned to the exact totals. At
+    // 8,191 the failure defers to the shutdown flush
+    // (120, the dump); at 8,192 the buffer flushes at
+    // fullness inside the run, and at 8,193, decided
+    // here for the first time, the answer is the
+    // same mid-run form (1, the failure named). The
+    // healthy twin asserts the tuning arithmetic.
+    for (total, want) in [(8191usize, 120), (8192, 1), (8193, 1)] {
+        let tmp = Tmp::new("check-exact");
+        std::fs::write(tmp.path("r.jsonl"), tuned_record(total, DEFECT_PREFIX)).expect("tuned");
+        let healthy = run(&["check", "r.jsonl"], &tmp.0);
+        assert_eq!(healthy.code, 1, "healthy total={total}");
+        assert_eq!(healthy.stdout.len(), total, "tuning total={total}");
+        let out = run_full(&["check", "r.jsonl"], &tmp.0, true);
+        assert_eq!(out.code, want, "full1 total={total}");
+        if want == 120 {
+            assert_eq!(out.stderr, DUMP_28.as_bytes());
+        } else {
+            assert_eq!(out.stderr, b"error, [Errno 28] No space left on device\n");
+        }
+    }
+}
+
+#[test]
+fn refusal_single_defect_at_the_exact_points() {
+    // Round 10. The single-print stderr refusal at
+    // the exact totals meets /dev/full on descriptor
+    // 2: all three totals end at 120, the two at and
+    // past capacity by the mid-run loss of the
+    // channel and the one under it by the shutdown
+    // flush. The healthy twin asserts the tuning.
+    for total in [8191usize, 8192, 8193] {
+        let tmp = Tmp::new("refusal-exact");
+        std::fs::write(tmp.path("r.jsonl"), tuned_record(total, REFUSAL_PREFIX)).expect("tuned");
+        let healthy = run(&["get", "r.jsonl", "claim-x"], &tmp.0);
+        assert_eq!(healthy.code, 1, "healthy total={total}");
+        assert_eq!(healthy.stderr.len(), total, "tuning total={total}");
+        let out = run_full(&["get", "r.jsonl", "claim-x"], &tmp.0, false);
+        assert_eq!(out.code, 120, "full2 total={total}");
+        assert!(out.stdout.is_empty());
+    }
+}
+
+#[test]
+fn rerouted_refusal_flips_at_capacity() {
+    // Round 10. The refusal rerouted into the stdout
+    // channel (descriptor 2 closed at launch,
+    // descriptor 1 at /dev/full) flips at capacity:
+    // at 8,191 the rerouted print fits the buffer
+    // and dies at the shutdown flush (120); at
+    // 8,192 and 8,193 it fails mid-run in the stdout
+    // channel and is caught, so the run answers the
+    // refusal's own 1. Round 9 ran this family only
+    // far past capacity and at fitting size.
+    for (total, want) in [(8191usize, 120), (8192, 1), (8193, 1)] {
+        let tmp = Tmp::new("reroute-exact");
+        std::fs::write(tmp.path("r.jsonl"), tuned_record(total, REFUSAL_PREFIX)).expect("tuned");
+        let out = run_closed2_full1(&["get", "r.jsonl", "claim-x"], &tmp.0);
+        assert_eq!(out.code, want, "reroute total={total}");
+    }
 }

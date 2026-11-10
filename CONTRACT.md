@@ -1047,3 +1047,185 @@ the repair code).
   written after this round's
   three reviews, fixes, and owner
   verification.
+
+- OR-59. Round 10 read PR 12 back
+  whole: 1 review, 0 review
+  comments, and 5 issue comments,
+  every body read to its end.
+  The review (5831658352,
+  COMMENTED on 6a855a8f) carries
+  one item, the failed Docstring
+  Coverage pre-merge check; its
+  run info records that no
+  configuration file from this
+  repository applied. The shell
+  (6749487940) stands in its
+  final form as a failure banner
+  (Review failed, the pull
+  request is closed) over a
+  retained walkthrough whose
+  assessment covers the closure
+  head 08b28f74, Merge Risk
+  Minimal, pre-merge checks 4
+  passed and 1 failed (Docstring
+  Coverage 42.86% against
+  80.00%, 7 functions across 3
+  files, 2 skipped as
+  unsupported). The trigger
+  (6749492682), the auto-reply
+  (6749716234, already reviewed
+  the last commit, not a
+  finding), the owner's
+  disposition (6749838420), and
+  the landing note (6752355954)
+  complete the census. The
+  disposition disposes both
+  items on the ground OR-51
+  records from secondtake's
+  ST-61, and it expressly charges
+  this read-back; the charge is
+  discharged here. The shell's
+  final form differs from the
+  Round 9 build report's
+  description of it (the banner,
+  and the walkthrough's coverage
+  extended to the closure head);
+  the disposition's figures match
+  the final form, and no Round 9
+  disposition is falsified.
+
+- OR-60. The stream law re-measured
+  at its exact points, at the
+  shipped CLI against the final
+  oracle tree (0c25a9a, its
+  extraction blob-verified again
+  this round): a 39-cell battery,
+  0 splits. A single-defect
+  refusal tuned so its printed
+  bytes total exactly 8,191,
+  8,192, and 8,193 meets a broken
+  descriptor 2 (at /dev/full and
+  at a readerless pipe) and ends
+  at 120 at all three totals, the
+  one under capacity by the
+  shutdown flush and the two at
+  and past it by the mid-run loss
+  of the channel. Check rendering
+  one defect on descriptor 1 at
+  the same totals answers 120
+  with the shutdown dump at
+  8,191 and 1 with the OS error
+  named at 8,192 and at 8,193,
+  the one-over point decided here
+  for the first time. A get view
+  tuned to the same totals (the
+  emit shape, one write plus an
+  explicit flush) answers 1 at a
+  broken descriptor 1 at all
+  three totals. The refusal
+  rerouted into the stdout
+  channel (descriptor 2 closed at
+  launch, descriptor 1 at
+  /dev/full) flips at capacity:
+  120 at 8,191, 1 at 8,192 and
+  8,193; Round 9 ran that family
+  only far past capacity and at
+  fitting size. Eleven add cells
+  re-verify the side-effect
+  order in every posture touched
+  (the append lands before the
+  emit; a refusal appends
+  nothing); the one launch-closed
+  add cell differs only on
+  descriptor 2, in exactly the
+  crash class OR-43 and OR-57
+  record (the oracle's traceback
+  text against the port's
+  silence, with exit, stdout,
+  and the record file in
+  agreement).
+
+- OR-61. The standing breadth
+  re-ran whole at this tree and
+  nothing moved. Round 9's two
+  batteries stand at 30 cells and
+  13 cells, 0 splits in each. The
+  closed-stream matrix stands at
+  14 postures by 15 labels, 210
+  cells a side; the only
+  differences are the four
+  launch-closed crash-class cells
+  of OR-43, and the boundary arms
+  at K=44 (8,180 defect bytes,
+  120 with the verbatim dump) and
+  K=45 (8,367 bytes, 1 with the
+  failure named) are byte for
+  byte identical on both sides.
+  The differential harness stands
+  at 126 cases, 400 steps, 0
+  failures.
+
+- OR-62. The realistic pass. A
+  history composed step by step
+  through both CLIs under a
+  deterministic seed: 2,400 adds
+  across 48 subjects (6 rotating
+  asserters, 4 evidence source
+  kinds, a supersession of each
+  subject's live head every third
+  add on that subject, a due date
+  on every fifth add), with get,
+  subject, due, and check reads
+  interleaved every 25 steps
+  (384 read steps), every step
+  comparing exit, stdout, stderr,
+  and the record bytes. The
+  finished record stands at
+  2,400 lines and 601,876 bytes,
+  byte for byte identical on both
+  sides. Whole-history reads
+  follow (subject views for all
+  48 subjects, due at three
+  dates, check, and three gets,
+  55 cells). The read budgets
+  were then exercised at their
+  contracted depths on that
+  history, a hand-appended claim
+  carrying nested arrays at 986,
+  987, and 988 and nested objects
+  at 985, 986, and 987, check and
+  get compared at each depth (12
+  cells): OR-55's points hold at
+  this scale. Last, the stream
+  battery ran against the big
+  store (13 cells): a get of a
+  chained claim, a due view, and
+  check under /dev/full, a
+  readerless pipe, and the
+  rerouted posture agree cell by
+  cell, the defective twin's
+  past-capacity refusal answers
+  120 at the broken descriptor 2
+  and 1 rerouted, and a get with
+  descriptor 1 closed at launch
+  stands in the OR-43 crash
+  class. The pass totals 2,864
+  compared steps, 0 splits.
+
+- OR-63. Three pins join the
+  streams suite, each asserting
+  the measured exits at the tuned
+  totals with a healthy twin
+  asserting the tuning arithmetic
+  (check_single_defect_at_the_
+  exact_points, refusal_single_
+  defect_at_the_exact_points,
+  rerouted_refusal_flips_at_
+  capacity). The gate on the
+  final tree: cargo test 69
+  passed (50 store, 19 streams),
+  clippy --all-targets with
+  warnings denied clean, fmt
+  --check clean, and the repo
+  codepoint scan at U+2014=0 and
+  U+2013=0.
