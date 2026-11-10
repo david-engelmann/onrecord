@@ -1213,15 +1213,20 @@ the repair code).
   compared steps, 0 splits.
 
 - OR-63. Three pins join the
-  streams suite, each asserting
-  the measured exits at the tuned
-  totals with a healthy twin
-  asserting the tuning arithmetic
-  (check_single_defect_at_the_
-  exact_points, refusal_single_
-  defect_at_the_exact_points,
-  rerouted_refusal_flips_at_
-  capacity). The gate on the
+  streams suite, asserting the
+  measured exits at the tuned
+  totals (check_single_defect_
+  at_the_exact_points, refusal_
+  single_defect_at_the_exact_
+  points, rerouted_refusal_flips_
+  at_capacity). The first two
+  pins each carry a healthy
+  twin asserting the tuning
+  arithmetic; the third pin's
+  tuned totals rest on the same
+  tuned_record construction the
+  second pin's twin asserts at
+  the same totals. The gate on the
   final tree: cargo test 69
   passed (50 store, 19 streams),
   clippy --all-targets with
