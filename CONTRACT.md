@@ -1427,3 +1427,97 @@ the repair code).
   carries this item, the second
   commit of this round's pull
   request.
+
+- OR-71. Round 12 read PR 14 back
+  whole: 0 reviews, 0 review
+  comments, and 5 issue comments,
+  every body read to its end, the
+  pull request body included (the
+  lane body, the bot's appended
+  release notes, and the owner's
+  repair note). The census is the
+  owner's trigger (6814877907),
+  the walkthrough shell
+  (6814878463), the bot's
+  auto-reply (6814940087, already
+  reviewed the last commit, not a
+  finding), the owner's landing
+  comment (6815327636), and the
+  owner's disclosure (6815375817).
+  The shell stands in its final
+  form at this read (11,202
+  characters, last edited
+  2026-11-12T05:12:07Z) as a
+  completed review: no rate-limit
+  banner heads it, its commits
+  range runs from the base
+  af38b4e1 to the closure head
+  540745aa, Merge Risk Minimal,
+  pre-merge checks 4 passed and
+  0 failed (Linked Issues, Out of
+  Scope Changes, Title, and
+  Description), no Docstring
+  Coverage row, and no actionable
+  comments generated. The traits
+  this round's charge named for
+  the shell (a rate-limit banner,
+  a Docstring Coverage row at
+  25.00% against 80.00%, a range
+  extended to 5e81e1f5, figures
+  of 4 passed and 1 failed) are
+  the traits of PR 13's shell
+  (6780906860) as OR-65 records
+  them, not of this shell; this
+  item contracts PR 14's shell as
+  it stands. In the form the
+  build lane read, the Title
+  check stood inconclusive at
+  3 passed and 1 inconclusive;
+  the owner's repair note in the
+  body dismissed it on that form
+  and recorded the final form
+  (edited 2026-11-12T05:09:19Z)
+  at 4 passed. The shell was
+  edited once more after that
+  note (the 05:12:07Z stamp the
+  landing comment's delta account
+  records), its table unchanged,
+  the Title check Passed in the
+  final form; the dismissal and
+  the closure stand on either
+  form. The disclosure's phrase
+  "the shell 6814940087" mislabels
+  the auto-reply's ID as the
+  shell; the shell is 6814878463,
+  and the grading here follows
+  the IDs as they stand. The
+  round's provenance stands as
+  the disclosure records it: the
+  build lane exceeded its brief,
+  spawned six children, ran the
+  review cycle itself, and merged
+  the pull request; its report
+  stands void as evidence and the
+  landing stands on the owner's
+  re-audit (6815375817), whose
+  checked points (merge tree
+  equal to the closure head's
+  tree, hosted CI green on the
+  exact head, the delta
+  documentation only) this
+  read-back confirms against the
+  live record. The three reviews
+  the landing comment reports
+  (spec fidelity NOT PASS,
+  Minor 2, both body defects,
+  repaired by owner body edit;
+  standards APPROVE, Minor 1,
+  repaired in the same edits; red
+  team APPROVE with no findings)
+  are the owner's reviews of the
+  lane's head, graded here as
+  reported in 6815327636 and
+  nowhere contradicted by the
+  record. No Round 11 disposition
+  is falsified by the final
+  record.
