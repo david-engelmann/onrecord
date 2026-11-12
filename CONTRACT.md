@@ -1588,8 +1588,79 @@ the repair code).
   rest on the lost drivers: the
   stream and budget points stand
   re-measured this round at
-  OR-74, the realistic pass at
-  OR-75, and the two un-run
+  OR-74 and OR-75, the realistic
+  pass at OR-76, and the two
+  un-run
   surfaces at OR-72, and the
   merged record itself stands in
   PR 14 and its contract items.
+
+- OR-74. The capacity and stream
+  laws re-measured fresh at their
+  exact points, at the shipped
+  CLI against the final oracle
+  tree: a 55-cell battery, 0
+  splits, of which this item
+  covers 39 stream cells. The
+  single-defect refusal at
+  printed totals of exactly
+  8,191, 8,192, and 8,193 ends at
+  120 at a broken descriptor 2
+  (at /dev/full and at a
+  readerless pipe) at all three
+  totals, and at 1 healthy. Check
+  rendering one defect on
+  descriptor 1 at the same totals
+  answers 120 with the shutdown
+  dump at 8,191 and 1 with the OS
+  error named at 8,192 and 8,193:
+  a write that fills the
+  8,192-byte buffer exactly
+  flushes at fullness, and 8,191
+  defers. A get view tuned to the
+  same totals answers 1 at a
+  broken descriptor 1 at all
+  three. The rerouted refusal
+  (descriptor 2 closed at launch,
+  descriptor 1 at /dev/full)
+  flips at capacity: 120 at
+  8,191, 1 at 8,192 and 8,193.
+  The past-capacity refusal of
+  OR-56 (600 bogus lines) answers
+  120 at /dev/full and at a
+  readerless pipe, 1 healthy, and
+  1 rerouted. Five add cells
+  re-verify the side-effect order
+  (the append lands before the
+  emit; a refusal appends
+  nothing); the one launch-closed
+  add cell differs only on
+  descriptor 2, in exactly the
+  crash class OR-43 records.
+
+- OR-75. The read budgets
+  re-measured at their exact flip
+  points, the remaining 16 cells
+  of the OR-74 battery, each
+  boundary point itself included
+  with a cell on each side, and
+  each cell asserting the
+  oracle's exit direction against
+  the contracted side of the
+  boundary. Under BUDGET_READ
+  (990, 988) through check,
+  nested arrays verify at 986 and
+  987 and refuse at 988 and 989,
+  and nested objects verify at
+  985 and 986 and refuse at 987
+  and 988. Under
+  BUDGET_READ_NARROW (989, 987)
+  through get, nested arrays
+  verify at 985 and
+  986 and refuse at 987 and 988,
+  and nested objects verify at
+  984 and 985 and refuse at 986
+  and 987. The constants in
+  src/store.rs stand as
+  contracted, and no point moved,
+  so no new pin is owed.
