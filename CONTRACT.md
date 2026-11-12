@@ -1240,3 +1240,190 @@ the repair code).
   carries this item, the second
   commit of this round's pull
   request.
+
+- OR-65. Round 11 read PR 13 back
+  whole: 1 review, 0 review
+  comments, and 4 issue comments,
+  every body read to its end, the
+  pull request body included (the
+  lane body, the bot's appended
+  release notes, and the owner's
+  repair note for 5e81e1f5). The
+  review (5850508355, COMMENTED on
+  50bada14) carries two additional
+  comments, both Trivial and
+  Unverified (share the exact-point
+  totals through a shared constant;
+  hyphenate byte-for-byte at OR-61
+  and OR-62), a prompt block that
+  names the failed Docstring
+  Coverage check, and run info
+  recording that no configuration
+  file from this repository
+  applied. The shell (6780906860)
+  stands in its final form
+  (updated 2026-11-10T23:12:15Z)
+  under a rate-limit banner, its
+  commits range extended to the
+  repair head 5e81e1f5, over a
+  retained walkthrough whose
+  change assessment still covers
+  50bada14, Merge Risk Minimal,
+  pre-merge checks 4 passed and 1
+  failed (Docstring Coverage
+  25.00% against 80.00%, 4
+  functions across 1 file, 2
+  skipped as unsupported). The
+  trigger (6780912599), the
+  rate-limit auto-reply
+  (6781087797, not a finding), and
+  the owner's landing note
+  (6781980273) complete the
+  census. The Round 10 report
+  disposed the step 0 record in
+  three items and the prompt
+  block; the landing note restates
+  those dispositions (the
+  Docstring Coverage failure on
+  the standing ground OR-51
+  records, the two Trivial and
+  Unverified comments with their
+  reasons) and corrects none of
+  them. No Round 10 disposition
+  is falsified by the final
+  record. Two form changes postdate
+  the report's read and are
+  contracted here: the shell was
+  edited after it (the banner and
+  the extended range; its figures
+  are unchanged), and the census
+  grew from 3 issue comments to 4
+  when the landing note landed.
+- OR-66. The stream law re-verified
+  fresh at its contracted points,
+  at the shipped CLI against the
+  final oracle tree (0c25a9a, its
+  extraction blob-verified again
+  this round): a 55-cell battery,
+  0 splits, of which this item
+  covers 39 stream cells. The
+  single-defect refusal at printed
+  totals of exactly 8,191, 8,192,
+  and 8,193 ends at 120 at a broken
+  descriptor 2 (at /dev/full and at
+  a readerless pipe) at all three
+  totals, and at 1 healthy. Check
+  rendering one defect on
+  descriptor 1 at the same totals
+  answers 120 with the shutdown
+  dump at 8,191 and 1 with the OS
+  error named at 8,192 and 8,193:
+  a write that fills the 8,192-byte
+  buffer exactly flushes at
+  fullness, and 8,191 defers. A get
+  view tuned to the same totals
+  answers 1 at a broken descriptor
+  1 at all three. The rerouted
+  refusal (descriptor 2 closed at
+  launch, closed in the child and
+  never redirected, descriptor 1 at
+  /dev/full) flips at capacity:
+  120 at 8,191, 1 at 8,192 and
+  8,193. The past-capacity refusal
+  of OR-56 (600 bogus lines, the
+  joined defect message far past
+  capacity) answers 120 at /dev/full
+  and at a readerless pipe, 1
+  healthy, and 1 rerouted. Five add
+  cells re-verify the side-effect
+  order (the append lands before
+  the emit; a refusal appends
+  nothing); the one launch-closed
+  add cell differs only on
+  descriptor 2, in exactly the
+  crash class OR-43 records.
+- OR-67. The read budgets re-verified
+  at their exact flip points, the
+  remaining 16 cells of the OR-66
+  battery, each boundary point
+  itself included with a cell on
+  each side. Under BUDGET_READ
+  (990, 988) through check, nested
+  arrays verify at 986 and 987 and
+  refuse at 988 and 989, and nested
+  objects verify at 985 and 986 and
+  refuse at 987 and 988. Under
+  BUDGET_READ_NARROW (989, 987)
+  through get, nested arrays verify
+  at 985 and 986 and refuse at 987
+  and 988, and nested objects
+  verify at 984 and 985 and refuse
+  at 986 and 987. The constants in
+  src/store.rs stand as contracted.
+- OR-68. The realistic pass. A
+  history composed step by step
+  through both CLIs under a
+  deterministic seed: 2,400 adds
+  across 48 subjects (6 rotating
+  asserters, 4 evidence source
+  kinds, a supersession of each
+  subject's live head every third
+  add on that subject, a due date
+  on every fifth add), with get,
+  subject, due, and check reads
+  interleaved every 25 steps
+  (384 read steps), every step
+  comparing exit, stdout, stderr,
+  and the record bytes. The
+  finished record stands at
+  2,400 lines and 601,762 bytes,
+  byte for byte identical on both
+  sides. Whole-history reads
+  follow (subject views for all
+  48 subjects, due at three
+  dates, check, and three gets,
+  55 cells). The read budgets
+  were then exercised at their
+  contracted depths on that
+  history, a hand-appended claim
+  carrying nested arrays at 986,
+  987, and 988 and nested objects
+  at 985, 986, and 987, check and
+  get compared at each depth (12
+  cells): OR-55's points hold at
+  this scale. Last, the stream
+  battery ran against the big
+  store (13 cells): a get of a
+  chained claim, a due view, and
+  check under /dev/full, a
+  readerless pipe, and the
+  rerouted posture agree cell by
+  cell, the defective twin's
+  past-capacity refusal answers
+  120 at the broken descriptor 2
+  and 1 rerouted, and a get with
+  descriptor 1 closed at launch
+  stands in the OR-43 crash
+  class. The pass totals 2,864
+  compared steps, 0 splits.
+- OR-69. No point moved, so no new
+  pin is owed: every point OR-66
+  and OR-67 re-verify already
+  stands pinned (OR-45 and OR-63
+  for the exact stream points,
+  OR-56 for the past-capacity
+  refusal, OR-55 for the budget
+  points). The gate on the final
+  tree: cargo test 69
+  passed (50 store, 19 streams),
+  clippy --all-targets with
+  warnings denied clean, fmt
+  --check clean, and the repo
+  codepoint scan at U+2014=0 and
+  U+2013=0.
+
+- OR-70. README records 11 of 100
+  in the closure commit that
+  carries this item, the second
+  commit of this round's pull
+  request.
