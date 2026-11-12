@@ -1700,3 +1700,37 @@ the repair code).
   a readerless pipe, with 1
   rerouted, at this scale as at
   Round 11's.
+
+- OR-77. The gate on the final
+  tree: cargo test 69 passed (50
+  store, 19 streams), clippy
+  --all-targets with warnings
+  denied clean, fmt --check
+  clean, and the repo codepoint
+  scan at U+2014=0 and U+2013=0,
+  run by the completion lane on
+  the banked head tree; this
+  closure changes no code. The
+  round's provenance: the
+  original build lane banked
+  OR-71 to OR-76 in five commits
+  on this branch and was
+  interrupted by a box restart
+  before the gate, this closure,
+  and the pull request, and its
+  scratch is gone with nothing
+  reconstructed. The completion
+  lane finished from the banked
+  head: it read OR-71 to OR-76
+  back whole and found each item
+  present and complete, ran the
+  gate, appended this closure,
+  and opened the pull request.
+  The items OR-71 to OR-76 stand
+  as the original lane's work;
+  this closure is the completion
+  lane's. README records 12 of
+  100 in the closure commit that
+  carries this item, the sixth
+  commit of this round's pull
+  request.
