@@ -1521,3 +1521,39 @@ the repair code).
   record. No Round 11 disposition
   is falsified by the final
   record.
+
+- OR-72. The two surfaces Round
+  11 named as not re-run, run in
+  full in their own right at the
+  binary built from this round's
+  base tree against the final
+  oracle tree (0c25a9a, verified
+  blob for blob through the
+  GitHub API this round: the
+  commit and its recursive tree
+  read through the API, both
+  standing extractions matching
+  all four package files by
+  recomputed git blob id). First,
+  the standing differential
+  harness of OR-22 (the driver at
+  hidden_files/chat2-or-round3/
+  differential.py, run unmodified
+  with OR_RUST_BIN and OR_PY_SRC
+  set to the oracle2 extraction):
+  126 cases, 400 steps, 0
+  failures, the Round 10 figures
+  reproduced exactly. Second, the
+  Round 9 and Round 10 standing
+  batteries, run unmodified from
+  their scratch homes: Round 9's
+  battery.py at 30 cells and
+  battery2.py at 13 cells, and
+  Round 10's battery10.py at 39
+  cells, 82 battery cells in all,
+  0 splits. Every cell byte-
+  compares exit, stdout, stderr
+  where observable, and the
+  record file after the step, as
+  the drivers stand. No cell
+  convicts and no repair is owed.
