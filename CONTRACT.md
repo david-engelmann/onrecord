@@ -1557,3 +1557,39 @@ the repair code).
   record file after the step, as
   the drivers stand. No cell
   convicts and no repair is owed.
+
+- OR-73. The owed workspace
+  copies of Round 11's scratch,
+  charged by PR 14's landing
+  comment, stand discharged as
+  follows. The lane's progress
+  file stands in the workspace at
+  retro-line/or11-scratch/
+  progress.md (2,628 bytes, read
+  back this round; it ends at the
+  read-back step, the form in
+  which the lane banked it). The
+  rest of the scratch (the lane's
+  report, its battery and
+  realistic-pass drivers, and its
+  logs) stood only in
+  /tmp/or11-scratch and in
+  /dev/shm staging, and neither
+  stands any longer: /tmp was
+  wiped in the restart wave after
+  the round closed and no copy
+  stands in the workspace, in the
+  goal's hidden files, or in the
+  lane's scaffold tree. Those
+  copies are discharged as
+  unrecoverable and nothing is
+  reconstructed in their place.
+  The round's measurements do not
+  rest on the lost drivers: the
+  stream and budget points stand
+  re-measured this round at
+  OR-74, the realistic pass at
+  OR-75, and the two un-run
+  surfaces at OR-72, and the
+  merged record itself stands in
+  PR 14 and its contract items.
