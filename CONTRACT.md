@@ -1421,3 +1421,9 @@ the repair code).
   --check clean, and the repo
   codepoint scan at U+2014=0 and
   U+2013=0.
+
+- OR-70. README records 11 of 100
+  in the closure commit that
+  carries this item, the second
+  commit of this round's pull
+  request.
