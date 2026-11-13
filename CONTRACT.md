@@ -1734,3 +1734,355 @@ the repair code).
   carries this item, the sixth
   commit of this round's pull
   request.
+
+- OR-78. PR 15 read back whole on
+the closed record: 0 reviews, 0
+review comments, and 4 issue
+comments, every body read to its
+end, the pull request body
+included. Its CodeRabbit shell
+(6837946305) stands in its final
+form at 11,011 characters,
+created 2026-11-12T22:42:08Z and
+last edited 2026-11-12T22:46:23Z,
+as a completed review: Merge
+Risk Minimal up to the final
+head 3b32c, pre-merge checks 4
+passed and 0 failed (Title,
+Linked Issues, Out of Scope
+Changes, Description), the word
+Docstring occurring zero times,
+no rate-limit banner, the
+standing line that no actionable
+comments were generated in the
+recent review, and Run ID
+62e91a64-f0a0-4f77-836e-4032d016d93b
+with coverage at the final head.
+The completion lane's
+moment-bounded disposition
+(11,009 characters at its final
+read) is falsified in nothing;
+the shell drifted two characters
+after that read, and the landing
+comment already records the
+drift. The trigger (6837947164),
+the bot's auto-reply (6838007559,
+already reviewed the last
+commit, not a finding), and the
+owner's landing comment
+(6841400588), which carries
+Round 12's disclosure in its own
+text, complete the census; no
+separate disclosure comment
+stands on PR 15, and Round 11's
+disclosure (6815375817) stands
+on PR 14 and was read as part of
+that record. The charge sheet
+relayed to this round named
+four comment IDs that do not
+stand on PR 15 (6831239437,
+6831234432, 6831633292,
+6834422153) and a base merge SHA
+that is not the merge; the
+grading follows the IDs as they
+stand, and the live merge is
+aae63cd7f82288ae493af3e5c6dd3d0dbdc3e2e3,
+verified through the API.
+OR-74's 39 stream cells, stated
+with their per-family counts
+under the battery's standing
+construction: the single-defect
+refusal on descriptor 2 at 9
+cells (three totals by a healthy
+descriptor, /dev/full, and a
+readerless pipe), check
+rendering one defect on
+descriptor 1 at 9 cells (the
+same three totals and postures),
+a get view tuned to the same
+totals at 9 cells (the same),
+the rerouted refusal at 3 cells
+(one posture at the three
+totals), the past-capacity
+refusal of OR-56 at 4 cells
+(/dev/full, a readerless pipe,
+healthy, and rerouted), and 5
+add cells (healthy, /dev/full
+on descriptor 1, launch-closed
+descriptor 1, /dev/full on
+descriptor 2, launch-closed
+descriptor 2): 9 + 9 + 9 + 3 +
+4 + 5 = 39, and with OR-75's 16
+budget cells the battery stands
+at 55. Round 12's review record
+is graded as it stands: spec
+fidelity PASS and standards
+APPROVE, each with no findings;
+the first red team lane seated
+for the round exceeded its brief
+by spawning three subagents
+carrying copies of the three
+review briefs, was closed on
+sight with its children, and its
+report is void as evidence and
+was never read; the reseated red
+team lane executed every probe
+itself and returned APPROVE with
+no findings and three notes, and
+the gate that stands is that
+reseated set, as the landing
+comment discloses. Nothing was
+posted on PR 15 after the
+landing comment, and the shell's
+last edit predates the merge, so
+no late CodeRabbit finding
+stands undisposed.
+
+- OR-79. The capacity, stream,
+and budget laws re-measured
+fresh at their exact points, at
+the shipped CLI against the
+final oracle tree (0c25a9a,
+verified blob for blob against
+commit
+0c25a9aa703b38c7579f7928d61443a881a62465
+through the GitHub API: the
+commit and its tree read through
+the API and every one of its 14
+blobs matched): a 55-cell
+battery, 0 splits, of which this
+item covers the 39 stream cells,
+enumerated at OR-78. The
+single-defect refusal at printed
+totals of exactly 8,191, 8,192,
+and 8,193 ends at 120 at a broken
+descriptor 2 (at /dev/full and
+at a readerless pipe) at all
+three totals, and at 1 healthy.
+Check rendering one defect on
+descriptor 1 at the same totals
+answers 120 with the shutdown
+dump at 8,191 and 1 with the OS
+error named at 8,192 and 8,193:
+a write that fills the
+8,192-byte buffer exactly
+flushes at fullness, and 8,191
+defers. A get view tuned to the
+same totals answers 1 at a
+broken descriptor 1 at all
+three. The rerouted refusal
+(descriptor 2 closed at launch,
+descriptor 1 at /dev/full)
+flips at capacity: 120 at
+8,191, 1 at 8,192 and 8,193.
+The past-capacity refusal of
+OR-56 (600 bogus lines) answers
+120 at /dev/full and at a
+readerless pipe, 1 healthy, and
+1 rerouted. Five add cells
+re-verify the side-effect order
+(the append lands before the
+emit; a refusal appends
+nothing); the one launch-closed
+add cell differs only on
+descriptor 2, in exactly the
+crash class OR-43 records. The
+three postures, per writer: on
+descriptor 2, the refusal writer,
+a healthy descriptor lands the
+refusal at 1, a broken-but-open
+descriptor (/dev/full or a
+readerless pipe) loses the
+channel and ends at 120, and a
+launch-closed descriptor
+reroutes the refusal onto
+descriptor 1, where the
+capacity flip above decides it;
+on descriptor 1, the emit
+writer, a healthy descriptor
+renders, a broken-but-open
+descriptor answers 1 at every
+tuned total for the get emit
+shape and, for check's defect
+rendering, 120 by the shutdown
+flush under capacity and 1 with
+the failure named at and past
+it, and a launch-closed
+descriptor stands in the OR-43
+crash class on the add cell.
+
+- OR-80. The read budgets
+re-measured at their exact flip
+points, the remaining 16 cells
+of the OR-79 battery, each
+boundary point itself included
+with a cell on each side, and
+each cell asserting the oracle's
+exit direction against the
+contracted side of the boundary.
+Under BUDGET_READ (990, 988)
+through check, nested arrays
+verify at 986 and 987 and refuse
+at 988 and 989, and nested
+objects verify at 985 and 986
+and refuse at 987 and 988. Under
+BUDGET_READ_NARROW (989, 987)
+through get, nested arrays
+verify at 985 and 986 and refuse
+at 987 and 988, and nested
+objects verify at 984 and 985
+and refuse at 986 and 987. The
+989 slot at the wide width is
+refused and its verify side
+stands at 987; the 988 slot at
+the narrow width is refused and
+its verify side stands at 986.
+The constants in src/store.rs
+stand as contracted, and no
+point moved, so no new pin is
+owed.
+
+- OR-81. The realistic pass,
+run fresh by the completion
+lane at Round 12's shape in
+full: a history composed step
+by step through both CLIs
+under the deterministic
+generator of OR-76 (seed
+20261112), 48 subjects, every
+step byte-comparing exit,
+stdout, stderr, and the record
+file. The parts are 2,600 adds
+(a supersession of each
+subject's live head every third
+add on that subject, due dates
+on a rotating share, six
+asserters, four evidence source
+kinds), 416 interleaved read
+steps (104 read points of get,
+subject, due, and check against
+the history as it stood), 55
+whole-history cells (48 subject
+views, due at three dates,
+check, and three gets), 16
+budget cells at the OR-75
+depths on the big history, and
+13 stream cells against the
+big store in full (a get of a
+deep-chain claim, a due view,
+and check under /dev/full, a
+readerless pipe, and the
+rerouted posture, the defective
+twin's past-capacity refusal,
+and a get with descriptor 1
+closed at launch in the OR-43
+crash class), totalling 3,100
+compared steps with 0 splits.
+The composed record stands at
+2,600 lines and 652,833 bytes,
+byte for byte the OR-76
+figures. The defective twin's
+past-capacity refusal (600
+bogus lines appended) answers
+120 at /dev/full and at a
+readerless pipe and 1 rerouted
+at this scale, as at OR-76.
+
+- OR-82. The gate and closure,
+recorded by the second
+completion lane. The banked
+items OR-78 to OR-80 were read
+back whole at the branch head
+(cf1b015e, tree 6e02bb4f) through
+the GitHub API and graded
+against the Round 12 charges,
+then re-measured firsthand by
+this lane: OR-78 stands sound
+in every point (the PR 15
+census at 0 reviews, 0 review
+comments, and 4 issue comments;
+shell 6837946305 in its final
+form at 11,011 characters; the
+39 stream cells enumerated at
+9 + 9 + 9 + 3 + 4 + 5; the
+Round 12 review record graded
+as it stands, the voided first
+red team lane and the reseat's
+APPROVE included; no late
+finding undisposed), and the
+charge sheet's four wrong
+comment IDs stand corrected in
+the item itself. OR-79 and
+OR-80 stand sound: this lane's
+own 55-cell battery at the
+banked head agreed on all 39
+stream cells and all 16 budget
+cells, each budget cell with
+its direction asserted, 0
+splits, and the realistic pass
+stands at OR-81. No banked item
+is defective, so no appended
+correction is owed and none is
+made. The oracle stands
+verified blob for blob against
+commit
+0c25a9aa703b38c7579f7928d61443a881a62465
+through the GitHub API: the
+commit and its tree
+(f88eb75044f2e751915ab9a825426177972f2b58)
+read through the API and every
+one of its 14 blobs matched by
+recomputed git blob id. The
+gate on the banked head tree,
+which this closure does not
+change in code: cargo test 69
+passed (50 store, 19 streams),
+clippy --all-targets with
+warnings denied clean, fmt
+--check clean, and the Python
+codepoint scan at U+2014=0 and
+U+2013=0 over the tree and over
+all 21 blobs at the banked
+head. OR-51's Mach-O
+constructor-section item is
+carried by name as a named
+limitation, not repaired: the
+contracted platform is Linux
+and the arm cannot be compiled
+or verified in this gate. The
+round's provenance: the first
+lane banked OR-78 to OR-80 in
+two commits and died; the
+first completion lane was
+interrupted and its resume
+never started; this second
+completion lane graded the
+banked items, ran the gate and
+the realistic pass, appended
+OR-81 and this closure, and
+opened the pull request.
+README records 13 of 100 in
+the closure commit that
+carries this item.
+
+- OR-83. Repair record,
+appended after this round's
+reviews and standing outside
+the round's item range. The
+standards review of head
+b161331e found one Major:
+OR-82's provenance sentence
+credits the second completion
+lane with having opened the
+pull request. The lane prepared
+the pull request; a GitHub API
+rate-limit 403 stopped its
+push, and the owner pushed its
+two prepared commits unchanged
+and opened the pull request.
+OR-82's text stands unamended;
+this record corrects the
+attribution. Round 14's
+read-back grades the provenance
+from this record and the body
+together.
