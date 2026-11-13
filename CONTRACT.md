@@ -1987,3 +1987,80 @@ bogus lines appended) answers
 120 at /dev/full and at a
 readerless pipe and 1 rerouted
 at this scale, as at OR-76.
+
+- OR-82. The gate and closure,
+recorded by the second
+completion lane. The banked
+items OR-78 to OR-80 were read
+back whole at the branch head
+(cf1b015e, tree 6e02bb4f) through
+the GitHub API and graded
+against the Round 12 charges,
+then re-measured firsthand by
+this lane: OR-78 stands sound
+in every point (the PR 15
+census at 0 reviews, 0 review
+comments, and 4 issue comments;
+shell 6837946305 in its final
+form at 11,011 characters; the
+39 stream cells enumerated at
+9 + 9 + 9 + 3 + 4 + 5; the
+Round 12 review record graded
+as it stands, the voided first
+red team lane and the reseat's
+APPROVE included; no late
+finding undisposed), and the
+charge sheet's four wrong
+comment IDs stand corrected in
+the item itself. OR-79 and
+OR-80 stand sound: this lane's
+own 55-cell battery at the
+banked head agreed on all 39
+stream cells and all 16 budget
+cells, each budget cell with
+its direction asserted, 0
+splits, and the realistic pass
+stands at OR-81. No banked item
+is defective, so no appended
+correction is owed and none is
+made. The oracle stands
+verified blob for blob against
+commit
+0c25a9aa703b38c7579f7928d61443a881a62465
+through the GitHub API: the
+commit and its tree
+(f88eb75044f2e751915ab9a825426177972f2b58)
+read through the API and every
+one of its 14 blobs matched by
+recomputed git blob id. The
+gate on the banked head tree,
+which this closure does not
+change in code: cargo test 69
+passed (50 store, 19 streams),
+clippy --all-targets with
+warnings denied clean, fmt
+--check clean, and the Python
+codepoint scan at U+2014=0 and
+U+2013=0 over the tree and over
+all 21 blobs at the banked
+head. OR-51's Mach-O
+constructor-section item is
+carried by name as a named
+limitation, not repaired: the
+contracted platform is Linux
+and the arm cannot be compiled
+or verified in this gate. The
+round's provenance: the first
+lane banked OR-78 to OR-80 in
+two commits and died; the
+first completion lane was
+interrupted and its resume
+never started; this second
+completion lane graded the
+banked items, ran the gate and
+the realistic pass, appended
+OR-81 and this closure, and
+opened the pull request.
+README records 13 of 100 in
+the closure commit that
+carries this item.
