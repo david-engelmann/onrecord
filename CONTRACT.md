@@ -2064,3 +2064,25 @@ opened the pull request.
 README records 13 of 100 in
 the closure commit that
 carries this item.
+
+- OR-83. Repair record,
+appended after this round's
+reviews and standing outside
+the round's item range. The
+standards review of head
+b161331e found one Major:
+OR-82's provenance sentence
+credits the second completion
+lane with having opened the
+pull request. The lane prepared
+the pull request; a GitHub API
+rate-limit 403 stopped its
+push, and the owner pushed its
+two prepared commits unchanged
+and opened the pull request.
+OR-82's text stands unamended;
+this record corrects the
+attribution. Round 14's
+read-back grades the provenance
+from this record and the body
+together.
