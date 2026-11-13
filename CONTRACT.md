@@ -1837,3 +1837,107 @@ landing comment, and the shell's
 last edit predates the merge, so
 no late CodeRabbit finding
 stands undisposed.
+
+- OR-79. The capacity, stream,
+and budget laws re-measured
+fresh at their exact points, at
+the shipped CLI against the
+final oracle tree (0c25a9a,
+verified blob for blob against
+commit
+0c25a9aa703b38c7579f7928d61443a881a62465
+through the GitHub API: the
+commit and its tree read through
+the API and every one of its 14
+blobs matched): a 55-cell
+battery, 0 splits, of which this
+item covers the 39 stream cells,
+enumerated at OR-78. The
+single-defect refusal at printed
+totals of exactly 8,191, 8,192,
+and 8,193 ends at 120 at a broken
+descriptor 2 (at /dev/full and
+at a readerless pipe) at all
+three totals, and at 1 healthy.
+Check rendering one defect on
+descriptor 1 at the same totals
+answers 120 with the shutdown
+dump at 8,191 and 1 with the OS
+error named at 8,192 and 8,193:
+a write that fills the
+8,192-byte buffer exactly
+flushes at fullness, and 8,191
+defers. A get view tuned to the
+same totals answers 1 at a
+broken descriptor 1 at all
+three. The rerouted refusal
+(descriptor 2 closed at launch,
+descriptor 1 at /dev/full)
+flips at capacity: 120 at
+8,191, 1 at 8,192 and 8,193.
+The past-capacity refusal of
+OR-56 (600 bogus lines) answers
+120 at /dev/full and at a
+readerless pipe, 1 healthy, and
+1 rerouted. Five add cells
+re-verify the side-effect order
+(the append lands before the
+emit; a refusal appends
+nothing); the one launch-closed
+add cell differs only on
+descriptor 2, in exactly the
+crash class OR-43 records. The
+three postures, per writer: on
+descriptor 2, the refusal writer,
+a healthy descriptor lands the
+refusal at 1, a broken-but-open
+descriptor (/dev/full or a
+readerless pipe) loses the
+channel and ends at 120, and a
+launch-closed descriptor
+reroutes the refusal onto
+descriptor 1, where the
+capacity flip above decides it;
+on descriptor 1, the emit
+writer, a healthy descriptor
+renders, a broken-but-open
+descriptor answers 1 at every
+tuned total for the get emit
+shape and, for check's defect
+rendering, 120 by the shutdown
+flush under capacity and 1 with
+the failure named at and past
+it, and a launch-closed
+descriptor stands in the OR-43
+crash class on the add cell.
+
+- OR-80. The read budgets
+re-measured at their exact flip
+points, the remaining 16 cells
+of the OR-79 battery, each
+boundary point itself included
+with a cell on each side, and
+each cell asserting the oracle's
+exit direction against the
+contracted side of the boundary.
+Under BUDGET_READ (990, 988)
+through check, nested arrays
+verify at 986 and 987 and refuse
+at 988 and 989, and nested
+objects verify at 985 and 986
+and refuse at 987 and 988. Under
+BUDGET_READ_NARROW (989, 987)
+through get, nested arrays
+verify at 985 and 986 and refuse
+at 987 and 988, and nested
+objects verify at 984 and 985
+and refuse at 986 and 987. The
+989 slot at the wide width is
+refused and its verify side
+stands at 987; the 988 slot at
+the narrow width is refused and
+its verify side stands at 986.
+The constants in src/store.rs
+stand as contracted, and no
+point moved, so no new pin is
+owed.
