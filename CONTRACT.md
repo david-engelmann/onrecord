@@ -1941,3 +1941,49 @@ The constants in src/store.rs
 stand as contracted, and no
 point moved, so no new pin is
 owed.
+
+- OR-81. The realistic pass,
+run fresh by the completion
+lane at Round 12's shape in
+full: a history composed step
+by step through both CLIs
+under the deterministic
+generator of OR-76 (seed
+20261112), 48 subjects, every
+step byte-comparing exit,
+stdout, stderr, and the record
+file. The parts are 2,600 adds
+(a supersession of each
+subject's live head every third
+add on that subject, due dates
+on a rotating share, six
+asserters, four evidence source
+kinds), 416 interleaved read
+steps (104 read points of get,
+subject, due, and check against
+the history as it stood), 55
+whole-history cells (48 subject
+views, due at three dates,
+check, and three gets), 16
+budget cells at the OR-75
+depths on the big history, and
+13 stream cells against the
+big store in full (a get of a
+deep-chain claim, a due view,
+and check under /dev/full, a
+readerless pipe, and the
+rerouted posture, the defective
+twin's past-capacity refusal,
+and a get with descriptor 1
+closed at launch in the OR-43
+crash class), totalling 3,100
+compared steps with 0 splits.
+The composed record stands at
+2,600 lines and 652,833 bytes,
+byte for byte the OR-76
+figures. The defective twin's
+past-capacity refusal (600
+bogus lines appended) answers
+120 at /dev/full and at a
+readerless pipe and 1 rerouted
+at this scale, as at OR-76.
