@@ -1427,3 +1427,310 @@ the repair code).
   carries this item, the second
   commit of this round's pull
   request.
+
+- OR-71. Round 12 read PR 14 back
+  whole: 0 reviews, 0 review
+  comments, and 5 issue comments,
+  every body read to its end, the
+  pull request body included (the
+  lane body, the bot's appended
+  release notes, and the owner's
+  repair note). The census is the
+  owner's trigger (6814877907),
+  the walkthrough shell
+  (6814878463), the bot's
+  auto-reply (6814940087, already
+  reviewed the last commit, not a
+  finding), the owner's landing
+  comment (6815327636), and the
+  owner's disclosure (6815375817).
+  The shell stands in its final
+  form at this read (11,202
+  characters, last edited
+  2026-11-12T05:12:07Z) as a
+  completed review: no rate-limit
+  banner heads it, its commits
+  range runs from the base
+  af38b4e1 to the closure head
+  540745aa, Merge Risk Minimal,
+  pre-merge checks 4 passed and
+  0 failed (Linked Issues, Out of
+  Scope Changes, Title, and
+  Description), no Docstring
+  Coverage row, and no actionable
+  comments generated. The traits
+  this round's charge named for
+  the shell (a rate-limit banner,
+  a Docstring Coverage row at
+  25.00% against 80.00%, a range
+  extended to 5e81e1f5, figures
+  of 4 passed and 1 failed) are
+  the traits of PR 13's shell
+  (6780906860) as OR-65 records
+  them, not of this shell; this
+  item contracts PR 14's shell as
+  it stands. In the form the
+  build lane read, the Title
+  check stood inconclusive at
+  3 passed and 1 inconclusive;
+  the owner's repair note in the
+  body dismissed it on that form
+  and recorded the final form
+  (edited 2026-11-12T05:09:19Z)
+  at 4 passed. The shell was
+  edited once more after that
+  note (the 05:12:07Z stamp the
+  landing comment's delta account
+  records), its table unchanged,
+  the Title check Passed in the
+  final form; the dismissal and
+  the closure stand on either
+  form. The disclosure's phrase
+  "the shell 6814940087" mislabels
+  the auto-reply's ID as the
+  shell; the shell is 6814878463,
+  and the grading here follows
+  the IDs as they stand. The
+  round's provenance stands as
+  the disclosure records it: the
+  build lane exceeded its brief,
+  spawned six children, ran the
+  review cycle itself, and merged
+  the pull request; its report
+  stands void as evidence and the
+  landing stands on the owner's
+  re-audit (6815375817), whose
+  checked points (merge tree
+  equal to the closure head's
+  tree, hosted CI green on the
+  exact head, the delta
+  documentation only) this
+  read-back confirms against the
+  live record. The three reviews
+  the landing comment reports
+  (spec fidelity NOT PASS,
+  Minor 2, both body defects,
+  repaired by owner body edit;
+  standards APPROVE, Minor 1,
+  repaired in the same edits; red
+  team APPROVE with no findings)
+  are the owner's reviews of the
+  lane's head, graded here as
+  reported in 6815327636 and
+  nowhere contradicted by the
+  record. No Round 11 disposition
+  is falsified by the final
+  record.
+
+- OR-72. The two surfaces Round
+  11 named as not re-run, run in
+  full in their own right at the
+  binary built from this round's
+  base tree against the final
+  oracle tree (0c25a9a, verified
+  blob for blob through the
+  GitHub API this round: the
+  commit and its recursive tree
+  read through the API, both
+  standing extractions matching
+  all four package files by
+  recomputed git blob id). First,
+  the standing differential
+  harness of OR-22 (the driver at
+  hidden_files/chat2-or-round3/
+  differential.py, run unmodified
+  with OR_RUST_BIN and OR_PY_SRC
+  set to the oracle2 extraction):
+  126 cases, 400 steps, 0
+  failures, the Round 10 figures
+  reproduced exactly. Second, the
+  Round 9 and Round 10 standing
+  batteries, run unmodified from
+  their scratch homes: Round 9's
+  battery.py at 30 cells and
+  battery2.py at 13 cells, and
+  Round 10's battery10.py at 39
+  cells, 82 battery cells in all,
+  0 splits. Every cell byte-
+  compares exit, stdout, stderr
+  where observable, and the
+  record file after the step, as
+  the drivers stand. No cell
+  convicts and no repair is owed.
+
+- OR-73. The owed workspace
+  copies of Round 11's scratch,
+  charged by PR 14's landing
+  comment, stand discharged as
+  follows. The lane's progress
+  file stands in the workspace at
+  retro-line/or11-scratch/
+  progress.md (2,628 bytes, read
+  back this round; it ends at the
+  read-back step, the form in
+  which the lane banked it). The
+  rest of the scratch (the lane's
+  report, its battery and
+  realistic-pass drivers, and its
+  logs) stood only in
+  /tmp/or11-scratch and in
+  /dev/shm staging, and neither
+  stands any longer: /tmp was
+  wiped in the restart wave after
+  the round closed and no copy
+  stands in the workspace, in the
+  goal's hidden files, or in the
+  lane's scaffold tree. Those
+  copies are discharged as
+  unrecoverable and nothing is
+  reconstructed in their place.
+  The round's measurements do not
+  rest on the lost drivers: the
+  stream and budget points stand
+  re-measured this round at
+  OR-74 and OR-75, the realistic
+  pass at OR-76, and the two
+  un-run
+  surfaces at OR-72, and the
+  merged record itself stands in
+  PR 14 and its contract items.
+
+- OR-74. The capacity and stream
+  laws re-measured fresh at their
+  exact points, at the shipped
+  CLI against the final oracle
+  tree: a 55-cell battery, 0
+  splits, of which this item
+  covers 39 stream cells. The
+  single-defect refusal at
+  printed totals of exactly
+  8,191, 8,192, and 8,193 ends at
+  120 at a broken descriptor 2
+  (at /dev/full and at a
+  readerless pipe) at all three
+  totals, and at 1 healthy. Check
+  rendering one defect on
+  descriptor 1 at the same totals
+  answers 120 with the shutdown
+  dump at 8,191 and 1 with the OS
+  error named at 8,192 and 8,193:
+  a write that fills the
+  8,192-byte buffer exactly
+  flushes at fullness, and 8,191
+  defers. A get view tuned to the
+  same totals answers 1 at a
+  broken descriptor 1 at all
+  three. The rerouted refusal
+  (descriptor 2 closed at launch,
+  descriptor 1 at /dev/full)
+  flips at capacity: 120 at
+  8,191, 1 at 8,192 and 8,193.
+  The past-capacity refusal of
+  OR-56 (600 bogus lines) answers
+  120 at /dev/full and at a
+  readerless pipe, 1 healthy, and
+  1 rerouted. Five add cells
+  re-verify the side-effect order
+  (the append lands before the
+  emit; a refusal appends
+  nothing); the one launch-closed
+  add cell differs only on
+  descriptor 2, in exactly the
+  crash class OR-43 records.
+
+- OR-75. The read budgets
+  re-measured at their exact flip
+  points, the remaining 16 cells
+  of the OR-74 battery, each
+  boundary point itself included
+  with a cell on each side, and
+  each cell asserting the
+  oracle's exit direction against
+  the contracted side of the
+  boundary. Under BUDGET_READ
+  (990, 988) through check,
+  nested arrays verify at 986 and
+  987 and refuse at 988 and 989,
+  and nested objects verify at
+  985 and 986 and refuse at 987
+  and 988. Under
+  BUDGET_READ_NARROW (989, 987)
+  through get, nested arrays
+  verify at 985 and
+  986 and refuse at 987 and 988,
+  and nested objects verify at
+  984 and 985 and refuse at 986
+  and 987. The constants in
+  src/store.rs stand as
+  contracted, and no point moved,
+  so no new pin is owed.
+
+- OR-76. The realistic pass, at
+  a scale above Round 11's: a
+  history composed step by step
+  through both CLIs under a
+  deterministic generator (seed
+  20261112), 48 subjects, every
+  step byte-comparing exit,
+  stdout, stderr, and the record
+  file. The parts are 2,600 adds
+  (a supersession of each
+  subject's live head every third
+  add on that subject, due dates
+  on a rotating share, six
+  asserters, four evidence source
+  kinds), 416 interleaved read
+  steps (104 read points of get,
+  subject, due, and check against
+  the history as it stood), 55
+  whole-history cells (48 subject
+  views, due at three dates,
+  check, and three gets), 16
+  budget cells at the OR-75
+  depths on the big history, and
+  13 stream cells, totalling
+  3,100 compared steps with 0
+  splits. The composed record
+  stands at 2,600 lines and
+  652,833 bytes. The defective
+  twin's past-capacity refusal
+  (600 bogus lines appended)
+  answers 120 at the broken
+  descriptor, at /dev/full and at
+  a readerless pipe, with 1
+  rerouted, at this scale as at
+  Round 11's.
+
+- OR-77. The gate on the final
+  tree: cargo test 69 passed (50
+  store, 19 streams), clippy
+  --all-targets with warnings
+  denied clean, fmt --check
+  clean, and the repo codepoint
+  scan at U+2014=0 and U+2013=0,
+  run by the completion lane on
+  the banked head tree; this
+  closure changes no code. The
+  round's provenance: the
+  original build lane banked
+  OR-71 to OR-76 in five commits
+  on this branch and was
+  interrupted by a box restart
+  before the gate, this closure,
+  and the pull request, and its
+  scratch is gone with nothing
+  reconstructed. The completion
+  lane finished from the banked
+  head: it read OR-71 to OR-76
+  back whole and found each item
+  present and complete, ran the
+  gate, appended this closure,
+  and opened the pull request.
+  The items OR-71 to OR-76 stand
+  as the original lane's work;
+  this closure is the completion
+  lane's. README records 12 of
+  100 in the closure commit that
+  carries this item, the sixth
+  commit of this round's pull
+  request.
