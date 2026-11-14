@@ -2086,3 +2086,124 @@ attribution. Round 14's
 read-back grades the provenance
 from this record and the body
 together.
+
+- OR-84. PR 16 read back whole
+on the closed record: 0 reviews,
+0 review comments, and 4 issue
+comments, every body read to its
+end, the pull request body
+included. Its CodeRabbit shell
+(6857741923) stands in its true
+final form at this read at
+10,910 characters, created
+2026-11-13T15:42:57Z and last
+edited 2026-11-13T16:15:29Z, as
+a completed review of the gate
+head: the commits range runs
+from the base aae63cd to
+b161331e, Merge Risk Minimal up
+to b1613, pre-merge checks 4
+passed and 0 failed (Title,
+Linked Issues, Out of Scope
+Changes, Description), the word
+Docstring occurring zero times,
+no rate-limit banner, the
+standing line that no actionable
+comments were generated in the
+recent review, and Run ID
+b0724097-289a-4744-9e03-6b49ed199f66,
+with files selected CONTRACT.md
+and README.md. The shell's
+coverage ends at the gate head;
+it does not extend to the repair
+head e12eac95 and nowhere
+mentions OR-83. The body's
+moment-bounded disposition
+(10,904 characters at the
+owner's read, the shell last
+edited then at 15:44:25Z) and
+the landing comment's read
+(10,910 characters) are
+falsified in nothing that
+carries a disposition: at every
+read the shell raised nothing,
+and nothing stands dismissed.
+One figure in the Round 13
+record does not reconcile: the
+landing comment states the shell
+drifted two characters after the
+owner's read, and the body's
+recorded figure is 10,904
+against the landing figure of
+10,910, a difference of six; the
+shell's final form is fixed by
+the landing read and this read
+alike at 10,910 characters, its
+last edit predates the merge,
+and no disposition fact turns on
+the difference. The trigger
+(6857740148), the bot's
+auto-reply (6857781387, already
+reviewed the last commit, not a
+finding), and the owner's
+landing comment (6858647245)
+complete the census. Every
+comment ID and figure in this
+round's brief was verified
+against the live record before
+contraction and stands as
+relayed, so no correction is
+owed. Nothing was posted on PR
+16 after the landing comment, so
+no late CodeRabbit finding
+stands undisposed. The round's
+provenance, graded from OR-83
+and the pull request body
+together as OR-83 charges:
+OR-82's provenance sentence
+credits the second completion
+lane with having opened the pull
+request, and that clause is
+false as written. The body's
+owner completion note states the
+true account, and OR-83 corrects
+the attribution with OR-82's
+text unamended: the lane graded
+the banked items, re-measured
+them firsthand, ran the gate and
+the realistic pass, appended
+OR-81 and OR-82, and prepared
+the pull request; a GitHub API
+rate-limit 403 at
+2026-11-13T15:34:10Z stopped its
+push, and the owner pushed its
+two prepared commits unchanged
+(OR-81 as 5992ac04 on tree
+5b6c5f0c, the OR-82 closure as
+b161331e on tree 057233ee, built
+on the banked head tree
+6e02bb4f) and opened the pull
+request. Graded together, the
+record states the truth: the
+body and the repair record agree
+in every particular, and OR-82's
+one clause stands corrected on
+the face of the record, not
+operative. The three sittings
+otherwise stand as OR-82 records
+them: the first lane banked
+OR-78 to OR-80 in two commits
+and died, the first completion
+lane was interrupted and its
+resume never started, and the
+second completion lane did the
+work above. The gate that stands
+is the three reviews of head
+b161331e (spec PASS, red team
+APPROVE, standards NOT APPROVE
+with the one Major the repair
+answers), OR-83 appended at
+e12eac95, both delta reviews of
+the repair head clean, and the
+merge tree equal to the repair
+tree.
