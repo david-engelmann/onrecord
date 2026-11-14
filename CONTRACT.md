@@ -2643,3 +2643,69 @@ completed whole on its first
 attempt this round, in about 79
 minutes; no figure in this
 round comes from a partial run.
+
+- OR-91. The gate on the final
+tree: cargo test exit 0, 69
+passed and 0 failed (50 store,
+19 streams); cargo clippy
+--all-targets with warnings
+denied, exit 0; cargo fmt
+--check exit 0. The gate ran
+against the closure tree's
+code, which differs from the
+Round 14 merge tree only in
+CONTRACT.md and README.md, on a
+binary whose provenance stands
+settled at OR-89. The battery
+and the realistic pass stand at
+OR-89 and OR-90. The oracle
+verification stands at OR-89:
+the final Python tree (0c25a9a)
+verified blob for blob against
+commit
+0c25a9aa703b38c7579f7928d61443a881a62465
+through the GitHub API, every
+one of its 14 blobs matched by
+recomputed git blob id. The
+codepoint scan over the tree
+stands at U+2014 0 and U+2013
+0.
+
+- OR-92. Closure. Round 15
+closes at 15 of 100, the README
+rounds line moving in this
+commit only. The gate stands at
+OR-91; the battery at OR-89 and
+the realistic pass at OR-90
+stand as the round's
+measurements. OR-51, the Mach-O
+constructor-section arm, stands
+carried by name as a named
+limitation, neither repaired
+nor reopened. The round's
+provenance: a single seating,
+banked family by family as each
+finished (2e56b5c8 OR-88,
+3cbe9437 OR-89, 207cd158 OR-90,
+this commit OR-91 and OR-92),
+each push asserting tree-SHA
+equality against the local tree
+before landing. The round's
+environment effects, in full:
+the realistic pass ran detached
+(nohup) with its log under the
+round's durable workspace
+scratch and completed whole on
+its first attempt, in about 79
+minutes; a box restart followed
+minutes after its completion,
+wiping /tmp and ending the
+lane's wait session, and the
+completed log is what OR-90
+contracts, no partial state
+standing anywhere in the round.
+Every finished family was
+already banked remotely when
+the restart came. No
+measurement in this round was
+taken in a faulted state.
