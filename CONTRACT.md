@@ -2392,3 +2392,91 @@ from /tmp, which a restart
 wiped, to durable workspace
 scratch; no measurement was
 taken in a faulted state.
+
+- OR-88. PR 17 read back whole
+on the closed record: 0
+reviews, 0 review comments, and
+4 issue comments, every body
+read to its end, the pull
+request body included. Its
+CodeRabbit shell (6870403600)
+stands in its true final form
+at this read at 10,802
+characters, created
+2026-11-14T02:43:30Z and last
+edited 2026-11-14T02:55:56Z, as
+a completed review of the final
+head: the commits range runs
+from the base ac892a98 to
+84c216ea, Merge Risk Minimal up
+to 84c21, pre-merge checks 4
+passed and 0 failed
+(Description, Title, Linked
+Issues, Out of Scope Changes),
+the word Docstring occurring
+zero times, no rate-limit
+banner, the standing line that
+no actionable comments were
+generated in the recent review,
+and Run ID
+157135e7-11a4-4d15-95db-fc0987c0e924,
+with files selected CONTRACT.md
+and README.md. The body's
+moment-bounded disposition
+(10,798 characters at the build
+lane's read, the shell last
+edited then at 02:45:12Z) and
+the reviews' reads (10,800
+characters, the shell last
+edited then at 02:46:23Z, as
+the landing comment records)
+are falsified in nothing that
+carries a disposition: the
+shell's last edit at 02:55:56Z
+postdates both reads and
+predates the landing comment by
+43 seconds, at every read the
+shell raised nothing
+actionable, and nothing stands
+dismissed. The trigger
+(6870403221), the bot's
+auto-reply (6870429491, already
+reviewed the last commit, not a
+finding), and the owner's
+landing comment (6870573155)
+complete the census. The
+owner's body repair stands in
+the body as it now reads (8,870
+characters): the standards
+review and the red team each
+returned the same single body
+Minor, a duplicated (the Round
+13 merge) parenthetical and a
+doubled period in the Verified
+block, the owner repaired both
+in the body before the merge
+and read the repair back, and
+the body as merged is that
+repaired body, graded as it
+stands. OR-84's contraction of
+the Round 13 drift discrepancy
+stands as the graded account,
+as the landing comment charges:
+the Round 13 landing comment
+stated the shell drifted two
+characters, and the Round 13
+body's recorded figure is
+10,904 against the landing
+figure of 10,910, a difference
+of six; the PR 17 record adds
+no fact on it, so nothing
+further is owed. Every comment
+ID and figure in this round's
+brief was verified against the
+live record before contraction
+and stands as relayed, so no
+correction is owed. Nothing was
+posted on PR 17 after the
+landing comment, so no late
+CodeRabbit finding stands
+undisposed.
