@@ -2963,3 +2963,72 @@ standing at zero bytes, and no
 figure in this round comes from
 either of them or from any
 partial run.
+
+- OR-96. The gate on the final
+tree: cargo test exit 0, 69
+passed and 0 failed (50 store,
+19 streams); cargo clippy
+--all-targets with warnings
+denied, exit 0; cargo fmt
+--check exit 0. The gate ran
+against the closure tree's code,
+which differs from the Round 15
+merge tree only in CONTRACT.md
+and README.md, on a binary whose
+provenance stands settled at
+OR-94. The battery and the
+realistic pass stand at OR-94
+and OR-95. The oracle
+verification stands at OR-94:
+the final Python tree (0c25a9a)
+verified blob for blob against
+commit
+0c25a9aa703b38c7579f7928d61443a881a62465
+through the GitHub API, every
+one of its 14 blobs matched by
+recomputed git blob id. The
+codepoint scan over the tree
+stands at U+2014 0 and U+2013 0.
+
+- OR-97. Closure. Round 16
+closes at 16 of 100, the README
+rounds line moving in this
+commit only. The gate stands at
+OR-96; the battery at OR-94 and
+the realistic pass at OR-95
+stand as the round's
+measurements. OR-51, the Mach-O
+constructor-section arm, stands
+carried by name as a named
+limitation, neither repaired nor
+reopened. The round's
+provenance: two seatings, banked
+family by family as each
+finished (006da93d OR-93,
+97250874 OR-94, fed2c522 OR-95,
+this commit OR-96 and OR-97),
+each push asserting tree-SHA
+equality against the local tree
+before landing. The round's
+environment effects, in full:
+the first seating banked OR-93
+and OR-94 and was then ended by
+a box restart wave without a
+final answer; its two detached
+realistic attempts died to
+restarts with their logs
+standing at zero bytes and no
+completed accounting, and
+neither stands anywhere in this
+round's figures. The completion
+seating re-ran the pass detached
+(nohup) with its log under the
+round's durable workspace
+scratch and it completed whole,
+in about 78 minutes, and OR-95
+contracts that completed run
+alone. Every finished family was
+already banked remotely when
+each restart came. No
+measurement in this round was
+taken in a faulted state.
