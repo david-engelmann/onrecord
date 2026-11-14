@@ -2709,3 +2709,93 @@ already banked remotely when
 the restart came. No
 measurement in this round was
 taken in a faulted state.
+
+- OR-93. PR 18 read back whole
+on the closed record: 0 reviews,
+0 review comments, and 4 issue
+comments, every body read to its
+end, the pull request body
+included. Its CodeRabbit shell
+(6875124868) stands in its true
+final form at this read at
+11,121 characters, created
+2026-11-14T09:20:25Z and last
+edited 2026-11-14T09:36:23Z, as
+a completed review of the final
+head: the commits range runs
+from the base 34598e92 to
+34c45c36, Merge Risk Minimal up
+to 34c45, pre-merge checks 4
+passed and 0 failed (Title,
+Linked Issues, Out of Scope
+Changes, Description), the word
+Docstring occurring zero times,
+no rate-limit banner, the
+standing line that no actionable
+comments were generated in the
+recent review, and Run ID
+9a5d0ffd-ac8f-4f2d-a38c-4f61f848bb3d,
+with files selected CONTRACT.md
+and README.md. The body's
+moment-bounded disposition
+(11,117 characters at the build
+lane's read, the shell last
+edited then at 09:22:15Z) and
+the reviews' reads (11,119
+characters, the shell last
+edited then at 09:28:22Z, as the
+landing comment records) are
+falsified in nothing that
+carries a disposition: the shell
+drifted two characters past each
+read in turn, its last edit at
+09:36:23Z postdates both reads
+and predates the landing
+comment, at every read the shell
+raised nothing actionable, and
+its one prose reservation,
+inside its passed Title check,
+calls the title somewhat overly
+narrow for relying on internal
+identifiers, the reservation the
+body dismissed. The trigger
+(6875124625), the bot's
+auto-reply (6875150112, already
+reviewed the last commit, not a
+finding), and the owner's
+landing comment (6875343596)
+complete the census. The owner's
+dismissal-phrase body repair
+stands graded as repaired, from
+the body as it now reads (6,752
+characters), read segment by
+segment: the step 0 account's
+dismissal sentence now scopes
+its claim to PR 17's title and
+the titles of PRs 15 and 16, and
+the repair note stands on the
+dismissal's face, recording that
+the dismissal first claimed the
+shape of every earlier round PR
+in the line, that the spec
+review counted all 18 titles and
+the exact shape holds for PRs
+15, 16, and 17 only, and that
+the repair changes no tree; the
+earlier wording survives only
+inside that note's account of
+it, and the dismissal itself
+stands on its operative grounds
+(PR 17's title identical in
+shape, the check passed, the
+bot's own standing line
+recording nothing actionable).
+Every comment ID and figure in
+this round's brief was verified
+against the live record before
+contraction and stands as
+relayed, so no correction is
+owed. Nothing was posted on PR
+18 after the landing comment, so
+no late CodeRabbit finding
+stands undisposed.
