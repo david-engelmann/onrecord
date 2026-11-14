@@ -2599,3 +2599,47 @@ stands at 986. The constants in
 src/store.rs stand as
 contracted, and no point moved,
 so no new pin is owed.
+
+- OR-90. The realistic pass
+re-run fresh at Round 12's
+shape in full (the OR-76
+construction), against the
+shipped CLI and the final
+oracle tree verified at OR-89:
+3,100 compared steps, 0 splits,
+composed of 2,600 adds with a
+supersession of each subject's
+live head every third add on
+that subject and 416
+interleaved read steps in phase
+1, 55 whole-history cells in
+phase 2, 16 budget cells at the
+OR-75 depths on the big history
+in phase 3, and 13 stream cells
+against the big store in phase
+4. The composed record stands
+at 2,600 lines and 652,833
+bytes, byte for byte the OR-76
+figures. Phase 4's thirteen
+cells all agree: six at exit 0,
+three at exit 120 (the two
+defect cells under a broken
+descriptor 2 and the rerouted
+check cell), and four at exit
+1, among them the
+closed-descriptor cell standing
+in the OR-43 crash class as
+contracted: exit, stdout, and
+file agree, the oracle's stderr
+carries its traceback, and the
+port's stderr is empty. The
+pass's final accounting is the
+harness's own over the complete
+run: REALISTIC cells 3100,
+splits 0. The pass ran detached
+with a durable log under the
+round's workspace scratch and
+completed whole on its first
+attempt this round, in about 79
+minutes; no figure in this
+round comes from a partial run.
