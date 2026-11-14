@@ -2351,3 +2351,44 @@ run: REALISTIC cells 3100,
 splits 0. The attempts the box
 killed before a run completed
 stand disclosed at OR-87.
+- OR-87. Closure. Round 14
+closes at 14 of 100, the
+README rounds line moving in
+this commit only. The gate on
+the final tree: cargo test
+exit 0, 69 passed and 0 failed
+(50 store, 19 streams); cargo
+clippy --all-targets with
+warnings denied, exit 0; cargo
+fmt --check exit 0. The battery
+and the realistic pass stand at
+OR-85 and OR-86, both run
+against the oracle tree
+verified blob for blob at
+OR-85. OR-51, the Mach-O
+constructor-section arm,
+stands carried by name as a
+named limitation, neither
+repaired nor reopened. The
+round's provenance: the build
+lane banked OR-84 and OR-85
+and stopped on the realistic
+pass, which the box killed
+three times in its hands (a
+restart at 1,000 of 2,600
+adds; a SIGTERM during phases
+2 to 4 after phase 1 had
+completed whole at the OR-76
+figures; a restart at 1,750 of
+2,600 adds on a detached
+re-run). The completion lane
+re-ran the pass detached and
+whole, and it completed: the
+accounting at OR-86 is that
+run's, and no figure in this
+round comes from a partial
+run. The round's staging moved
+from /tmp, which a restart
+wiped, to durable workspace
+scratch; no measurement was
+taken in a faulted state.
