@@ -4027,3 +4027,74 @@ completed whole in about 100
 minutes, and every figure in this
 item comes from that completed run
 alone.
+
+- OR-111. The gate record whole.
+The final gate re-run whole on the
+closure tree: cargo test exit 0,
+69 passed and 0 failed (50 store,
+19 streams); cargo clippy
+--all-targets with warnings
+denied, exit 0; cargo fmt --check
+exit 0. The final oracle tree
+stands verified through the API as
+it has since OR-77: commit
+0c25a9aa703b38c7579f7928d61443a881a62465,
+tree
+f88eb75044f2e751915ab9a825426177972f2b58,
+all 14 blobs matched by recomputed
+git blob id against the extraction
+the batteries at OR-109 and OR-110
+ran. The flighttape pin stands
+reconfirmed through the API:
+commit
+74a83298aeb31c82e62b9fb0c613f5bc8600799e,
+tree
+afd4d7d13520411e003762548fc79082a1b9cf6e,
+exactly 50 blobs, and the golden
+digest
+(cc9c4e01fca418dcc33114caf75fae1f6bf0d401f297b5d61f6776903fa955a3)
+executed, not merely cited,
+through the suite's digest test in
+the gate runs of this round, on
+the base tree at OR-109 and on the
+closure tree here. A Python
+codepoint scan over all 21 blobs
+of the closure tree itself finds
+zero U+2014 and zero U+2013.
+
+- OR-112. Closure. Round 19 closes
+at 19 of 100, the README rounds
+line moving in this commit only.
+The gate stands at OR-111; the
+battery at OR-109 and the budgets
+and realistic pass at OR-110 stand
+as the round's measurements.
+OR-51, the Mach-O
+constructor-section arm, stands
+carried by name as a named
+limitation, neither repaired nor
+reopened. The round's provenance:
+one seating, banked family by
+family as each finished (f4fb530d
+OR-108, f1f993c8 OR-109, f8af031d
+OR-110, this commit OR-111 and
+OR-112), each push asserting
+tree-SHA equality against the
+local tree before landing. The
+round's environment effects, in
+full: a write-fault wave and a
+service restart touched the
+round's schedule and nothing it
+contracts; the wave killed the
+realistic pass's first attempt in
+phase 4 and refused its second at
+startup, and a restart killed its
+third in phase 2, as OR-110
+records, while the battery
+completed on its first run in an
+unfaulted window and every figure
+this round contracts comes from a
+completed run or gate in an
+unfaulted window. No measurement
+this round contracts was taken in
+a faulted state.
