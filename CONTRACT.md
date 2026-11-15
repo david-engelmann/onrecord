@@ -3938,3 +3938,92 @@ launch-closed descriptor stands in
 the OR-43 crash class on the add
 cell. No stream point moved, so no
 new pin is owed.
+
+- OR-110. The read budgets and the
+realistic pass re-measured fresh.
+The read budgets at their exact
+flip points, the remaining 16
+cells of the battery at OR-109,
+each boundary point itself
+included with a cell on each side,
+each cell asserting the oracle's
+exit direction against the
+contracted side of the boundary,
+and the constants first read from
+src/store.rs at this round's base
+(BUDGET_READ (990, 988) and
+BUDGET_READ_NARROW (989, 987)).
+Under BUDGET_READ (990, 988)
+through check, nested arrays
+verify at 986 and 987 and refuse
+at 988 and 989, and nested objects
+verify at 985 and 986 and refuse
+at 987 and 988. Under
+BUDGET_READ_NARROW (989, 987)
+through get, nested arrays verify
+at 985 and 986 and refuse at 987
+and 988, and nested objects verify
+at 984 and 985 and refuse at 986
+and 987. The 989 slot at the wide
+width is refused and its verify
+side stands at 987; the 988 slot
+at the narrow width is refused and
+its verify side stands at 986. No
+budget point moved, so no new pin
+is owed. The realistic pass re-run
+fresh at Round 12's shape in full
+(the OR-76 construction), against
+the shipped CLI and the final
+oracle tree verified at OR-111:
+3,100 compared steps, 0 splits,
+composed of 2,600 adds with a
+supersession of each subject's
+live head every third add on that
+subject and 416 interleaved read
+steps in phase 1, 55 whole-history
+cells in phase 2, 16 budget cells
+at the OR-75 depths on the big
+history in phase 3, and 13 stream
+cells against the big store in
+phase 4. The composed record
+stands at 2,600 lines and 652,833
+bytes, byte for byte the OR-76
+figures. Phase 4's thirteen cells
+all agree: six at exit 0, three at
+exit 120 (the two defect cells
+under a broken descriptor 2 and
+the rerouted check cell), and four
+at exit 1, among them the
+closed-descriptor cell standing in
+the OR-43 crash class as
+contracted: exit, stdout, and file
+agree, the oracle's stderr carries
+its traceback, and the port's
+stderr is empty. The pass's final
+accounting is the harness's own
+over the complete run: REALISTIC
+cells 3100, splits 0. The pass ran
+detached with a durable log under
+the round's workspace scratch.
+Four detached attempts stand in
+this round's record. The first ran
+about 100 minutes and died in
+phase 4 when a write-fault wave
+refused every write on the box;
+its phase 1 had completed with the
+two sides' records byte-identical
+at the contracted figures, and it
+is counted nowhere. The second
+failed at startup on the same
+wave, when no temporary directory
+on the box was usable, and is
+counted nowhere. The third
+completed phase 1 whole at the
+contracted figures and died in
+phase 2 when a service restart
+took the process, and is counted
+nowhere. The fourth attempt
+completed whole in about 100
+minutes, and every figure in this
+item comes from that completed run
+alone.
