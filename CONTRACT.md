@@ -3668,3 +3668,80 @@ detached attempt, no attempt was
 killed by a restart or the write
 fault, and no figure in this round
 comes from any partial run.
+
+- OR-106. The gate record. The
+gate on the final tree: cargo test
+exit 0, 69 passed and 0 failed (50
+store, 19 streams); cargo clippy
+--all-targets with warnings
+denied, exit 0; cargo fmt --check
+exit 0. The gate ran against the
+closure tree's code, which differs
+from the Round 17 merge tree only
+in CONTRACT.md and README.md, on a
+binary whose provenance stands
+settled at OR-104. The battery
+stands at OR-104 and the budgets
+and the realistic pass at OR-105.
+The oracle verification stands
+here: the final Python tree
+(0c25a9a) verified blob for blob
+against commit
+0c25a9aa703b38c7579f7928d61443a881a62465
+through the GitHub API, the commit
+and its tree f88eb750 read through
+the API and every one of its 14
+blobs matched by recomputed git
+blob id against this round's
+driven extraction, 0 mismatches.
+The flighttape fleet pin
+reconfirmed through the API:
+commit
+74a83298aeb31c82e62b9fb0c613f5bc8600799e,
+tree afd4d7d1, 58 entries
+untruncated, exactly 50 blobs. The
+golden fixture executed at the
+pinned checkout through the
+suite's digest test,
+the_digest_is_pinned_to_the_family_golden,
+passing by name in the gate's run
+on the final tree, the digest
+standing at
+cc9c4e01fca418dcc33114caf75fae1f6bf0d401f297b5d61f6776903fa955a3.
+The codepoint scan over the final
+tree, counted by a Python scan
+over all 21 blobs of the closure
+tree as formed before this
+family's push: U+2014 0 and U+2013
+0.
+
+- OR-107. Closure. Round 18 closes
+at 18 of 100, the README rounds
+line moving in this commit only.
+The gate stands at OR-106; the
+battery at OR-104 and the budgets
+and realistic pass at OR-105 stand
+as the round's measurements.
+OR-51, the Mach-O
+constructor-section arm, stands
+carried by name as a named
+limitation, neither repaired nor
+reopened. The round's provenance:
+one seating, banked family by
+family as each finished (a574155d
+OR-103, 115ca042 OR-104, 69339c79
+OR-105, this commit OR-106 and
+OR-107), each push asserting
+tree-SHA equality against the
+local tree before landing. The
+round's environment effects, in
+full: no restart and no write
+fault touched any measurement this
+round contracts; the battery
+completed on its first run in an
+unfaulted window and the realistic
+pass completed whole on its first
+detached attempt, as OR-104 and
+OR-105 record. No measurement this
+round contracts was taken in a
+faulted state.
