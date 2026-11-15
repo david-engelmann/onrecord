@@ -3403,3 +3403,108 @@ already banked remotely when the
 restart came. No measurement
 this round contracts was taken
 in a faulted state.
+
+- OR-103. PR 20 read back whole on
+the closed record: 0 reviews, 0
+review comments, and 4 issue
+comments, every body read to its
+end, the pull request body
+included (6,939 characters at this
+read). Its CodeRabbit shell
+(6887388190) stands in its true
+final form at this read at 10,909
+characters, created
+2026-11-15T01:35:58Z and last
+edited 2026-11-15T01:45:51Z, the
+same form the Round 17 reviews
+read and the form the landing
+comment contracts: a completed
+review of the closure head, the
+commits range running from the
+base be7fa75f to d7ae09e3, Merge
+Risk Minimal up to d7ae0,
+pre-merge checks 4 passed and 0
+failed (Description, Title, Linked
+Issues, Out of Scope Changes), the
+word Docstring occurring zero
+times, no rate-limit banner, the
+standing line that no actionable
+comments were generated in the
+recent review, and Run ID
+86d4a685-c2e9-4711-9223-ce9a0e0a763f,
+with files selected CONTRACT.md
+and README.md and the included
+allowance used with none
+remaining. The body's
+moment-bounded disposition (10,907
+characters at the build lane's
+read, the shell last edited then
+at 01:37:32Z) is falsified in
+nothing that carries a
+disposition: the shell drifted two
+characters past that read and
+stands at the reviews' figure at
+this read, its last edit at
+01:45:51Z postdating the body's
+read and predating the landing
+comment, and at every read the
+shell raised nothing actionable.
+Its one reservation-shaped
+sentence stands inside its passed
+Title check and stands dismissed
+on the grounds re-graded at this
+read: the sentence reads "The
+conventional-commit prefix
+"refine:" is a minor style point
+and does not affect relevance",
+verified verbatim in the shell's
+Title check full details at this
+read, where the check stands
+Passed; the check itself passed
+unqualified; the sentence faults
+nothing and itself states the
+point does not affect relevance;
+the title's form is the standing
+form of this line's round PRs,
+identical in shape to PR 19's
+title read through the API at this
+read; and the shell's standing
+line records that no actionable
+comments were generated. The
+trigger (6887387778, 20
+characters, never edited), the
+bot's auto-reply (6887412567, 573
+characters, the
+action-not-completed
+acknowledgment, already reviewed
+the last commit, not a finding and
+carrying no correction), and the
+owner's landing comment
+(6887678070) complete the census,
+the landing comment last. The
+bot's release-notes appendix on PR
+20's body, censused in the
+whole-body read, stands inside its
+own markers as the bot's own text:
+two bullets, both correct (the
+status at 17 of 100; the Round 17
+records covering the validation
+results, the test and quality
+checks, and the completion
+details, noting the interrupted
+runs excluded), adopted by no
+authored sentence. OR-51, the
+Mach-O constructor-section arm,
+stands carried by name as a named
+limitation at its standing scope,
+neither repaired nor reopened, and
+stands named again at this round's
+closure. Every comment ID and
+figure in this round's brief was
+verified against the live record
+before contraction and stands as
+relayed, so no correction is owed.
+Nothing was posted on PR 20 after
+the landing comment, so no late
+CodeRabbit finding stands
+undisposed.
