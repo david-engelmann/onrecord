@@ -3334,3 +3334,72 @@ at zero bytes and no completed
 accounting, and no figure in
 this round comes from it or from
 any partial run.
+
+- OR-101. The gate on the final
+tree: cargo test exit 0, 69
+passed and 0 failed (50 store,
+19 streams); cargo clippy
+--all-targets with warnings
+denied, exit 0; cargo fmt
+--check exit 0. The gate ran
+against the closure tree's code,
+which differs from the Round 16
+merge tree only in CONTRACT.md
+and README.md, on a binary whose
+provenance stands settled at
+OR-99. The battery and the
+realistic pass stand at OR-99
+and OR-100. The oracle
+verification stands at OR-99:
+the final Python tree (0c25a9a)
+verified blob for blob against
+commit
+0c25a9aa703b38c7579f7928d61443a881a62465
+through the GitHub API, every
+one of its 14 blobs matched by
+recomputed git blob id. The
+codepoint scan over the tree
+stands at U+2014 0 and U+2013 0.
+
+- OR-102. Closure. Round 17
+closes at 17 of 100, the README
+rounds line moving in this
+commit only. The gate stands at
+OR-101; the battery at OR-99 and
+the realistic pass at OR-100
+stand as the round's
+measurements. OR-51, the Mach-O
+constructor-section arm, stands
+carried by name as a named
+limitation, neither repaired nor
+reopened. The round's
+provenance: one seating, banked
+family by family as each
+finished (0bdfe821 OR-98,
+fc43faaf OR-99, 30cf4c93 OR-100,
+this commit OR-101 and OR-102),
+each push asserting tree-SHA
+equality against the local tree
+before landing. The round's
+environment effects, in full:
+the battery's first run and the
+realistic pass's first detached
+attempt both ran into the box
+restart of 2026-11-15T00:01Z.
+The battery run's ten /dev/full
+cells stand falsified by that
+window's device state and are
+counted nowhere, the battery
+re-run whole after the restart
+as OR-99 records; the realistic
+attempt died minutes after its
+launch with its log standing at
+zero bytes and no completed
+accounting, and the pass was
+re-run detached to the completed
+accounting OR-100 contracts.
+Every finished family was
+already banked remotely when the
+restart came. No measurement
+this round contracts was taken
+in a faulted state.
