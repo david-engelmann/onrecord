@@ -3745,3 +3745,356 @@ detached attempt, as OR-104 and
 OR-105 record. No measurement this
 round contracts was taken in a
 faulted state.
+
+- OR-108. PR 21 read back whole on
+the closed record: 0 reviews, 0
+review comments, and 2 issue
+comments, every body read to its
+end, the pull request body
+included (6,203 characters at this
+read). Its CodeRabbit shell
+(6892260310) stands in its true
+final form at this read at 11,101
+characters, created
+2026-11-15T09:21:15Z and last
+edited 2026-11-15T09:28:02Z, the
+same form the Round 18 reviews
+read and the form the landing
+comment contracts: a completed
+review of the closure head, the
+commits range running from the
+base 4c96846a to ab4b7a9e, Merge
+Risk Minimal up to ab4b7,
+pre-merge checks 4 passed and 0
+failed (Title, Linked Issues, Out
+of Scope Changes, Description),
+the word Docstring occurring zero
+times, no rate-limit banner, the
+standing line that no actionable
+comments were generated in the
+recent review, and Run ID
+2fdf6f0c-36bb-4f34-9a2c-9e6646de7c80,
+with files selected CONTRACT.md
+and README.md and the included
+allowance used with none
+remaining. The body's
+moment-bounded disposition (11,099
+characters at the body's read, the
+shell last edited then at
+09:22:59Z) is falsified in nothing
+that carries a disposition: the
+shell drifted two characters past
+that read and stands at the
+reviews' figure at this read, its
+last edit at 09:28:02Z postdating
+the body's read and predating the
+landing comment, and at every read
+the shell raised nothing
+actionable. Its one
+reservation-shaped passage stands
+inside its passed Title check and
+stands dismissed on the grounds
+re-graded at this read: the
+passage reads "The title does not
+name the main content, which is
+the recorded gate, stream, budget,
+and verification results. It also
+uses ticket IDs that a reader must
+look up. The title is partially
+related to the change, so the
+check passes.", verified verbatim
+in the shell's Title check full
+details at this read, where the
+check stands Passed; the check
+itself passed; the passage faults
+the title only for naming less
+than the whole content, and its
+own conclusion is that the check
+passes; the title's form is the
+standing form of this line's round
+PRs, identical in shape to PR 20's
+title read through the API at this
+read; the named range OR-103 to
+OR-107 stands in the merged
+contract each exactly once,
+counted at this read; and the
+shell's standing line records that
+no actionable comments were
+generated. No trigger comment
+stands and no auto-reply stands:
+the bot reviewed automatically at
+the pull request's opening, and
+the owner's landing comment
+(6892545418, 1,546 characters,
+never edited) completes the
+census, the landing comment last.
+The bot's release-notes appendix
+on PR 21's body, censused in the
+whole-body read, stands nowhere at
+this read: no appendix markers
+stand anywhere in the body, the
+same absence the Round 18 gate's
+reads recorded, so no bot text on
+the body stands to be adopted or
+graded. OR-51, the Mach-O
+constructor-section arm, stands
+carried by name as a named
+limitation at its standing scope,
+neither repaired nor reopened, and
+stands named again at this round's
+closure. Every comment ID and
+figure in this round's brief was
+verified against the live record
+before contraction and stands as
+relayed, so no correction is owed.
+Nothing was posted on PR 21 after
+the landing comment, so no late
+CodeRabbit finding stands
+undisposed.
+
+- OR-109. The gate on the base
+tree and the stream law
+re-measured fresh at their exact
+points. The gate ran on the Round
+18 merge tree before any item was
+written: cargo test exit 0, 69
+passed and 0 failed (50 store, 19
+streams); cargo clippy
+--all-targets with warnings
+denied, exit 0; cargo fmt --check
+exit 0. The shipped binary's
+provenance was settled before any
+cell ran: built fresh from the
+base tree, and a full clean
+rebuild at the same path
+reproduced it byte-identically
+(md5
+c471a8782ada0e4ceceb57e5c748633c
+at this round's scratch path), so
+the driven binary is that tree's
+binary. A 55-cell battery at Round
+14's shape, re-executed whole at
+the shipped CLI against the final
+oracle tree verified at OR-111: 0
+splits, of which this item covers
+the 39 stream cells, enumerated as
+at OR-78 (9 + 9 + 9 + 3 + 4 + 5),
+and the remaining 16 budget cells
+stand at OR-110. The battery
+completed on its first run in an
+unfaulted window, and no figure in
+this item comes from any other
+run. The single-defect refusal at
+printed totals of exactly 8,191,
+8,192, and 8,193 ends at 120 at a
+broken descriptor 2 (at /dev/full
+and at a readerless pipe) at all
+three totals, and at 1 healthy.
+Check rendering one defect on
+descriptor 1 at the same totals
+answers 120 with the shutdown dump
+at 8,191 and 1 with the OS error
+named at 8,192 and 8,193: a write
+that fills the 8,192-byte buffer
+exactly flushes at fullness, and
+8,191 defers. A get view tuned to
+the same totals answers 1 at a
+broken descriptor 1 at all three.
+The rerouted refusal (descriptor 2
+closed at launch, descriptor 1 at
+/dev/full) flips at capacity: 120
+at 8,191, 1 at 8,192 and 8,193.
+The past-capacity refusal of OR-56
+(600 bogus lines) answers 120 at
+/dev/full and at a readerless
+pipe, 1 healthy, and 1 rerouted.
+Five add cells re-verify the
+side-effect order (the append
+lands before the emit; a refusal
+appends nothing); the one
+launch-closed add cell differs
+only on descriptor 2, in exactly
+the crash class OR-43 records. The
+three postures, per writer: on
+descriptor 2, the refusal writer,
+a healthy descriptor lands the
+refusal at 1, a broken-but-open
+descriptor (/dev/full or a
+readerless pipe) loses the channel
+and ends at 120, and a
+launch-closed descriptor reroutes
+the refusal onto descriptor 1,
+where the capacity flip above
+decides it; on descriptor 1, the
+emit writer, a healthy descriptor
+renders, a broken-but-open
+descriptor answers 1 at every
+tuned total for the get emit shape
+and, for check's defect rendering,
+120 by the shutdown flush under
+capacity and 1 with the failure
+named at and past it, and a
+launch-closed descriptor stands in
+the OR-43 crash class on the add
+cell. No stream point moved, so no
+new pin is owed.
+
+- OR-110. The read budgets and the
+realistic pass re-measured fresh.
+The read budgets at their exact
+flip points, the remaining 16
+cells of the battery at OR-109,
+each boundary point itself
+included with a cell on each side,
+each cell asserting the oracle's
+exit direction against the
+contracted side of the boundary,
+and the constants first read from
+src/store.rs at this round's base
+(BUDGET_READ (990, 988) and
+BUDGET_READ_NARROW (989, 987)).
+Under BUDGET_READ (990, 988)
+through check, nested arrays
+verify at 986 and 987 and refuse
+at 988 and 989, and nested objects
+verify at 985 and 986 and refuse
+at 987 and 988. Under
+BUDGET_READ_NARROW (989, 987)
+through get, nested arrays verify
+at 985 and 986 and refuse at 987
+and 988, and nested objects verify
+at 984 and 985 and refuse at 986
+and 987. The 989 slot at the wide
+width is refused and its verify
+side stands at 987; the 988 slot
+at the narrow width is refused and
+its verify side stands at 986. No
+budget point moved, so no new pin
+is owed. The realistic pass re-run
+fresh at Round 12's shape in full
+(the OR-76 construction), against
+the shipped CLI and the final
+oracle tree verified at OR-111:
+3,100 compared steps, 0 splits,
+composed of 2,600 adds with a
+supersession of each subject's
+live head every third add on that
+subject and 416 interleaved read
+steps in phase 1, 55 whole-history
+cells in phase 2, 16 budget cells
+at the OR-75 depths on the big
+history in phase 3, and 13 stream
+cells against the big store in
+phase 4. The composed record
+stands at 2,600 lines and 652,833
+bytes, byte for byte the OR-76
+figures. Phase 4's thirteen cells
+all agree: six at exit 0, three at
+exit 120 (the two defect cells
+under a broken descriptor 2 and
+the rerouted check cell), and four
+at exit 1, among them the
+closed-descriptor cell standing in
+the OR-43 crash class as
+contracted: exit, stdout, and file
+agree, the oracle's stderr carries
+its traceback, and the port's
+stderr is empty. The pass's final
+accounting is the harness's own
+over the complete run: REALISTIC
+cells 3100, splits 0. The pass ran
+detached with a durable log under
+the round's workspace scratch.
+Four detached attempts stand in
+this round's record. The first ran
+about 100 minutes and died in
+phase 4 when a write-fault wave
+refused every write on the box;
+its phase 1 had completed with the
+two sides' records byte-identical
+at the contracted figures, and it
+is counted nowhere. The second
+failed at startup on the same
+wave, when no temporary directory
+on the box was usable, and is
+counted nowhere. The third
+completed phase 1 whole at the
+contracted figures and died in
+phase 2 when a service restart
+took the process, and is counted
+nowhere. The fourth attempt
+completed whole in about 100
+minutes, and every figure in this
+item comes from that completed run
+alone.
+
+- OR-111. The gate record whole.
+The final gate re-run whole on the
+closure tree: cargo test exit 0,
+69 passed and 0 failed (50 store,
+19 streams); cargo clippy
+--all-targets with warnings
+denied, exit 0; cargo fmt --check
+exit 0. The final oracle tree
+stands verified through the API as
+it has since OR-77: commit
+0c25a9aa703b38c7579f7928d61443a881a62465,
+tree
+f88eb75044f2e751915ab9a825426177972f2b58,
+all 14 blobs matched by recomputed
+git blob id against the extraction
+the batteries at OR-109 and OR-110
+ran. The flighttape pin stands
+reconfirmed through the API:
+commit
+74a83298aeb31c82e62b9fb0c613f5bc8600799e,
+tree
+afd4d7d13520411e003762548fc79082a1b9cf6e,
+exactly 50 blobs, and the golden
+digest
+(cc9c4e01fca418dcc33114caf75fae1f6bf0d401f297b5d61f6776903fa955a3)
+executed, not merely cited,
+through the suite's digest test in
+the gate runs of this round, on
+the base tree at OR-109 and on the
+closure tree here. A Python
+codepoint scan over all 21 blobs
+of the closure tree itself finds
+zero U+2014 and zero U+2013.
+
+- OR-112. Closure. Round 19 closes
+at 19 of 100, the README rounds
+line moving in this commit only.
+The gate stands at OR-111; the
+battery at OR-109 and the budgets
+and realistic pass at OR-110 stand
+as the round's measurements.
+OR-51, the Mach-O
+constructor-section arm, stands
+carried by name as a named
+limitation, neither repaired nor
+reopened. The round's provenance:
+one seating, banked family by
+family as each finished (f4fb530d
+OR-108, f1f993c8 OR-109, f8af031d
+OR-110, this commit OR-111 and
+OR-112), each push asserting
+tree-SHA equality against the
+local tree before landing. The
+round's environment effects, in
+full: a write-fault wave and a
+service restart touched the
+round's schedule and nothing it
+contracts; the wave killed the
+realistic pass's first attempt in
+phase 4 and refused its second at
+startup, and a restart killed its
+third in phase 2, as OR-110
+records, while the battery
+completed on its first run in an
+unfaulted window and every figure
+this round contracts comes from a
+completed run or gate in an
+unfaulted window. No measurement
+this round contracts was taken in
+a faulted state.
