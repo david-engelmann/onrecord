@@ -3508,3 +3508,90 @@ Nothing was posted on PR 20 after
 the landing comment, so no late
 CodeRabbit finding stands
 undisposed.
+
+- OR-104. The gate on the base
+tree and the stream law
+re-measured fresh at their exact
+points. The gate ran on the Round
+17 merge tree before any item was
+written: cargo test exit 0, 69
+passed and 0 failed (50 store, 19
+streams); cargo clippy
+--all-targets with warnings
+denied, exit 0; cargo fmt --check
+exit 0. The shipped binary's
+provenance was settled before any
+cell ran: built fresh from the
+base tree, and a full clean
+rebuild at the same path
+reproduced it byte-identically
+(md5
+3e3d6a731c5ef09bbeaa050bb9bff612
+at this round's scratch path), so
+the driven binary is that tree's
+binary. A 55-cell battery at Round
+14's shape, re-executed whole at
+the shipped CLI against the final
+oracle tree verified at OR-106: 0
+splits, of which this item covers
+the 39 stream cells, enumerated as
+at OR-78 (9 + 9 + 9 + 3 + 4 + 5),
+and the remaining 16 budget cells
+stand at OR-105. The battery
+completed on its first run in an
+unfaulted window, and no figure in
+this item comes from any other
+run. The single-defect refusal at
+printed totals of exactly 8,191,
+8,192, and 8,193 ends at 120 at a
+broken descriptor 2 (at /dev/full
+and at a readerless pipe) at all
+three totals, and at 1 healthy.
+Check rendering one defect on
+descriptor 1 at the same totals
+answers 120 with the shutdown dump
+at 8,191 and 1 with the OS error
+named at 8,192 and 8,193: a write
+that fills the 8,192-byte buffer
+exactly flushes at fullness, and
+8,191 defers. A get view tuned to
+the same totals answers 1 at a
+broken descriptor 1 at all three.
+The rerouted refusal (descriptor 2
+closed at launch, descriptor 1 at
+/dev/full) flips at capacity: 120
+at 8,191, 1 at 8,192 and 8,193.
+The past-capacity refusal of OR-56
+(600 bogus lines) answers 120 at
+/dev/full and at a readerless
+pipe, 1 healthy, and 1 rerouted.
+Five add cells re-verify the
+side-effect order (the append
+lands before the emit; a refusal
+appends nothing); the one
+launch-closed add cell differs
+only on descriptor 2, in exactly
+the crash class OR-43 records. The
+three postures, per writer: on
+descriptor 2, the refusal writer,
+a healthy descriptor lands the
+refusal at 1, a broken-but-open
+descriptor (/dev/full or a
+readerless pipe) loses the channel
+and ends at 120, and a
+launch-closed descriptor reroutes
+the refusal onto descriptor 1,
+where the capacity flip above
+decides it; on descriptor 1, the
+emit writer, a healthy descriptor
+renders, a broken-but-open
+descriptor answers 1 at every
+tuned total for the get emit shape
+and, for check's defect rendering,
+120 by the shutdown flush under
+capacity and 1 with the failure
+named at and past it, and a
+launch-closed descriptor stands in
+the OR-43 crash class on the add
+cell. No stream point moved, so no
+new pin is owed.
