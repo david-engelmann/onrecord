@@ -4098,3 +4098,137 @@ completed run or gate in an
 unfaulted window. No measurement
 this round contracts was taken in
 a faulted state.
+
+- OR-113. PR 22 read back
+whole on the closed record: 0
+reviews, 0 review comments,
+and 2 issue comments, every
+body read to its end, the pull
+request body included (7,221
+characters at this read, the
+owner's repaired final form).
+Its CodeRabbit shell
+(6902745414) stands in its
+true final form at this read
+at 13,073 characters, created
+2026-11-15T22:54:23Z and last
+edited 2026-11-15T23:18:29Z.
+The shell carries three forms
+in the record, each accounted
+at its own moment: 12,966
+characters at the pull request
+body's read, the shell last
+edited then at 22:56:57Z;
+12,936 characters at the Round
+19 gate's reads, settled
+downward, last edited
+23:03:06Z; and 13,073
+characters at the owner's
+brief-time read and at this
+read, the shell having
+re-rendered upward by 137
+characters in the minute
+before the landing comment
+posted, every
+disposition-bearing element
+unchanged across the three
+forms. At this read the shell
+stands as a completed review
+of the closure head ceb802bc:
+Merge Risk Minimal up to
+ceb80, pre-merge checks 3
+passed and 1 inconclusive
+(Description, Linked Issues,
+Out of Scope Changes passed;
+Title inconclusive), the word
+Docstring occurring zero
+times, no rate-limit banner,
+the standing line that no
+actionable comments were
+generated in the recent
+review, and Run ID
+19e01f40-7536-4bd7-a058-f902bb836158,
+with files selected
+CONTRACT.md and README.md and
+the included allowance used
+with none remaining. Its one
+reservation stands in the
+inconclusive Title check and
+stands dismissed on the
+grounds recorded in PR 22's
+body, re-graded at this read:
+the passage reads that the
+title names the round and
+ticket range but not the main
+change, and that it is too
+generic to convey the primary
+change to a teammate scanning
+history, while its own
+explanation records that the
+title is related to the
+changeset, so it does not
+fail; the check stands
+inconclusive, not failed; the
+title's form is the standing
+form of this line's round PRs,
+identical in shape to PR 21's
+and PR 20's titles read
+through the API at this read;
+the range the title names,
+OR-108 to OR-112, heads
+exactly one item each in the
+merged contract, counted at
+this read; and the shell's
+standing line records that no
+actionable comments were
+generated. No trigger comment
+stands and no auto-reply
+stands: the bot reviewed
+automatically at the pull
+request's opening, and the
+owner's landing comment
+(6903058961, 2,496 characters,
+created 2026-11-15T23:19:00Z
+and never edited) completes
+the census, the landing
+comment last. The bot's
+release-notes appendix on PR
+22's body stands charged as
+dropped, at the summary scope
+PR 22's body records: the
+body's step 0 paragraph
+censuses it as the bot's own
+text, a Summary by CodeRabbit
+section recording
+documentation updates to the
+project status and the round's
+measurement records, and the
+owner's repair note on the
+final body records that the
+patch that completed the body
+dropped it and that its exact
+text is not recoverable from
+the lane's records. Its
+absence from PR 22's final
+body is the standing state
+this item contracts, not a
+discovery at this read; the
+text is not reconstructed
+here, and the absence is not
+graded as a new defect. OR-51,
+the Mach-O constructor-section
+arm, stands carried by name as
+a named limitation at its
+standing scope, neither
+repaired nor reopened, and
+stands named again at this
+round's closure. Every comment
+ID and figure in this round's
+brief was verified against the
+live record before contraction
+and stands as relayed, so no
+correction is owed. Nothing
+was posted on PR 22 after the
+landing comment, so no late
+CodeRabbit finding stands
+undisposed.
