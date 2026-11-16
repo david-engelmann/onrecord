@@ -4422,3 +4422,80 @@ completed whole in about 67
 minutes, and every figure in
 this item comes from that
 completed run alone.
+
+- OR-116. The gate record
+whole. The final gate re-run
+whole on the closure tree:
+cargo test exit 0, 69 passed
+and 0 failed (50 store, 19
+streams); cargo clippy
+--all-targets with warnings
+denied, exit 0; cargo fmt
+--check exit 0. The final
+oracle tree stands verified
+through the API as it has
+since OR-77: commit
+0c25a9aa703b38c7579f7928d61443a881a62465,
+tree
+f88eb75044f2e751915ab9a825426177972f2b58,
+all 14 blobs matched by
+recomputed git blob id against
+the extraction the batteries
+at OR-114 and OR-115 ran, 0
+mismatches. The flighttape pin
+stands reconfirmed through the
+API: commit
+74a83298aeb31c82e62b9fb0c613f5bc8600799e,
+tree
+afd4d7d13520411e003762548fc79082a1b9cf6e,
+exactly 50 blobs, and the
+golden digest
+(cc9c4e01fca418dcc33114caf75fae1f6bf0d401f297b5d61f6776903fa955a3)
+executed, not merely cited,
+through the suite's digest
+test in the gate runs of this
+round, on the base tree at
+OR-114 and on the closure tree
+here. A Python codepoint scan
+over all 21 blobs of the
+closure tree itself finds zero
+U+2014 and zero U+2013.
+
+- OR-117. Closure. Round 20
+closes at 20 of 100, the
+README rounds line moving in
+this commit only. The gate
+stands at OR-116; the battery
+at OR-114 and the budgets and
+realistic pass at OR-115 stand
+as the round's measurements.
+OR-51, the Mach-O
+constructor-section arm,
+stands carried by name as a
+named limitation, neither
+repaired nor reopened. The
+round's provenance: one
+seating, banked family by
+family as each finished
+(1919f1f5 OR-113, c7903039
+OR-114, 683f0d03 OR-115, this
+commit OR-116 and OR-117),
+each push asserting tree-SHA
+equality against the local
+tree before landing. The
+round's environment effects,
+in full: a service restart
+touched the round's schedule
+and nothing it contracts; the
+restart killed the realistic
+pass's first detached attempt
+in phase 1, as OR-115 records,
+while the battery completed on
+its first run in an unfaulted
+window and every figure this
+round contracts comes from a
+completed run or gate in an
+unfaulted window. No
+measurement this round
+contracts was taken in a
+faulted state.
