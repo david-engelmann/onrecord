@@ -4499,3 +4499,125 @@ unfaulted window. No
 measurement this round
 contracts was taken in a
 faulted state.
+
+- OR-118. PR 23 read back
+whole on the closed record: 0
+reviews, 0 review comments,
+and 2 issue comments, every
+body read to its end, the pull
+request body included (7,861
+characters at this read). Its
+CodeRabbit shell (6911441349)
+stands in its true final form
+at this read at 11,218
+characters, created
+2026-11-16T08:33:51Z and last
+edited 2026-11-16T08:39:37Z.
+The shell carries three forms
+in the record, each accounted
+at its own moment: 11,214
+characters at the pull request
+body's first read, the shell
+last edited then at 08:36:07Z;
+11,216 characters at the
+body's final read, last edited
+08:38:59Z; and 11,218
+characters at the Round 20
+gate's reads and at this read,
+the shell having re-rendered
+upward by two characters at
+each step, every
+disposition-bearing element
+unchanged across the three
+forms. At this read the shell
+stands as a completed review
+of the closure head 6365fd33:
+Merge Risk Minimal up to
+6365f, pre-merge checks 4
+passed and 0 failed
+(Description, Title, Linked
+Issues, Out of Scope Changes),
+the word Docstring occurring
+zero times, no rate-limit
+banner, the standing line that
+no actionable comments were
+generated in the recent
+review, and Run ID
+009e76f4-3457-4265-a4d0-009e7c273dd5,
+with files selected
+CONTRACT.md and README.md and
+the included allowance used
+with none remaining. No
+reservation stands in the
+shell and no dismissal stands
+on the record: its Title check
+stands Passed, and the mild
+remark in that check's full
+details, that the title does
+not name the verification
+results or the closure,
+withdraws itself in the same
+passage (it is specific enough
+for a reviewer to find the
+primary change), so it stands
+recorded as a disposition in
+PR 23's body, re-graded at
+this read: the check stands
+passed, not inconclusive or
+failed; the title (43
+characters) names the round
+and the OR-113 to OR-117
+range, and that range heads
+exactly one item each in the
+merged contract, counted at
+this read; the title's form is
+the standing form of this
+line's round PRs; and the
+shell's standing line records
+that no actionable comments
+were generated. No review
+object and no review comments
+stand, so nothing was fixed.
+No trigger comment stands and
+no auto-reply stands: the bot
+reviewed automatically at the
+pull request's opening, and
+the owner's landing comment
+(6911812006, 1,745 characters,
+created 2026-11-16T08:52:37Z
+and never edited) completes
+the census, the landing
+comment last. The bot's
+release-notes appendix on PR
+23's body stands preserved at
+the body's foot inside its own
+markers, censused in the
+whole-body read at this read
+at 387 characters counting
+from its opening marker: a
+Summary by CodeRabbit section
+with two bullets under
+Documentation, recording the
+records covering Round 20 and
+the README's move to 20 of
+100, each correct at this
+read, and PR 23's body records
+the appendix preserved byte
+for byte through that body's
+patch. OR-51, the Mach-O
+constructor-section arm,
+stands carried by name as a
+named limitation at its
+standing scope, neither
+repaired nor reopened, and
+stands named again at this
+round's closure. Every comment
+ID and figure in this round's
+brief was verified against the
+live record before contraction
+and stands as relayed, so no
+correction is owed. Nothing
+was posted on PR 23 after the
+landing comment, so no late
+CodeRabbit finding stands
+undisposed.
