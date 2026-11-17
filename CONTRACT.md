@@ -5075,3 +5075,50 @@ documented with the pass
 remaining open and no result
 recorded), each correct at
 this read.
+
+- OR-124. Base gate and
+battery. The base gate ran
+whole on the base tree
+(94571683, the Round 21
+closure tree) at this round's
+hand: cargo test 69 passed and
+0 failed (50 store, 19
+streams), clippy with warnings
+denied clean, fmt clean, every
+stage on its first attempt
+after the slot turn came. The
+debug binary at this round's
+scratch target path carries
+md5
+ebacf7f3670e658eeb1fa9c9512aed18,
+the same digest as Round 21's
+build at its own path.
+Execution read the source from
+the Round 21 lane's worktree,
+whose local tree is the base
+tree exactly; the brief's
+fresh worktree could not be
+materialized in the session's
+write-fault regime, and the
+deviation stands disclosed on
+the pull request record. The
+battery ran whole against this
+build and the oracle verified
+at OR-123's read-back shape
+(0c25a9a, 14 blobs, 0
+mismatches): 55 cells (39
+stream, 16 budget), 0 splits,
+every cell agreeing, on its
+first executed run; one
+earlier launch failure, on
+this lane's own harness path
+error with zero cells run,
+stands in the round's attempt
+history on the pull request
+record. The budget constants
+were re-read from the base
+tree's src/store.rs lines 30
+and 31 before the run:
+BUDGET_READ (990, 988) and
+BUDGET_READ_NARROW (989, 987),
+unchanged.
