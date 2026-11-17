@@ -4967,3 +4967,111 @@ contracts was taken in a
 faulted state, and no counted
 pass rests on a killed or
 refused attempt.
+
+- OR-123. PR 24 read back
+whole on the closed record: 0
+reviews, 0 review comments,
+and 4 issue comments, every
+body read to its end, the pull
+request body included (9,211
+characters at this read). Its
+CodeRabbit shell (6941916764)
+stands in its true final form
+at this read at 11,259
+characters, created
+2026-11-17T07:41:41Z and last
+edited 2026-11-17T13:46:08Z.
+The shell carries three forms
+in the record, each accounted
+at its own moment: 11,255
+characters at the pull request
+body's gate read, the shell
+last edited then at
+2026-11-17T07:45:29Z; 11,257
+characters at the owner's gate
+patch, last edited
+2026-11-17T07:51:34Z; and
+11,259 characters at the final
+re-render, last edited
+2026-11-17T13:46:08Z, standing
+unchanged from that edit
+through the queue comment, the
+merge, and this read. The
+landing comment's phrase
+placing the further re-renders
+at the queue comment and the
+merge is loose on timing
+alone, the final re-render
+having landed before both; its
+figure of 11,259 characters at
+the landing is exact. The
+shell in its final form
+carries the completed review
+of the closure head 3c8ad65e:
+Merge Risk Minimal up to
+3c8ad, pre-merge checks 4
+passed and 0 failed (Title,
+Linked Issues, Out of Scope
+Changes, Description), the
+word Docstring occurring zero
+times, no rate-limit banner,
+the standing line that no
+actionable comments were
+generated in the recent
+review, Run ID
+46e307f7-bd40-456c-9b3d-65e7df66ba9b,
+files selected CONTRACT.md and
+README.md, the included
+allowance used with none
+remaining. The Title check
+stands Passed, its full
+details affirming that the
+title names the primary
+change, is specific, and is
+accurate. No reservation
+stands in the shell and no
+dismissal stands on the round:
+no review object and no review
+comments stand on the pull
+request, so nothing was fixed
+and nothing was dismissed, and
+that posture stands confirmed
+at this read. The owner's
+queue comment (6953287480)
+stands at 12 characters, the
+words /trunk merge, created
+2026-11-17T15:57:09Z and never
+edited. The trunk notice
+(6953290494) stands at 113
+characters, created
+2026-11-17T15:57:16Z and
+edited once, at
+2026-11-17T16:04:39Z, to its
+final text recording the merge
+as successful through the
+queue. The landing comment
+(6953705853) stands at 1,799
+characters, created
+2026-11-17T16:12:58Z, never
+edited, standing last; nothing
+stands posted after it, so the
+fourth charge of that landing
+stands discharged with nothing
+to disposition. The bot's
+release-notes appendix stands
+at the pull request body's
+foot inside its own markers at
+493 characters counting from
+its opening marker: a Summary
+by CodeRabbit section with
+three bullets under
+Documentation (the status line
+to 21 of 100; Round 21 records
+covering reviews,
+measurements, and
+verification; nine incomplete
+realistic-pass attempts
+documented with the pass
+remaining open and no result
+recorded), each correct at
+this read.
