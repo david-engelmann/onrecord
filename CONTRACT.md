@@ -4861,3 +4861,109 @@ re-run's completion is carried
 to the next round's charges as
 an open item, the same posture
 OR-51 stands in below.
+
+- OR-121. The gate record
+whole. The final gate re-run
+whole on the closure tree:
+cargo test exit 0, 69 passed
+and 0 failed (50 store, 19
+streams); cargo clippy
+--all-targets with warnings
+denied, exit 0; cargo fmt
+--check exit 0. The final
+oracle tree stands verified
+through the API as it has
+since OR-77: commit
+0c25a9aa703b38c7579f7928d61443a881a62465,
+tree
+f88eb75044f2e751915ab9a825426177972f2b58,
+all 14 blobs matched by
+recomputed git blob id against
+the extraction the batteries
+at OR-119 and OR-120 ran, 0
+mismatches. The flighttape pin
+stands reconfirmed through the
+API: commit
+74a83298aeb31c82e62b9fb0c613f5bc8600799e,
+tree
+afd4d7d13520411e003762548fc79082a1b9cf6e,
+exactly 50 blobs; the pin's
+own suite run whole at this
+round's hand at 241 passed and
+0 failed, and the golden
+executed through the pin's own
+CLI, converting
+tests/fixtures/claude_session_synthetic.jsonl
+to a 1,663-byte tape
+byte-identical to this repo's
+tests/fixtures/tape_synthetic.json,
+its digest printing
+cc9c4e01fca418dcc33114caf75fae1f6bf0d401f297b5d61f6776903fa955a3
+and its verify accepting at
+exit 0; the suite's own digest
+test
+(the_digest_is_pinned_to_the_family_golden)
+passed in the gate runs of
+this round, on the base tree
+at OR-119 and on the closure
+tree here. A Python codepoint
+scan over all 21 blobs of the
+closure tree itself finds zero
+U+2014 and zero U+2013.
+
+- OR-122. Closure. Round 21
+closes at 21 of 100, the
+README rounds line moving in
+this commit only. The gate
+stands at OR-121; the battery
+at OR-119 and the budgets at
+OR-120 stand as the round's
+contracted measurements. Two
+items stand carried open by
+name. OR-51, the Mach-O
+constructor-section arm,
+stands carried as a named
+limitation, neither repaired
+nor reopened. The realistic
+pass's re-run stands carried
+uncontracted, as OR-120
+records: nine attempts in this
+round's record, no completed
+run, no figure contracted, its
+last contracted state standing
+at OR-115, and its completion
+stands charged to the next
+round. The round's provenance:
+one seating, banked family by
+family as each finished
+(02204df3 OR-118, 8ff2254d
+OR-119, b9c74806 OR-120, this
+commit OR-121 and OR-122),
+each push asserting tree-SHA
+equality against the local
+tree before landing, every
+push server-side through the
+Git Data API with the branch
+created at the base through
+the API and no local git push
+used. The round's environment
+effects, in full: box restarts
+at about 17:09Z, 19:11Z, and
+21:30Z on the first day and at
+about 03:29Z, 05:30Z, and
+07:19Z on the second, and the
+box write fault in its
+flickering windows, run
+through the round's record,
+and the realistic pass's nine
+attempts failed in that
+environment, as OR-120
+records; the battery completed
+on its first run and every
+gate this round contracts ran
+whole in an unfaulted window.
+No measurement this round
+contracts was taken in a
+faulted state, and no counted
+pass rests on a killed or
+refused attempt.
