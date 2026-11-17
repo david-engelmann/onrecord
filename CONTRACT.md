@@ -4726,3 +4726,138 @@ descriptor stands in the OR-43
 crash class on the add cell.
 No stream point moved, so no
 new pin is owed.
+
+- OR-120. The read budgets and
+the realistic pass re-measured
+fresh. The read budgets at
+their exact flip points, the
+remaining 16 cells of the
+battery at OR-119, each
+boundary point itself included
+with a cell on each side, each
+cell asserting the oracle's
+exit direction against the
+contracted side of the
+boundary, and the constants
+first read from src/store.rs
+at this round's base
+(BUDGET_READ (990, 988) and
+BUDGET_READ_NARROW (989,
+987)). Under BUDGET_READ (990,
+988) through check, nested
+arrays verify at 986 and 987
+and refuse at 988 and 989, and
+nested objects verify at 985
+and 986 and refuse at 987 and
+988. Under BUDGET_READ_NARROW
+(989, 987) through get, nested
+arrays verify at 985 and 986
+and refuse at 987 and 988, and
+nested objects verify at 984
+and 985 and refuse at 986 and
+987. The 989 slot at the wide
+width is refused and its
+verify side stands at 987; the
+988 slot at the narrow width
+is refused and its verify side
+stands at 986. No budget point
+moved, so no new pin is owed.
+The realistic pass re-run
+fresh at Round 12's shape in
+full (the OR-76 construction),
+against the shipped CLI and
+the final oracle tree verified
+at OR-121, stands not
+contracted this round: nine
+attempts stand in this round's
+record and no attempt
+completed, so no figure of the
+pass is contracted here and
+the pass's last contracted
+state stands at OR-115, where
+a completed run recorded 3,100
+compared steps and 0 splits
+with the composed record at
+2,600 lines and 652,833 bytes.
+Each of the nine is counted
+nowhere, and no counted pass
+rests on any of them. The
+first ran about 50 minutes in
+phase 1, its two sides'
+records growing in lockstep at
+every spot check, and died
+when a box restart took the
+process at 2,386 of the 2,600
+adds, the two records standing
+in lockstep at 2,386 lines and
+598,486 bytes each. The second
+attempt completed phase 1
+whole inside itself, its
+composed record standing at
+the OR-76 figures on both
+sides and its log recording
+the phase's completion with no
+split printed, and was killed
+before the pass completed, its
+later phases never printing,
+the process gone after the box
+restart at about 19:11Z. The
+third attempt composed the
+full record, its two sides
+standing at 2,600 lines and
+652,833 bytes each, and was
+killed by the box restart at
+about 21:30Z before the pass
+completed, its log never
+written. The fourth attempt
+composed the full record at
+the same figures and never
+completed, its log never
+written, the process gone
+after the box restart at about
+03:29Z on the following day.
+The fifth attempt ran about
+105 minutes with no box
+restart intervening, its
+record standing composed at
+the same figures, and was gone
+with its log never written and
+its fourth phase never begun.
+The sixth and seventh attempts
+failed at launch in a faulted
+write window before any cell
+ran, the log writer refused
+and no temporary directory
+usable. The eighth attempt ran
+in the foreground of its
+supervising session, its
+output carried to the durable
+log by a consumer that retries
+writes through the fault, and
+was killed about six minutes
+into its first phase by the
+box restart at about 05:30Z.
+The ninth attempt ran in the
+same supervised form and was
+killed by the box restart at
+about 07:19Z in phase 1 at
+2,310 of the 2,600 adds, its
+records standing in lockstep
+at 2,310 lines and 579,858
+bytes each and its log never
+written. As partial evidence
+only, contracted as nothing:
+the frozen record pairs of the
+six attempts that composed
+records (the first, second,
+third, fourth, fifth, and
+ninth) stand byte-identical
+between the two sides at each
+attempt's frozen length, so
+the composition agreed step
+for step as far as each of
+those attempts ran. The
+re-run's completion is carried
+to the next round's charges as
+an open item, the same posture
+OR-51 stands in below.
