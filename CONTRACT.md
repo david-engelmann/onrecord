@@ -5443,3 +5443,184 @@ moves no disposition, and
 OR-125 stands unrewritten in
 every other particular, as
 OR-123 does.
+
+OR-130. PR 26 read back whole
+at this round's opening
+(charges 1 and 4 of the Round
+22 landing comment
+6982807997). The PR stands
+merged as squash
+1b34f00f19e368e982c6edca22ba60ca5f8a3f32
+on 2026-11-18T13:59:35Z, this
+round's base; its head stands
+at
+608beaa8c82a7c7ca818f28a398525f895e573ae
+on tree
+f1a13fcc5e5c3540fec93bfe4d8fc17e0aaf2340
+over base
+cb2822620d6f4063706ccb6957fefd1c32a63ec2,
+and its body stands at 12,765
+chars. The census at this
+item's writing, refreshed at
+2026-11-18T15:36Z: 4 issue
+comments, 0 reviews, 0 review
+comments, the landing comment
+6982807997 (2,512 chars,
+created 2026-11-18T15:18:37Z,
+never edited) standing last.
+The CodeRabbit shell
+6971300569 stands in its true
+final form at 11,290 chars,
+last edited
+2026-11-18T13:52:09Z: the
+incremental review of the
+repair head (Run ID
+c33279dd-d097-4c51-8ee0-67c61579ab52,
+reviewing the range 535dc0d2
+to 608beaa8 with CONTRACT.md
+the one file selected,
+coverage standing at
+608beaa8), its Merge Risk
+standing at Minimal up to the
+repair head, its pre-merge
+checks at 4 passed and 0
+failed, its standing line that
+no actionable comments were
+generated in the recent
+review, and no review object
+or review comment anywhere on
+the PR, so nothing in it was
+fixed. No reservation stands:
+its Title check stands Passed,
+the check's details noting
+only that the title omits the
+OR-129 census correction and
+the README edit, acceptable
+for a title, a mild remark
+inside a passed check, so
+nothing stands dismissed
+either. Its walkthrough's
+three rows are accurate in
+substance, including its
+naming of OR-129's census
+correction. The shell's
+earlier forms stand recorded
+at 11,066 chars (the
+closure-head review, Run ID
+a2a1bcc5-2966-4c09-aad9-be683cb598dd)
+and 11,068 at the red team's
+read, each exact at its
+moment; the body's step 0
+paragraph states the shell at
+11,066 and the Trunk notice at
+403, both moment-bounded
+figures exact at the lane's
+reads and superseded by the
+final forms contracted here.
+The Trunk notice 6971297185
+stands at 113 chars in its
+post-merge form (merged
+successfully, with the queue
+details link), last edited
+2026-11-18T13:59:39Z, its
+403-char pre-merge form
+standing at the gate reads.
+The owner's queue comment
+6980566561 stands at 12 chars,
+the words /trunk merge,
+created 2026-11-18T13:52:12Z
+and never edited. The bot's
+release-notes appendix stands
+at the body's foot inside its
+own markers at 606 chars
+counting from its opening
+marker (608 counting the two
+separating newlines), its four
+bullets under Documentation
+standing as the Round 22
+records; the realistic
+attempts uncontracted; the
+post-review repair and the
+corrected comment count; the
+README at 22 of 100, each
+correct at this read; the
+body's own step 0 paragraph
+censuses the appendix at 592
+chars with a different four,
+naming OR-51 and not the
+repair, the bot having edited
+its appendix after the lane's
+read, so the body's
+enumeration stands superseded
+on that limb, the appendix
+being the bot's own text and
+preserved byte for byte
+through the owner's patch as
+it then stood. The owner's
+body patch graded against the
+record: all four limbs stand
+in the final body exactly as
+charged (the Verified head
+moved to 608beaa8 on tree
+f1a13fcc, with OR-129 named in
+the family list as the repair
+record appended after the
+three reviews on their
+findings and passed by delta
+reviews on both axes; the Spec
+paragraph's census sentence
+corrected to 6 issue comments
+as corrected at OR-129; the
+charge 4 clause restated with
+both post-landing posts named
+and dispositioned at OR-129;
+and the kill sentence standing
+at the realistic bullet's end,
+recording the lane's kill of
+its two queued sessions, each
+counted nowhere), and the
+patch changed no tree, the
+head standing at 608beaa8 as
+merged. OR-129's
+qualifications stand
+contracted as they stand: PR
+24's census corrected to six
+issue comments with both
+post-landing posts
+(6954365104, the owner's stray
+duplicate queue comment from
+the owner's stale enqueue
+script, and 6954366730,
+Trunk's error notice)
+dispositioned as inert on the
+already-merged PR, the Round
+21 landing's charge 4
+discharged on the corrected
+census and not on OR-123's
+clause; the attempt history
+completed with the lane's kill
+of its two queued sessions and
+the two queue deaths (restarts
+at about 19:50Z and 20:44Z on
+2026-11-17) kept distinct from
+the seven attempts, each
+counted nowhere; and attempt
+7's mechanism qualified (the
+first refusal event at add-835
+both sides refused with the
+files identical, the first
+one-sided refusals at adds 872
+and 873), OR-123 and OR-125
+standing unrewritten.
+Post-landing material (charge
+4): nothing stands posted
+after the landing comment at
+the refreshed census, and the
+only post-merge edit anywhere
+on the PR is the Trunk
+notice's own move to its
+post-merge form at 13:59:39Z,
+dispositioned in this census;
+charge 4 stands discharged
+with nothing further to
+disposition.
