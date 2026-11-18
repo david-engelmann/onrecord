@@ -5208,3 +5208,55 @@ attempt 5's pair at its 2,458,
 and attempt 7's at its 2,205.
 Every attempt stands counted
 nowhere.
+
+- OR-126. Verification family.
+The oracle was re-verified
+through the API before any
+harness pointed at it: commit
+0c25a9aa703b38c7579f7928d61443a881a62465,
+tree
+f88eb75044f2e751915ab9a825426177972f2b58,
+14 blobs, 0 mismatches against
+the local extraction, whose
+package stands at its src
+directory. The flighttape pin
+was reconfirmed the same way:
+commit
+74a83298aeb31c82e62b9fb0c613f5bc8600799e,
+tree
+afd4d7d13520411e003762548fc79082a1b9cf6e,
+exactly 50 blobs, 0
+mismatches. The pin suite ran
+whole in the verified
+materialization with a fresh
+target dir at this round's
+scratch: 241 passed, 0 failed.
+The golden was executed
+through the pin's own CLI:
+convert of the pin's
+tests/fixtures/claude_session_synthetic.jsonl
+produced a 1,663-byte tape
+byte-identical to onrecord's
+tests/fixtures/tape_synthetic.json,
+the digest printed
+cc9c4e01fca418dcc33114caf75fae1f6bf0d401f297b5d61f6776903fa955a3
+at exit 0, and verify accepted
+at exit 0. Checklist item 6
+executed: cargo install into a
+scratch CARGO_HOME completed,
+the installed binary at
+873,744 bytes. Item 7 executed
+from that binary: the
+quickstart reproduces the
+README exactly, the add
+printing
+claim-2946b699934e0f6b, the
+get view byte-identical to the
+printed view at 719 bytes,
+check printing the record is
+sound. Item 3 re-verified
+live: the GitHub description,
+the README lede, and the
+Cargo.toml package description
+stand byte-identical, passing
+outright.
