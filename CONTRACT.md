@@ -5122,3 +5122,89 @@ and 31 before the run:
 BUDGET_READ (990, 988) and
 BUDGET_READ_NARROW (989, 987),
 unchanged.
+
+- OR-125. The realistic
+completion charged at OR-122
+stands UNCONTRACTED again, and
+its completion stands charged
+to Round 23 as that round's
+first business. The pass last
+stands contracted at OR-115:
+3,100 cells, 0 splits, the
+composed record at 2,600 lines
+and 652,833 bytes, its fourth
+phase split six cells at exit
+0, three at exit 120, four at
+exit 1. This round's history:
+one launch failure before any
+attempt, the harness pointed
+at the oracle's extraction
+root instead of its src
+directory, burning its retries
+in under a minute with zero
+cells run, the same class as
+Round 21's sixth and seventh
+attempts, corrected before the
+first real attempt. Attempt 1
+composed phases 1 to 3 whole,
+its phase 1 record exact at
+2,600 lines and 652,833 bytes,
+then the write fault refused
+its fourth phase's first seed
+write and it exited with no
+final accounting after 89
+minutes. Attempt 2 was killed
+by a box restart in phase 1,
+last read at 1,487 of 2,600
+adds in lockstep, its later
+state unknowable. Attempt 3
+repeated attempt 1's shape
+whole: phases 1 to 3 complete,
+the same refusal at the fourth
+phase's first seed write, dead
+after 76 minutes with probe
+writes refused across the box
+in the same minute. Attempt 4
+never launched: its seating
+died queued in a restart after
+42 minutes, unrun. Attempt 5
+ran to completion in 107
+minutes and printed its
+accounting, 3,100 cells and
+1,271 splits, and counts
+nowhere: the splits are the
+fault's own, both sides
+refusing appends together
+through the fault windows with
+only their refusal texts'
+bytes differing, one one-sided
+append failure desyncing the
+pair mid-phase, its composed
+record standing byte-identical
+on disk at 2,458 lines and
+617,216 bytes with 142 of its
+adds never landed, its third
+phase agreeing 16 of 16 and
+its fourth 13 of 13 on that
+record. Attempt 6 died to a
+restart three minutes into its
+run, last read at 344 adds in
+lockstep. Attempt 7 completed
+in 47 minutes with 2,064
+splits of the same making, its
+first one-sided refusal at
+add-835, its composed pair
+byte-identical at 2,205 lines
+and 553,083 bytes with 395
+adds never landed, its fourth
+phase agreeing 13 of 13. As
+partial evidence only,
+contracted as nothing: the
+frozen record pairs of
+attempts 1 and 3 stand
+byte-identical between the
+sides at the full 2,600 lines,
+attempt 5's pair at its 2,458,
+and attempt 7's at its 2,205.
+Every attempt stands counted
+nowhere.
