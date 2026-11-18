@@ -5260,3 +5260,52 @@ the README lede, and the
 Cargo.toml package description
 stand byte-identical, passing
 outright.
+
+- OR-127. Closure gate. The
+closure gate ran whole on the
+closure tree's code, which is
+byte-identical to the base
+tree's in every code blob,
+only CONTRACT.md and README.md
+differing between the trees:
+after a full clean rebuild at
+the same target path, cargo
+test 69 passed and 0 failed
+(50 store, 19 streams, the
+counts read from the gate's
+own built test binaries),
+clippy with warnings denied
+clean, fmt clean, every
+stage's exit verified at 0 in
+the session capture after two
+earlier quota-killed attempts
+at the same stages, whose
+false clean lines in the first
+follow-on script stand
+corrected in the round's
+record. The battery ran whole
+on the closure build: 55
+cells, 0 splits. Provenance at
+build-path scope: the rebuilt
+binary is byte-identical to
+the first build, md5
+ebacf7f3670e658eeb1fa9c9512aed18
+at the same target path. A
+Python codepoint scan over all
+21 blobs of the closure tree
+itself, executed over the
+constructed tree before its
+commit landed, finds zero
+U+2014 and zero U+2013.
+
+- OR-128. Round 22 closes at
+22 of 100. The README rounds
+line moves to 22 of 100 in
+this closure commit only.
+OR-51 stands carried open by
+name into Round 23 as a named
+limitation, the Mach-O
+constructor-section arm,
+neither repaired nor reopened
+in this round, per the round's
+charge.
