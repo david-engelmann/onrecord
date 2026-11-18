@@ -4967,3 +4967,479 @@ contracts was taken in a
 faulted state, and no counted
 pass rests on a killed or
 refused attempt.
+
+- OR-123. PR 24 read back
+whole on the closed record: 0
+reviews, 0 review comments,
+and 4 issue comments, every
+body read to its end, the pull
+request body included (9,211
+characters at this read). Its
+CodeRabbit shell (6941916764)
+stands in its true final form
+at this read at 11,259
+characters, created
+2026-11-17T07:41:41Z and last
+edited 2026-11-17T13:46:08Z.
+The shell carries three forms
+in the record, each accounted
+at its own moment: 11,255
+characters at the pull request
+body's gate read, the shell
+last edited then at
+2026-11-17T07:45:29Z; 11,257
+characters at the owner's gate
+patch, last edited
+2026-11-17T07:51:34Z; and
+11,259 characters at the final
+re-render, last edited
+2026-11-17T13:46:08Z, standing
+unchanged from that edit
+through the queue comment, the
+merge, and this read. The
+landing comment's phrase
+placing the further re-renders
+at the queue comment and the
+merge is loose on timing
+alone, the final re-render
+having landed before both; its
+figure of 11,259 characters at
+the landing is exact. The
+shell in its final form
+carries the completed review
+of the closure head 3c8ad65e:
+Merge Risk Minimal up to
+3c8ad, pre-merge checks 4
+passed and 0 failed (Title,
+Linked Issues, Out of Scope
+Changes, Description), the
+word Docstring occurring zero
+times, no rate-limit banner,
+the standing line that no
+actionable comments were
+generated in the recent
+review, Run ID
+46e307f7-bd40-456c-9b3d-65e7df66ba9b,
+files selected CONTRACT.md and
+README.md, the included
+allowance used with none
+remaining. The Title check
+stands Passed, its full
+details affirming that the
+title names the primary
+change, is specific, and is
+accurate. No reservation
+stands in the shell and no
+dismissal stands on the round:
+no review object and no review
+comments stand on the pull
+request, so nothing was fixed
+and nothing was dismissed, and
+that posture stands confirmed
+at this read. The owner's
+queue comment (6953287480)
+stands at 12 characters, the
+words /trunk merge, created
+2026-11-17T15:57:09Z and never
+edited. The trunk notice
+(6953290494) stands at 113
+characters, created
+2026-11-17T15:57:16Z and
+edited once, at
+2026-11-17T16:04:39Z, to its
+final text recording the merge
+as successful through the
+queue. The landing comment
+(6953705853) stands at 1,799
+characters, created
+2026-11-17T16:12:58Z, never
+edited, standing last; nothing
+stands posted after it, so the
+fourth charge of that landing
+stands discharged with nothing
+to disposition. The bot's
+release-notes appendix stands
+at the pull request body's
+foot inside its own markers at
+493 characters counting from
+its opening marker: a Summary
+by CodeRabbit section with
+three bullets under
+Documentation (the status line
+to 21 of 100; Round 21 records
+covering reviews,
+measurements, and
+verification; nine incomplete
+realistic-pass attempts
+documented with the pass
+remaining open and no result
+recorded), each correct at
+this read.
+
+- OR-124. Base gate and
+battery. The base gate ran
+whole on the base tree
+(94571683, the Round 21
+closure tree) at this round's
+hand: cargo test 69 passed and
+0 failed (50 store, 19
+streams), clippy with warnings
+denied clean, fmt clean, every
+stage on its first attempt
+after the slot turn came. The
+debug binary at this round's
+scratch target path carries
+md5
+ebacf7f3670e658eeb1fa9c9512aed18,
+the same digest as Round 21's
+build at its own path.
+Execution read the source from
+the Round 21 lane's worktree,
+whose local tree is the base
+tree exactly; the brief's
+fresh worktree could not be
+materialized in the session's
+write-fault regime, and the
+deviation stands disclosed on
+the pull request record. The
+battery ran whole against this
+build and the oracle verified
+at OR-123's read-back shape
+(0c25a9a, 14 blobs, 0
+mismatches): 55 cells (39
+stream, 16 budget), 0 splits,
+every cell agreeing, on its
+first executed run; one
+earlier launch failure, on
+this lane's own harness path
+error with zero cells run,
+stands in the round's attempt
+history on the pull request
+record. The budget constants
+were re-read from the base
+tree's src/store.rs lines 30
+and 31 before the run:
+BUDGET_READ (990, 988) and
+BUDGET_READ_NARROW (989, 987),
+unchanged.
+
+- OR-125. The realistic
+completion charged at OR-122
+stands UNCONTRACTED again, and
+its completion stands charged
+to Round 23 as that round's
+first business. The pass last
+stands contracted at OR-115:
+3,100 cells, 0 splits, the
+composed record at 2,600 lines
+and 652,833 bytes, its fourth
+phase split six cells at exit
+0, three at exit 120, four at
+exit 1. This round's history:
+one launch failure before any
+attempt, the harness pointed
+at the oracle's extraction
+root instead of its src
+directory, burning its retries
+in under a minute with zero
+cells run, the same class as
+Round 21's sixth and seventh
+attempts, corrected before the
+first real attempt. Attempt 1
+composed phases 1 to 3 whole,
+its phase 1 record exact at
+2,600 lines and 652,833 bytes,
+then the write fault refused
+its fourth phase's first seed
+write and it exited with no
+final accounting after 89
+minutes. Attempt 2 was killed
+by a box restart in phase 1,
+last read at 1,487 of 2,600
+adds in lockstep, its later
+state unknowable. Attempt 3
+repeated attempt 1's shape
+whole: phases 1 to 3 complete,
+the same refusal at the fourth
+phase's first seed write, dead
+after 76 minutes with probe
+writes refused across the box
+in the same minute. Attempt 4
+never launched: its seating
+died queued in a restart after
+42 minutes, unrun. Attempt 5
+ran to completion in 107
+minutes and printed its
+accounting, 3,100 cells and
+1,271 splits, and counts
+nowhere: the splits are the
+fault's own, both sides
+refusing appends together
+through the fault windows with
+only their refusal texts'
+bytes differing, one one-sided
+append failure desyncing the
+pair mid-phase, its composed
+record standing byte-identical
+on disk at 2,458 lines and
+617,216 bytes with 142 of its
+adds never landed, its third
+phase agreeing 16 of 16 and
+its fourth 13 of 13 on that
+record. Attempt 6 died to a
+restart three minutes into its
+run, last read at 344 adds in
+lockstep. Attempt 7 completed
+in 47 minutes with 2,064
+splits of the same making, its
+first one-sided refusal at
+add-835, its composed pair
+byte-identical at 2,205 lines
+and 553,083 bytes with 395
+adds never landed, its fourth
+phase agreeing 13 of 13. As
+partial evidence only,
+contracted as nothing: the
+frozen record pairs of
+attempts 1 and 3 stand
+byte-identical between the
+sides at the full 2,600 lines,
+attempt 5's pair at its 2,458,
+and attempt 7's at its 2,205.
+Every attempt stands counted
+nowhere.
+
+- OR-126. Verification family.
+The oracle was re-verified
+through the API before any
+harness pointed at it: commit
+0c25a9aa703b38c7579f7928d61443a881a62465,
+tree
+f88eb75044f2e751915ab9a825426177972f2b58,
+14 blobs, 0 mismatches against
+the local extraction, whose
+package stands at its src
+directory. The flighttape pin
+was reconfirmed the same way:
+commit
+74a83298aeb31c82e62b9fb0c613f5bc8600799e,
+tree
+afd4d7d13520411e003762548fc79082a1b9cf6e,
+exactly 50 blobs, 0
+mismatches. The pin suite ran
+whole in the verified
+materialization with a fresh
+target dir at this round's
+scratch: 241 passed, 0 failed.
+The golden was executed
+through the pin's own CLI:
+convert of the pin's
+tests/fixtures/claude_session_synthetic.jsonl
+produced a 1,663-byte tape
+byte-identical to onrecord's
+tests/fixtures/tape_synthetic.json,
+the digest printed
+cc9c4e01fca418dcc33114caf75fae1f6bf0d401f297b5d61f6776903fa955a3
+at exit 0, and verify accepted
+at exit 0. Checklist item 6
+executed: cargo install into a
+scratch CARGO_HOME completed,
+the installed binary at
+873,744 bytes. Item 7 executed
+from that binary: the
+quickstart reproduces the
+README exactly, the add
+printing
+claim-2946b699934e0f6b, the
+get view byte-identical to the
+printed view at 719 bytes,
+check printing the record is
+sound. Item 3 re-verified
+live: the GitHub description,
+the README lede, and the
+Cargo.toml package description
+stand byte-identical, passing
+outright.
+
+- OR-127. Closure gate. The
+closure gate ran whole on the
+closure tree's code, which is
+byte-identical to the base
+tree's in every code blob,
+only CONTRACT.md and README.md
+differing between the trees:
+after a full clean rebuild at
+the same target path, cargo
+test 69 passed and 0 failed
+(50 store, 19 streams, the
+counts read from the gate's
+own built test binaries),
+clippy with warnings denied
+clean, fmt clean, every
+stage's exit verified at 0 in
+the session capture after two
+earlier quota-killed attempts
+at the same stages, whose
+false clean lines in the first
+follow-on script stand
+corrected in the round's
+record. The battery ran whole
+on the closure build: 55
+cells, 0 splits. Provenance at
+build-path scope: the rebuilt
+binary is byte-identical to
+the first build, md5
+ebacf7f3670e658eeb1fa9c9512aed18
+at the same target path. A
+Python codepoint scan over all
+21 blobs of the closure tree
+itself, executed over the
+constructed tree before its
+commit landed, finds zero
+U+2014 and zero U+2013.
+
+- OR-128. Round 22 closes at
+22 of 100. The README rounds
+line moves to 22 of 100 in
+this closure commit only.
+OR-51 stands carried open by
+name into Round 23 as a named
+limitation, the Mach-O
+constructor-section arm,
+neither repaired nor reopened
+in this round, per the round's
+charge.
+
+- OR-129. Repair record, appended after
+the three reviews of the
+closure head, answering the
+gate's findings on this
+round's record (spec fidelity
+F1 and F2; standards F1,
+graded Major on that axis, and
+F2; red team F1 and F2), with
+OR-123 and OR-125 unrewritten.
+The census first. OR-123 reads
+PR 24 at 4 issue comments and
+closes with the landing
+comment (6953705853) standing
+last, nothing posted after it,
+and the landing's fourth
+charge discharged with nothing
+to disposition; that closing
+clause is false and stands
+qualified by this record. At
+this record's own census PR 24
+stands at six issue comments:
+the shell (6941916764), the
+owner's queue comment
+(6953287480), the trunk notice
+(6953290494), the landing
+(6953705853, 1,799 characters,
+created 2026-11-17T16:12:58Z,
+never edited), and two posts
+after the landing. The first,
+the owner's stray duplicate
+queue comment (6954365104, 12
+characters, the words /trunk
+merge, created
+2026-11-17T16:37:36Z), was
+posted by the owner's stale
+enqueue script on the
+already-merged pull request
+and stands disclosed in the
+owner's Session 186 record.
+The second, trunk's error
+notice (6954366730, 84
+characters, created
+2026-11-17T16:37:39Z), reads
+"An error occurred while
+submitting your PR to the
+queue: `This PR is already
+merged`" and is trunk's reply
+to the duplicate. Both posts
+are inert on their facts: each
+stands on a closed,
+already-merged pull request,
+neither queued anything nor
+could queue anything, and no
+Round 21 figure, element, or
+disposition moves for either.
+Both stand dispositioned here,
+which is what the fourth
+charge asked of this
+read-back, and the fourth
+charge stands discharged on
+this corrected census and not
+on OR-123's clause. The pull
+request 26 body's Spec
+paragraph repeats the census
+of four and the
+nothing-after-the-landing
+clause, and both stand
+qualified by this record. The
+attempt history second.
+OR-125's account of the
+realistic's seven attempts
+omits this lane's own kill of
+two queued sessions, an event
+the lane's progress record
+states plainly and which
+stands recorded here, counted
+nowhere: after attempt 1 died
+at the fourth phase's first
+seed write (2026-11-17
+23:48:38Z), attempt 2 stood
+queued behind the follow-on
+rest session, whose provenance
+stage ran cargo clean and
+whose closure test stage then
+failed six times inside the
+same fault window that killed
+attempt 1's phase 4, the clean
+leaving the target dir without
+a binary; this lane killed
+both queued sessions, the rest
+session and attempt 2's
+queueing, which must not
+launch against a missing
+binary. For completeness the
+same record states the two
+queue deaths the lane's final
+accounting keeps distinct from
+the seven attempts: the
+realistic's first two
+queueings died unrun in the
+box restarts at about 19:50Z
+and about 20:44Z on
+2026-11-17, each counted
+nowhere. The mechanism third.
+OR-125 states attempt 7's
+first one-sided refusal at
+add-835; the lane's progress
+record, written from the same
+FAIL lines, states add-835 as
+py refused with the files
+identical, a both-refused
+event with the files in
+agreement after the step, and
+places the first one-sided
+refusals at adds 872 and 873,
+the pair desyncing there. A
+one-sided refusal with the
+other side landing cannot
+leave the files identical, so
+OR-125's sentence stands
+qualified to the progress
+record's account: the first
+refusal event stands at
+add-835, both sides refused
+with the files identical, and
+the first one-sided refusals
+stand at adds 872 and 873. The
+detail sits inside a
+counted-nowhere attempt and
+moves no disposition, and
+OR-125 stands unrewritten in
+every other particular, as
+OR-123 does.
