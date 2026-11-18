@@ -5309,3 +5309,137 @@ constructor-section arm,
 neither repaired nor reopened
 in this round, per the round's
 charge.
+
+- OR-129. Repair record, appended after
+the three reviews of the
+closure head, answering the
+gate's findings on this
+round's record (spec fidelity
+F1 and F2; standards F1,
+graded Major on that axis, and
+F2; red team F1 and F2), with
+OR-123 and OR-125 unrewritten.
+The census first. OR-123 reads
+PR 24 at 4 issue comments and
+closes with the landing
+comment (6953705853) standing
+last, nothing posted after it,
+and the landing's fourth
+charge discharged with nothing
+to disposition; that closing
+clause is false and stands
+qualified by this record. At
+this record's own census PR 24
+stands at six issue comments:
+the shell (6941916764), the
+owner's queue comment
+(6953287480), the trunk notice
+(6953290494), the landing
+(6953705853, 1,799 characters,
+created 2026-11-17T16:12:58Z,
+never edited), and two posts
+after the landing. The first,
+the owner's stray duplicate
+queue comment (6954365104, 12
+characters, the words /trunk
+merge, created
+2026-11-17T16:37:36Z), was
+posted by the owner's stale
+enqueue script on the
+already-merged pull request
+and stands disclosed in the
+owner's Session 186 record.
+The second, trunk's error
+notice (6954366730, 84
+characters, created
+2026-11-17T16:37:39Z), reads
+"An error occurred while
+submitting your PR to the
+queue: `This PR is already
+merged`" and is trunk's reply
+to the duplicate. Both posts
+are inert on their facts: each
+stands on a closed,
+already-merged pull request,
+neither queued anything nor
+could queue anything, and no
+Round 21 figure, element, or
+disposition moves for either.
+Both stand dispositioned here,
+which is what the fourth
+charge asked of this
+read-back, and the fourth
+charge stands discharged on
+this corrected census and not
+on OR-123's clause. The pull
+request 26 body's Spec
+paragraph repeats the census
+of four and the
+nothing-after-the-landing
+clause, and both stand
+qualified by this record. The
+attempt history second.
+OR-125's account of the
+realistic's seven attempts
+omits this lane's own kill of
+two queued sessions, an event
+the lane's progress record
+states plainly and which
+stands recorded here, counted
+nowhere: after attempt 1 died
+at the fourth phase's first
+seed write (2026-11-17
+23:48:38Z), attempt 2 stood
+queued behind the follow-on
+rest session, whose provenance
+stage ran cargo clean and
+whose closure test stage then
+failed six times inside the
+same fault window that killed
+attempt 1's phase 4, the clean
+leaving the target dir without
+a binary; this lane killed
+both queued sessions, the rest
+session and attempt 2's
+queueing, which must not
+launch against a missing
+binary. For completeness the
+same record states the two
+queue deaths the lane's final
+accounting keeps distinct from
+the seven attempts: the
+realistic's first two
+queueings died unrun in the
+box restarts at about 19:50Z
+and about 20:44Z on
+2026-11-17, each counted
+nowhere. The mechanism third.
+OR-125 states attempt 7's
+first one-sided refusal at
+add-835; the lane's progress
+record, written from the same
+FAIL lines, states add-835 as
+py refused with the files
+identical, a both-refused
+event with the files in
+agreement after the step, and
+places the first one-sided
+refusals at adds 872 and 873,
+the pair desyncing there. A
+one-sided refusal with the
+other side landing cannot
+leave the files identical, so
+OR-125's sentence stands
+qualified to the progress
+record's account: the first
+refusal event stands at
+add-835, both sides refused
+with the files identical, and
+the first one-sided refusals
+stand at adds 872 and 873. The
+detail sits inside a
+counted-nowhere attempt and
+moves no disposition, and
+OR-125 stands unrewritten in
+every other particular, as
+OR-123 does.
