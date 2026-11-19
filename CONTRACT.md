@@ -5795,3 +5795,82 @@ completion stands charged
 forward to Round 24 as this
 round's first business, for
 the fourth consecutive round.
+
+OR-132. The base gate and the
+battery on the base tree. The
+round worked from a verified
+extraction of the base tree
+f1a13fcc5e5c3540fec93bfe4d8fc17e0aaf2340
+under the lane's scratch (21
+blobs, every blob's git hash
+verified in memory against its
+tree entry and again after its
+write, 0 mismatches), no
+worktree materialized in the
+fault regime, every target dir
+and temp root under the
+scratch. Cargo test stands at
+69 of 69 in a single run (50
+store and 19 streams, both
+suites green), the run made in
+a process tree whose /dev/full
+stood verified genuine at the
+run's own probe: a character
+device at major 1, minor 7,
+whose writes raise ENOSPC. The
+gate's first two runs in other
+trees measured the environment
+instead: the store suite
+passed 50 of 50 in both, and
+the streams suite failed
+exactly 11 named cells
+(boundary_at_dev_full,
+boundary_at_exact_capacity,
+check_defect_at_dev_full_exits_120_with_the_dump,
+check_single_defect_at_the_exact_points,
+emit_with_stderr_closed_and_stdout_full_exits_1,
+help_at_dev_full_exits_120_with_the_dump,
+refusal_past_capacity_with_stderr_at_dev_full_exits_120,
+refusal_single_defect_at_the_exact_points,
+refusal_with_stderr_at_dev_full_exits_120,
+refusal_with_stderr_closed_and_stdout_full_exits_120,
+rerouted_refusal_flips_at_capacity),
+each a cell that aims a stream
+at /dev/full, each failing on
+the bare exit 1 because in
+those trees /dev/full stood as
+a regular file whose writes
+succeed (9,000 bytes at the
+chain tree's probe); mknod
+stands denied on this box,
+inside a user namespace as at
+the top level, so the device
+cannot be repaired from
+inside, and the cells stand
+contracted only from the tree
+where the device verified
+genuine. Clippy (cargo clippy
+--locked --all-targets -- -D
+warnings) exits 0 and cargo
+fmt --check exits 0 on the
+base tree. The budget
+constants stand re-read from
+the extracted base tree at
+src/store.rs lines 30 and 31:
+BUDGET_READ the pair (990,
+988) and BUDGET_READ_NARROW
+the pair (989, 987).
+Provenance: the debug binary's
+md5 stands at
+2d97c040cbdc00ca1695633ab796089d
+before and after a full clean
+rebuild (cargo clean, then
+cargo build --locked at the
+same target path), identical,
+the figure scoped to its build
+path with the source path
+named as
+~/workspace/retro-line/or23-scratch/work/base-src.
+The battery on the base build:
+55 cells (39 stream and 16
+budget), 0 splits, exit 0.
