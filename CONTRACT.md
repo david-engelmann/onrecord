@@ -5874,3 +5874,79 @@ named as
 The battery on the base build:
 55 cells (39 stream and 16
 budget), 0 splits, exit 0.
+
+OR-133. The verification
+family. The oracle stands
+verified before any harness
+reliance: commit
+0c25a9aa703b38c7579f7928d61443a881a62465,
+tree
+f88eb75044f2e751915ab9a825426177972f2b58,
+14 blobs, every blob
+hash-verified through the API
+against its tree entry and
+again after its write, 0
+mismatches; both harnesses ran
+with the oracle package path
+at the extraction's src
+directory. The pin stands
+verified the same way in its
+own repo: commit
+74a83298aeb31c82e62b9fb0c613f5bc8600799e
+in david-engelmann/flighttape,
+tree
+afd4d7d13520411e003762548fc79082a1b9cf6e,
+exactly 50 blobs, 0 mismatches
+(the round's first chain run
+fetched for the pin tree in
+this repo, took the API's 422,
+and died; the extraction then
+completed from the flighttape
+repo). The pin suite on the
+pin checkout: 241 passed, exit
+0; the pin carries no
+/dev/full dependence (its
+tests and sources searched
+whole, no reference stands).
+The golden stands executed on
+the pin's own CLI: convert of
+the pin's
+tests/fixtures/claude_session_synthetic.jsonl
+produced a tape of 1,663
+bytes, byte-identical to the
+base tree's
+tests/fixtures/tape_synthetic.json;
+the digest stands at
+cc9c4e01fca418dcc33114caf75fae1f6bf0d401f297b5d61f6776903fa955a3;
+verify of the tape against
+that digest exits 0. Checklist
+item 3 re-verified live in
+this round: the GitHub
+description, the Cargo.toml
+description field, and the
+README lede stand
+byte-identical at the one
+description sentence.
+Checklist item 6: cargo
+install --locked from the base
+source into a scratch
+CARGO_HOME installed onrecord
+v0.1.0 clean, the installed
+binary the one the quickstart
+ran. Checklist item 7: the
+quickstart from the installed
+binary reproduced the README
+exactly: the add printed
+claim-2946b699934e0f6b, the
+get view stood at 719 bytes,
+the documented view byte for
+byte, and check printed the
+record is sound (the lane's
+first quickstart run
+mis-transcribed the evidence
+argument, note:deploy-log for
+trace:run-17, and printed
+claim-3471e794d3a65ece, the
+documented get then refused by
+name; the mis-run is the
+lane's, counted nowhere).
