@@ -5950,3 +5950,77 @@ claim-3471e794d3a65ece, the
 documented get then refused by
 name; the mis-run is the
 lane's, counted nowhere).
+
+OR-134. The closure gate. The
+closure tree differs from the
+OR-133 head tree
+(46989cd00f547c364bd4f0c07e86e84138fe2bfe)
+in CONTRACT.md and README.md
+only, its code byte-identical
+to the base tree's code as
+gated at OR-132, so the base
+gate's figures stand for the
+closure tree's code: cargo
+test 69 of 69 in the single
+genuine-device run, clippy
+exiting 0, fmt exiting 0. The
+battery stands re-run on the
+closure build, the build of
+the closure tree's code
+extracted from the OR-133 head
+tree (21 blobs, every blob
+hash-verified, 0 mismatches)
+and built clean: 55 cells (39
+stream and 16 budget), 0
+splits, exit 0. The lane's own
+codepoint scan over the
+closure tree stands at 0 em
+dashes and 0 en dashes: every
+blob of the OR-133 head tree
+was fetched through the API,
+decoded as UTF-8, and counted
+for the U+2014 and U+2013
+codepoints directly (a
+codepoint scan over decoded
+text, not a shell grep), and
+the closure CONTRACT.md and
+README.md were counted from
+the exact bytes this commit
+lands, the pushed blobs
+hash-verified equal to the
+counted bytes after the push;
+every other blob of the
+closure tree is a head-tree
+blob.
+
+OR-135. Round 23 closes at 23
+of 100. The round read back PR
+26 whole and contracted
+OR-129's qualifications
+(OR-130); carried the
+realistic on its own complete
+record of eleven attempts,
+every one counted nowhere, the
+completion charged forward as
+Round 24's first business for
+the fourth consecutive round
+and the last contracted state
+standing at OR-115 (OR-131);
+executed the base gate whole,
+cargo test 69 of 69 in a
+single run on a verified
+genuine /dev/full, with the
+environment record of the
+device standing in the item
+(OR-132); and discharged the
+verification family whole, the
+oracle and the pin verified
+blob by blob through the API
+before any harness reliance,
+the pin suite at 241, the
+golden executed, and checklist
+items 3, 6, and 7 re-verified
+at the lane's own hand
+(OR-133). OR-51 carries open
+by name as a named limitation,
+untouched.
