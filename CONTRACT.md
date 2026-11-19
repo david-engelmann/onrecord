@@ -6024,3 +6024,61 @@ at the lane's own hand
 (OR-133). OR-51 carries open
 by name as a named limitation,
 untouched.
+
+- OR-136. Repair record,
+appended after the spec
+fidelity review of the
+closure head, answering that
+review's finding F1 on this
+round's record, with OR-131
+unrewritten. OR-131 closes
+its session accounting: two
+further chain sessions died
+before any attempt began,
+naming the lane's first
+shell-backgrounded launch at
+15:29Z, killed with its
+session before its first
+print landed, and the run of
+23:55:50Z, SIGTERMed inside
+its probe window, each
+counted nowhere. That
+enumeration undercounts the
+set by one and stands
+corrected by this record. The
+lane's own progress record
+stands three such deaths, not
+two. Between the two events
+OR-131 names, the second
+launch (runtime-tracked, at
+15:30Z) ran its extract and
+then died on an uncaught
+AssertionError 422 in the pin
+tree fetch, before any
+realistic attempt began; the
+progress record carries it as
+a chain death counted
+nowhere, and the event
+already stands disclosed in
+this same contract at OR-133,
+the round's first chain run
+fetching for the pin tree in
+this repo, taking the API's
+422, and dying. The corrected
+enumeration stands at three
+pre-attempt chain deaths: the
+15:29Z launch, killed with
+its session before its first
+print landed; the 15:30Z
+launch, dead on the pin-fetch
+422 after its extract; and
+the run of 23:55:50Z,
+SIGTERMed inside its probe
+window; each counted nowhere.
+The eleven realistic attempts
+reconcile exactly as OR-131
+states them and are not
+implicated by this
+correction, and OR-131 stands
+unrewritten in every other
+particular.
