@@ -5624,3 +5624,174 @@ dispositioned in this census;
 charge 4 stands discharged
 with nothing further to
 disposition.
+
+OR-131. The realistic and the
+red team runner (charge 2 of
+the Round 22 landing comment
+6982807997). The Round 22 red
+team's probe-gated runner
+stands resolved at this
+round's hand: its script
+(rt_runner.sh, pid 88129,
+launched 2026-11-18T08:33:41Z)
+probed its full first window
+of 45 probes without a clean
+window and exited without
+executing any stage; its
+nowindow marker stands set,
+its log holds only its START
+line, none of its stage
+markers stand (pin, golden,
+append-refusal, realistic,
+done), and a scan of /proc by
+the script's path finds no
+process of it, the one match
+being the scanning shell's own
+command line. It banked no
+figures toward its untested
+set, and no runner stands
+armed undisclosed. Of that
+untested set, this round
+executed the pin suite and the
+golden at its own hand
+(OR-133); the append-refusal
+reproduction was not re-run in
+the red team's framing, the
+refusal behavior it targeted
+standing covered by the store
+suite's refused-add pin, which
+passed in this round's gate
+(OR-132); and the realistic
+attempt is this item's own
+history. The realistic
+completion, charged for the
+third consecutive round,
+stands carried again, on this
+round's own complete attempt
+record: eleven attempts, every
+one counted nowhere, no
+completed run's final
+accounting standing in this
+round. Attempt 1 began
+2026-11-18T17:00:25Z and died
+with its chain session under a
+runtime SIGTERM at about
+18:09Z, standing at 2,279 of
+2,600 phase-1 adds with the
+pair byte-identical (2,279
+lines, 571,791 bytes, md5
+c80b81a882dd828b3376fa27c18fc594
+on both sides) and no split in
+the compared prefix. Attempt 2
+(18:16Z to 19:55Z) took a
+split at add-2501 in the
+refusal class as the
+file-count quota wall rose,
+its pair byte-identical at
+2,508 lines and 629,360 bytes
+(md5
+764a37fde9b902375a92a4b3b0a2e436
+on both sides), and died
+silently against the wall with
+no final accounting, the
+chain's own result write
+crashing on EDQUOT at
+19:55:53Z. Attempt 3 (20:02Z
+to 20:16Z) took splits at adds
+487 and 765 and died when the
+oracle interpreter itself
+failed on OSError 122, Disk
+quota exceeded, its crash dump
+ending in the words lost
+sys.stderr; its pair stands
+byte-identical at 766 lines
+and 191,417 bytes. Attempt 4
+began at 20:28:07Z and died
+with its session under a
+runtime SIGTERM about three
+minutes in, no temp root and
+no harness log standing; a
+session death, distinct from a
+pass attempt's own failure.
+Attempt 5 (20:44:07Z to
+21:17:48Z) exited 1 with an
+empty harness log and no final
+accounting, its pair
+byte-identical at 1,400 lines
+and 350,449 bytes. Attempt 6
+began at 21:26:41Z and died
+with its session under a
+runtime SIGTERM at about
+22:10Z, some 44 minutes in,
+its pair byte-identical at
+1,052 lines and 263,123 bytes
+(md5
+26a86acd8e2ef726593ce7b9674ad652
+on both sides) and no split in
+the compared prefix. Attempt 7
+(22:20:35Z to 23:54:59Z)
+stands as the round's
+strongest partial: phases 1 to
+3 complete with zero splits,
+phase 1 at 2,600 adds and 416
+interleaved read steps with
+the record composed at 2,600
+lines and 652,833 bytes,
+OR-115's exact figures
+organically produced, phases 2
+and 3 done; phase 4's first
+cell then died at its seed
+write on a PermissionError in
+the harness itself, no
+compared step of phase 4
+having run. Attempt 8
+(00:16:28Z to 01:20:41Z on
+2026-11-19) exited 1 with an
+empty log and no final
+accounting, its pair standing
+at the full composition, 2,600
+lines and 652,833 bytes,
+byte-identical (md5
+6cba153da883f7b76ad69373719b72ac
+on both sides), its death
+silent and unlocated after the
+record reached full
+composition. Attempt 9
+(01:25:39Z to 02:06:43Z)
+exited 1 with an empty log and
+no temp root created, no
+compared step evidenced.
+Attempt 10 (02:11:43Z to
+02:21:45Z) exited 1 the same
+way, empty log, no temp root,
+no compared step evidenced.
+Attempt 11 began at 02:26:24Z
+and died with its session
+under a runtime SIGTERM at
+about 02:32Z, some six minutes
+in, no temp root and no
+harness log standing. Attempt
+7's phases and the identical
+pairs of attempts 2 and 8 are
+stated as partial and
+contracted as nothing. Two
+further chain sessions died
+before any attempt began (the
+lane's first
+shell-backgrounded launch at
+15:29Z, killed with its
+session before its first print
+landed, and the run of
+23:55:50Z, SIGTERMed inside
+its probe window), each
+counted nowhere. The last
+contracted state of the
+realistic stands at OR-115
+unchanged (3,100 compared
+steps, 0 splits; the composed
+record at 2,600 lines and
+652,833 bytes), and the
+completion stands charged
+forward to Round 24 as this
+round's first business, for
+the fourth consecutive round.
