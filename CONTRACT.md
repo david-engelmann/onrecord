@@ -6380,3 +6380,163 @@ stands between the identifiers
 in the Round 23 landing
 comment and the live record at
 this read.
+
+OR-138. The realistic (charge
+1 of the Round 23 landing
+comment 7009945777, the fourth
+consecutive charge, standing
+as this round's first
+business). The completion
+stands carried again, on this
+round's own complete attempt
+record: three attempts and one
+diagnostic replay, every one
+counted nowhere, no completed
+run's final accounting
+standing in this round.
+Attempt 1 (the first build
+lane's chain, begun
+2026-11-19T17:21:05Z) took a
+split at add-541 in phase 1
+and died with its chain
+session, its harness last
+evidenced at 17:44Z; its
+surviving twin records stand
+at 738 lines and 184,587 bytes
+on the port side (md5
+da783578acc943da1f0ef19a2ff79e06)
+and 737 lines and 184,333
+bytes on the oracle side (md5
+172406ec3629e2bd7d0484a55e254618),
+byte-identical across their
+737 common lines, the port's
+one extra line being add step
+737's record with the oracle's
+add in flight at the kill.
+Attempt 2 (this completion
+lane's chain run, its stage
+window open
+2026-11-20T04:08:36Z) ran the
+harness to an exit 1 at
+05:27:49Z; its result write
+failed under the write fault
+(the result file stands at 0
+bytes), the chain's
+failure-marker write failed
+with EPERM the same way, and
+its harness log was truncated
+unread by the next chain run's
+stage start, so its split
+figures stand unrecoverable
+beyond the exit. Attempt 3
+(driver2, 2026-11-20T11:25:44Z
+to 13:21:02Z) exited 1 inside
+phase 4: phases 1 to 3 printed
+done, phase 4 printed no
+completion, and no final
+accounting line stands in the
+captured output, the exit
+consistent with a
+fault-refused seed write
+raising in the harness; its
+preserved log and result file
+both stand at 0 bytes under
+the fault, the outline
+standing on the driver's
+delivered stage line. Phase 1
+of attempt 3 stands reconciled
+from its surviving files: the
+twins byte-identical at 2,574
+lines and 646,335 bytes (md5
+5baf569a92aceb33638288f782486f90
+on both sides), their first
+737 lines byte-identical to
+attempt 1's record, with 26 of
+the 2,600 adds unlanded on
+both sides in the
+symmetric-refusal shape proven
+at this lane's hand after the
+run, both CLIs exiting 1 with
+the identical stderr (error,
+cannot append to the record,
+r.jsonl: Operation not
+permitted) and the record at 0
+bytes in the wave still
+standing at 13:28Z, a step
+refused on both sides
+comparing as agreement and
+appending nothing; its split
+count stands unrecovered with
+its accounting, the identical
+files bounding phase 1's
+divergences to the exit-only
+class, since any landed
+divergence would stand in the
+files permanently. The
+diagnostic replay (steps 0 to
+700 of the harness's own
+construction, 813 compared
+steps, 2026-11-20T09:24:11Z to
+09:34:43Z) split exactly
+twice, at add-319 and add-468,
+never at add-541, both with
+the one signature: the port's
+add exiting 0 printing its
+claim id, the oracle's add
+exiting 1 with stderr naming
+Disk quota exceeded, and the
+twin records byte-identical at
+the split moment (79,830
+bytes, md5
+37390e32b63d9e3f8e84ef5de22aa27d;
+117,110 bytes, md5
+4f0149462541c9ea13cde0ae6dd38595),
+the oracle's append having
+landed while its add reported
+the failure; the diagnostic's
+own first queued run died at
+the 2026-11-20T09:22:54Z
+restart with every temp root
+unusable, counted nowhere. The
+ground for the carry stands
+stated here: the environment's
+write fault, in the hard waves
+standing across this round,
+refuses the appends of both
+implementations alike (the
+EPERM signature above and the
+EDQUOT signature of the
+diagnostic), at rates the
+round measured at every hand
+(two events in 813 steps in
+the calmest window the
+diagnostic found; 0 of 6
+oracle adds landing in a probe
+at 12:2xZ; both CLIs refused
+identically at 13:28Z), and a
+3,100-step pass needs every
+step's writes to land on both
+sides, which no window of this
+round sustained; where both
+sides' writes land, they
+agree, on attempt 1's 737-line
+identical prefix, on attempt
+3's byte-identical 2,574-line
+composition, and on 811 of the
+diagnostic's 813 steps, its
+two splits' files identical.
+Attempt 3 stands as the
+round's strongest partial:
+phases 1 to 3 traversed on a
+byte-identical composition,
+phase 4 uncompleted. The last
+contracted state of the
+realistic stands at OR-115
+unchanged (3,100 compared
+steps, 0 splits; the composed
+record at 2,600 lines and
+652,833 bytes), and the
+completion stands charged
+forward to Round 25 as its
+first business, for the fifth
+consecutive round.
