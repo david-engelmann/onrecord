@@ -6540,3 +6540,71 @@ completion stands charged
 forward to Round 25 as its
 first business, for the fifth
 consecutive round.
+
+OR-139. The gate on the base
+tree
+(b902f07d993a2d4f1c5aaefb85103299c0d3c91e,
+the Round 23 landing), in two
+parts at two hands. The first
+build lane's base gate banked
+BASEGATE_OK_ENVQUAL at
+2026-11-19T17:19:05Z on its
+own tree: cargo fmt clean,
+clippy clean under warnings
+denied, the store suite 50 of
+50, and the streams suite 8
+passed with exactly the 11
+device cells failed
+(boundary_at_dev_full,
+boundary_at_exact_capacity,
+check_defect_at_dev_full_exits_120_with_the_dump,
+check_single_defect_at_the_exact_points,
+emit_with_stderr_closed_and_stdout_full_exits_1,
+help_at_dev_full_exits_120_with_the_dump,
+refusal_past_capacity_with_stderr_at_dev_full_exits_120,
+refusal_single_defect_at_the_exact_points,
+refusal_with_stderr_at_dev_full_exits_120,
+refusal_with_stderr_closed_and_stdout_full_exits_120,
+rerouted_refusal_flips_at_capacity)
+in a session whose /dev/full
+was a regular file (mode
+0o100600 at 2,082 bytes,
+writes to it succeeding), the
+device qualification standing
+as the named exception rather
+than a pass. The
+genuine-device half stands
+discharged at this completion
+lane's own hand in this round:
+its driver tree's probe
+verified the genuine /dev/full
+character device (char 1,7,
+writes raising ENOSPC) before
+the run, and the full cargo
+test in that tree completed at
+2026-11-19T23:57:26Z with exit
+0, the store suite 50 passed
+and the streams suite 19
+passed, 0 failed, so the full
+streams set contracts at the
+genuine device in this round,
+on the base tree, with no
+qualification. The budget
+constants were re-read at this
+lane's hand from the base
+tree's src/store.rs (lines 30
+and 31): BUDGET_READ at (990,
+988) and BUDGET_READ_NARROW at
+(989, 987), the pair OR-64
+pinned and OR-132 re-read. The
+README's printed get view was
+re-measured at this lane's
+hand at 719 bytes, the figure
+OR-133 printed. The battery on
+the base build (55 cells: 39
+stream, 16 budget) compared
+with 0 splits, run in this
+round under the completion
+lane's stages driver, its
+stage completing at
+2026-11-20T15:35:02Z.
