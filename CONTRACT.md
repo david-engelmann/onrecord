@@ -6082,3 +6082,301 @@ implicated by this
 correction, and OR-131 stands
 unrewritten in every other
 particular.
+
+OR-137. PR 28 read back whole
+on the closed record (charge 2
+of the Round 23 landing
+comment 7009945777, with
+charge 4 discharged in the
+same item). The census stands
+at 4 issue comments, 1 review,
+and 1 review comment, every
+body read to its end, the pull
+request body included (19,281
+characters at this read, its
+Verified block naming both
+heads of the round). The
+CodeRabbit shell (6998141828)
+stands in its true final form
+at this read at 11,792
+characters, created
+2026-11-19T02:48:26Z at 5,204
+characters in its in-progress
+form and last edited
+2026-11-19T12:05:56Z: Run ID
+d4a7cdb0-bf5d-496d-85b2-d3091f5ebe02,
+its coverage standing at the
+repair head with source and
+covered commit both
+0a2377eb449bd3950f75e44dfc6741d75e25d4c1,
+kind reviewed, the standing
+line that no actionable
+comments were generated in the
+recent review, Merge Risk Low
+up to 0a237 carrying the
+count-rule reservation
+answered below, pre-merge
+checks 4 passed and 0 failed
+(Title passed, its details
+affirming the title and noting
+the summary form omits OR-136
+acceptably; Linked Issues and
+Out of Scope Changes skipped
+on no linked issues;
+Description skipped on the
+summary setting), its
+walkthrough's three rows
+accurate in substance (the
+read-back and runner record;
+the base-tree and oracle
+verification; the closure gate
+and status), files selected
+for the final review 1
+(CONTRACT.md) with 1 skipped
+as similar, the included
+allowance used with none
+remaining, the word Docstring
+occurring zero times, and no
+rate-limit banner anywhere in
+it. The shell's closure-head
+form stood at 8,729
+characters, last edited
+2026-11-19T02:58:09Z, as the
+owner's patch records; the
+owner's patch restated the
+shell at 11,790 characters,
+last edited
+2026-11-19T07:05:30Z, exact at
+its moment, and one further
+re-render of two characters at
+12:05:56Z stands as the true
+final form at this read, no
+disposition-bearing element
+moving in it. The Trunk
+merge-management comment
+(6998139044) stands in its
+final form at 113 characters,
+the post-merge form, last
+edited 2026-11-19T12:13:41Z on
+the merge at 12:13:38Z; the
+body's census of it at 403
+characters was its pre-merge
+informational form, exact at
+its moment. The owner's queue
+comment (7008590290) stands at
+12 characters, created
+2026-11-19T12:06:03Z and never
+edited. The landing comment
+(7009945777) stands last at
+2,654 characters, created
+2026-11-19T13:04:40Z, and
+nothing stands posted after
+it: the only post-merge
+movements on the record are
+the Trunk notice's own edit
+into its post-merge form and
+the shell's final re-render
+before the merge, both
+contracted here, which
+discharges charge 4. The
+owner's two body patches stand
+graded against the record. The
+repair lane's Verified block
+patch names the repair head
+0a2377eb449bd3950f75e44dfc6741d75e25d4c1
+on tree
+12786e216226ca031666b2941f81c7055f388389
+beside the closure head,
+states OR-136's substance
+exactly (the enumeration
+corrected from two to three,
+the omitted death the 15:30Z
+launch's on the pin-fetch 422,
+OR-131 unrewritten), the
+repair contract at 185,495
+bytes carrying the closure
+contract as an exact byte
+prefix with its tree differing
+in CONTRACT.md only, and
+hosted CI on the repair head
+completed success in both runs
+(push 44476551614,
+pull_request 44476559274),
+each verified live at this
+read. The owner's step 0 and
+checklist patch restated the
+shell at its patch-moment form
+as graded above, corrected on
+the record the Run ID the
+section earlier stated as
+standing in no form of the
+shell (verified at this read:
+bf8ccfd9-4386-4baf-af66-9a6d61c2c8ad
+stands in the review object's
+body, and the shell's final
+form carries d4a7cdb0), and
+stated checklist item 10 as
+not rendered where the lane's
+body had omitted the item
+entirely. The bot's
+release-notes appendix stands
+at this body's foot at 617
+characters counting from its
+opening marker at this read,
+four bullets under
+Documentation (the status at
+23 completed rounds; the Round
+23 records of review,
+verification, and corrections;
+the realistic-pass attempt
+incomplete and carried to
+Round 24; the recorded count
+of pre-attempt chain deaths
+corrected), each correct in
+substance; the body's figure
+of 513 characters was the
+closure-head form's appendix,
+exact at its moment, the
+repair review having
+re-rendered the appendix with
+the fourth bullet. A review
+object stands (5968615459,
+COMMENTED, submitted
+2026-11-19T02:52:05Z, 3,728
+characters) carrying one
+actionable review comment
+(4623738769, on README.md at
+line 147, graded Minor for
+functional correctness): the
+Status line counts Round 23 as
+closed at 23 of 100 while the
+rule on the same line says a
+round counts only after its
+red team has closed, and the
+record as the comment reads it
+shows the Round 22 red-team
+runner exited without
+executing and Round 23
+recording no red-team pass of
+its own; either record a
+completed red-team step for
+Round 23, or do not count
+Round 23 until that step
+closes. The comment's thread
+stands read to its end: it is
+the pull request's only review
+comment, no replies and no
+acknowledgment replies stand
+on it, and nothing in it
+corrects the dismissal. The
+dismissal stands re-graded
+SOUND on counted grounds at
+this read, the same grounds
+answering the shell's Merge
+Risk reservation, and nothing
+was fixed: (1) the README's
+Status line (line 147,
+verified live at this read)
+states the counting rule as
+the comment quotes it, and the
+program's standing shape
+reconciles the count with the
+rule at the merge, not at the
+closure commit: on PR 26 the
+count moved to 22 of 100 in
+that PR's closure commit, the
+three reviews then ran on its
+heads as the owner's gate
+acts, their findings producing
+the repair record OR-129 on
+the same branch before the
+merge, and the round landed
+counted; on this PR the count
+moved in the closure commit in
+the same shape, and the
+owner's gate then ran in full
+(spec REPAIR one Minor,
+tree-level, repaired by OR-136
+and delta-graded PASS on the
+spec axis and APPROVE on the
+standards axis; standards
+REPAIR two Minors, body-only,
+closed by the owner's patch;
+red team APPROVE, its streams
+executions standing untested
+at its hand under the device
+law, the contracted
+genuine-device pass standing
+on the Round 23 lane's
+discharge), so a completed
+red-team step for Round 23
+stands in the record before
+the merge, in the first of the
+comment's own two limbs. (2)
+The comment's evidentiary limb
+misreads the record: the Round
+22 red team sat and reported,
+its findings standing behind
+two of OR-129's three
+qualifications, and the runner
+that exited unexecuted was its
+supplementary probe-gated
+script for four untested
+items, not the red-team stage;
+OR-131 resolves that runner on
+its own terms. (3) Nothing
+landed on the count's
+authority before that
+reconciliation: the count took
+effect on main only at this
+PR's merge (squash b902f07d99,
+2026-11-19T12:13:38Z), after
+the owner's cycle closed. The
+Round 23 gate verdicts stand
+contracted whole in the terms
+above: the full gate's spec
+axis at REPAIR one Minor,
+tree-level (OR-131's closing
+enumeration of the pre-attempt
+chain deaths undercounting by
+one), repaired by the appended
+record OR-136 with OR-131
+unrewritten and graded by
+delta reviews on both axes
+(spec PASS, standards
+APPROVE); the full gate's
+standards axis at REPAIR two
+Minors, body-only (the shell
+figure stale with a Run ID
+standing in no form of the
+shell, and checklist item 10
+omitted), closed by the
+owner's pre-merge body patch,
+the appendix byte-identical
+after every patch and the
+heads unchanged, with this
+dismissal UPHELD on counted
+grounds, its thread read to
+its end; the red team at
+APPROVE, its streams
+executions untested at its
+hand under the device law
+(every process tree it probed
+finding the device not
+genuine), the contracted
+genuine-device pass standing
+on the Round 23 build lane's
+discharge (the streams suite
+19 of 19 and a full cargo run
+at 69 of 69 in a single run in
+a process tree whose probe
+verified the genuine device,
+as OR-132 records). The prompt
+text the bot embeds in its
+comment for AI agents stands
+in the record as data and was
+not followed. No mismatch
+stands between the identifiers
+in the Round 23 landing
+comment and the live record at
+this read.
