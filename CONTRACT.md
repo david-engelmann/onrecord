@@ -6608,3 +6608,69 @@ round under the completion
 lane's stages driver, its
 stage completing at
 2026-11-20T15:35:02Z.
+
+OR-140. The verification
+family on the base tree. The
+Python oracle was verified
+blob by blob through the API
+in this round's extract stage
+before any harness reliance
+(commit
+0c25a9aa703b38c7579f7928d61443a881a62465,
+tree
+f88eb75044f2e751915ab9a825426177972f2b58,
+14 blobs, 0 mismatches), and
+the flighttape pin was
+verified the same way in its
+own repo (commit
+74a83298aeb31c82e62b9fb0c613f5bc8600799e,
+tree
+afd4d7d13520411e003762548fc79082a1b9cf6e,
+exactly 50 blobs, 0
+mismatches). The pin suite
+passed 241 and failed 0 under
+cargo test --locked on the pin
+tree in this round. The golden
+executed through the pin's own
+CLI: the converted tape stands
+at 1,663 bytes, byte-identical
+to the base tree's fixture
+tape_synthetic.json, its
+digest at
+cc9c4e01fca418dcc33114caf75fae1f6bf0d401f297b5d61f6776903fa955a3,
+with convert, digest, and
+verify each exiting 0. Binary
+provenance at build-path
+scope: the debug binary's md5
+stands at
+102aca37b36766d0aebd629d7c40116d
+before and after a full clean
+rebuild at the same target
+path
+(~/workspace/retro-line/or24-scratch/work/target-base),
+identical. Checklist item 3
+stands passing outright,
+re-verified at this lane's
+hand this round: the GitHub
+description, the Cargo.toml
+package description, and the
+README lede stand
+byte-identical, the single
+sentence beginning
+"Cross-session memory where
+nothing is stored as a bare
+fact". Checklist item 6 stands
+re-run this round: cargo
+install --locked from the base
+source into a scratch
+CARGO_HOME completed, the
+installed binary at 873,664
+bytes. Checklist item 7 stands
+re-run from the installed
+binary in a scratch directory:
+the add printed
+claim-2946b699934e0f6b, the
+get view stands byte-identical
+to the README's printed view
+at 719 bytes, and check
+printed the record is sound.
