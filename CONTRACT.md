@@ -6758,3 +6758,95 @@ checklist items 3, 6, and 7
 re-verified (OR-140). OR-51
 carries open by name as a
 named limitation, untouched.
+
+OR-143. Repair record,
+appended after the Round 24
+gate reviews of the closure
+head, answering the findings
+the three axes converged on
+against OR-138's realistic
+record (the bot's review
+comments 4650545036 and
+4650545042, each sustained at
+all three hands), with OR-138
+unrewritten. Two sentences of
+OR-138 stand narrowed by this
+record, each limb re-verified
+at this repair lane's hand.
+First, the symmetric-refusal
+passage. OR-138 states, of
+attempt 3's phase 1, the 26 of
+the 2,600 adds unlanded on
+both sides in the
+symmetric-refusal shape, both
+CLIs exiting 1 with the
+identical stderr. The exits
+and the stderr in that
+sentence are the later
+probe's, not the run's. The
+shape was proven at the build
+lane's hand after the run, in
+the wave still standing at
+13:28Z, and attempt 3's own
+per-step exit results survive
+nowhere: its preserved log,
+its result file, and its
+driver output each stand at 0
+bytes under the fault,
+re-verified at this hand. The
+sentence stands narrowed to
+what the surviving files
+prove: the 26 adds left both
+records unchanged, the
+refusals stand as the probe's
+observation after the run, and
+the run's own per-step exits
+stand unrecorded. The
+reconciliation limb loses
+nothing: the twins stand
+byte-identical at 2,574 lines
+and 646,335 bytes (md5
+5baf569a92aceb33638288f782486f90
+on both sides, re-verified at
+this hand), and the 2,600 adds
+less the 26 unlanded stand at
+the 2,574 lines the files
+carry. Second, the ground
+sentence. OR-138 states that
+where both sides' writes land,
+they agree, citing the
+diagnostic among its evidence.
+The agreement that sentence
+claims is the records'. At the
+diagnostic's two splits,
+add-319 and add-468, both
+appends landed and the twin
+records stood byte-identical
+at the split moments (79,830
+bytes, md5
+37390e32b63d9e3f8e84ef5de22aa27d;
+117,110 bytes, md5
+4f0149462541c9ea13cde0ae6dd38595;
+the diagnostic's preserved
+log, read at this hand), while
+the commands' results
+differed, the port's add
+exiting 0 and the oracle's add
+exiting 1, which is why those
+two steps count as splits
+inside the sentence's own 811
+of 813. The sentence stands
+narrowed accordingly: where
+both sides' writes land, the
+records agree, the two
+diagnostic splits standing as
+record agreement under
+differing command results.
+OR-138 stands unrewritten in
+every other particular, and
+nothing else in this round's
+record is implicated by either
+narrowing. This record stands
+outside the Status range,
+which continues to run through
+OR-142.
