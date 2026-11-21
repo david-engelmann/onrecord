@@ -6674,3 +6674,87 @@ get view stands byte-identical
 to the README's printed view
 at 719 bytes, and check
 printed the record is sound.
+
+OR-141. The closure gate. The
+closure tree differs from the
+OR-140 head tree
+(d0b50eae1440624ec280ceb56bd83b8afaa46661)
+in CONTRACT.md and README.md
+only, its code byte-identical
+to the base tree's code as
+gated at OR-139, so the base
+gate's figures stand for the
+closure tree's code: cargo
+test 69 of 69 (50 store, 19
+streams) in the genuine-device
+run at the completion lane's
+hand, clippy exiting 0, fmt
+exiting 0. The battery stands
+re-run on the closure build,
+the build of the closure
+tree's code extracted from the
+OR-140 head tree (21 blobs,
+every blob hash-verified, 0
+mismatches) and built clean:
+55 cells (39 stream and 16
+budget), 0 splits, exit 0. The
+lane's own codepoint scan over
+the closure tree stands at 0
+em dashes and 0 en dashes:
+every blob of the OR-140 head
+tree was fetched through the
+API, decoded as UTF-8, and
+counted for the U+2014 and
+U+2013 codepoints directly (a
+codepoint scan over decoded
+text, not a shell grep), 21
+blobs at 0 and 0, and the
+closure CONTRACT.md and
+README.md were counted from
+the exact bytes this commit
+lands, the pushed blobs
+hash-verified equal to the
+counted bytes after the push;
+every other blob of the
+closure tree is a head-tree
+blob unchanged.
+
+OR-142. Round 24 closes at 24
+of 100. The round read back PR
+28 whole over both its heads,
+graded both of the owner's
+body patches, and re-graded
+the upheld dismissal of the
+bot's review comment to its
+thread's end (OR-137); carried
+the realistic on its own
+complete record of three
+attempts and one diagnostic
+replay, every one counted
+nowhere, the completion
+charged forward as Round 25's
+first business for the fifth
+consecutive round and the last
+contracted state standing at
+OR-115 (OR-138); executed the
+base gate in two parts at two
+hands, the first build lane's
+environment-qualified gate and
+this completion lane's
+genuine-device discharge of
+the full streams set on the
+base tree (OR-139); and
+discharged the verification
+family whole, the oracle and
+the pin verified blob by blob
+through the API before any
+harness reliance, the battery
+at 0 splits on the base build,
+the pin suite at 241, the
+golden executed, binary
+provenance identical at
+build-path scope, and
+checklist items 3, 6, and 7
+re-verified (OR-140). OR-51
+carries open by name as a
+named limitation, untouched.
