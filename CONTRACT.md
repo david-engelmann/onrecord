@@ -6082,3 +6082,771 @@ implicated by this
 correction, and OR-131 stands
 unrewritten in every other
 particular.
+
+OR-137. PR 28 read back whole
+on the closed record (charge 2
+of the Round 23 landing
+comment 7009945777, with
+charge 4 discharged in the
+same item). The census stands
+at 4 issue comments, 1 review,
+and 1 review comment, every
+body read to its end, the pull
+request body included (19,281
+characters at this read, its
+Verified block naming both
+heads of the round). The
+CodeRabbit shell (6998141828)
+stands in its true final form
+at this read at 11,792
+characters, created
+2026-11-19T02:48:26Z at 5,204
+characters in its in-progress
+form and last edited
+2026-11-19T12:05:56Z: Run ID
+d4a7cdb0-bf5d-496d-85b2-d3091f5ebe02,
+its coverage standing at the
+repair head with source and
+covered commit both
+0a2377eb449bd3950f75e44dfc6741d75e25d4c1,
+kind reviewed, the standing
+line that no actionable
+comments were generated in the
+recent review, Merge Risk Low
+up to 0a237 carrying the
+count-rule reservation
+answered below, pre-merge
+checks 4 passed and 0 failed
+(Title passed, its details
+affirming the title and noting
+the summary form omits OR-136
+acceptably; Linked Issues and
+Out of Scope Changes skipped
+on no linked issues;
+Description skipped on the
+summary setting), its
+walkthrough's three rows
+accurate in substance (the
+read-back and runner record;
+the base-tree and oracle
+verification; the closure gate
+and status), files selected
+for the final review 1
+(CONTRACT.md) with 1 skipped
+as similar, the included
+allowance used with none
+remaining, the word Docstring
+occurring zero times, and no
+rate-limit banner anywhere in
+it. The shell's closure-head
+form stood at 8,729
+characters, last edited
+2026-11-19T02:58:09Z, as the
+owner's patch records; the
+owner's patch restated the
+shell at 11,790 characters,
+last edited
+2026-11-19T07:05:30Z, exact at
+its moment, and one further
+re-render of two characters at
+12:05:56Z stands as the true
+final form at this read, no
+disposition-bearing element
+moving in it. The Trunk
+merge-management comment
+(6998139044) stands in its
+final form at 113 characters,
+the post-merge form, last
+edited 2026-11-19T12:13:41Z on
+the merge at 12:13:38Z; the
+body's census of it at 403
+characters was its pre-merge
+informational form, exact at
+its moment. The owner's queue
+comment (7008590290) stands at
+12 characters, created
+2026-11-19T12:06:03Z and never
+edited. The landing comment
+(7009945777) stands last at
+2,654 characters, created
+2026-11-19T13:04:40Z, and
+nothing stands posted after
+it: the only post-merge
+movements on the record are
+the Trunk notice's own edit
+into its post-merge form and
+the shell's final re-render
+before the merge, both
+contracted here, which
+discharges charge 4. The
+owner's two body patches stand
+graded against the record. The
+repair lane's Verified block
+patch names the repair head
+0a2377eb449bd3950f75e44dfc6741d75e25d4c1
+on tree
+12786e216226ca031666b2941f81c7055f388389
+beside the closure head,
+states OR-136's substance
+exactly (the enumeration
+corrected from two to three,
+the omitted death the 15:30Z
+launch's on the pin-fetch 422,
+OR-131 unrewritten), the
+repair contract at 185,495
+bytes carrying the closure
+contract as an exact byte
+prefix with its tree differing
+in CONTRACT.md only, and
+hosted CI on the repair head
+completed success in both runs
+(push 44476551614,
+pull_request 44476559274),
+each verified live at this
+read. The owner's step 0 and
+checklist patch restated the
+shell at its patch-moment form
+as graded above, corrected on
+the record the Run ID the
+section earlier stated as
+standing in no form of the
+shell (verified at this read:
+bf8ccfd9-4386-4baf-af66-9a6d61c2c8ad
+stands in the review object's
+body, and the shell's final
+form carries d4a7cdb0), and
+stated checklist item 10 as
+not rendered where the lane's
+body had omitted the item
+entirely. The bot's
+release-notes appendix stands
+at this body's foot at 617
+characters counting from its
+opening marker at this read,
+four bullets under
+Documentation (the status at
+23 completed rounds; the Round
+23 records of review,
+verification, and corrections;
+the realistic-pass attempt
+incomplete and carried to
+Round 24; the recorded count
+of pre-attempt chain deaths
+corrected), each correct in
+substance; the body's figure
+of 513 characters was the
+closure-head form's appendix,
+exact at its moment, the
+repair review having
+re-rendered the appendix with
+the fourth bullet. A review
+object stands (5968615459,
+COMMENTED, submitted
+2026-11-19T02:52:05Z, 3,728
+characters) carrying one
+actionable review comment
+(4623738769, on README.md at
+line 147, graded Minor for
+functional correctness): the
+Status line counts Round 23 as
+closed at 23 of 100 while the
+rule on the same line says a
+round counts only after its
+red team has closed, and the
+record as the comment reads it
+shows the Round 22 red-team
+runner exited without
+executing and Round 23
+recording no red-team pass of
+its own; either record a
+completed red-team step for
+Round 23, or do not count
+Round 23 until that step
+closes. The comment's thread
+stands read to its end: it is
+the pull request's only review
+comment, no replies and no
+acknowledgment replies stand
+on it, and nothing in it
+corrects the dismissal. The
+dismissal stands re-graded
+SOUND on counted grounds at
+this read, the same grounds
+answering the shell's Merge
+Risk reservation, and nothing
+was fixed: (1) the README's
+Status line (line 147,
+verified live at this read)
+states the counting rule as
+the comment quotes it, and the
+program's standing shape
+reconciles the count with the
+rule at the merge, not at the
+closure commit: on PR 26 the
+count moved to 22 of 100 in
+that PR's closure commit, the
+three reviews then ran on its
+heads as the owner's gate
+acts, their findings producing
+the repair record OR-129 on
+the same branch before the
+merge, and the round landed
+counted; on this PR the count
+moved in the closure commit in
+the same shape, and the
+owner's gate then ran in full
+(spec REPAIR one Minor,
+tree-level, repaired by OR-136
+and delta-graded PASS on the
+spec axis and APPROVE on the
+standards axis; standards
+REPAIR two Minors, body-only,
+closed by the owner's patch;
+red team APPROVE, its streams
+executions standing untested
+at its hand under the device
+law, the contracted
+genuine-device pass standing
+on the Round 23 lane's
+discharge), so a completed
+red-team step for Round 23
+stands in the record before
+the merge, in the first of the
+comment's own two limbs. (2)
+The comment's evidentiary limb
+misreads the record: the Round
+22 red team sat and reported,
+its findings standing behind
+two of OR-129's three
+qualifications, and the runner
+that exited unexecuted was its
+supplementary probe-gated
+script for four untested
+items, not the red-team stage;
+OR-131 resolves that runner on
+its own terms. (3) Nothing
+landed on the count's
+authority before that
+reconciliation: the count took
+effect on main only at this
+PR's merge (squash b902f07d99,
+2026-11-19T12:13:38Z), after
+the owner's cycle closed. The
+Round 23 gate verdicts stand
+contracted whole in the terms
+above: the full gate's spec
+axis at REPAIR one Minor,
+tree-level (OR-131's closing
+enumeration of the pre-attempt
+chain deaths undercounting by
+one), repaired by the appended
+record OR-136 with OR-131
+unrewritten and graded by
+delta reviews on both axes
+(spec PASS, standards
+APPROVE); the full gate's
+standards axis at REPAIR two
+Minors, body-only (the shell
+figure stale with a Run ID
+standing in no form of the
+shell, and checklist item 10
+omitted), closed by the
+owner's pre-merge body patch,
+the appendix byte-identical
+after every patch and the
+heads unchanged, with this
+dismissal UPHELD on counted
+grounds, its thread read to
+its end; the red team at
+APPROVE, its streams
+executions untested at its
+hand under the device law
+(every process tree it probed
+finding the device not
+genuine), the contracted
+genuine-device pass standing
+on the Round 23 build lane's
+discharge (the streams suite
+19 of 19 and a full cargo run
+at 69 of 69 in a single run in
+a process tree whose probe
+verified the genuine device,
+as OR-132 records). The prompt
+text the bot embeds in its
+comment for AI agents stands
+in the record as data and was
+not followed. No mismatch
+stands between the identifiers
+in the Round 23 landing
+comment and the live record at
+this read.
+
+OR-138. The realistic (charge
+1 of the Round 23 landing
+comment 7009945777, the fourth
+consecutive charge, standing
+as this round's first
+business). The completion
+stands carried again, on this
+round's own complete attempt
+record: three attempts and one
+diagnostic replay, every one
+counted nowhere, no completed
+run's final accounting
+standing in this round.
+Attempt 1 (the first build
+lane's chain, begun
+2026-11-19T17:21:05Z) took a
+split at add-541 in phase 1
+and died with its chain
+session, its harness last
+evidenced at 17:44Z; its
+surviving twin records stand
+at 738 lines and 184,587 bytes
+on the port side (md5
+da783578acc943da1f0ef19a2ff79e06)
+and 737 lines and 184,333
+bytes on the oracle side (md5
+172406ec3629e2bd7d0484a55e254618),
+byte-identical across their
+737 common lines, the port's
+one extra line being add step
+737's record with the oracle's
+add in flight at the kill.
+Attempt 2 (this completion
+lane's chain run, its stage
+window open
+2026-11-20T04:08:36Z) ran the
+harness to an exit 1 at
+05:27:49Z; its result write
+failed under the write fault
+(the result file stands at 0
+bytes), the chain's
+failure-marker write failed
+with EPERM the same way, and
+its harness log was truncated
+unread by the next chain run's
+stage start, so its split
+figures stand unrecoverable
+beyond the exit. Attempt 3
+(driver2, 2026-11-20T11:25:44Z
+to 13:21:02Z) exited 1 inside
+phase 4: phases 1 to 3 printed
+done, phase 4 printed no
+completion, and no final
+accounting line stands in the
+captured output, the exit
+consistent with a
+fault-refused seed write
+raising in the harness; its
+preserved log and result file
+both stand at 0 bytes under
+the fault, the outline
+standing on the driver's
+delivered stage line. Phase 1
+of attempt 3 stands reconciled
+from its surviving files: the
+twins byte-identical at 2,574
+lines and 646,335 bytes (md5
+5baf569a92aceb33638288f782486f90
+on both sides), their first
+737 lines byte-identical to
+attempt 1's record, with 26 of
+the 2,600 adds unlanded on
+both sides in the
+symmetric-refusal shape proven
+at this lane's hand after the
+run, both CLIs exiting 1 with
+the identical stderr (error,
+cannot append to the record,
+r.jsonl: Operation not
+permitted) and the record at 0
+bytes in the wave still
+standing at 13:28Z, a step
+refused on both sides
+comparing as agreement and
+appending nothing; its split
+count stands unrecovered with
+its accounting, the identical
+files bounding phase 1's
+divergences to the exit-only
+class, since any landed
+divergence would stand in the
+files permanently. The
+diagnostic replay (steps 0 to
+700 of the harness's own
+construction, 813 compared
+steps, 2026-11-20T09:24:11Z to
+09:34:43Z) split exactly
+twice, at add-319 and add-468,
+never at add-541, both with
+the one signature: the port's
+add exiting 0 printing its
+claim id, the oracle's add
+exiting 1 with stderr naming
+Disk quota exceeded, and the
+twin records byte-identical at
+the split moment (79,830
+bytes, md5
+37390e32b63d9e3f8e84ef5de22aa27d;
+117,110 bytes, md5
+4f0149462541c9ea13cde0ae6dd38595),
+the oracle's append having
+landed while its add reported
+the failure; the diagnostic's
+own first queued run died at
+the 2026-11-20T09:22:54Z
+restart with every temp root
+unusable, counted nowhere. The
+ground for the carry stands
+stated here: the environment's
+write fault, in the hard waves
+standing across this round,
+refuses the appends of both
+implementations alike (the
+EPERM signature above and the
+EDQUOT signature of the
+diagnostic), at rates the
+round measured at every hand
+(two events in 813 steps in
+the calmest window the
+diagnostic found; 0 of 6
+oracle adds landing in a probe
+at 12:2xZ; both CLIs refused
+identically at 13:28Z), and a
+3,100-step pass needs every
+step's writes to land on both
+sides, which no window of this
+round sustained; where both
+sides' writes land, they
+agree, on attempt 1's 737-line
+identical prefix, on attempt
+3's byte-identical 2,574-line
+composition, and on 811 of the
+diagnostic's 813 steps, its
+two splits' files identical.
+Attempt 3 stands as the
+round's strongest partial:
+phases 1 to 3 traversed on a
+byte-identical composition,
+phase 4 uncompleted. The last
+contracted state of the
+realistic stands at OR-115
+unchanged (3,100 compared
+steps, 0 splits; the composed
+record at 2,600 lines and
+652,833 bytes), and the
+completion stands charged
+forward to Round 25 as its
+first business, for the fifth
+consecutive round.
+
+OR-139. The gate on the base
+tree
+(b902f07d993a2d4f1c5aaefb85103299c0d3c91e,
+the Round 23 landing), in two
+parts at two hands. The first
+build lane's base gate banked
+BASEGATE_OK_ENVQUAL at
+2026-11-19T17:19:05Z on its
+own tree: cargo fmt clean,
+clippy clean under warnings
+denied, the store suite 50 of
+50, and the streams suite 8
+passed with exactly the 11
+device cells failed
+(boundary_at_dev_full,
+boundary_at_exact_capacity,
+check_defect_at_dev_full_exits_120_with_the_dump,
+check_single_defect_at_the_exact_points,
+emit_with_stderr_closed_and_stdout_full_exits_1,
+help_at_dev_full_exits_120_with_the_dump,
+refusal_past_capacity_with_stderr_at_dev_full_exits_120,
+refusal_single_defect_at_the_exact_points,
+refusal_with_stderr_at_dev_full_exits_120,
+refusal_with_stderr_closed_and_stdout_full_exits_120,
+rerouted_refusal_flips_at_capacity)
+in a session whose /dev/full
+was a regular file (mode
+0o100600 at 2,082 bytes,
+writes to it succeeding), the
+device qualification standing
+as the named exception rather
+than a pass. The
+genuine-device half stands
+discharged at this completion
+lane's own hand in this round:
+its driver tree's probe
+verified the genuine /dev/full
+character device (char 1,7,
+writes raising ENOSPC) before
+the run, and the full cargo
+test in that tree completed at
+2026-11-19T23:57:26Z with exit
+0, the store suite 50 passed
+and the streams suite 19
+passed, 0 failed, so the full
+streams set contracts at the
+genuine device in this round,
+on the base tree, with no
+qualification. The budget
+constants were re-read at this
+lane's hand from the base
+tree's src/store.rs (lines 30
+and 31): BUDGET_READ at (990,
+988) and BUDGET_READ_NARROW at
+(989, 987), the pair OR-64
+pinned and OR-132 re-read. The
+README's printed get view was
+re-measured at this lane's
+hand at 719 bytes, the figure
+OR-133 printed. The battery on
+the base build (55 cells: 39
+stream, 16 budget) compared
+with 0 splits, run in this
+round under the completion
+lane's stages driver, its
+stage completing at
+2026-11-20T15:35:02Z.
+
+OR-140. The verification
+family on the base tree. The
+Python oracle was verified
+blob by blob through the API
+in this round's extract stage
+before any harness reliance
+(commit
+0c25a9aa703b38c7579f7928d61443a881a62465,
+tree
+f88eb75044f2e751915ab9a825426177972f2b58,
+14 blobs, 0 mismatches), and
+the flighttape pin was
+verified the same way in its
+own repo (commit
+74a83298aeb31c82e62b9fb0c613f5bc8600799e,
+tree
+afd4d7d13520411e003762548fc79082a1b9cf6e,
+exactly 50 blobs, 0
+mismatches). The pin suite
+passed 241 and failed 0 under
+cargo test --locked on the pin
+tree in this round. The golden
+executed through the pin's own
+CLI: the converted tape stands
+at 1,663 bytes, byte-identical
+to the base tree's fixture
+tape_synthetic.json, its
+digest at
+cc9c4e01fca418dcc33114caf75fae1f6bf0d401f297b5d61f6776903fa955a3,
+with convert, digest, and
+verify each exiting 0. Binary
+provenance at build-path
+scope: the debug binary's md5
+stands at
+102aca37b36766d0aebd629d7c40116d
+before and after a full clean
+rebuild at the same target
+path
+(~/workspace/retro-line/or24-scratch/work/target-base),
+identical. Checklist item 3
+stands passing outright,
+re-verified at this lane's
+hand this round: the GitHub
+description, the Cargo.toml
+package description, and the
+README lede stand
+byte-identical, the single
+sentence beginning
+"Cross-session memory where
+nothing is stored as a bare
+fact". Checklist item 6 stands
+re-run this round: cargo
+install --locked from the base
+source into a scratch
+CARGO_HOME completed, the
+installed binary at 873,664
+bytes. Checklist item 7 stands
+re-run from the installed
+binary in a scratch directory:
+the add printed
+claim-2946b699934e0f6b, the
+get view stands byte-identical
+to the README's printed view
+at 719 bytes, and check
+printed the record is sound.
+
+OR-141. The closure gate. The
+closure tree differs from the
+OR-140 head tree
+(d0b50eae1440624ec280ceb56bd83b8afaa46661)
+in CONTRACT.md and README.md
+only, its code byte-identical
+to the base tree's code as
+gated at OR-139, so the base
+gate's figures stand for the
+closure tree's code: cargo
+test 69 of 69 (50 store, 19
+streams) in the genuine-device
+run at the completion lane's
+hand, clippy exiting 0, fmt
+exiting 0. The battery stands
+re-run on the closure build,
+the build of the closure
+tree's code extracted from the
+OR-140 head tree (21 blobs,
+every blob hash-verified, 0
+mismatches) and built clean:
+55 cells (39 stream and 16
+budget), 0 splits, exit 0. The
+lane's own codepoint scan over
+the closure tree stands at 0
+em dashes and 0 en dashes:
+every blob of the OR-140 head
+tree was fetched through the
+API, decoded as UTF-8, and
+counted for the U+2014 and
+U+2013 codepoints directly (a
+codepoint scan over decoded
+text, not a shell grep), 21
+blobs at 0 and 0, and the
+closure CONTRACT.md and
+README.md were counted from
+the exact bytes this commit
+lands, the pushed blobs
+hash-verified equal to the
+counted bytes after the push;
+every other blob of the
+closure tree is a head-tree
+blob unchanged.
+
+OR-142. Round 24 closes at 24
+of 100. The round read back PR
+28 whole over both its heads,
+graded both of the owner's
+body patches, and re-graded
+the upheld dismissal of the
+bot's review comment to its
+thread's end (OR-137); carried
+the realistic on its own
+complete record of three
+attempts and one diagnostic
+replay, every one counted
+nowhere, the completion
+charged forward as Round 25's
+first business for the fifth
+consecutive round and the last
+contracted state standing at
+OR-115 (OR-138); executed the
+base gate in two parts at two
+hands, the first build lane's
+environment-qualified gate and
+this completion lane's
+genuine-device discharge of
+the full streams set on the
+base tree (OR-139); and
+discharged the verification
+family whole, the oracle and
+the pin verified blob by blob
+through the API before any
+harness reliance, the battery
+at 0 splits on the base build,
+the pin suite at 241, the
+golden executed, binary
+provenance identical at
+build-path scope, and
+checklist items 3, 6, and 7
+re-verified (OR-140). OR-51
+carries open by name as a
+named limitation, untouched.
+
+OR-143. Repair record,
+appended after the Round 24
+gate reviews of the closure
+head, answering the findings
+the three axes converged on
+against OR-138's realistic
+record (the bot's review
+comments 4650545036 and
+4650545042, each sustained at
+all three hands), with OR-138
+unrewritten. Two sentences of
+OR-138 stand narrowed by this
+record, each limb re-verified
+at this repair lane's hand.
+First, the symmetric-refusal
+passage. OR-138 states, of
+attempt 3's phase 1, the 26 of
+the 2,600 adds unlanded on
+both sides in the
+symmetric-refusal shape, both
+CLIs exiting 1 with the
+identical stderr. The exits
+and the stderr in that
+sentence are the later
+probe's, not the run's. The
+shape was proven at the build
+lane's hand after the run, in
+the wave still standing at
+13:28Z, and attempt 3's own
+per-step exit results survive
+nowhere: its preserved log,
+its result file, and its
+driver output each stand at 0
+bytes under the fault,
+re-verified at this hand. The
+sentence stands narrowed to
+what the surviving files
+prove: the 26 adds left both
+records unchanged, the
+refusals stand as the probe's
+observation after the run, and
+the run's own per-step exits
+stand unrecorded. The
+reconciliation limb loses
+nothing: the twins stand
+byte-identical at 2,574 lines
+and 646,335 bytes (md5
+5baf569a92aceb33638288f782486f90
+on both sides, re-verified at
+this hand), and the 2,600 adds
+less the 26 unlanded stand at
+the 2,574 lines the files
+carry. Second, the ground
+sentence. OR-138 states that
+where both sides' writes land,
+they agree, citing the
+diagnostic among its evidence.
+The agreement that sentence
+claims is the records'. At the
+diagnostic's two splits,
+add-319 and add-468, both
+appends landed and the twin
+records stood byte-identical
+at the split moments (79,830
+bytes, md5
+37390e32b63d9e3f8e84ef5de22aa27d;
+117,110 bytes, md5
+4f0149462541c9ea13cde0ae6dd38595;
+the diagnostic's preserved
+log, read at this hand), while
+the commands' results
+differed, the port's add
+exiting 0 and the oracle's add
+exiting 1, which is why those
+two steps count as splits
+inside the sentence's own 811
+of 813. The sentence stands
+narrowed accordingly: where
+both sides' writes land, the
+records agree, the two
+diagnostic splits standing as
+record agreement under
+differing command results.
+OR-138 stands unrewritten in
+every other particular, and
+nothing else in this round's
+record is implicated by either
+narrowing. This record stands
+outside the Status range,
+which continues to run through
+OR-142.
