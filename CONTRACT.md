@@ -7277,3 +7277,36 @@ stands between the identifiers
 in the Round 24 landing
 comment and the live record at
 this read.
+
+OR-146. The base gate stands
+whole on the new base tree (b8
+117c22cb05ab4c8667087e165a347c
+b41cf21b, the Round 24 landing
+tree) as a full pass in a
+probe-verified genuine device
+tree: the gate's own process
+tree probed /dev/full before
+the run and found the genuine
+character device (char 1,7, a
+write raising ENOSPC), and in
+that tree cargo test exited 0
+with 69 passed and 0 failed
+(50 store, 19 streams), cargo
+clippy exited 0 with warnings
+denied, and cargo fmt --check
+exited 0. The cargo
+invocations ran offline
+against the local cargo cache;
+the round's earlier clippy
+exit 101 and the first cargo
+test's fast death stand
+charged to cargo's network
+fetch of the git dependency
+failing in this sandbox,
+proven by the same clippy
+invocation passing clean
+offline at this lane's own
+hand before the gate's
+completed pass, and the
+completed pass itself is the
+gate of record.
