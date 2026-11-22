@@ -7435,3 +7435,53 @@ planted control counted first
 at 1 em dash and 1 en dash,
 reads 0 and 0 over its 21
 files.
+
+OR-149. Round 25 closes. The
+charges from PR 30's landing
+comment stand dispositioned:
+OR-144, the realistic, stands
+carried on this round's own
+complete attempt record (four
+launches, the strongest
+completing the composed record
+at OR-115's shape with phases
+1 to 3 done and no split
+recorded anywhere, every
+attempt ended by the
+environment and none by a
+compared step) and is charged
+to Round 26 as first business
+for the seventh consecutive
+round; OR-145 reads PR 30 back
+whole over both heads and
+grades the owner's patch, the
+OR-143 repair record, and the
+merge; OR-146 stands the base
+gate whole on the new base
+tree in a genuine device tree;
+OR-147 stands the verification
+family (the oracle and the pin
+verified blob for blob before
+reliance, the battery at 55
+cells and 0 splits on the base
+build, the pin suite at 241,
+the golden executed whole,
+provenance identical across a
+clean rebuild, checklist items
+3, 6, and 7 re-verified, the
+budget constants re-read, the
+codepoint scans at 0 and 0);
+OR-148 stands the closure gate
+whole on the extracted closure
+tree. OR-51 stands carried
+open by name as a named
+limitation, untouched. The
+README rounds line moves to 25
+of 100 in this closure commit
+only. The round's attempt
+history, the fault waves, the
+restarts, the slot convoys,
+the refused writes, and every
+failed or killed pass, stands
+disclosed whole on the pull
+request body.
