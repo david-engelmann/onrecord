@@ -7396,3 +7396,42 @@ base tree's 21 blobs scan at 0
 and 0 through the API; the
 closure tree's scan stands in
 OR-148.
+
+OR-148. The closure gate
+stands whole on the extracted
+closure tree (6cd563a0629b83ad
+6ea49c2d5de9e45bd5894baf, the
+tree of the head after
+OR-147): the tree was
+extracted through the API with
+every blob hash-verified, 21
+blobs and 0 mismatches; the
+closure build compiled clean
+and its full cargo suite
+passed at 69 (50 store, 19
+streams) with 0 failed; the
+battery ran on the closure
+build at 55 cells with 0
+splits and exit 0, on its
+fourth launch, the first
+having exited 1 with no
+surviving output, the second
+having died at startup when
+Python's tempfile probe found
+no usable temporary directory
+in a write-refusing phase, and
+the third having been killed
+in the slot queue by a runtime
+restart. The closure tree's
+code stands byte-identical to
+the base tree's in every code
+blob: only CONTRACT.md differs
+between the two trees, and
+README.md stands identical
+until this round's closure
+commit. The codepoint scan
+over the closure tree, with a
+planted control counted first
+at 1 em dash and 1 en dash,
+reads 0 and 0 over its 21
+files.
