@@ -7582,3 +7582,67 @@ narrowing. This record stands
 outside the Status range,
 which continues to run through
 OR-149.
+
+OR-151. Repair record,
+appended after the Round 25
+gate reviews of the closure
+head, answering the red team's
+finding F-3 (the spec axis's
+two findings stand answered at
+OR-150), with OR-147
+unrewritten. One clause stands
+narrowed by this record: the
+pin tree's contents re-
+verified at this repair lane's
+hand, and the golden's
+execution standing re-executed
+whole at the red team's hand.
+The finding names OR-146; the
+clause it quotes stands in
+OR-147, and this record
+narrows the clause where it
+stands. OR-147's golden clause
+states that the converted tape
+stands at 1,663 bytes byte-
+identical to the fixture, and
+that the digest cc9c4e01fca418
+dcc33114caf75fae1f6bf0d401f297
+b5d61f6776903fa955a3 stands in
+the output with the verify
+step reporting the digest
+matches. The digest limb holds
+whole: convert, digest, and
+verify each exited 0, the tape
+stands at 1,663 bytes, the
+digest stands in the output,
+and verify reports the digest
+matches. The byte-identity
+limb has no object in the pin
+tree: the pin at commit 74a832
+98aeb31c82e62b9fb0c613f5bc8600
+799e holds exactly 50 blobs,
+no blob in it stands at 1,663
+bytes, the only fixture for
+this conversion is the input
+session file tests/fixtures/cl
+aude_session_synthetic.jsonl
+at 1,661 bytes, from which the
+converted tape necessarily
+differs, and the pin's own
+tests contract the golden as
+the digest constant alone
+(tests/convert.rs and
+tests/digest_cli.rs). The
+clause stands narrowed
+accordingly: the identity
+contracted and holding is the
+digest identity, and no byte-
+identity to any fixture in the
+pin tree is claimed. OR-147
+stands unrewritten in every
+other particular, and nothing
+else in this round's record is
+implicated by this narrowing.
+This record stands outside the
+Status range, which continues
+to run through OR-149.
