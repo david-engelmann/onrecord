@@ -6850,3 +6850,115 @@ narrowing. This record stands
 outside the Status range,
 which continues to run through
 OR-142.
+
+OR-144. The realistic pass,
+charged forward as this
+round's first business for the
+sixth consecutive round
+(landing comment 7059193655 on
+PR 30, charge 1), stands
+carried on this round's own
+complete attempt record, and
+the charge carries to Round 26
+as first business for the
+seventh consecutive round.
+Four launches ran under the
+round's driver, numbered 1, 2,
+4, and 6 by the driver's own
+counter, which counts each
+attempt's end line as an
+attempt line, so no launches 3
+and 5 ever existed. Every
+launch probed /dev/full in its
+own tree before starting and
+found the genuine character
+device (char 1,7, a write
+raising ENOSPC). Every launch
+ran on the base build (binary
+md5 2766b711917d9404e4e2e8e21d
+4a2af0, the provenance-
+verified build of OR-147)
+against the final oracle tree
+verified blob for blob before
+reliance. Attempt 1 (start
+2026-11-22T06:01:37Z) queued
+behind another lane's build
+slot holder and was killed by
+a runtime restart at about
+07:52Z before it ever acquired
+the slot; its log, created at
+07:51Z in the restart's edge,
+stands at 0 bytes, it created
+no temp roots, and zero cells
+are claimed for it. Attempt 2
+(start 07:53:30Z, end
+09:05:59Z, driver exit 0) is
+the strongest partial: its log
+records PHASE1 complete (2,600
+adds and 416 interleaved read
+steps compared, the composed
+record at 2,600 lines and
+652,833 bytes), PHASE2 done,
+and PHASE3 done, with zero
+split steps recorded; it died
+in phase 4's first cell
+(p4-get-full2) when the
+harness's own seed write
+raised PermissionError, Errno
+1, Operation not permitted,
+and HARNESS_EXIT 1 stands in
+its log. Its twin records
+stand at 2,600 lines and
+652,833 bytes each with md5 6c
+ba153da883f7b76ad69373719b72ac
+on both sides, read at this
+lane's own hand; that is the
+records' agreement, stated as
+such. Attempt 4 (start
+09:21:10Z, end 09:33:12Z,
+driver exit 1) died at startup
+in the restart at 09:33Z: no
+temp roots, its log at 0
+bytes, zero cells claimed,
+because nothing survives to
+claim. Attempt 6 (start
+09:34:37Z, end 10:57:18Z,
+driver exit 1) composed the
+same record whole: its twins
+stand at 2,600 lines and
+652,833 bytes with the same
+md5 on both sides, byte-
+identical to attempt 2's
+record; the harness then
+exited about a minute after
+the record completed, before
+any phase line banked in its
+log (0 bytes) and before phase
+4's first cell directory was
+created, and the exit's own
+log append was refused, so
+which phases it completed past
+the record's composition
+cannot be told from what
+survives and none is claimed.
+No split step stands recorded
+in any surviving log. The
+ground for the carry: a
+complete run needs about two
+uninterrupted hours on this
+box (phase 1 alone took about
+50 minutes in attempt 2 and
+about 74 minutes in attempt 6
+by the file times, under
+load), and every attempt was
+ended by the environment, two
+by runtime restarts, one by
+the write fault refusing the
+harness's own write, and one
+at the record's completion
+with its accounting refused;
+no attempt was ended by a
+compared step's disagreement.
+The pass is therefore not
+contracted, and it is charged
+forward whole.
