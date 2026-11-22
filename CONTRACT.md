@@ -7485,3 +7485,100 @@ the refused writes, and every
 failed or killed pass, stands
 disclosed whole on the pull
 request body.
+
+OR-150. Repair record,
+appended after the Round 25
+gate reviews of the closure
+head, answering the spec
+axis's two findings against
+OR-144 and OR-146 (the bot's
+review comments 4659165095 and
+4659165101, each sustained at
+the spec hand as the build
+lane had graded them), with
+OR-144, OR-146, and OR-149
+unrewritten. Two sentences
+stand narrowed by this record,
+each limb re-verified at this
+repair lane's hand. First,
+OR-144's ground sentence.
+OR-144 states that every
+attempt was ended by the
+environment, two by runtime
+restarts, one by the write
+fault refusing the harness's
+own write, and one at the
+record's completion with its
+accounting refused, and that
+no attempt was ended by a
+compared step's disagreement.
+The per-attempt clauses stand
+as recorded: attempts 1 and 4
+were ended by runtime
+restarts, attempt 2 by the
+write fault refusing the
+harness's own seed write in
+phase 4, and attempt 6's exit
+came about a minute after the
+record's composition with its
+own log append refused. What
+does not survive is attempt
+6's exit cause: its log stands
+at 0 bytes, re-verified at
+this hand, and OR-144 itself
+records that which phases it
+completed past the record's
+composition cannot be told
+from what survives. The
+sentence stands narrowed
+accordingly: the environmental
+distribution and the exclusion
+of a compared-step ending hold
+for attempts 1, 2, and 4 on
+their retained causes, and
+neither extends to attempt 6,
+whose ending stands
+unattributed in what survives
+beyond its accounting refusal
+at the record's completion.
+OR-149's closure summary
+repeats the distribution, that
+every attempt ended by the
+environment and none by a
+compared step, and that
+repetition stands narrowed by
+this same record. Second,
+OR-146's attribution. OR-146
+states that the round's
+earlier clippy exit 101 and
+the first cargo test's fast
+death stand charged to cargo's
+network fetch of the git
+dependency failing in this
+sandbox, proven by the same
+clippy invocation passing
+clean offline. That proof
+covers the clippy exit 101 and
+only the clippy exit 101: the
+first cargo test's captured
+output was lost, as the pull
+request body's attempt history
+records of the fourth chain
+launch, and no surviving
+evidence attributes that
+test's death to the fetch. The
+sentence stands narrowed
+accordingly: the fetch stands
+proven for the clippy exit
+101, and the first cargo
+test's cause stands
+unattributed in what survives.
+OR-144, OR-146, and OR-149
+stand unrewritten in every
+other particular, and nothing
+else in this round's record is
+implicated by either
+narrowing. This record stands
+outside the Status range,
+which continues to run through
+OR-149.
