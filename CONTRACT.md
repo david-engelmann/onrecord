@@ -7310,3 +7310,89 @@ hand before the gate's
 completed pass, and the
 completed pass itself is the
 gate of record.
+
+OR-147. The verification
+family stands on instruments
+verified before reliance: the
+final oracle was extracted
+through the API and verified
+blob for blob before reliance
+(commit 0c25a9aa703b38c7579f79
+28d61443a881a62465, tree f88eb
+75044f2e751915ab9a825426177972
+f2b58, 14 blobs, 0
+mismatches), and the
+flighttape pin the same way
+(commit 74a83298aeb31c82e62b9f
+b0c613f5bc8600799e, tree afd4d
+7d13520411e003762548fc79082a1b
+9cf6e, exactly 50 blobs, 0
+mismatches). The battery ran
+at 55 cells (39 stream, 16
+budget) with 0 splits on the
+base build; the battery on the
+closure build stands in
+OR-148. The pin suite passed
+241 and failed 0. The golden
+executed whole through the
+pin's own CLI: convert,
+digest, and verify each exited
+0, the converted tape stands
+at 1,663 bytes byte-identical
+to the fixture, and the digest
+cc9c4e01fca418dcc33114caf75fae
+1f6bf0d401f297b5d61f6776903fa9
+55a3 stands in the output with
+the verify step reporting the
+digest matches. Provenance:
+the base binary's md5 2766b711
+917d9404e4e2e8e21d4a2af0
+stands identical before and
+after a clean rebuild at the
+same target path (the scratch
+target-base directory), a
+build-path scoped result at
+that path. Checklist item 3
+re-verified passing outright:
+the repository description,
+the README lede, and the
+Cargo.toml package description
+stand byte-identical at this
+read. Checklist item 6 re-
+verified: cargo install
+--offline --locked from the
+extracted base tree into a
+scratch install root, the
+installed binary at 873,584
+bytes; the first attempt, run
+into a fresh scratch
+CARGO_HOME, failed on the
+flighttape git checkout, which
+the offline mode cannot make
+outside the default cargo
+home's git cache, and the
+install was rerun on the
+--root shape, which is the
+install of record. Checklist
+item 7 re-verified: the README
+quickstart run from the
+installed binary in a scratch
+directory, the add printing
+claim-2946b699934e0f6b, the
+get view at 719 bytes byte-
+identical to the README's
+printed view, and check
+reporting the record is sound.
+The budget constants were re-
+read from the extracted base
+tree's src/store.rs lines 30
+and 31 at BUDGET_READ (990,
+988) and BUDGET_READ_NARROW
+(989, 987). The codepoint
+scans ran with a planted
+control counted first at 1 em
+dash and 1 en dash, and the
+base tree's 21 blobs scan at 0
+and 0 through the API; the
+closure tree's scan stands in
+OR-148.
