@@ -6850,3 +6850,799 @@ narrowing. This record stands
 outside the Status range,
 which continues to run through
 OR-142.
+
+OR-144. The realistic pass,
+charged forward as this
+round's first business for the
+sixth consecutive round
+(landing comment 7059193655 on
+PR 30, charge 1), stands
+carried on this round's own
+complete attempt record, and
+the charge carries to Round 26
+as first business for the
+seventh consecutive round.
+Four launches ran under the
+round's driver, numbered 1, 2,
+4, and 6 by the driver's own
+counter, which counts each
+attempt's end line as an
+attempt line, so no launches 3
+and 5 ever existed. Every
+launch probed /dev/full in its
+own tree before starting and
+found the genuine character
+device (char 1,7, a write
+raising ENOSPC). Every launch
+ran on the base build (binary
+md5 2766b711917d9404e4e2e8e21d
+4a2af0, the provenance-
+verified build of OR-147)
+against the final oracle tree
+verified blob for blob before
+reliance. Attempt 1 (start
+2026-11-22T06:01:37Z) queued
+behind another lane's build
+slot holder and was killed by
+a runtime restart at about
+07:52Z before it ever acquired
+the slot; its log, created at
+07:51Z in the restart's edge,
+stands at 0 bytes, it created
+no temp roots, and zero cells
+are claimed for it. Attempt 2
+(start 07:53:30Z, end
+09:05:59Z, driver exit 0) is
+the strongest partial: its log
+records PHASE1 complete (2,600
+adds and 416 interleaved read
+steps compared, the composed
+record at 2,600 lines and
+652,833 bytes), PHASE2 done,
+and PHASE3 done, with zero
+split steps recorded; it died
+in phase 4's first cell
+(p4-get-full2) when the
+harness's own seed write
+raised PermissionError, Errno
+1, Operation not permitted,
+and HARNESS_EXIT 1 stands in
+its log. Its twin records
+stand at 2,600 lines and
+652,833 bytes each with md5 6c
+ba153da883f7b76ad69373719b72ac
+on both sides, read at this
+lane's own hand; that is the
+records' agreement, stated as
+such. Attempt 4 (start
+09:21:10Z, end 09:33:12Z,
+driver exit 1) died at startup
+in the restart at 09:33Z: no
+temp roots, its log at 0
+bytes, zero cells claimed,
+because nothing survives to
+claim. Attempt 6 (start
+09:34:37Z, end 10:57:18Z,
+driver exit 1) composed the
+same record whole: its twins
+stand at 2,600 lines and
+652,833 bytes with the same
+md5 on both sides, byte-
+identical to attempt 2's
+record; the harness then
+exited about a minute after
+the record completed, before
+any phase line banked in its
+log (0 bytes) and before phase
+4's first cell directory was
+created, and the exit's own
+log append was refused, so
+which phases it completed past
+the record's composition
+cannot be told from what
+survives and none is claimed.
+No split step stands recorded
+in any surviving log. The
+ground for the carry: a
+complete run needs about two
+uninterrupted hours on this
+box (phase 1 alone took about
+50 minutes in attempt 2 and
+about 74 minutes in attempt 6
+by the file times, under
+load), and every attempt was
+ended by the environment, two
+by runtime restarts, one by
+the write fault refusing the
+harness's own write, and one
+at the record's completion
+with its accounting refused;
+no attempt was ended by a
+compared step's disagreement.
+The pass is therefore not
+contracted, and it is charged
+forward whole.
+
+OR-145. PR 30 read back whole
+on the closed record (charge 2
+of the Round 24 landing
+comment 7059193655, with
+charge 4 discharged in the
+same item). The census stands
+at 4 issue comments, 1 review,
+and 2 review comments, every
+body read to its end, the pull
+request body included (17,750
+characters at this read, its
+Verified block naming both
+heads of the round and the
+repair head). The CodeRabbit
+shell (7057276299) stands in
+its true final form at this
+read at 11,573 characters,
+created 2026-11-21T04:28:19Z
+and last edited
+2026-11-21T06:53:11Z. Its
+forms chain: 8,524 characters
+at the build lane's patch
+read, last edited
+2026-11-21T04:31:03Z, the
+completed review of the
+closure head; 8,526 characters
+at the three review hands,
+last edited
+2026-11-21T04:40:54Z; 11,571
+characters at the owner's
+patch read, last edited
+2026-11-21T06:47:44Z, the
+completed review of the repair
+head; and 11,573 characters at
+this read, one further re-
+render of two characters after
+the owner's patch standing as
+the true final form. In its
+final form: the standing line
+that no actionable comments
+were generated in the recent
+review; its walkthrough's
+three rows accurate in
+substance (the review
+disposition and realistic-pass
+record; the base gate and
+verification record; the
+closure gate and round
+status); its change assessment
+at Other with effort 2,
+Simple, assessed at the repair
+head 1591710dfb3f; Merge Risk
+Minimal up to 1591710d, its
+coverage standing at source
+and covered commit both 159171
+0dfb3fc7d7d87a692892f98c0ec475
+100f, kind reviewed, its text
+recording that the two earlier
+review precision points have
+been addressed in the repair
+record; pre-merge checks 4
+passed and 0 failed (Title
+Passed, its details affirming
+the title and noting only that
+the stated range leaves out
+the repair record OR-143;
+Linked Issues and Out of Scope
+Changes passed as skipped on
+no linked issues; Description
+passed as skipped on the
+summary setting); files
+selected for the final review
+1 (CONTRACT.md) with 1 skipped
+as similar; the included
+allowance used with none
+remaining; the word Docstring
+occurring zero times; and no
+rate-limit banner anywhere in
+it. The final form carries the
+repair review's Run ID 4e0c0fe
+d-b647-49b4-baf1-b1aeaaa5b31b
+in its recent review info, its
+commits line standing between
+the closure head and the
+repair head; the closure
+review's Run ID 53adbb7d-5125-
+4948-8847-0b331b912416 stands
+in the review object's body
+and in no form of the shell at
+this read. The Trunk merge-
+management comment
+(7057274323) stands in its
+final form at 113 characters,
+the post-merge form, last
+edited 2026-11-21T07:00:41Z on
+the merge at 07:00:38Z; the
+body's census of it at 403
+characters, never edited, was
+its pre-merge informational
+form, exact at its moment. The
+owner's queue comment
+(7058892465) stands at 12
+characters, created
+2026-11-21T06:53:09Z and never
+edited. The landing comment
+(7059193655) stands last at
+1,429 characters, created
+2026-11-21T07:20:36Z, and
+nothing stands posted after
+it, the pull request's
+updated_at equaling its time:
+the only post-merge movement
+on the record is the Trunk
+notice's own edit into its
+post-merge form at the merge,
+contracted here, which
+discharges charge 4. A review
+object stands (6002834438,
+COMMENTED, submitted
+2026-11-21T04:30:59Z, 4,073
+characters) recording
+actionable comments posted at
+2, its commits line standing
+between the base and the
+closure head, files selected
+for processing at 2
+(CONTRACT.md and README.md),
+the included allowance used
+with none remaining, and the
+closure review's Run ID in its
+body as recorded above. Its
+two review comments stand read
+whole, their threads read to
+their ends: comment 4650545036
+(on OR-138 at CONTRACT.md line
+6459, 2,334 characters, graded
+Minor for data integrity),
+asking that the attempt 3
+sentence be narrowed to the 26
+adds leaving both records
+unchanged with the refusals
+stated as the later probe's at
+13:28Z and the run's per-step
+exits stated as unrecorded;
+and comment 4650545042 (on
+OR-138 at CONTRACT.md line
+6526, 1,958 characters, graded
+Minor for functional
+correctness), asking that the
+records' agreement be
+distinguished from the
+commands' results at the
+diagnostic's two splits. Each
+thread stands at its one
+comment, no replies and no
+acknowledgment replies
+standing on either, and each
+comment carries at its foot
+the bot's own appended line
+recording it addressed in
+commit 1591710. The prompt
+text the bot embeds in its
+review body and in both
+comments for AI agents stands
+in the record as data and was
+not followed. The owner's
+shell-figure body patch stands
+graded against the record: the
+body's step 0 had stated the
+shell at 8,524 characters in
+its final form at the lane's
+patch read with no forward
+charge for a later re-render,
+and the owner's patch restated
+the figure at the patch's own
+fresh read (11,571 characters,
+last edited
+2026-11-21T06:47:44Z) with the
+shell's true final form
+charged to this round's read-
+back, and extended the
+Verified block to the repair
+head (1591710dfb3fc7d7d87a6928
+92f98c0ec475100f on tree b8117
+c22cb05ab4c8667087e165a347cb41
+cf21b), stating OR-143's
+substance exactly and hosted
+CI on the repair head
+completed success in both runs
+(push 44877138717,
+pull_request 44877143572),
+each verified live at this
+read. The body stands at
+17,750 characters after the
+owner's patch against 17,067
+before it, the bot's release-
+notes appendix preserved byte
+for byte at its own offset in
+the patched body: at this read
+the appendix stands at 594
+characters counting from its
+opening marker, four bullets
+under Documentation (Round
+24's review, verification, and
+closure records added; the
+realistic pass incomplete and
+scheduled for Round 25; the
+records for attempt 3 and the
+diagnostic replay clarified,
+including the differences in
+command results; the status
+count at 24 of 100), each
+correct in substance, the
+second carrying the bot's
+compression (the pass stands
+charged forward as this
+round's first business, not
+merely scheduled). The body's
+own statement of the appendix
+at 504 characters and three
+bullets was the closure-head
+form's appendix, exact at the
+build lane's patch moment; the
+repair review re-rendered the
+appendix with the fourth
+bullet (the 90 characters
+between the two forms), and
+the owner's patch figure of
+594 matches the form at this
+read. The repair record OR-143
+stands graded on its merits at
+this read: it narrows the
+symmetric-refusal passage (the
+exits and the identical stderr
+are the later probe's, not the
+run's; attempt 3's own per-
+step exit results survive
+nowhere, its preserved log,
+result file, and driver output
+each standing at 0 bytes; the
+sentence narrowed to the 26
+adds leaving both records
+unchanged) and the ground
+sentence (the agreement
+claimed is the records'; at
+the diagnostic's two splits,
+add-319 and add-468, both
+appends landed and the records
+stood byte-identical while the
+port's add exited 0 and the
+oracle's exited 1, those two
+steps standing as record
+agreement under differing
+command results inside the
+sentence's own 811 of 813),
+with the reconciliation
+figures untouched (the twins
+byte-identical at 2,574 lines
+and 646,335 bytes, md5 5baf569
+a92aceb33638288f782486f90 on
+both sides), OR-138
+unrewritten in every other
+particular, and the record
+standing outside the Status
+range, which continues to run
+through OR-142; its delta
+reviews passed on both axes at
+the owner's gate, as the
+landing comment records. The
+Round 24 gate verdicts stand
+contracted whole in the terms
+above: the full gate's three
+axes at REPAIR, converging on
+OR-138's two precision limbs
+(spec two Minors, both record-
+level; standards three Minors,
+the two record limbs with the
+shell-figure limb body-only;
+red team two Minors, both
+record-level, its own cargo
+re-executions standing
+untested at its hand in the
+fault and slot regime, its
+findings resting on
+documentary and artifact
+evidence), the record limbs
+repaired by OR-143 with delta
+reviews passing on both axes
+and the body limb closed by
+the owner's patch. The merge
+stands verified at this read:
+the pull request closed merged
+at 2026-11-21T07:00:38Z as
+squash 99c796baa207843979b726a
+4ed5064de847346fc, a single
+parent at the base b902f07d993
+a2d4f1c5aaefb85103299c0d3c91e,
+its tree b8117c22cb05ab4c86670
+87e165a347cb41cf21b equal to
+the repair head's tree, main
+standing at the squash, and
+the README on main reading 24
+of 100. Hosted CI on the
+closure head (push
+44865845328, pull_request
+44866253506) and on the repair
+head (push 44877138717,
+pull_request 44877143572) each
+completed success, verified
+live at this read. No mismatch
+stands between the identifiers
+in the Round 24 landing
+comment and the live record at
+this read.
+
+OR-146. The base gate stands
+whole on the new base tree (b8
+117c22cb05ab4c8667087e165a347c
+b41cf21b, the Round 24 landing
+tree) as a full pass in a
+probe-verified genuine device
+tree: the gate's own process
+tree probed /dev/full before
+the run and found the genuine
+character device (char 1,7, a
+write raising ENOSPC), and in
+that tree cargo test exited 0
+with 69 passed and 0 failed
+(50 store, 19 streams), cargo
+clippy exited 0 with warnings
+denied, and cargo fmt --check
+exited 0. The cargo
+invocations ran offline
+against the local cargo cache;
+the round's earlier clippy
+exit 101 and the first cargo
+test's fast death stand
+charged to cargo's network
+fetch of the git dependency
+failing in this sandbox,
+proven by the same clippy
+invocation passing clean
+offline at this lane's own
+hand before the gate's
+completed pass, and the
+completed pass itself is the
+gate of record.
+
+OR-147. The verification
+family stands on instruments
+verified before reliance: the
+final oracle was extracted
+through the API and verified
+blob for blob before reliance
+(commit 0c25a9aa703b38c7579f79
+28d61443a881a62465, tree f88eb
+75044f2e751915ab9a825426177972
+f2b58, 14 blobs, 0
+mismatches), and the
+flighttape pin the same way
+(commit 74a83298aeb31c82e62b9f
+b0c613f5bc8600799e, tree afd4d
+7d13520411e003762548fc79082a1b
+9cf6e, exactly 50 blobs, 0
+mismatches). The battery ran
+at 55 cells (39 stream, 16
+budget) with 0 splits on the
+base build; the battery on the
+closure build stands in
+OR-148. The pin suite passed
+241 and failed 0. The golden
+executed whole through the
+pin's own CLI: convert,
+digest, and verify each exited
+0, the converted tape stands
+at 1,663 bytes byte-identical
+to the fixture, and the digest
+cc9c4e01fca418dcc33114caf75fae
+1f6bf0d401f297b5d61f6776903fa9
+55a3 stands in the output with
+the verify step reporting the
+digest matches. Provenance:
+the base binary's md5 2766b711
+917d9404e4e2e8e21d4a2af0
+stands identical before and
+after a clean rebuild at the
+same target path (the scratch
+target-base directory), a
+build-path scoped result at
+that path. Checklist item 3
+re-verified passing outright:
+the repository description,
+the README lede, and the
+Cargo.toml package description
+stand byte-identical at this
+read. Checklist item 6 re-
+verified: cargo install
+--offline --locked from the
+extracted base tree into a
+scratch install root, the
+installed binary at 873,584
+bytes; the first attempt, run
+into a fresh scratch
+CARGO_HOME, failed on the
+flighttape git checkout, which
+the offline mode cannot make
+outside the default cargo
+home's git cache, and the
+install was rerun on the
+--root shape, which is the
+install of record. Checklist
+item 7 re-verified: the README
+quickstart run from the
+installed binary in a scratch
+directory, the add printing
+claim-2946b699934e0f6b, the
+get view at 719 bytes byte-
+identical to the README's
+printed view, and check
+reporting the record is sound.
+The budget constants were re-
+read from the extracted base
+tree's src/store.rs lines 30
+and 31 at BUDGET_READ (990,
+988) and BUDGET_READ_NARROW
+(989, 987). The codepoint
+scans ran with a planted
+control counted first at 1 em
+dash and 1 en dash, and the
+base tree's 21 blobs scan at 0
+and 0 through the API; the
+closure tree's scan stands in
+OR-148.
+
+OR-148. The closure gate
+stands whole on the extracted
+closure tree (6cd563a0629b83ad
+6ea49c2d5de9e45bd5894baf, the
+tree of the head after
+OR-147): the tree was
+extracted through the API with
+every blob hash-verified, 21
+blobs and 0 mismatches; the
+closure build compiled clean
+and its full cargo suite
+passed at 69 (50 store, 19
+streams) with 0 failed; the
+battery ran on the closure
+build at 55 cells with 0
+splits and exit 0, on its
+fourth launch, the first
+having exited 1 with no
+surviving output, the second
+having died at startup when
+Python's tempfile probe found
+no usable temporary directory
+in a write-refusing phase, and
+the third having been killed
+in the slot queue by a runtime
+restart. The closure tree's
+code stands byte-identical to
+the base tree's in every code
+blob: only CONTRACT.md differs
+between the two trees, and
+README.md stands identical
+until this round's closure
+commit. The codepoint scan
+over the closure tree, with a
+planted control counted first
+at 1 em dash and 1 en dash,
+reads 0 and 0 over its 21
+files.
+
+OR-149. Round 25 closes. The
+charges from PR 30's landing
+comment stand dispositioned:
+OR-144, the realistic, stands
+carried on this round's own
+complete attempt record (four
+launches, the strongest
+completing the composed record
+at OR-115's shape with phases
+1 to 3 done and no split
+recorded anywhere, every
+attempt ended by the
+environment and none by a
+compared step) and is charged
+to Round 26 as first business
+for the seventh consecutive
+round; OR-145 reads PR 30 back
+whole over both heads and
+grades the owner's patch, the
+OR-143 repair record, and the
+merge; OR-146 stands the base
+gate whole on the new base
+tree in a genuine device tree;
+OR-147 stands the verification
+family (the oracle and the pin
+verified blob for blob before
+reliance, the battery at 55
+cells and 0 splits on the base
+build, the pin suite at 241,
+the golden executed whole,
+provenance identical across a
+clean rebuild, checklist items
+3, 6, and 7 re-verified, the
+budget constants re-read, the
+codepoint scans at 0 and 0);
+OR-148 stands the closure gate
+whole on the extracted closure
+tree. OR-51 stands carried
+open by name as a named
+limitation, untouched. The
+README rounds line moves to 25
+of 100 in this closure commit
+only. The round's attempt
+history, the fault waves, the
+restarts, the slot convoys,
+the refused writes, and every
+failed or killed pass, stands
+disclosed whole on the pull
+request body.
+
+OR-150. Repair record,
+appended after the Round 25
+gate reviews of the closure
+head, answering the spec
+axis's two findings against
+OR-144 and OR-146 (the bot's
+review comments 4659165095 and
+4659165101, each sustained at
+the spec hand as the build
+lane had graded them), with
+OR-144, OR-146, and OR-149
+unrewritten. Two sentences
+stand narrowed by this record,
+each limb re-verified at this
+repair lane's hand. First,
+OR-144's ground sentence.
+OR-144 states that every
+attempt was ended by the
+environment, two by runtime
+restarts, one by the write
+fault refusing the harness's
+own write, and one at the
+record's completion with its
+accounting refused, and that
+no attempt was ended by a
+compared step's disagreement.
+The per-attempt clauses stand
+as recorded: attempts 1 and 4
+were ended by runtime
+restarts, attempt 2 by the
+write fault refusing the
+harness's own seed write in
+phase 4, and attempt 6's exit
+came about a minute after the
+record's composition with its
+own log append refused. What
+does not survive is attempt
+6's exit cause: its log stands
+at 0 bytes, re-verified at
+this hand, and OR-144 itself
+records that which phases it
+completed past the record's
+composition cannot be told
+from what survives. The
+sentence stands narrowed
+accordingly: the environmental
+distribution and the exclusion
+of a compared-step ending hold
+for attempts 1, 2, and 4 on
+their retained causes, and
+neither extends to attempt 6,
+whose ending stands
+unattributed in what survives
+beyond its accounting refusal
+at the record's completion.
+OR-149's closure summary
+repeats the distribution, that
+every attempt ended by the
+environment and none by a
+compared step, and that
+repetition stands narrowed by
+this same record. Second,
+OR-146's attribution. OR-146
+states that the round's
+earlier clippy exit 101 and
+the first cargo test's fast
+death stand charged to cargo's
+network fetch of the git
+dependency failing in this
+sandbox, proven by the same
+clippy invocation passing
+clean offline. That proof
+covers the clippy exit 101 and
+only the clippy exit 101: the
+first cargo test's captured
+output was lost, as the pull
+request body's attempt history
+records of the fourth chain
+launch, and no surviving
+evidence attributes that
+test's death to the fetch. The
+sentence stands narrowed
+accordingly: the fetch stands
+proven for the clippy exit
+101, and the first cargo
+test's cause stands
+unattributed in what survives.
+OR-144, OR-146, and OR-149
+stand unrewritten in every
+other particular, and nothing
+else in this round's record is
+implicated by either
+narrowing. This record stands
+outside the Status range,
+which continues to run through
+OR-149.
+
+OR-151. Repair record,
+appended after the Round 25
+gate reviews of the closure
+head, answering the red team's
+finding F-3 (the spec axis's
+two findings stand answered at
+OR-150), with OR-147
+unrewritten. One clause stands
+narrowed by this record: the
+pin tree's contents re-
+verified at this repair lane's
+hand, and the golden's
+execution standing re-executed
+whole at the red team's hand.
+The finding names OR-146; the
+clause it quotes stands in
+OR-147, and this record
+narrows the clause where it
+stands. OR-147's golden clause
+states that the converted tape
+stands at 1,663 bytes byte-
+identical to the fixture, and
+that the digest cc9c4e01fca418
+dcc33114caf75fae1f6bf0d401f297
+b5d61f6776903fa955a3 stands in
+the output with the verify
+step reporting the digest
+matches. The digest limb holds
+whole: convert, digest, and
+verify each exited 0, the tape
+stands at 1,663 bytes, the
+digest stands in the output,
+and verify reports the digest
+matches. The byte-identity
+limb has no object in the pin
+tree: the pin at commit 74a832
+98aeb31c82e62b9fb0c613f5bc8600
+799e holds exactly 50 blobs,
+no blob in it stands at 1,663
+bytes, the only fixture for
+this conversion is the input
+session file tests/fixtures/cl
+aude_session_synthetic.jsonl
+at 1,661 bytes, from which the
+converted tape necessarily
+differs, and the pin's own
+tests contract the golden as
+the digest constant alone
+(tests/convert.rs and
+tests/digest_cli.rs). The
+clause stands narrowed
+accordingly: the identity
+contracted and holding is the
+digest identity, and no byte-
+identity to any fixture in the
+pin tree is claimed. OR-147
+stands unrewritten in every
+other particular, and nothing
+else in this round's record is
+implicated by this narrowing.
+This record stands outside the
+Status range, which continues
+to run through OR-149.
