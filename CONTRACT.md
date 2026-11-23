@@ -8060,3 +8060,50 @@ after the OR-153 to OR-155
 families had landed, and the
 append-only record keeps the
 order the work finished in.
+
+OR-156. The closure gate
+stands whole on the extracted
+closure tree (9c2151a9485da561
+90be13fdfe21d87f3a624618, the
+tree of the head after
+OR-155): the tree was
+extracted through the API with
+every blob hash-verified, 21
+blobs and 0 mismatches; the
+closure build compiled clean
+and its full cargo suite
+passed at 69 (50 store, 19
+streams) with 0 failed; the
+battery ran on the closure
+build at 55 cells with 0
+splits and exit 0, on the
+gate's sixth launch, the first
+having died at startup on this
+lane's own invocation error,
+the second in its extract at
+the fleet REST pool's hard
+stop, the third killed in its
+extract by a runtime restart,
+the fourth's build having
+timed out in the build slot's
+queue at 3,600 seconds without
+acquiring the slot, and the
+fifth killed by a runtime
+restart in the same queue. The
+closure tree's code stands
+byte-identical to the base
+tree's in every code blob:
+only CONTRACT.md differs
+between the two trees, and
+README.md stands identical
+until this round's closure
+commit; the same identity
+holds between the closure tree
+and the head after OR-152,
+where again only CONTRACT.md
+differs. The codepoint scan
+over the closure tree, with a
+planted control counted first
+at 1 em dash and 1 en dash,
+reads 0 and 0 over its 21
+files.
