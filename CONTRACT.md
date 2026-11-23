@@ -8165,3 +8165,101 @@ the pool's hard stop, and
 every failed or killed pass,
 stands disclosed whole on the
 pull request body.
+
+OR-158. Repair record,
+appended after the Round 26
+gate reviews of the closure
+head, answering the spec
+axis's finding S-1 and the red
+team's finding F-1 against
+OR-152 and OR-157 (the bot's
+review comment 4662250640,
+sustained at both hands as a
+true positive; the build lane
+had graded it as standing in
+part), with OR-152 and OR-157
+unrewritten. Two sentences
+stand narrowed by this record,
+each limb re-verified at this
+repair lane's hand. First,
+OR-152's ground sentence.
+OR-152 states that every
+attempt was ended by the
+environment, one by a runtime
+restart in the slot queue and
+two in the span just past the
+record's composition with
+their accounting refused, and
+that no attempt was ended by a
+compared step's disagreement
+in anything that survives. The
+per-attempt clauses stand as
+recorded: attempts 1 and 4
+each composed the record
+whole, their twins standing at
+2,600 lines and 652,833 bytes
+each with md5 6cba153da883f7b7
+6ad69373719b72ac on both
+sides, re-measured at this
+hand, and each harness then
+exited at driver exit 1 about
+a minute after the record
+completed, before phase 4's
+first cell directory was
+created, its log standing at 0
+bytes, re-verified at this
+hand, so which phases it
+completed past the record's
+composition cannot be told
+from what survives and none is
+claimed; attempt 3 was killed
+by a runtime restart in the
+slot queue before it ever
+acquired the slot, its line in
+the attempts file standing
+with a start and no end, re-
+verified at this hand. What
+does not survive is attempts 1
+and 4's exit causes: the
+retained evidence establishes
+the endings' span, the
+composed records, and the
+refused accounting, and
+nothing that survives
+attributes either exit. The
+sentence stands narrowed
+accordingly: the environmental
+distribution and the exclusion
+of a compared-step ending hold
+for attempt 3 on its retained
+cause, and neither extends to
+attempts 1 and 4, whose
+endings stand unattributed in
+what survives beyond the
+retained facts, no split step
+standing recorded in any
+surviving record of any
+attempt. OR-157's closure
+summary repeats the
+distribution without the
+bound, that every attempt
+ended by the environment and
+none by a compared step, and
+that repetition stands
+narrowed by this same record.
+No figure changes on either
+reading: zero cells are
+counted for every attempt on
+either reading, and the
+realistic's carry to Round 27
+as first business for the
+eighth consecutive round
+stands as charged. OR-152 and
+OR-157 stand unrewritten in
+every other particular, and
+nothing else in this round's
+record is implicated by this
+narrowing. This record stands
+outside the Status range,
+which continues to run through
+OR-157.
