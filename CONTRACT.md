@@ -8866,3 +8866,88 @@ ENOSPC), so no cell of the
 suite stands excused on the
 device. The realistic stands
 at OR-165.
+
+OR-168. The verification
+family stands executed on the
+new base at this hand. The
+Python oracle stands verified
+whole before reliance at 14
+blobs and 0 mismatches (commit
+0c25a9aa703b38c7579f7928d61443
+a881a62465, tree f88eb75044f2e
+751915ab9a825426177972f2b58,
+API-reachable). The battery
+stands executed on the base
+build at exit 0: 55 cells, 0
+splits, the stream sections
+and the budget sections in
+agreement throughout, the
+reroute flip standing at
+capacity in the cells
+(reroute-8192-closed2-full1 at
+exit 1 on both sides where
+reroute-8191 stands at 120)
+and the past-capacity refusal
+cells in agreement on both
+sides; the budget constants
+stand read at this hand at
+src/store.rs lines 30 and 31
+as BUDGET_READ (990, 988) and
+BUDGET_READ_NARROW (989, 987).
+The pin stands verified at
+exactly 50 blobs and 0
+mismatches (commit 74a83298aeb
+31c82e62b9fb0c613f5bc8600799e,
+tree afd4d7d13520411e003762548
+fc79082a1b9cf6e) and its suite
+stands executed at exit 0 with
+241 passed summed over its
+result lines. The golden
+stands executed with the pin
+tree's command line tool: the
+pin tree's only conversion
+fixture stands at 1,661 bytes,
+convert at exit 0 producing
+the tape at 1,663 bytes,
+digest at exit 0 printing cc9c
+4e01fca418dcc33114caf75fae1f6b
+f0d401f297b5d61f6776903fa955a3
+, and verify at exit 0; per
+OR-151 the golden's identity
+is the digest alone, no pin
+blob standing at 1,663 bytes
+and none contracted.
+Provenance stands reproduced
+across a clean rebuild at the
+same target path, the first
+build and the clean rebuild
+both at md5 87303e0650310a517e
+cc5f4f20cc5395, the pair's
+equality the contracted
+property and the value itself
+build-path scoped. The
+codepoint scans stand run with
+the planted control counted
+first (control U+2014 1,
+U+2013 1): the base tree at 21
+blobs reads U+2014 0 and
+U+2013 0. Storefront item 3
+stands PASSING outright: the
+repository description, read
+live through the API at this
+hand, stands byte-identical to
+the README lede and to the
+Cargo.toml description, all
+three carrying the same text.
+Checklist items 6 and 7 stand
+re-executed against the new
+base at this hand: the crate
+installs through the
+documented route at 873,584
+bytes of installed binary, the
+quickstart add prints
+claim-2946b699934e0f6b, the
+get view stands byte-identical
+to the README's printed view
+at 719 bytes, and check prints
+"the record is sound".
