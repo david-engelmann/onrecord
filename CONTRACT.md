@@ -9027,3 +9027,44 @@ contract in the round's
 standing push order; the
 numbering follows the round's
 plan, not the append order.
+
+OR-169. The closure gate
+stands executed whole on the
+final tree itself at this
+hand: the tree after OR-168's
+push, b37c71cf5cd979b2cf527ff0
+e4c9e3a998de10ce, the code
+byte-identical at the branch
+head, only the contract
+differing. Its execution
+history stands complete on
+this record: the first
+execution died at extraction
+in the hard write-fault wave,
+its 21 blobs landing
+unverified against the fault
+(21 mismatches, CLOSURE
+EXTRACT FAILED); the second
+execution, launched in the
+window after a runtime
+restart, extracted the tree at
+21 blobs and 0 mismatches and
+completed whole. The closure
+build's suite stands at test
+exit 0 with the store suite at
+50 passed and the streams
+suite at 19 passed, clippy at
+exit 0 and fmt at exit 0, and
+the battery on the closure
+build stands at exit 0 with 55
+cells and 0 splits.
+CLOSURE_GATE_OK. The codepoint
+scans stand run with the
+planted control counted first
+(control U+2014 1, U+2013 1):
+the closure-gate tree and the
+realistic item's head tree
+each read 21 blobs at U+2014 0
+and U+2013 0. Checklist item 3
+stands passing outright,
+graded at OR-168.
