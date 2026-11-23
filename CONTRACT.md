@@ -8951,3 +8951,79 @@ get view stands byte-identical
 to the README's printed view
 at 719 bytes, and check prints
 "the record is sound".
+
+OR-165. The realistic pass at
+OR-115's contracted shape
+stands run as standing
+business on the new base, on
+the verified base build of
+OR-167 with the oracle as
+verified at OR-168, and it
+does not complete this round:
+no attempt produced the
+harness's completed
+accounting, and no cells are
+counted from any attempt in
+this item or anywhere else.
+The attempt history stands
+whole. Attempt 1 started
+2026-11-23T18:26:17Z with
+/dev/full verified genuine in
+the driver's own process tree
+(char device 1,7, a write
+raising ENOSPC), queued on the
+build slot behind a sibling
+lane's gate, and was killed
+mid-composition by a runtime
+restart: both composed records
+stand in its retained temp
+root or24-real-5vvdsk09 at
+1,378 of 2,600 lines and
+344,927 bytes, md5-identical
+to each other at the kill
+point (a56d7ed4a8606d636080568
+9adf752e6 on both sides), its
+attempt log at 0 bytes with no
+accounting printed. Attempt 2
+started 2026-11-23T19:32:32Z,
+the device verified genuine
+again in its own tree, queued
+in its turn, and composed the
+record whole: both sides stand
+in its retained temp root
+or24-real-tq__rrlt at the
+contracted 2,600 lines and
+652,833 bytes, the pair at md5
+6cba153da883f7b76ad69373719b72
+ac, OR-115's contracted
+composed-record md5 reproduced
+byte for byte on both
+implementations. At that
+attempt's close the harness's
+completed accounting and its
+exit line were lost to the
+write fault: the attempt log
+stands at 0 bytes, the run
+wrapper's own trailing echo
+stands refused in the same
+instant in the driver's
+captured output, and neither
+the driver's result file nor
+its ledger completion line
+ever landed. Under the
+contracted standard an attempt
+counts on the harness's
+completed final accounting
+alone, so attempt 2 counts
+nowhere despite its
+composition standing whole,
+and the pass stands charged
+forward to the next round's
+execution and to this round's
+red team under limb (1) of
+OR-166. This item stands
+appended after OR-168 in the
+contract in the round's
+standing push order; the
+numbering follows the round's
+plan, not the append order.
