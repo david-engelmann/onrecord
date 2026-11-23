@@ -8263,3 +8263,149 @@ narrowing. This record stands
 outside the Status range,
 which continues to run through
 OR-157.
+
+OR-160. PR 34 stands read back
+whole through the API over
+both of its heads: the closure
+head 0fd635b63c0066363ceae43b5
+26adffec1d0d274 (tree d590094d
+468350ebc17b10c1a70fb69808399b
+8d, contract 243,087 bytes)
+and the repair head 555a8310f3
+1fbfb3b096add2d517c0801ba53ba2
+(tree 3bcfbebf388cb9a83ec442e3
+3ef26cdbc81c38b2, contract
+245,760 bytes), the title
+"refine: onrecord Round 26,
+OR-152 to OR-156" at 43
+characters, items OR-152 to
+OR-157 in the Status range and
+the repair record OR-158
+standing outside it. The body
+as repair-patched stands at
+13,419 characters, read whole
+at this hand; no release-notes
+appendix stands in it, its
+absence measured at this hand
+and not assumed. The gate
+stands graded in the open: the
+standards axis approved the
+build outright; the spec axis
+returned REPAIR on one Minor
+(S-1) and the red team REPAIR
+on the same Minor (F-1),
+convergent, the qualification
+of OR-152's ground sentence
+and OR-157's closure summary,
+discharged by OR-158 with
+delta reviews PASS and
+APPROVE. Hosted CI stands
+verified at this hand on both
+heads, each in both runs
+completed success: closure
+push gate check 137509457766
+and pull_request gate check
+137511180360; repair push gate
+check 137530438743 and
+pull_request gate check
+137530458315. The merge stands
+verified: PR 34 merged
+2026-11-23T06:56:55Z as b4611e
+4e8eecf66f2c2b42237a3683ab4c51
+d5c7, its tree 3bcfbebf388cb9a
+83ec442e33ef26cdbc81c38b2
+identical to the reviewed
+repair tree, single parent e98
+8371a1a62a5c2a747b40a1e543077d
+3fcae39, the main ref reading
+the merge commit and the
+README on main reading 26 of
+100. The PR's census stands
+closed at this read: exactly 4
+issue comments, 1 review, and
+1 review comment, no replies
+anywhere. The Trunk note
+7092730776 stands at 113
+characters in its merged form;
+the owner's enqueue comment
+7093708058 stands at 12
+characters; the landing
+comment 7094061699 stands last
+at 880 characters. The bot
+shell 7092734870 stands read
+whole in its true final form
+at 8,613 characters, last
+edited 2026-11-23T06:46:07Z,
+exactly the landing
+verification's figure with no
+later re-render: its review
+info carries Run ID f625258d-
+1ad4-4c6d-81b5-d6a8dd3b0868
+over the range e988371a1a62a5c
+2a747b40a1e543077d3fcae39 to
+the closure head 0fd635b63c006
+6363ceae43b526adffec1d0d274,
+Merge Risk Low up to 0fd63
+with coverage at source and
+covered commit both the
+closure head, kind reviewed,
+carrying the one reservation
+that one sentence in the
+attempt record states exit
+causes more firmly than the
+surviving evidence supports,
+and pre-merge checks 4 passed
+and 0 failed; the completed
+form the build lane read at
+8,607 characters stands
+superseded by the re-render
+over the repair head, as the
+body charged to this read-
+back. Review 6017098546
+(COMMENTED, submitted
+2026-11-23T05:50:20Z on the
+closure head, Run ID f625258d-
+1ad4-4c6d-81b5-d6a8dd3b0868 in
+its review info) stands read
+whole at 3,812 characters, its
+1 actionable comment graded
+standing in part by the build
+lane and sustained whole at
+the owner's gate. Its review
+comment stands read whole to
+its end: 4662250640 at 2,046
+characters (CONTRACT.md line
+8046, the attempt exit
+qualification), carrying the
+bot's own appended line
+"Addressed in commit 555a831",
+no replies to it, and no
+acknowledgment traffic beyond
+that line anywhere on the PR
+at this read; the disposition
+is therefore not a merge-time
+read but this round's own end-
+to-end one. The Round 26 red
+team's four build limbs stand
+named here as charged to Round
+27's red team from the
+verified trees: the cargo
+suite re-run at 69, the
+battery at 55 cells on both
+builds, the pin suite
+execution at 241, and the
+golden's convert, digest, and
+verify execution, each
+untested at that red team's
+hand under the hard write
+fault (its extraction run
+landing 0 of 42 verified
+writes); the charge stands
+recorded here so it stands on
+this round's record, and this
+build lane executes the same
+limbs at its own hand in this
+round's family. Post-landing
+material on PR 34 beyond the
+landing comment: none stands
+at this read.
