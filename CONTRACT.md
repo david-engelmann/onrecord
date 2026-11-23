@@ -8664,3 +8664,162 @@ rounds line moves from 26 to
 commit only. OR-51 stands
 carried open, untouched, into
 Round 28.
+
+OR-166. PR 36 stands read back
+whole through the API over its
+single head f9ee65f154124cdc8e
+233649b3115834fe6f03d2 (tree 6
+b190e32a20546888e1673df80c774f
+6a490dade, contract 256,729
+bytes), the title "refine:
+onrecord Round 27, OR-159 to
+OR-163" at 43 characters,
+items OR-159 to OR-164 in the
+Status range and no repair
+record standing in the round.
+The body stands at 8,503
+characters, read whole at this
+hand; no release-notes
+appendix stands in it, its
+absence measured at this hand
+and not assumed. The gate
+stands graded in the open:
+spec PASS, standards APPROVE,
+and red team APPROVE, no
+findings on any axis; the
+realistic's completion at
+OR-159 stands verified by the
+red team on its surviving
+evidence to the full extent
+that evidence reaches (the
+retained temp root or24-real-
+dm4p6hrq with both composed
+records byte-identical, the
+whole 644-byte log carrying
+the completed accounting, and
+the attempt census matching
+OR-159 figure for figure).
+Hosted CI stands verified at
+this hand on the closure head,
+each completed success: push
+run 45166320062 (gate check
+137664078898), pull_request
+run 45166586218 (gate check
+137664987457), the CodeRabbit
+check 137665137859, and the
+Trunk Merge Queue check
+137726606571. The merge stands
+verified: PR 36 merged
+2026-11-23T13:36:58Z as 36a870
+7dddc88d80b6dc6cf0cae8d3d5dcf9
+72ee, its tree 6b190e32a205468
+88e1673df80c774f6a490dade
+identical to the reviewed
+tree, single parent b4611e4e8e
+ecf66f2c2b42237a3683ab4c51d5c7
+, the main ref reading the
+merge commit and the README on
+main reading 27 of 100. The
+PR's census stands closed at
+this read: exactly 4 issue
+comments, no reviews, and no
+review comments, no replies
+anywhere. The Trunk note
+7099840034 stands at 113
+characters in its merged form;
+the owner's enqueue comment
+7102619266 stands at 12
+characters; the landing
+comment 7102856751 stands last
+at 1,092 characters. The bot
+shell 7099845976 stands read
+whole in its true final form
+at 11,105 characters, last
+edited 2026-11-23T11:42:24Z,
+exactly the landing
+verification's figure with no
+later re-render: its review
+info carries Run ID 68fa2be2-
+7bd3-4ab8-8fa1-cf42421020ac
+over the range b4611e4e8eecf66
+f2c2b42237a3683ab4c51d5c7 to
+the closure head f9ee65f154124
+cdc8e233649b3115834fe6f03d2,
+files selected for processing
+2, Merge Risk Minimal up to
+f9ee6 with coverage at source
+and covered commit both the
+closure head, kind reviewed,
+pre-merge checks 4 passed and
+0 failed, and no actionable
+comments generated; within the
+passed Title check's
+explanation the bot observes
+that the title's range is
+slightly narrower than the
+stated coverage, graded in
+full on the PR's body as
+accurate and the standing
+convention, the closure item
+standing outside the title
+range on every round's PR. The
+completed form the build lane
+read at 11,103 characters
+stands superseded by the re-
+render over the same head to
+11,105, as the body charged to
+this read-back. No formal
+review and no review comments
+stand on PR 36, so the bot's
+whole presence on the PR is
+the shell, and it stands read
+to its end; no acknowledgment
+traffic stands anywhere on the
+PR at this read, and the
+disposition is therefore not a
+merge-time read but this
+round's own end-to-end one.
+The Round 27 red team's six
+build limbs stand named here
+as charged to Round 28's red
+team, its first business: (1)
+the realistic reproduction at
+OR-115's contracted shape on a
+verified own build, in a
+process tree whose own probe
+verifies /dev/full genuine;
+(2) the cargo 69 re-run paired
+on both trees, with clippy and
+fmt; (3) battery 55 executed
+on both builds, carrying the
+stream and budget behavioral
+points at their contracted
+flips; (4) the pin suite 241
+executed on the red team's own
+extraction; (5) the golden's
+convert, digest, and verify
+executed, the digest identity
+alone contracted per OR-151;
+(6) the provenance clean
+rebuild, first build and clean
+rebuild md5 compared at the
+same target path. Each stood
+untested at that red team's
+hand under the hard write-
+fault wave its report
+documents auditable (burst
+probes at 0 of 20 across every
+directory probed, three
+successive extraction
+machineries landing zero new
+verified files, and the
+pipeline process reaped by a
+runtime restart); the charge
+stands recorded here so it
+stands on this round's record,
+and this build lane executes
+the same limbs at its own hand
+in this round's family. Post-
+landing material on PR 36
+beyond the landing comment:
+none stands at this read.
