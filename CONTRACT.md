@@ -8107,3 +8107,61 @@ planted control counted first
 at 1 em dash and 1 en dash,
 reads 0 and 0 over its 21
 files.
+
+OR-157. Round 26 closes. The
+charges from PR 32's landing
+comment stand dispositioned:
+OR-152, the realistic, stands
+carried on this round's own
+complete attempt record (three
+attempts under the round's
+driver, two of them composing
+the record whole at OR-115's
+shape with the twins identical
+on both sides and the third
+killed in the build slot's
+queue by a runtime restart,
+every attempt ended by the
+environment and none by a
+compared step) and is charged
+to Round 27 as first business
+for the eighth consecutive
+round; OR-153 reads PR 32 back
+whole over all three of its
+heads and grades the owner's
+patch, the gate, the shell's
+true final form, and the
+merge; OR-154 stands the base
+gate whole on the new base
+tree in a genuine device tree;
+OR-155 stands the verification
+family (the oracle and the pin
+verified blob for blob before
+reliance, the battery at 55
+cells and 0 splits on the base
+build, the pin suite at 241,
+the golden standing as its
+digest identity alone,
+provenance identical across a
+clean rebuild, checklist items
+3, 6, and 7 re-verified, the
+budget constants re-read, the
+codepoint scans at 0 and 0);
+OR-156 stands the closure gate
+whole on the extracted closure
+tree. OR-152 stands appended
+after OR-155 in this file, the
+order the work finished in, as
+its own text records. OR-51
+stands carried open by name as
+a named limitation, untouched.
+The README rounds line moves
+to 26 of 100 in this closure
+commit only. The round's
+attempt history, the fault
+waves, the restarts, the slot
+convoys, the refused writes,
+the pool's hard stop, and
+every failed or killed pass,
+stands disclosed whole on the
+pull request body.
