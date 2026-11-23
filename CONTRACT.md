@@ -8823,3 +8823,46 @@ in this round's family. Post-
 landing material on PR 36
 beyond the landing comment:
 none stands at this read.
+
+OR-167. The base gate stands
+executed whole fresh on the
+new base at this hand. The
+base tree 6b190e32a20546888e16
+73df80c774f6a490dade stands
+extracted at 21 blobs and
+verified blob for blob at this
+hand, 0 mismatches, before any
+reliance. The gate's own
+execution history stands
+complete on this record: the
+first execution's test leg
+died by signal while queued on
+the build slot (exit -15 with
+no output captured, clippy and
+fmt each at exit 0 within that
+same execution, the device
+verified genuine), the stage
+verdict stood BASEGATE_FAIL on
+that execution and the chain
+halted on it as a non-fault
+failure; the second execution
+was reaped entire by a runtime
+restart while its test leg sat
+queued on the slot; the third
+execution completed whole, and
+the verdict stands on it:
+BASEGATE_OK, cargo test at
+exit 0 with the store suite at
+50 passed and 0 failed and the
+streams suite at 19 passed and
+0 failed (the pair at 69),
+clippy at exit 0 under -D
+warnings, and fmt --check at
+exit 0, with /dev/full
+verified genuine in the
+chain's own process tree (char
+device 1,7, a write raising
+ENOSPC), so no cell of the
+suite stands excused on the
+device. The realistic stands
+at OR-165.
