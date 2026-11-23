@@ -8585,3 +8585,38 @@ contract in the round's
 standing push order; the
 numbering follows the round's
 plan, not the append order.
+
+OR-163. The closure gate
+stands executed on the tree
+after OR-162 (tree 19355bf06d1
+729abeddb67d60c57892dbbfefeec)
+, extracted through the API
+and verified blob for blob (21
+blobs, 0 mismatches), code
+byte-identical at the OR-159
+and closure heads, only
+CONTRACT.md differing between
+them, the README identical
+until the closure commit.
+Cargo build and the full suite
+on the closure build exit 0
+(69 tests, 50 store and 19
+streams, 0 failed). The
+differential battery on the
+closure build: 55 cells, 0
+splits, harness exit 0; the
+battery's first execution
+inside the gate process
+produced no output at all and
+exited 1 within the same
+write-fault wave that refused
+the gate's own result write,
+and the figure stands on the
+re-execution at this hand,
+which produced the full cell
+record. The codepoint scan
+over the closure-gate tree and
+over the OR-159 head's tree,
+the planted control counted
+first at 1 and 1: 21 blobs
+each at U+2014 0 and U+2013 0.
