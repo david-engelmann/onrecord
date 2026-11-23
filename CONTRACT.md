@@ -7831,3 +7831,34 @@ files support. Post-landing
 material on PR 32 beyond the
 landing comment: none stands
 at this read.
+
+OR-154. The base gate stands
+whole on the new base tree (7b
+c96f67e91ef56246768e1d56b5c0c5
+f88b00df, the Round 25 landing
+tree) as a full pass in a
+probe-verified genuine device
+tree: the gate's own process
+tree probed /dev/full before
+the run and found the genuine
+character device (char 1,7, a
+write raising ENOSPC), and in
+that tree cargo test exited 0
+with 69 passed and 0 failed
+(50 store, 19 streams), cargo
+clippy exited 0 with warnings
+denied, and cargo fmt --check
+exited 0, no failed cells. The
+cargo invocations ran offline
+against the local cargo cache,
+on the extracted base tree
+whose 21 blobs were verified
+hash for hash through the API
+before reliance. The gate ran
+on this round's second chain
+launch, the first having died
+in its window wait at the
+runtime restart at about
+21:01Z with nothing banked;
+the completed pass is the gate
+of record.
