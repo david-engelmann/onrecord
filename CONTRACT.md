@@ -8448,3 +8448,75 @@ second execution, run whole
 after the restart in the
 genuine tree of that
 execution's own probe.
+
+OR-162. The standing
+verification family stands re-
+executed whole on the Round 27
+base. The oracle stands
+extracted whole from this
+repo's own history at commit 0
+c25a9aa703b38c7579f7928d61443a
+881a62465 (tree f88eb75044f2e7
+51915ab9a825426177972f2b58),
+14 blobs verified blob for
+blob before reliance. The
+differential battery on the
+base build: 55 cells (39
+stream, 16 budget), 0 splits,
+harness exit 0. The pin suite
+over the flighttape pin at
+commit 74a83298aeb31c82e62b9fb
+0c613f5bc8600799e (tree afd4d7
+d13520411e003762548fc79082a1b9
+cf6e, 50 blobs extracted and
+verified): 241 passed, 0
+failed, exit 0. The golden
+through the pin's own CLI: the
+pin fixture converted, tape
+1,663 bytes, digest cc9c4e01fc
+a418dcc33114caf75fae1f6bf0d401
+f297b5d61f6776903fa955a3 in
+the output, digest exit 0,
+verify exit 0; the identity
+claimed is the digest alone
+per OR-151, no fixture byte-
+identity claimed. Provenance:
+the base binary's md5 0813ea05
+f0d89c99faab710e56c988f1
+stands identical across a
+clean rebuild at the same
+target path, the claim build-
+path scoped as contracted.
+Budget constants at
+src/store.rs lines 30 to 31
+read BUDGET_READ (990, 988)
+and BUDGET_READ_NARROW (989,
+987). The codepoint scan over
+the base tree through the API,
+the planted control counted
+first at 1 em dash and 1 en
+dash: 21 blobs at U+2014 0 and
+U+2013 0.
+
+Checklist item 3 stands re-
+verified PASSING outright at
+this hand: the repo
+description, the README lede,
+and the Cargo.toml package
+description stand byte-
+identical, read on the
+extracted base tree and
+against the repo surface.
+Checklist item 6: cargo
+install --offline --locked
+into a scratch root installed
+the binary at 873,584 bytes.
+Checklist item 7: the README
+quickstart run from the
+installed binary printed
+claim-2946b699934e0f6b on the
+add; the get view stands at
+719 bytes, byte-identical to
+the README's printed view;
+check reported the record is
+sound.
