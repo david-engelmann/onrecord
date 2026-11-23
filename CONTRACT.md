@@ -8620,3 +8620,47 @@ over the OR-159 head's tree,
 the planted control counted
 first at 1 and 1: 21 blobs
 each at U+2014 0 and U+2013 0.
+
+OR-164. Round 27 closes. The
+round's items stand at OR-159
+to OR-164 in the Status range.
+The realistic differential at
+OR-115's contracted shape
+stands PASSED at OR-159 on one
+completed attempt (3,100
+cells, 0 splits), ending the
+run of seven consecutive
+unpassed rounds. The standing
+family stands verified whole
+on the new base at OR-161 and
+OR-162: base gate 69 paired in
+a genuine /dev/full tree,
+battery 55 and 0 on the base
+build, pin suite 241, the
+golden as the digest identity
+alone, oracle whole at 14
+blobs, budget constants (990,
+988) and (989, 987),
+provenance reproducible, scans
+0 and 0, and the storefront
+passing outright at item 3
+with items 6 and 7 re-
+verified. PR 34 stands read
+back whole at OR-160, its
+repair head's tree the round's
+base, the CodeRabbit review
+and its comment read to their
+ends, and the Round 26 red
+team's four untested build
+limbs named there as charged
+to this round's red team. The
+closure gate stands executed
+at OR-163 on the tree after
+OR-162, the battery at 55
+cells and 0 splits on the
+closure build. The README
+rounds line moves from 26 to
+27 of 100 in this closure
+commit only. OR-51 stands
+carried open, untouched, into
+Round 28.
