@@ -7646,3 +7646,188 @@ implicated by this narrowing.
 This record stands outside the
 Status range, which continues
 to run through OR-149.
+
+OR-153. PR 32 stands read back
+whole through the API over all
+three of its heads: the
+closure head d2d877d35d48deb44
+87d82b3f4a825fa8a24116d (tree 
+b1a81cb03c480303dce551e8047583
+c367f78b28, contract 224,193
+bytes), the repair head 718e7d
+30803e762d428dd2c4272b03e3e252
+bf49 (tree 61060106b5fbef38eef
+f8f6c739725e2cfd152aa,
+contract 226,836 bytes), and
+the second repair head 2a0f7f7
+a0e29754612cb3d20d5aeb23a6df17
+b64 (tree 7bc96f67e91ef5624676
+8e1d56b5c0c5f88b00df, contract
+228,632 bytes), the title
+"refine: onrecord Round 25,
+OR-144 to OR-148" at 43
+characters, items OR-144 to
+OR-149 in the Status range and
+the repair records OR-150 and
+OR-151 standing outside it.
+The body as owner-patched
+stands at 14,297 characters,
+read whole at this hand; the
+bot's release-notes appendix
+stands preserved at offset
+13,703 at 594 characters, its
+three bullets graded correct,
+the third (the limits of the
+available evidence on an
+attempt's exit cause, the
+first test failure's cause,
+and the pin fixture's byte
+identity) matching exactly
+what OR-150 and OR-151 do and
+claiming nothing beyond it.
+The gate stands graded in the
+open: the standards axis
+approved the build outright;
+the spec axis returned REPAIR
+on two Minors, discharged by
+OR-150 with delta reviews PASS
+and APPROVE; the red team
+returned REPAIR on three
+Minors, its first two the same
+narrowings and its third new,
+discharged by OR-150 and
+OR-151 with delta reviews PASS
+and APPROVE. The third
+finding's attribution stands
+corrected on the record: the
+finding named OR-146, the
+golden clause it quotes stands
+in OR-147, verified at the
+repair lane's hand and at both
+delta reviews' hands, and
+OR-151 narrows the clause
+where it stands and says so on
+its face. Hosted CI stands
+verified at this hand on all
+three heads, each in both runs
+completed success: closure
+push 45049193131 and
+pull_request 45049431261;
+repair push 45052065829 and
+pull_request 45052070925;
+second repair push 45064838165
+and pull_request 45064844160.
+The merge stands verified: PR
+32 merged 2026-11-22T20:24:02Z
+as e988371a1a62a5c2a747b40a1e5
+43077d3fcae39, its tree 7bc96f
+67e91ef56246768e1d56b5c0c5f88b
+00df identical to the reviewed
+second repair tree, single
+parent 99c796baa207843979b726a
+4ed5064de847346fc, the main
+ref reading the merge commit
+and the README on main reading
+25 of 100. The PR's census
+stands closed at this read:
+exactly 4 issue comments, 1
+review, and 2 review comments,
+no replies anywhere. The Trunk
+note 7082836621 stands at 113
+characters in its merged form;
+the owner's enqueue comment
+7085108126 stands at 12
+characters; the landing
+comment 7085272750 stands last
+at 1,289 characters. The bot
+shell 7082839007 stands read
+whole in its true final form
+at 11,413 characters, last
+edited 2026-11-22T20:12:20Z,
+exactly the landing
+verification's figure with no
+later re-render: its recent
+review info carries Run ID d8c
+642d1-5552-4373-922e-
+834a34153de5 over the range d2
+d877d35d48deb4487d82b3f4a825fa
+8a24116d to 2a0f7f7a0e29754612
+cb3d20d5aeb23a6df17b64, its
+recent review status reading
+that no actionable comments
+were generated in the recent
+review, Merge Risk Minimal up
+to 2a0f7 with coverage at
+source and covered commit both
+the second repair head, kind
+reviewed, and pre-merge checks
+4 passed and 0 failed; the
+completed form the build lane
+read at 8,553 characters
+stands superseded by the re-
+renders over the two repair
+heads, as the body charged to
+this read-back. Review
+6013508025 (COMMENTED,
+submitted 2026-11-22T17:29:03Z
+on the closure head, Run ID 37
+c77485-68ad-4cf7-b4e9-
+2884f7e2dd71 in its review
+info) stands read whole at
+4,166 characters, its 2
+actionable comments graded
+standing in part by the build
+lane and discharged by OR-150
+at the owner's gate. Its
+review comments stand read
+whole to their ends:
+4659165095 at 2,956 characters
+(CONTRACT.md line 6961, the
+attempt 6 exit qualification)
+and 4659165101 at 2,000
+characters (line 7306, the
+first test failure's
+attribution), each carrying
+the bot's own appended line
+"Addressed in commit 718e7d3"
+(updated
+2026-11-22T17:54:5xZ), no
+replies to either, and no
+acknowledgment traffic beyond
+those lines anywhere on the PR
+at this read; the disposition
+is therefore not a merge-time
+read but this round's own end-
+to-end one. The Round 25 red
+team's probe-gated standing
+runner stands dispositioned:
+left in its scratch
+(realistic_loop.py, process
+62358 from 2026-11-22T19:43Z)
+to run the realistic once
+three consecutive fresh-file
+probes passed, it never fired;
+its driver's attempts file
+records two attempt starts
+(19:18:07Z and 19:26:37Z, the
+device GENUINE at both, their
+log and result files at 0
+bytes), its probe files end at
+21:00:58Z, no process stands
+at this read, its result file
+stands at 0 bytes, and no
+marker file stands. No result
+landed from it, and no cells
+are claimed for it anywhere.
+Its ending is attributed on
+the retained evidence alone:
+the runtime restart at about
+21:01Z, which also killed this
+lane's first chain launch in
+its window wait, is the last
+event its probes precede and
+the only ending the surviving
+files support. Post-landing
+material on PR 32 beyond the
+landing comment: none stands
+at this read.
