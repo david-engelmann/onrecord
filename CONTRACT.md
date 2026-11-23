@@ -7942,3 +7942,121 @@ base tree's 21 blobs scan at 0
 and 0 through the API; the
 closure tree's scan stands in
 OR-156.
+
+OR-152. The realistic pass,
+charged forward as this
+round's first business for the
+seventh consecutive round
+(landing comment 7085272750 on
+PR 32), stands carried on this
+round's own complete attempt
+record, and the charge carries
+to Round 27 as first business
+for the eighth consecutive
+round. Three attempts ran
+under the round's driver,
+numbered 1, 3, and 4 by the
+driver's own counter, which
+counts each banked line of the
+attempts file as an attempt
+line, so no attempt 2 ever
+existed. A first driver launch
+before them died at its first
+append, the write refused with
+PermissionError, and banked no
+attempt at all; it stands in
+the pull request body's
+attempt history and is counted
+nowhere else. Every attempt
+probed /dev/full in its own
+tree before starting and found
+the genuine character device
+(char 1,7, a write raising
+ENOSPC). Every attempt ran on
+the base build (binary md5 bef
+537f5bbc10874bfe1f905827ab547,
+the provenance-verified build
+of OR-155) against the final
+oracle tree verified blob for
+blob before reliance. Attempt
+1 (start 2026-11-22T23:09:40Z,
+end 2026-11-23T00:20:24Z,
+driver exit 1) composed the
+record whole: its twin records
+stand at 2,600 lines and
+652,833 bytes each with md5 6c
+ba153da883f7b76ad69373719b72ac
+on both sides, read at this
+lane's own hand; that is the
+records' agreement, stated as
+such. The harness then exited
+about a minute after the
+record completed, before phase
+4's first cell directory was
+created, and its log stands at
+0 bytes, its own writes
+refused across the run, so
+which phases it completed past
+the record's composition
+cannot be told from what
+survives and none is claimed;
+zero cells are counted for it.
+Attempt 3 (start
+2026-11-23T00:37:23Z) queued
+behind the sibling lanes' slot
+holders for about 35 minutes
+and was killed by a runtime
+restart at about 01:11Z before
+it ever acquired the slot; it
+created no temp roots, its
+driver died with it and banked
+no end line, and zero cells
+are claimed for it. Attempt 4
+(start 2026-11-23T01:12:53Z,
+end 2026-11-23T02:05:15Z,
+driver exit 1) composed the
+same record whole: its twins
+stand at 2,600 lines and
+652,833 bytes with the same
+md5 on both sides, byte-
+identical to attempt 1's
+record; the harness then
+exited about a minute after
+the record completed, before
+phase 4's first cell directory
+was created, and its log
+stands at 0 bytes on the same
+terms as attempt 1's, so its
+phases past the composition
+likewise cannot be told and
+none is claimed; zero cells
+are counted for it. No split
+step stands recorded in any
+surviving record of any
+attempt. The ground for the
+carry: a complete run needs
+about two uninterrupted hours
+on this box (phase 1 alone
+took about 62 minutes in
+attempt 1 and about 45 minutes
+in attempt 4 by the file
+times, under load), and every
+attempt was ended by the
+environment, one by a runtime
+restart in the slot queue and
+two in the span just past the
+record's composition with
+their accounting refused; no
+attempt was ended by a
+compared step's disagreement
+in anything that survives. The
+pass is therefore not
+contracted, and it is charged
+forward whole. This item
+stands appended after OR-155
+in the contract file: the
+realistic's last attempt ended
+after the OR-153 to OR-155
+families had landed, and the
+append-only record keeps the
+order the work finished in.
