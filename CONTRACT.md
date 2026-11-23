@@ -8520,3 +8520,68 @@ add; the get view stands at
 the README's printed view;
 check reported the record is
 sound.
+
+OR-159. The realistic
+differential at OR-115's
+contracted shape stands PASSED
+at this build lane's hand, the
+eighth consecutive round at
+that shape and the first
+completion after the seven
+consecutive unpassed rounds
+the contract records through
+OR-152: one attempt, completed
+whole, its record retained at
+every phase. Attempt 1 (driver
+start 2026-11-23T09:31:27Z,
+end 2026-11-23T10:28:20Z,
+driver exit 0) ran on the
+provenance-verified base build
+of OR-161 and OR-162, in a
+process tree whose own probe
+verified /dev/full genuine
+before the harness started
+(the node a character device
+(1, 7) whose write raises
+ENOSPC), the harness under the
+build slot for the run's whole
+lifetime, its one new temp
+root or24-real-dm4p6hrq
+retained. The attempt's log
+stands at 644 bytes and
+carries the run's whole
+accounting: phase 1 composed
+the record whole (2,600 adds,
+416 interleaved read steps,
+the record standing at 2,600
+lines and 652,833 bytes),
+phase 2 done, phase 3 done,
+phase 4 done with its steps
+agreeing on both sides, and
+the harness's completed final
+accounting REALISTIC cells
+3100, splits 0, harness exit
+0. The composed record stands
+measured at this hand on both
+sides of the retained temp
+root at 2,600 lines and
+652,833 bytes, md5 6cba153da88
+3f7b76ad69373719b72ac on the
+Rust record and on the Python
+record, byte-identical across
+the two implementations and
+identical to the record Round
+26's attempts composed. No
+split step stands recorded
+anywhere in the attempt's
+surviving record, and the
+split count is zero. The 3,100
+cells are counted on this
+completed attempt alone; no
+other attempt was launched
+this round. This item stands
+appended after OR-162 in the
+contract in the round's
+standing push order; the
+numbering follows the round's
+plan, not the append order.
