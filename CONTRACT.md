@@ -8409,3 +8409,42 @@ round's family. Post-landing
 material on PR 34 beyond the
 landing comment: none stands
 at this read.
+
+OR-161. The Round 27 base gate
+stands executed whole on the
+merged Round 26 base (main at 
+b4611e4e8eecf66f2c2b42237a3683
+ab4c51d5c7, tree 3bcfbebf388cb
+9a83ec442e33ef26cdbc81c38b2)
+in a process tree whose own
+probe verified /dev/full
+genuine before the suite ran:
+the node a character device
+(1, 7) whose write raises
+ENOSPC, no environment
+qualification standing. The
+base tree stands extracted
+through the API and verified
+blob for blob before any
+build: 21 blobs, 0 mismatches,
+contract 245,760 bytes at blob
+6ed95d24dba461b2957be5cb211064
+da8a8a5b1f. Cargo test
+--offline --locked on the base
+build: 69 tests passed and 0
+failed, 50 in the store suite
+and 19 in the streams suite,
+exit 0; clippy --offline
+--locked --all-targets with -D
+warnings exits 0 and cargo fmt
+--check exits 0. The gate's
+first execution passed the
+test leg whole (50 and 19, 0
+failed) and was taken by a
+runtime restart in the stage's
+later slot queues; the verdict
+above stands on the gate's
+second execution, run whole
+after the restart in the
+genuine tree of that
+execution's own probe.
