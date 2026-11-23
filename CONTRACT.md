@@ -9068,3 +9068,13 @@ each read 21 blobs at U+2014 0
 and U+2013 0. Checklist item 3
 stands passing outright,
 graded at OR-168.
+
+OR-170. Closure. The Status
+range above now reads OR-1 to
+OR-170. The README rounds line
+moves from 27 of 100 to 28 of
+100 in this commit alone.
+OR-51, the Mach-O constructor
+arm, stands carried open by
+name, untouched again this
+round.
