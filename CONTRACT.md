@@ -9412,3 +9412,97 @@ get view stands byte-identical
 to the README's printed view
 at 719 bytes, and check prints
 "the record is sound".
+
+OR-175. The realistic pass at
+OR-115's contracted shape
+stands PASSED at this build
+lane's hand, on the second of
+two attempts, the first having
+died in phase 4 on the write
+fault with its composition
+standing whole; the attempt
+history stands whole. Attempt
+2 (driver start
+2026-11-24T03:31:25Z, end
+2026-11-24T05:27:49Z, driver
+exit 0) ran on the verified
+base build of OR-173 with the
+oracle as verified at OR-174,
+in a process tree whose own
+probe verified /dev/full
+genuine before the harness
+started (char device 1,7, a
+write raising ENOSPC), the
+harness under the build slot
+for the run's whole lifetime,
+its one new temp root
+or24-real-tuomh561 retained.
+The attempt's log carries the
+run's whole accounting: phase
+1 composed the record whole
+(2,600 adds, 416 interleaved
+read steps, the record
+standing at 2,600 lines and
+652,833 bytes), phase 2 done,
+phase 3 done, phase 4 done,
+and the harness's completed
+final accounting REALISTIC
+cells 3100, splits 0, harness
+exit 0. The composed record
+stands measured at this hand
+on both sides of the retained
+temp root at 2,600 lines and
+652,833 bytes, md5 6cba153da88
+3f7b76ad69373719b72ac on the
+Rust record and on the Python
+record, byte-identical across
+the two implementations,
+OR-115's contracted composed-
+record md5 reproduced byte for
+byte. No split step stands
+recorded anywhere in the
+attempt's record, and the
+split count is zero. The 3,100
+cells are counted on this
+completed attempt alone.
+Attempt 1 (driver start
+2026-11-24T02:07:07Z, the
+device verified genuine in its
+own tree) completed phases 1
+to 3: its record stands
+composed whole in its retained
+temp root or24-real-kkujifbz
+at 2,600 lines and 652,833
+bytes, the pair at md5 6cba153
+da883f7b76ad69373719b72ac on
+both sides, verified at this
+hand in the retained root. In
+phase 4 the harness died on
+the box write fault, a
+PermissionError (Errno 1,
+Operation not permitted)
+raised on a phase-4 get cell's
+seed write (realistic24.py
+line 273 in pcell), harness
+exit 1, the final accounting
+never printed; the driver's
+own result file stands at 0
+bytes and its ledger end line
+never landed, a runtime
+restart taking the driver in
+the same window. Under the
+contracted standard an attempt
+counts on the harness's
+completed final accounting
+alone, so attempt 1 counts
+nowhere despite its
+composition and its first
+three phases standing whole.
+Round 28's build attempts did
+not count, and the Round 28
+red team's completed
+reproduction stands as that
+axis's own evidence; this
+round's count is this build
+lane's own, on attempt 2
+alone.
