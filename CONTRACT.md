@@ -9595,3 +9595,211 @@ OR-51, the Mach-O constructor
 arm, stands carried open by
 name, untouched again this
 round.
+
+OR-178. PR 40 read back whole
+at this hand. PR 40 stands
+closed and merged: opened from
+refine/or-round29 on base e0ad
+9360dac94b88020b309d7023475835
+56229b, six commits (44263ecc,
+tree 53c509ec, contract
+274,226 bytes; c79b3a3e, tree
+63e51924, contract 274,950;
+34008166, tree 76e66c9d,
+contract 277,354; 3b9f0ad0,
+tree 51d45bd3, contract
+279,911; 6563bf8b, tree
+1d57f346, contract 282,101;
+cc41a67c, tree b246e994,
+contract 282,339), merged by
+the Trunk merge queue on
+2026-11-24T19:09:02Z as c76093
+03c12c8d6c637963f8d5bba687a1d0
+b531, a single-parent squash
+commit whose tree b246e9948905
+cb53fe7a93085b68e0402ee1891b
+is identical to the reviewed
+closure tree. Main stands at
+the merge commit, CONTRACT.md
+on main measures 282,339
+bytes, the Status range reads
+OR-1 to OR-177 with OR-177
+standing as the Round 29
+closure record inside the
+range as its last item, and
+the README rounds line reads
+29 of 100. The body stands in
+its final form at 17,034
+chars, the build lane's body
+at 13,415 with the owner's
+gate record appended after it
+standing at its end; no
+release-notes appendix stands
+in the body, onrecord bodies
+carrying none by standing
+shape, the absence measured in
+the body and in the shell at
+the last round's hand and
+confirmed at this one. The
+final census of PR 40 stands
+at 4 issue comments, 0
+reviews, and 0 review
+comments: the Trunk note
+7138052921 at 113 chars in its
+merged form, last edited
+2026-11-24T19:09:05Z; the bot
+shell 7138057987; the owner's
+enqueue comment 7141480986 (12
+chars, the trunk merge
+command) of
+2026-11-24T19:01:21Z; and the
+owner's landing comment
+7146426794 of
+2026-11-24T22:36:10Z at 1,735
+chars standing last on the PR.
+The owner's brief for this
+round named the census at 3
+issue comments; the live
+census reads 4, the same four
+named here, and the correction
+stands recorded. The Trunk
+queue PR 41 stands closed
+unmerged. The Round 29 gate is
+graded in the open: spec
+fidelity PASS with no findings
+(its report at 17,455 chars;
+one correction to the owner's
+own brief stands recorded in
+its report and adopted in the
+gate record, that OR-177 is
+the closure record inside the
+Status range, the range
+reading OR-1 to OR-177 with
+OR-177 as its last item,
+rather than a repair record
+outside a range standing at
+OR-1 to OR-176; one
+observation O-1, no text owed,
+on the shell's standing re-
+render); standards APPROVE
+with no findings (its report
+at 8,420 chars); red team
+APPROVE with no findings (its
+report at 18,704 chars,
+completed across two seats,
+the first seat ending without
+a verdict after banking its
+skeleton, manifests, read-
+backs, and extractions, all
+verified at the completion
+seat's own hand before
+reliance, the two-seat history
+disclosed in its report). The
+gate stood clean on findings
+and the landing comment
+records it so. THREE LIMBS
+STAND UNTESTED AT THE RED
+TEAM'S HAND, DISCLOSED IN FULL
+IN ITS REPORT AND CHARGED
+FORWARD TO THIS ROUND'S RED
+TEAM BY NAME, environmental
+and not evidentiary, and they
+are that axis's first
+business, not this build
+lane's: the device-dependent
+cells of the streams suite and
+the battery (the /dev/full
+node stood as a regular file
+at every gate probe in its
+tree; its test leg reproduced
+the exact banked non-genuine
+shape, store 50 passed with
+streams 8 passed and 11 failed
+at exactly those cells; a
+genuine window opened at
+2026-11-24T17:59Z in its own
+tree and closed again while
+its driver queued behind live
+sibling holds; the lane's
+genuine-tree evidence stands
+in its two closure executions,
+audited whole at its hand);
+the provenance pair at its own
+target path (three seatings
+attempted, one killed mid-
+compile by a box restart, one
+producing only empty logs
+under a write-fault wave, one
+stood down at its bounded
+wait; the lane's pair standing
+as the lane's evidence, build-
+path scoped); and items 6 and
+7 at its hand on the same
+seatings (the lane's banked
+execution standing as the
+lane's evidence, the installed
+code byte-identical to the
+head's code). The CodeRabbit
+shell 7138057987 stands
+settled at its true final form
+at this hand: 11,739 chars,
+last edited
+2026-11-24T19:01:22Z, the
+figure at the owner's landing
+read confirmed exact with no
+later re-render standing
+(11,735 at the resume lane's
+patch read, 11,737 at the
+owner's and the spec axis's
+reads, the plus-two re-renders
+the standing convention). Its
+recent-review panel reads that
+no actionable comments were
+generated in the recent
+review; its Run ID stands fcfb
+1612-689b-436d-9735-
+8aed40ea17ea over the range
+e0ad9360 to cc41a67c with
+files selected for processing
+at 2, CONTRACT.md and
+README.md; its Merge Risk
+panel reads Minimal up to
+cc41a with the coverage record
+naming source and covered
+commit both as the closure
+head cc41a67c, kind reviewed;
+its pre-merge checks stand at
+4 passed, the Title check
+carrying the observation that
+the title names the round and
+the work items but does not
+say the change is a contract
+record update or a counter
+change, graded on PR 40's body
+face as accurate and as the
+standing convention, the title
+being the round's label in the
+form every round carries, no
+change owed; the review used
+the included allowance, 0
+remaining after it. PR 40's
+title stands at 43 chars in
+the form this round's PR title
+follows. Hosted CI stands
+verified at this hand on the
+closure head: the push run
+45439656673, the pull_request
+run 45440019864, and the
+dynamic run 45440010480 each
+completed success, the body's
+recorded gate checks (push
+138606910838, pull_request
+138608212132, CodeRabbit
+138608348793) standing as the
+gate's own record. Checklist
+item 3 stands passing
+outright, its repository-
+description home read live at
+this hand byte-identical to
+the README lede, the three
+homes graded whole at OR-180.
