@@ -9136,3 +9136,165 @@ correction. This record stands
 outside the Status range,
 which continues to run through
 OR-170.
+
+OR-172. PR 38 stands read back
+whole through the API over its
+closure head 7f931afa94ea4fc02
+a38a1ce4de6d4aa0f793c32 (tree 
+f8756bf642dfa4a99700b34ebe6df0
+7e34b8292f, contract 268,157
+bytes) and its repair head 59a
+9ddf2d2f38e56cd9f89900c5ae779b
+6d1b83f (tree e430d3fb07395e96
+051b79c6d1ac4271e379ac02,
+contract 269,745 bytes), the
+title "refine: onrecord Round
+28, OR-165 to OR-169" at 43
+characters, items OR-165 to
+OR-170 in the Status range and
+repair record OR-171 standing
+appended outside it. The body
+stands at 12,186 characters in
+the owner's patched form, read
+whole at this hand; the
+release-notes appendix stands
+in it, measured from its
+opening marker at offset
+10,688 spanning 420 characters
+through its end marker,
+preserved byte for byte
+through the owner's patch,
+with the owner's gate record
+appended after it. The gate
+stands graded in the open:
+spec REPAIR on one Minor, F-1,
+OR-169's closure-gate
+attribution; standards
+APPROVE, no findings; red team
+APPROVE, no findings and no
+limb untested, the six build
+limbs charged forward from
+Round 27 all executed at that
+axis's hand, including the
+realistic's completed
+reproduction at 3,100 cells
+and 0 splits with its log
+whole, that count the axis's
+own and standing in no
+contract item. F-1 stands
+discharged by repair record
+OR-171, appended with OR-169
+unrewritten, both delta
+reviews clean (spec delta
+PASS, standards delta APPROVE,
+each measured at its own
+hand), and by the owner's
+patch correcting the body's
+parallel OR-169 paragraph.
+Hosted CI stands verified at
+this hand on both heads, each
+completed success: on the
+closure head, push run
+45277311481 (gate check
+138052331565) and pull_request
+run 45278279596 (gate check
+138055674661) with the
+CodeRabbit check 138055785857;
+on the repair head, push run
+45303473292 and pull_request
+run 45303479847, gate checks
+138141474907 and 138141494225,
+the CodeRabbit check
+138141587641, and the Trunk
+Merge Queue check
+138143621762. The merge stands
+verified: PR 38 merged
+2026-11-24T01:25:54Z as e0ad93
+60dac94b88020b309d702347583556
+229b, its tree e430d3fb07395e9
+6051b79c6d1ac4271e379ac02
+identical to the reviewed
+repair tree, single parent 36a
+8707dddc88d80b6dc6cf0cae8d3d5d
+cf972ee, the main ref reading
+the merge commit and the
+README on main reading 28 of
+100. The PR's census stands
+closed at this read: exactly 4
+issue comments, no reviews,
+and no review comments, no
+replies anywhere. The Trunk
+note 7115572912 stands at 113
+characters in its merged form;
+the owner's enqueue comment
+7118974561 stands at 12
+characters; the landing
+comment 7119467942 stands last
+at 1,565 characters. The bot
+shell 7115577082 stands read
+whole in its true final form
+at 11,732 characters, last
+edited 2026-11-24T01:18:35Z,
+exactly the landing
+verification's figure with no
+later re-render: its recent
+review info carries Run ID 9ba
+ea774-8eaf-476b-b601-
+a65d57d7c35c over the range 7f
+931afa94ea4fc02a38a1ce4de6d4aa
+0f793c32 to the repair head 59
+a9ddf2d2f38e56cd9f89900c5ae779
+b6d1b83f, files selected for
+processing 1 (CONTRACT.md)
+with one further file skipped
+as similar to a previous
+change, Merge Risk Minimal up
+to 59a9d with coverage at
+source and covered commit both
+the repair head, kind
+reviewed, pre-merge checks 4
+passed, and no actionable
+comments generated in the
+recent review. Within the
+passed Title check's full-
+details explanation the bot
+observes that the title does
+not mention the README or
+CONTRACT.md updates or the
+OR-170 and OR-171 records but
+captures the main change,
+graded here in full as
+accurate about the title's
+shape and no change owed: that
+shape is the standing
+convention, the title carrying
+the round and its item range
+with the closure item and any
+repair record outside the
+range, and the check passed.
+The completed form the build
+lane read at the body patch
+(11,059 characters, Run ID
+55f1d1cb-
+dabe-4177-96fc-24578d50c60e
+over the base to the closure
+head) stands superseded by the
+re-render over the repair head
+to 11,732, as the body charged
+to this read-back, and the
+landing verification's figure
+stands confirmed exact against
+it. No formal review and no
+review comments stand on PR
+38, so the bot's whole
+presence on the PR is the
+shell, and it stands read to
+its end; no acknowledgment
+traffic stands anywhere on the
+PR at this read, and the
+disposition is therefore not a
+merge-time read but this
+round's own end-to-end one.
+Post-landing material on PR 38
+beyond the landing comment:
+none stands at this read.
