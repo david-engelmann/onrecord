@@ -9078,3 +9078,61 @@ OR-51, the Mach-O constructor
 arm, stands carried open by
 name, untouched again this
 round.
+
+OR-171. Repair record,
+appended after the Round 28
+gate reviews of the closure
+head, answering the spec
+axis's finding F-1 (Minor)
+against OR-169, with OR-169
+unrewritten. One claim stands
+corrected by this record:
+OR-169's head claim names the
+final tree for the closure
+gate and states only the
+contract differing. The
+closure gate ran whole on the
+tree after OR-168's push, b37c
+71cf5cd979b2cf527ff0e4c9e3a998
+de10ce, extracted through the
+API and verified blob for blob
+at 21 blobs and 0 mismatches
+on its second execution, its
+first execution having died at
+extraction in the hard write-
+fault wave, as OR-169 itself
+records. That tree differs
+from OR-169's head in
+CONTRACT.md alone, so the
+difference clause stood exact
+at that head; it differs from
+the final head in CONTRACT.md
+and README.md, the README
+having moved in the closure
+commit after the gate ran.
+Every code blob stands byte-
+identical between the gated
+tree and the head throughout,
+and no executed figure
+changes: every figure the gate
+produced stands as executed on
+b37c71cf. The gate's standing
+at this repair: the spec axis
+returned REPAIR on this
+finding alone, the standards
+axis APPROVE with no findings,
+and the red team APPROVE with
+every limb executed and none
+untested, including the
+realistic's completed
+reproduction at its own hand
+at 3,100 cells and 0 splits,
+counted in no contract item.
+OR-169 stands unrewritten in
+every other particular, and
+nothing else in this round's
+record is implicated by this
+correction. This record stands
+outside the Status range,
+which continues to run through
+OR-170.
