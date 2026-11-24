@@ -9298,3 +9298,30 @@ round's own end-to-end one.
 Post-landing material on PR 38
 beyond the landing comment:
 none stands at this read.
+
+OR-173. The base gate stands
+executed whole fresh on the
+new base at this hand. The
+base tree e430d3fb07395e96051b
+79c6d1ac4271e379ac02 stands
+extracted at 21 blobs and
+verified blob for blob at this
+hand, 0 mismatches, before any
+reliance. The gate completed
+whole on its first execution,
+and the verdict stands on it:
+BASEGATE_OK, cargo test at
+exit 0 with the store suite at
+50 passed and 0 failed and the
+streams suite at 19 passed and
+0 failed (the pair at 69),
+clippy at exit 0 under -D
+warnings, and fmt --check at
+exit 0, with /dev/full
+verified genuine in the
+chain's own process tree (char
+device 1,7, a write raising
+ENOSPC), so no cell of the
+suite stands excused on the
+device. The realistic stands
+at OR-175.
