@@ -9803,3 +9803,95 @@ description home read live at
 this hand byte-identical to
 the README lede, the three
 homes graded whole at OR-180.
+
+OR-179. The base gate stands
+executed whole fresh on the
+new base at this hand. The
+base tree b246e9948905cb53fe7a
+93085b68e0402ee1891b, the
+Round 29 landing tree, stands
+extracted at 21 blobs and
+verified blob for blob, 0
+mismatches, before any
+reliance. The stage's attempt
+history stands whole across
+this round's three lanes. The
+build lane's four chain
+launches stand first: the
+first died mid-extraction to a
+runtime restart; the second
+completed the extraction and
+died in the build slot's queue
+to a second restart; the third
+ran its test leg at 03:24Z in
+the non-genuine shape (the
+store suite at 50 passed, the
+streams suite at 8 passed and
+11 failed at exactly the full-
+device cells, /dev/full having
+flipped to a regular file mid-
+run after standing genuine at
+the lane's own probe) and its
+clippy leg at exit 101 on the
+box write fault before a third
+restart killed it; the fourth
+ran its test leg at 05:12Z in
+the same non-genuine shape and
+ended with its clippy leg
+still queued behind a sibling
+gate hold, no verdict banked;
+none of the four counts. The
+first completion lane
+relaunched the chain at
+07:36:00Z; its test leg was
+killed by SIGKILL at
+07:41:36Z, counted nowhere,
+and its clippy leg queued two
+and a half hours behind the
+secondtake Round 41 lane's
+deliberate closure gate hold
+without moving. On the
+disclosed route change to this
+lane's own lock, the IP-130
+form on the muda Round 30
+precedent, the completion lane
+withdrew its own queued legs
+unrun and relaunched on the
+lane lock; two launches there
+halted with their test legs
+failing 40 store cells on
+EPERM writes into a window
+narrowed to single writes
+(10:29:37Z and 10:56:02Z),
+each counted nowhere, and a
+vigil probing the window once
+a minute at the store suite's
+own shape relaunched the chain
+on three consecutive bulk
+passes. The first completion
+lane then errored out on a
+transport failure at
+2026-11-25T12:53Z; a second
+completion lane adopted the
+vigil's standing relaunch and
+watched it complete. The
+verdict stands on that
+execution alone (chain start
+2026-11-25T12:52:36Z, the
+stage banked at 12:54:00Z):
+BASEGATE_OK, cargo test at
+exit 0 with the store suite at
+50 passed and 0 failed and the
+streams suite at 19 passed and
+0 failed (the pair at 69),
+clippy at exit 0 under -D
+warnings, and fmt --check at
+exit 0, with /dev/full
+verified genuine in the
+chain's own process tree (char
+device 1,7, a write raising
+ENOSPC) and the failed-cells
+list empty, so no cell of the
+suite stands excused on the
+device. The realistic stands
+at OR-181.
