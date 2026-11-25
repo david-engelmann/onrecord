@@ -9984,3 +9984,91 @@ get view stands byte-identical
 to the README's printed view
 at 719 bytes, and check prints
 "the record is sound".
+
+OR-181. The realistic pass at
+OR-115's contracted shape
+stands PASSED at this hand, on
+the second of two attempts,
+the first having composed its
+record whole and lost its
+accounting to a runtime
+restart; the attempt history
+stands whole. Attempt 2
+(driver start
+2026-11-25T15:08:17Z, end
+2026-11-25T16:24:59Z, driver
+exit 0) ran on the verified
+base build of OR-179 with the
+oracle as verified at OR-180,
+in a process tree whose own
+probe verified /dev/full
+genuine before the harness
+started (char device 1,7, a
+write raising ENOSPC), the
+harness under this lane's own
+lock for the run's whole
+lifetime on the route change
+disclosed at OR-179, its one
+new temp root or24-real-
+crv4vieq retained. The
+attempt's log carries the
+run's whole accounting: phase
+1 composed the record whole
+(2,600 adds, 416 interleaved
+read steps, the record
+standing at 2,600 lines and
+652,833 bytes), phase 2 done,
+phase 3 done, phase 4 done
+with its full-device steps in
+agreement on both sides, and
+the harness's completed final
+accounting REALISTIC cells
+3100, splits 0, harness exit
+0. The composed record stands
+measured at this hand on both
+sides of the retained temp
+root at 2,600 lines and
+652,833 bytes, md5 6cba153da88
+3f7b76ad69373719b72ac on the
+Rust record and on the Python
+record, byte-identical across
+the two implementations,
+OR-115's contracted composed-
+record md5 reproduced byte for
+byte. No split step stands
+recorded anywhere in the
+attempt's record, and the
+split count is zero. The 3,100
+cells are counted on this
+completed attempt alone.
+Attempt 1 (driver start
+2026-11-25T13:11:07Z, the
+device verified genuine in its
+own tree) composed its record
+whole in its retained temp
+root or24-real-oi9y1wsk at
+2,600 lines and 652,833 bytes,
+the pair at md5 6cba153da883f7
+b76ad69373719b72ac on both
+sides, verified at this hand
+in the retained root. Its
+completed final accounting
+never printed: the attempt's
+process tree stands gone with
+no exit line banked, its
+attempt log stands at 0 bytes
+and its driver's result file
+at 0 bytes, in the window of a
+runtime restart that took this
+lane's own waiting shell by
+SIGTERM at the same moment.
+Under the contracted standard
+an attempt counts on the
+harness's completed final
+accounting alone, so attempt 1
+counts nowhere despite its
+composition standing whole.
+Round 29's count stood on its
+second attempt likewise; this
+round's count is this lane's
+own, on attempt 2 alone.
