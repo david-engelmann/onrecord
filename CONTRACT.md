@@ -10139,3 +10139,165 @@ OR-51, the Mach-O constructor
 arm, stands carried open by
 name, untouched again this
 round.
+
+OR-184. PR 42 read back whole
+at this hand. PR 42 stands
+closed and merged: opened from
+refine/or-round30 on base c760
+9303c12c8d6c637963f8d5bba687a1
+d0b531, six commits (84cb4845,
+tree d3c03835, contract
+288,081 bytes; cbb62c00, tree
+c4b16197, contract 290,624;
+5969590f, tree f642c638,
+contract 293,081; 2d8215e3,
+tree a6187886, contract
+295,504; d7a53c83, tree
+8555ca75, contract 297,066;
+0e097cb7, tree 5dfe8e74,
+contract 297,304), merged by
+the Trunk merge queue on
+2026-11-26T00:59:19Z as 7213a2
+2581ec624ca01a61e398d132cb4c16
+3366, a single-parent squash
+commit whose tree 5dfe8e74d9d9
+daa356b93c41c5c782f34abed968
+is identical to the reviewed
+closure tree. Main stands at
+the merge commit, CONTRACT.md
+on main measures 297,304
+bytes, the Status range reads
+OR-1 to OR-183 with OR-183
+standing as the Round 30
+closure record inside the
+range as its last item, and
+the README rounds line reads
+30 of 100. The body stands in
+its final form at 14,121
+chars, the build lane's body
+at 13,604 with the owner's
+gate record appended after the
+release-notes appendix
+standing at its end; the
+appendix stands in the body
+from its opening marker at
+offset 13,056 spanning 548
+through its end marker. The
+final census of PR 42 stands
+at 3 issue comments, 0
+reviews, and 0 review
+comments: the Trunk note
+7169198426 at 113 chars in its
+merged form, last edited
+2026-11-26T00:59:22Z; the bot
+shell 7169203357; and the
+owner's enqueue comment
+7179193714 (12 chars, the
+trunk merge command) of
+2026-11-26T00:52:05Z standing
+last on the PR. The owner's
+brief for this round named the
+census at 2 issue comments,
+the gate-time census; the live
+census reads 3, the owner's
+enqueue having been added at
+the landing, and the
+correction stands recorded. No
+separate landing comment
+stands on the PR; the owner's
+gate record stands appended in
+the body, and the PR's
+updated_at of
+2026-11-26T00:59:22Z is the
+Trunk note's merged-form edit.
+The Trunk queue PR 43 stands
+closed unmerged. The Round 30
+gate is graded in the open:
+spec fidelity PASS with no
+findings (its report at 11,646
+chars); standards APPROVE with
+no findings at any grade (its
+report at 8,485 chars); red
+team APPROVE with no findings
+at any grade (its report at
+10,557 chars), all nine limbs
+executed at its own hand, and
+Round 29's three untested
+limbs stand discharged in full
+at its hand (the device cells
+in the genuine shape, the
+provenance pair at its own
+target path, and items 6 and
+7), the charge that stood open
+across Rounds 29 and 30 now
+closed. The gate stood fully
+clean and the owner's gate
+record in the body records it
+so. The CodeRabbit shell
+7169203357 stands settled at
+its true final form at this
+hand: 11,115 chars, last
+edited 2026-11-26T00:52:09Z,
+the figure at the owner's
+landing read confirmed exact
+with no later re-render
+standing (11,111 at the build
+lane's patch read, 11,113 at
+the standards axis's read, the
+plus-two re-renders the
+standing convention). Its
+recent-review panel reads that
+no actionable comments were
+generated in the recent
+review; its Run ID stands 4b80
+a1a8-eb9e-4bb5-915c-
+4d8b1ac881e3 over the range
+c7609303 to 0e097cb7 with
+files selected for processing
+at 2, CONTRACT.md and
+README.md; its Merge Risk
+panel reads Minimal up to
+0e097 with the coverage record
+naming source and covered
+commit both as the closure
+head 0e097cb7, kind reviewed;
+its pre-merge checks stand at
+4 passed, the Title check
+carrying the observation that
+the title's range (OR-178 to
+OR-182) differs slightly from
+its summary's (OR-178 through
+OR-183) and that the title
+does not name the verification
+or realistic-run details,
+graded on PR 42's body face as
+accurate and as the standing
+convention, the title being
+the round's label in the form
+every round carries, no change
+owed; the review used the
+included allowance, 0
+remaining after it. The
+shell's walkthrough in one
+phrase misnames the round's
+records as Round 29's; its own
+tables state the items
+correctly as OR-178 through
+OR-183, and the error is the
+bot's summary prose alone, as
+graded on the body. PR 42's
+title stands at 43 chars in
+the form this round's PR title
+follows. Hosted CI stands
+verified at this hand on the
+closure head: the push run
+45659873572, the pull_request
+run 45662522398, and the
+dynamic run 45662510700 each
+completed success. Checklist
+item 3 stands passing
+outright, its repository-
+description home read live at
+this hand byte-identical to
+the README lede, the three
+homes graded whole at OR-186.
