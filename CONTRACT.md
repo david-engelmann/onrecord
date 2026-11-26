@@ -10497,3 +10497,60 @@ whose own probe verified
 1,7, a write raising ENOSPC)
 before the harness started. No
 third launch stands.
+
+OR-188. The closure gate
+stands executed whole on the
+closure tree itself at this
+hand: the tree this round's
+closure commit adopts
+unchanged, differing from the
+OR-187 head's tree in
+CONTRACT.md and README.md
+alone, every code blob byte-
+identical between the two
+trees. The completing
+executions stand on the
+staging run and on the API
+extraction run, each in a
+process tree whose own probe
+verified /dev/full genuine
+(char device 1,7, a write
+raising ENOSPC) before the
+harness started, the gate
+script itself probing the
+device in its own tree before
+any leg runs and refusing to
+run in a tree where the device
+does not stand genuine. The
+first completing execution ran
+on the closure content staged
+locally, computed to that tree
+and verified file by file
+against its own manifest at 21
+blobs and 0 mismatches; the
+second extracted the tree
+through the API from the tree
+object created there for the
+closure commit, verified blob
+for blob at 21 blobs and 0
+mismatches with no file beyond
+the manifest, and completed
+whole on that extraction. The
+closure build's suite stands
+at test exit 0 with the store
+suite at 50 passed and the
+streams suite at 19 passed,
+clippy at exit 0 and fmt at
+exit 0, and the battery on the
+closure build stands at exit 0
+with 55 cells and 0 splits.
+CLOSURE_GATE_OK. The codepoint
+scans stand run with the
+planted control counted first
+(control U+2014 1, U+2013 1):
+the closure-gate tree and the
+realistic item's head tree
+each read 21 blobs at U+2014 0
+and U+2013 0. Checklist item 3
+stands passing outright,
+graded at OR-186.
