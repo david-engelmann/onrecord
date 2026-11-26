@@ -10564,3 +10564,175 @@ OR-51, the Mach-O constructor
 arm, stands carried open by
 name, untouched again this
 round.
+
+OR-190. PR 44 read back whole
+at this hand. PR 44 stands
+closed and merged: opened from
+refine/or-round31 on base 7213
+a22581ec624ca01a61e398d132cb4c
+163366, six commits (06ffdc5d,
+tree 5aa06959, contract
+301,778 bytes; b105ff31, tree
+d2d605b8, contract 303,004;
+31b50ff1, tree 83160185,
+contract 305,805; ae1db896,
+tree 12a0fc4a, contract
+307,142; 45d16a2e, tree
+8fbd4874, contract 308,704;
+8aad7409, tree a9582ac4,
+contract 308,942), merged by
+the Trunk merge queue on
+2026-11-26T21:14:03Z as 7c0fc3
+92f445c3998c7232283c5799947ec2
+1c8c, a single-parent squash
+commit whose tree a9582ac435b0
+037a2c00b2181d3b42f401b44168
+is identical to the reviewed
+closure tree. Main stands at
+the merge commit, CONTRACT.md
+on main measures 308,942
+bytes, the Status range reads
+OR-1 to OR-189 with OR-189
+standing as the Round 31
+closure record inside the
+range as its last item, and
+the README rounds line reads
+31 of 100. The body stands in
+its final form at 8,343 chars,
+the build lane's body at 7,466
+with the owner's gate record
+appended after the release-
+notes appendix standing at its
+end; the appendix stands in
+the body from its opening
+marker at offset 6,944
+spanning 522 through its end
+marker. The final census of PR
+44 stands at 3 issue comments,
+0 reviews, and 0 review
+comments: the Trunk note
+7188961042 at 113 chars in its
+merged form, last edited
+2026-11-26T21:14:06Z; the bot
+shell 7188965984; and the
+owner's enqueue comment
+7203396377 (12 chars, the
+trunk merge command) of
+2026-11-26T21:06:28Z standing
+last on the PR. The body as
+opened named the census at 2
+issue comments, the gate-time
+census; the live census reads
+3, the owner's enqueue having
+been added at the landing, and
+the correction stands
+recorded. No separate landing
+comment stands on the PR; the
+owner's gate record stands
+appended in the body, and the
+PR's updated_at of
+2026-11-26T21:14:06Z is the
+Trunk note's merged-form edit.
+The Trunk queue PR 45 stands
+closed unmerged. The Round 31
+gate is graded in the open:
+spec fidelity PASS with one
+body-only Minor (its report at
+11,701 chars, the Minor as
+F-1); standards APPROVE with
+the same Minor (its report at
+14,630 chars, the Minor as
+S-1); red team APPROVE with
+the same Minor (its report at
+18,263 chars, the Minor as
+F-1), every limb executed at
+its own hand. The Minor: the
+body's attempt history did not
+name in words that the round's
+completion was carried by two
+seats of the owner chat in
+parallel after the original
+build lane's transport end,
+the second seat's staging tree
+cc39c145 standing unreferenced
+and counted nowhere. It stands
+discharged by the owner's gate
+record appended to the body,
+whose text names the transport
+end after four banked commits
+and the verified closure
+staging, the two seats'
+concurrent completion against
+the same scratch, the single
+concordant chain as the pushed
+result, and the completion
+lane's placing no text on the
+PR; no contract byte was
+affected and no delta review
+was owed. The CodeRabbit shell
+7188965984 stands settled at
+its true final form at this
+hand: 11,151 chars, last
+edited 2026-11-26T21:06:13Z,
+before the merge, with no
+later re-render standing
+(11,147 at the build lane's
+patch read, 11,149 at the red
+team's read, the plus-two re-
+renders the standing
+convention). Its recent-review
+panel reads that no actionable
+comments were generated in the
+recent review; its Run ID
+stands 55efd08d-5f57-4b26-
+909c-1ac1688180a2 over the
+range 7213a225 to 8aad7409
+with files selected for
+processing at 2, CONTRACT.md
+and README.md; its Merge Risk
+panel reads Minimal up to
+8aad7 with the coverage record
+naming source and covered
+commit both as the closure
+head 8aad7409, kind reviewed;
+its pre-merge checks stand at
+4 passed, the Title check
+carrying the observation that
+the title's range (OR-184 to
+OR-188) stops one item short
+of the round's span (OR-184 to
+OR-189) and that the title
+does not state the change is a
+documentation record, graded
+on PR 44's body face as
+accurate and as the standing
+convention, the title
+following PR 42's title in
+form exactly, the family span
+with the closure record after
+it, no change owed; the review
+used the included allowance, 0
+remaining after it. The Step 0
+record in PR 44's body stands
+read back whole at this hand:
+its moment-bounded shell
+figure of 11,147 chars stands
+covered by its express charge
+to this read-back, and every
+other claim in it stands
+confirmed as it reads. PR 44's
+title stands at 43 chars in
+the form this round's PR title
+follows. Hosted CI stands
+verified at this hand on the
+closure head: the push run
+45796950877, the pull_request
+run 45798509058, and the
+dynamic run 45798504857 each
+completed success. Checklist
+item 3 stands passing
+outright, its repository-
+description home read live at
+this hand byte-identical to
+the README lede, the three
+homes graded whole at OR-192.
