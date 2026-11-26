@@ -10448,3 +10448,52 @@ get view stands byte-identical
 to the README's printed view
 at 719 bytes, and check prints
 "the record is sound".
+
+OR-187. The realistic stands
+completed fresh at this round,
+counted on attempt 2 alone.
+Per OR-150's discipline the
+attempt ledger stands whole.
+Attempt 1 (one launch, begun
+2026-11-26T04:53:11Z, its
+harness root at or24-real-
+qaq9bsyt) was killed mid-run
+by a runtime restart at about
+06:25Z, the driver and the
+harness both taken in the
+restart window after the
+harness's PHASE1 line had
+printed (adds 2600,
+interleaved read steps 416,
+record 652833 bytes, 2600
+lines); its completed
+accounting never printed and
+no driver end line stands for
+it, and the attempt counts
+nowhere. Its composition
+stands whole in its root at
+this hand: both records at
+2,600 lines, 652,833 bytes,
+md5 6cba153da883f7b76ad6937371
+9b72ac. Attempt 2 (one launch,
+begun 2026-11-26T06:31:25Z,
+ended 2026-11-26T08:16:18Z,
+driver exit 0, its harness
+root at or24-real-06c6hxr2)
+completed whole and counts
+alone: REALISTIC cells 3100,
+splits 0, HARNESS_EXIT 0, both
+records at 2,600 lines,
+652,833 bytes, md5 6cba153da88
+3f7b76ad69373719b72ac, the
+corpus composition reproducing
+exactly, the corpus composed
+whole from the repository's
+own history by the harness's
+construction at OR-115. Both
+attempts ran in a process tree
+whose own probe verified
+/dev/full genuine (char device
+1,7, a write raising ENOSPC)
+before the harness started. No
+third launch stands.
