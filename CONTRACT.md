@@ -10301,3 +10301,49 @@ description home read live at
 this hand byte-identical to
 the README lede, the three
 homes graded whole at OR-186.
+
+OR-185. The base gate stands
+executed whole fresh on the
+new base at this hand. The
+base tree 5dfe8e74d9d9daa356b9
+3c41c5c782f34abed968, the
+Round 30 landing tree, stands
+extracted at 21 blobs and
+verified blob for blob, 0
+mismatches, before any
+reliance. The verdict stands
+on a single chain execution
+(chain start
+2026-11-26T04:02:43Z, the
+stage banked at 04:40:02Z):
+BASEGATE_OK, cargo test at
+exit 0 with the store suite at
+50 passed and 0 failed and the
+streams suite at 19 passed and
+0 failed (the pair at 69),
+clippy at exit 0 under -D
+warnings, and fmt --check at
+exit 0, with /dev/full
+verified genuine in the
+chain's own process tree (char
+device 1,7, a write raising
+ENOSPC) and the failed-cells
+list empty, so no cell of the
+suite stands excused on the
+device. The stage's legs
+queued in the shared build
+slot behind live sibling holds
+(the clippy leg behind a
+sibling lane's gate script,
+the fmt leg behind a second
+sibling hold), each holder
+verified live at this hand and
+never disturbed; the queue
+counts nowhere and stands
+disclosed here. No earlier
+launch of this round's chain
+stands ahead of this
+execution, and no leg of the
+base gate was interrupted,
+killed, or refused. The
+realistic stands at OR-187.
