@@ -10775,3 +10775,57 @@ verdict above stands on the
 completion lane's relaunched
 execution alone, whole in one
 execution.
+
+OR-192. Verification family,
+executed whole on the Round 31
+base. The battery runs 55
+cells at 0 splits, 39 stream
+cells and 16 budget cells: the
+reroute flip stands exact at
+capacity and the past-capacity
+refusal cells stand in
+agreement, and the budget
+points stand as read from the
+constants at src/store.rs
+lines 30 and 31 of this
+round's own extraction,
+BUDGET_READ at (990, 988) and
+BUDGET_READ_NARROW at (989,
+987). The oracle at 0c25a9aa
+stands verified whole before
+reliance (14 blobs, 0
+mismatches) and the pin at
+74a83298 likewise (50 blobs, 0
+mismatches); the pin suite
+passes 241 tests summed over
+its own 19 result lines, the
+first line at 3. The golden
+stands by the digest alone per
+OR-151: the pinned tree's
+converter renders the fixture
+and the digest reads cc9c4e01f
+ca418dcc33114caf75fae1f6bf0d40
+1f297b5d61f6776903fa955a3. The
+provenance pair stands equal
+at this round's target path,
+the first build and the clean
+rebuild both at md5 f94b761cf2
+867b471884fdba50b5e6f3, the
+value build-path scoped.
+Checklist items 6 and 7 stand
+re-executed at this hand: the
+installed binary at 873,584
+bytes, and the get view byte-
+identical to the README's
+printed view. Storefront item
+3 stands PASSING outright: the
+repository description, the
+README lede, and the
+Cargo.toml description stand
+byte-identical, read at this
+hand. The codepoint scans
+stand run with the planted
+control counted first: the
+base tree and the OR-190 head
+tree each read 21 blobs at
+U+2014 0 and U+2013 0.
