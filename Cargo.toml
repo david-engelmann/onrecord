@@ -11,7 +11,7 @@ documentation = "https://docs.rs/onrecord"
 keywords = ["agents", "memory", "provenance", "audit", "jsonl"]
 categories = ["command-line-utilities", "database-implementations"]
 rust-version = "1.74"
-exclude = ["CONTRACT.md", "scripts/**", ".github/**", "tests/**"]
+exclude = ["CONTRACT.md", "scripts/**", ".github/**", "tests/**", "book/**", "docs/media/*.gif", "docs/media/*.png"]
 
 [lib]
 name = "onrecord"
@@ -24,3 +24,11 @@ path = "src/main.rs"
 [dependencies]
 flighttape = { git = "https://github.com/david-engelmann/flighttape", rev = "74a83298aeb31c82e62b9fb0c613f5bc8600799e" }
 sha2 = "0.10"
+
+[package.metadata.binstall]
+pkg-url = "{ repo }/releases/download/v{ version }/{ name }-v{ version }-{ target }.{ archive-format }"
+bin-dir = "{ name }-v{ version }-{ target }/{ bin }{ binary-ext }"
+pkg-fmt = "tgz"
+
+[package.metadata.binstall.overrides.x86_64-pc-windows-msvc]
+pkg-fmt = "zip"

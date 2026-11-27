@@ -1,0 +1,19 @@
+#compdef onrecord
+
+_onrecord() {
+    local -a subcommands
+    subcommands=(
+        'add:onrecord add subcommand'
+        'get:onrecord get subcommand'
+        'subject:onrecord subject subcommand'
+        'due:onrecord due subcommand'
+        'check:onrecord check subcommand'
+    )
+    if (( CURRENT == 2 )); then
+        _describe -t commands 'onrecord subcommand' subcommands
+        return
+    fi
+    _arguments -s '--text' '--asserter' '--at' '--evidence' '--supersedes' '--subject' '--due' '-h' '--help' '*:file:_files'
+}
+
+_onrecord "$@"

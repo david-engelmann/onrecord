@@ -1,3 +1,18 @@
+<p align="center">
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="media/lockup-dark.svg">
+    <img src="media/lockup-light.svg" alt="onrecord" width="760">
+  </picture>
+</p>
+
+<p align="center">
+  <img src="media/money-shot.gif" alt="onrecord conflict view and check showcase" width="880">
+</p>
+
+<p align="center">
+  <img src="media/architecture.svg" alt="onrecord claim ledger architecture" width="900">
+</p>
+
 # Onrecord Operator and Library Guide
 
 `onrecord` is an append-only, self-verifying claim store for cross-session agent memory. Every entry in a record file (`record.jsonl`) is an immutable claim carrying its assertion text, asserter identity, caller-supplied timestamp, non-empty evidence list, linear supersession pointer, optional subject and due date, and a position-bound cryptographic digest ID (`claim-<16hex>`).
@@ -409,3 +424,15 @@ fn append_confession() -> Result<String, onrecord::StoreError> {
 | `1` | Domain or I/O refusal (`error, <reason>` on stderr), `check` found one or more record defects (printed on stdout), or unrecoverable stream/encoding failure when standard streams were closed at launch. |
 | `2` | CLI usage / argument parse error (`argparse`-compatible usage and error message on stderr). |
 | `120` | Buffered stdout or stderr flush failed at interpreter-mode shutdown (for example writing redirected output to a full device or broken pipe). |
+
+---
+
+## Shell Completions & `cargo-binstall`
+
+```sh
+cargo binstall onrecord
+
+# Shell completions (bash, zsh, fish, PowerShell)
+source completions/onrecord.bash
+```
+

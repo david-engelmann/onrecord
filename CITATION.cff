@@ -1,0 +1,13 @@
+cff-version: 1.2.0
+message: "If you use onrecord in research or production systems, please cite this software."
+title: "onrecord: Append-Only Claim and Receipt Store for Cross-Session Agent Memory"
+type: software
+authors:
+  - family-names: Engelmann
+    given-names: David
+version: "0.1.0"
+date-released: "2026-11-27"
+license: MIT
+repository-code: "https://github.com/david-engelmann/onrecord"
+url: "https://david-engelmann.github.io/onrecord/"
+abstract: "Append-only JSONL claim store in Rust where every memory carries asserter, timestamp, evidence, linear supersession chain, and subject conflict views."

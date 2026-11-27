@@ -1,0 +1,56 @@
+name: clean-install
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  verify-archive-and-smoke:
+    name: clean archive smoke (${{ matrix.os }})
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest]
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - name: Install Rust stable
+        uses: dtolnay/rust-toolchain@stable
+      - name: Verify installer and shell completion syntax
+        shell: bash
+        run: |
+          set -euo pipefail
+          sh -n install.sh
+          bash -n "completions/onrecord.bash"
+      - name: Build release archive, verify SHA256SUMS, and run clean-room smoke check
+        shell: bash
+        run: |
+          set -euo pipefail
+          cargo build --release --locked
+          STAGE_DIR="$RUNNER_TEMP/release-stage"
+          INSTALL_BIN="$RUNNER_TEMP/clean-bin"
+          mkdir -p "$STAGE_DIR" "$INSTALL_BIN"
+          cp "target/release/onrecord" "$STAGE_DIR/onrecord"
+          cp LICENSE README.md "$STAGE_DIR/"
+          cp -r completions "$STAGE_DIR/completions"
+          tar -C "$STAGE_DIR" -czf "$STAGE_DIR/onrecord-ci.tar.gz" "onrecord" LICENSE README.md completions
+          if command -v sha256sum >/dev/null 2>&1; then
+            (cd "$STAGE_DIR" && sha256sum "onrecord-ci.tar.gz" > SHA256SUMS && sha256sum -c SHA256SUMS)
+          else
+            (cd "$STAGE_DIR" && shasum -a 256 "onrecord-ci.tar.gz" > SHA256SUMS && shasum -a 256 -c SHA256SUMS)
+          fi
+          tar -xzf "$STAGE_DIR/onrecord-ci.tar.gz" -C "$INSTALL_BIN"
+          chmod 0755 "$INSTALL_BIN/onrecord"
+          export PATH="$INSTALL_BIN:$PATH"
+          command -v "onrecord"
+          "onrecord" --help >/dev/null
+          onrecord check examples/demo_record.jsonl && onrecord subject examples/demo_record.jsonl deploy >/dev/null
