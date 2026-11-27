@@ -10829,3 +10829,52 @@ control counted first: the
 base tree and the OR-190 head
 tree each read 21 blobs at
 U+2014 0 and U+2013 0.
+
+OR-193. The realistic stands
+not completed at this round.
+Per OR-150's discipline the
+attempt ledger stands whole:
+three launches stand, each
+killed by a runtime restart,
+none reaching the harness's
+completed final accounting,
+and none counts. Attempt 1
+(one launch, begun
+2026-11-27T02:33:37Z) was
+killed in the build slot's
+queue before the harness ran,
+its own probe reading
+/dev/full not genuine in its
+tree, a regular file in its
+session; no harness root
+stands for it. Attempt 2 (one
+launch, begun
+2026-11-27T03:03:04Z, its
+harness root at or24-real-
+klnfp_7j, its own probe
+verifying /dev/full genuine
+before the harness started)
+was killed mid-composition by
+a runtime restart at about
+04:45Z; its composition stands
+in its root at this hand: both
+big records at 1,500 lines,
+375,698 bytes, md5 7b367fbb6ea
+280b01e9ff5534fd3aefa, byte-
+identical. Attempt 3 (one
+launch, begun
+2026-11-27T04:48:50Z, its
+harness root at or24-real-
+_gg761z8, its own probe
+verifying /dev/full genuine)
+queued in the slot for about
+an hour and was killed mid-
+composition by a runtime
+restart at about 07:03Z; its
+composition stands at 1,325
+lines on each side, 331,942
+bytes, md5 dbf3c959cab92472fc5
+2857e103cfb48, byte-identical.
+No fourth launch stands. The
+realistic's completion stands
+charged to Round 33.
