@@ -1,0 +1,174 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/david-engelmann/onrecord/blob/main/schema/views.schema.json",
+  "title": "Onrecord CLI and Library View Documents",
+  "description": "JSON output documents emitted by onrecord get, onrecord subject (single live claim or conflict view), and onrecord due.",
+  "$defs": {
+    "evidence_entry": {
+      "type": "object",
+      "required": [
+        "source",
+        "reference"
+      ],
+      "properties": {
+        "source": {
+          "type": "string",
+          "minLength": 1
+        },
+        "reference": {
+          "type": "string",
+          "minLength": 1
+        }
+      },
+      "additionalProperties": true
+    },
+    "claim": {
+      "type": "object",
+      "required": [
+        "id",
+        "text",
+        "asserter",
+        "asserted_at",
+        "evidence",
+        "supersedes"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "pattern": "^claim-[0-9a-f]{16}$"
+        },
+        "text": {
+          "type": "string",
+          "minLength": 1
+        },
+        "asserter": {
+          "type": "string",
+          "minLength": 1
+        },
+        "asserted_at": {
+          "type": "string",
+          "minLength": 1
+        },
+        "evidence": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "$ref": "#/$defs/evidence_entry"
+          }
+        },
+        "supersedes": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "subject": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "due": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}$"
+        }
+      },
+      "additionalProperties": true
+    },
+    "retrieval_view": {
+      "title": "Single Claim Retrieval View",
+      "description": "Returned by onrecord get and by onrecord subject when exactly one live claim answers for the subject.",
+      "type": "object",
+      "required": [
+        "claim",
+        "chain"
+      ],
+      "properties": {
+        "claim": {
+          "$ref": "#/$defs/claim"
+        },
+        "chain": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "$ref": "#/$defs/claim"
+          },
+          "description": "Linear supersession history ordered oldest-first, ending at claim."
+        }
+      },
+      "additionalProperties": false
+    },
+    "subject_conflict_view": {
+      "title": "Subject Conflict View",
+      "description": "Returned by onrecord subject when two or more live claims answer for the requested subject.",
+      "type": "object",
+      "required": [
+        "conflict",
+        "subject",
+        "claims"
+      ],
+      "properties": {
+        "conflict": {
+          "type": "boolean",
+          "const": true
+        },
+        "subject": {
+          "type": "string"
+        },
+        "claims": {
+          "type": "array",
+          "minItems": 2,
+          "items": {
+            "$ref": "#/$defs/retrieval_view"
+          }
+        }
+      },
+      "additionalProperties": false
+    },
+    "due_view": {
+      "title": "Due View",
+      "description": "Returned by onrecord due for a YYYY-MM-DD cutoff date.",
+      "type": "object",
+      "required": [
+        "as_of",
+        "due"
+      ],
+      "properties": {
+        "as_of": {
+          "type": "string",
+          "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}$"
+        },
+        "due": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/retrieval_view"
+          },
+          "description": "Live claims with due <= as_of, ordered by due date then record position."
+        },
+        "conflicts": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "string"
+          },
+          "description": "Present only when two or more due claims answer for the same subject, sorted lexicographically by UTF-16 code units."
+        }
+      },
+      "additionalProperties": false
+    }
+  },
+  "oneOf": [
+    {
+      "$ref": "#/$defs/retrieval_view"
+    },
+    {
+      "$ref": "#/$defs/subject_conflict_view"
+    },
+    {
+      "$ref": "#/$defs/due_view"
+    }
+  ]
+}

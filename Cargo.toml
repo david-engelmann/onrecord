@@ -4,6 +4,14 @@ version = "0.1.0"
 edition = "2021"
 description = "Cross-session memory where nothing is stored as a bare fact: every memory is a claim on the record, carrying who asserted it, when, the evidence behind it, and the chain of claims it superseded."
 license = "MIT"
+readme = "README.md"
+homepage = "https://github.com/david-engelmann/onrecord"
+repository = "https://github.com/david-engelmann/onrecord"
+documentation = "https://docs.rs/onrecord"
+keywords = ["agents", "memory", "provenance", "audit", "jsonl"]
+categories = ["command-line-utilities", "database-implementations"]
+rust-version = "1.74"
+exclude = ["CONTRACT.md", "scripts/**", ".github/**", "tests/**"]
 
 [lib]
 name = "onrecord"

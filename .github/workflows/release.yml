@@ -1,0 +1,106 @@
+name: release
+
+permissions:
+  contents: read
+
+on:
+  push:
+    tags:
+      - "v*"
+
+jobs:
+  build:
+    permissions:
+      contents: read
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - os: ubuntu-latest
+            target: x86_64-unknown-linux-gnu
+            archive: tar.gz
+          - os: ubuntu-24.04-arm
+            target: aarch64-unknown-linux-gnu
+            archive: tar.gz
+          - os: macos-13
+            target: x86_64-apple-darwin
+            archive: tar.gz
+          - os: macos-latest
+            target: aarch64-apple-darwin
+            archive: tar.gz
+          - os: windows-latest
+            target: x86_64-pc-windows-msvc
+            archive: zip
+    runs-on: ${{ matrix.os }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: dtolnay/rust-toolchain@stable
+        with:
+          targets: ${{ matrix.target }}
+      - name: Build release binary
+        env:
+          TARGET: ${{ matrix.target }}
+        run: cargo build --release --locked --target "$TARGET"
+        shell: bash
+      - name: Package archive (tar.gz)
+        if: matrix.archive == 'tar.gz'
+        env:
+          TAG: ${{ github.ref_name }}
+          TARGET: ${{ matrix.target }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          STAGE="onrecord-${TAG}-${TARGET}"
+          mkdir -p "dist/${STAGE}"
+          cp "target/${TARGET}/release/onrecord" "dist/${STAGE}/onrecord"
+          cp LICENSE README.md "dist/${STAGE}/"
+          tar -C dist -czf "dist/${STAGE}.tar.gz" "${STAGE}"
+          rm -rf "dist/${STAGE}"
+      - name: Package archive (zip)
+        if: matrix.archive == 'zip'
+        env:
+          TAG: ${{ github.ref_name }}
+          TARGET: ${{ matrix.target }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          STAGE="onrecord-${TAG}-${TARGET}"
+          mkdir -p "dist/${STAGE}"
+          cp "target/${TARGET}/release/onrecord.exe" "dist/${STAGE}/onrecord.exe"
+          cp LICENSE README.md "dist/${STAGE}/"
+          (cd dist && 7z a -tzip "${STAGE}.zip" "${STAGE}")
+          rm -rf "dist/${STAGE}"
+      - uses: actions/upload-artifact@v4
+        with:
+          name: archive-${{ matrix.target }}
+          path: dist/*
+
+  publish:
+    needs: build
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/download-artifact@v4
+        with:
+          path: artifacts
+          merge-multiple: true
+      - name: Generate SHA256SUMS and publish GitHub Release
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          TAG: ${{ github.ref_name }}
+        run: |
+          set -euo pipefail
+          cd artifacts
+          sha256sum onrecord-* > SHA256SUMS
+          cat SHA256SUMS
+          if gh release view "$TAG" >/dev/null 2>&1; then
+            gh release upload "$TAG" SHA256SUMS onrecord-* --clobber
+          else
+            gh release create "$TAG" SHA256SUMS onrecord-* --title "$TAG" --generate-notes
+          fi
