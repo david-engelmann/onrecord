@@ -950,7 +950,10 @@ impl Store {
         match std::fs::metadata(&self.path.os) {
             Ok(_) => Ok(true),
             Err(error) => match error.raw_os_error() {
-                Some(2) | Some(20) | Some(9) | Some(40) => Ok(false),
+                #[cfg(unix)]
+                Some(2) | Some(20) | Some(9) | Some(util::ELOOP) => Ok(false),
+                #[cfg(not(unix))]
+                Some(2) | Some(3) | Some(6) | Some(267) | Some(1921) => Ok(false),
                 Some(errno) => Err(named(os_error_with_path(errno, &error, &self.path.display))),
                 None => Err(named(Msg::str(&error.to_string()))),
             },

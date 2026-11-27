@@ -1322,15 +1322,27 @@ fn a_name_past_the_os_limit_surfaces_its_os_error() {
     let path = tmp.path(&"x".repeat(300));
     let store = store_at(&path);
     let error = store.check().expect_err("check surfaces the OS error");
-    assert!(
-        error.text().starts_with("[Errno 36] File name too long"),
-        "{}",
-        error.text()
-    );
-    let error = store
-        .get(&text("claim-x"))
-        .expect_err("get surfaces it too");
-    assert!(error.text().starts_with("[Errno 36]"), "{}", error.text());
+    #[cfg(unix)]
+    {
+        let prefix = format!(
+            "[Errno {}] File name too long",
+            onrecord::util::ENAMETOOLONG
+        );
+        assert!(error.text().starts_with(&prefix), "{}", error.text());
+        let error = store
+            .get(&text("claim-x"))
+            .expect_err("get surfaces it too");
+        let code_prefix = format!("[Errno {}]", onrecord::util::ENAMETOOLONG);
+        assert!(error.text().starts_with(&code_prefix), "{}", error.text());
+    }
+    #[cfg(not(unix))]
+    {
+        assert!(error.text().starts_with("[Errno "), "{}", error.text());
+        let error = store
+            .get(&text("claim-x"))
+            .expect_err("get surfaces it too");
+        assert!(error.text().starts_with("[Errno "), "{}", error.text());
+    }
     // due never gates on exists: its load reports
     // the unreadable record as a defect instead.
     let error = store
