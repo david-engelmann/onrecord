@@ -10736,3 +10736,42 @@ description home read live at
 this hand byte-identical to
 the README lede, the three
 homes graded whole at OR-192.
+
+OR-191. Base gate, executed
+whole fresh on the Round 31
+base (main at 7c0fc392,
+contract at 308,942 bytes).
+The verdict stands on a single
+chain execution under the
+shared build slot, its legs
+queued behind live sibling
+holds verified live at this
+hand and never disturbed: the
+test leg exits 0 with 69 tests
+passed, the store suite at 50
+passed and the streams suite
+at 19 passed, every remaining
+result line at 0, and the
+failed cells empty; clippy
+with warnings denied exits 0;
+the formatting check exits 0.
+The verdict stands
+BASEGATE_OK. /dev/full stands
+verified genuine inside the
+chain's own process tree at
+the stage's opening probe,
+character device 1,7 with
+writes refused ENOSPC, the
+probe taken before the test
+leg ran. The chain's first
+execution, launched by the
+round's original lane,
+completed its test and clippy
+legs at exit 0 and was killed
+by a runtime restart before
+its formatting leg ran, and it
+counts nowhere as a stage; the
+verdict above stands on the
+completion lane's relaunched
+execution alone, whole in one
+execution.
