@@ -1,55 +1,56 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1040 480" width="1040" height="480" role="img" aria-label="onrecord technical architecture">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1040 490" width="1040" height="490" role="img" aria-label="onrecord technical architecture">
   <defs>
+    <pattern id="grid" width="24" height="24" patternUnits="userSpaceOnUse">
+      <circle cx="2" cy="2" r="1" fill="#1E293B" opacity="0.65"/>
+    </pattern>
     <marker id="arr" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
       <path d="M 0 1 L 9 5 L 0 9 z" fill="#A78BFA"/>
     </marker>
-    <marker id="arrMuted" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
-      <path d="M 0 1 L 9 5 L 0 9 z" fill="#64748B"/>
-    </marker>
   </defs>
-  <rect width="1040" height="480" rx="14" fill="#0B0F17" stroke="#1E293B" stroke-width="2"/>
+  <rect width="1040" height="490" rx="14" fill="#0B0F17" stroke="#1E293B" stroke-width="2"/>
+  <rect width="1040" height="490" rx="14" fill="url(#grid)"/>
   <text x="28" y="38" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="16" font-weight="700" fill="#F8FAFC">onrecord  //  TECHNICAL ARCHITECTURE &amp; INVARIANT BOUNDARIES</text>
   <text x="28" y="58" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif" font-size="12.5" fill="#94A3B8">Every claim carries asserter, timestamp, evidence, linear supersession chain, and conflict detection.</text>
   <line x1="28" y1="72" x2="1012" y2="72" stroke="#1E293B" stroke-width="1.2"/>
-  <rect x="28" y="96" width="235" height="165" rx="10" fill="#111827" stroke="#334155" stroke-width="1.8"/>
-  <text x="42" y="120" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="12.5" font-weight="700" fill="#F8FAFC">1. Claim Entry &amp; Grammar</text>
-  <text x="42" y="140" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="11" fill="#94A3B8">onrecord add record.jsonl</text>
-  <text x="42" y="157" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="11" fill="#94A3B8">Caller-supplied asserted_at</text>
-  <text x="42" y="174" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="11" fill="#94A3B8">(flighttape::timeparse ISO)</text>
-  <text x="42" y="191" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="11" fill="#94A3B8">Asserter + text + subject</text>
-  <text x="42" y="208" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="11" fill="#94A3B8">Evidence[{source, reference}]</text>
-  <text x="42" y="225" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="11" fill="#94A3B8">Optional supersedes &amp; due</text>
-  <text x="42" y="242" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="11" fill="#94A3B8">Store never invents wall time</text>
-  <rect x="299" y="96" width="255" height="165" rx="10" fill="#1D1138" stroke="#A78BFA" stroke-width="1.8"/>
-  <text x="313" y="120" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="12.5" font-weight="700" fill="#A78BFA">2. Position-Bound Claim ID</text>
-  <text x="313" y="140" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="11" fill="#94A3B8">Canonical Form 1 payload:</text>
-  <text x="313" y="157" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="11" fill="#94A3B8">  {&quot;claim&quot;: body_no_id,</text>
-  <text x="313" y="174" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="11" fill="#94A3B8">   &quot;position&quot;: line_idx}</text>
-  <text x="313" y="191" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="11" fill="#94A3B8">SHA-256 hex digest[0..16]</text>
-  <text x="313" y="208" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="11" fill="#94A3B8">-&gt; &quot;claim-2946b699934e0f6b&quot;</text>
-  <text x="313" y="225" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="11" fill="#94A3B8">Binds content AND exact</text>
-  <text x="313" y="242" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="11" fill="#94A3B8">append order in JSONL!</text>
-  <rect x="590" y="96" width="422" height="165" rx="10" fill="#111827" stroke="#A78BFA" stroke-width="1.8"/>
-  <text x="604" y="120" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="12.5" font-weight="700" fill="#F8FAFC">3. Linear Supersession vs Subject Conflict</text>
-  <text x="604" y="140" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="11" fill="#94A3B8">Linear chain: claim-A  &lt;--supersedes--  claim-B (live head)</text>
-  <text x="604" y="157" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="11" fill="#94A3B8">Fork refusal: superseding an already-superseded claim exits 1</text>
-  <text x="604" y="174" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="11" fill="#94A3B8"></text>
-  <text x="604" y="191" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="11" fill="#94A3B8">Independent assertions on same subject (&#x27;deploy&#x27;):</text>
-  <text x="604" y="208" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="11" fill="#94A3B8">  live head 1 (agent-ops)   +   live head 2 (agent-canary)</text>
-  <text x="604" y="225" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="11" fill="#94A3B8">  --&gt; onrecord subject returns &quot;conflict&quot;: true with BOTH chains!</text>
-  <line x1="263" y1="178" x2="297" y2="178" stroke="#A78BFA" stroke-width="2.2" marker-end="url(#arr)"/>
-  <line x1="554" y1="178" x2="588" y2="178" stroke="#A78BFA" stroke-width="2.2" marker-end="url(#arr)"/>
-  <rect x="28" y="294" width="480" height="152" rx="10" fill="#111827" stroke="#334155" stroke-width="1.8"/>
-  <text x="42" y="318" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="12.5" font-weight="700" fill="#F8FAFC">4. Five Query &amp; Verification Surfaces</text>
-  <text x="42" y="338" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="11" fill="#94A3B8">- add     : validate grammar, enforce linear supersession, append</text>
-  <text x="42" y="355" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="11" fill="#94A3B8">- get     : return claim + full oldest-first supersession chain</text>
-  <text x="42" y="372" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="11" fill="#94A3B8">- subject : return all live heads on subject + explicit conflict flag</text>
-  <text x="42" y="389" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="11" fill="#94A3B8">- due     : list live heads whose due date &lt;= as_of (YYYY-MM-DD)</text>
-  <text x="42" y="406" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="11" fill="#94A3B8">- check   : recompute every line&#x27;s position-bound ID &amp; audit links</text>
-  <rect x="532" y="294" width="480" height="152" rx="10" fill="#111827" stroke="#334155" stroke-width="1.8"/>
-  <text x="546" y="318" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="12.5" font-weight="700" fill="#F8FAFC">Tamper &amp; Truncation Resistance</text>
-  <text x="546" y="338" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="11" fill="#94A3B8">- Deleting, reordering, or editing any historical JSONL line shifts</text>
-  <text x="546" y="355" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="11" fill="#94A3B8">  every subsequent position index and fails &#x27;onrecord check&#x27; by line</text>
-  <text x="546" y="372" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="11" fill="#94A3B8">- Pre-main launch-FD probe preserves closed-descriptor POSIX semantics</text>
-  <text x="546" y="389" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="11" fill="#94A3B8">- Consumed directly as a Rust library crate by sibling tool tetlock</text>
+  <rect x="28" y="94" width="235" height="174" rx="10" fill="#111827" stroke="#334155" stroke-width="1.8"/>
+  <text x="42" y="118" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="12.5" font-weight="700" fill="#F8FAFC">1. Claim Entry &amp; Grammar</text>
+  <text x="42" y="138" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="11" fill="#94A3B8">onrecord add record.jsonl</text>
+  <text x="42" y="155" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="11" fill="#94A3B8">Caller-supplied asserted_at</text>
+  <text x="42" y="172" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="11" fill="#94A3B8">(flighttape::timeparse ISO)</text>
+  <text x="42" y="189" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="11" fill="#94A3B8">Asserter + text + subject</text>
+  <text x="42" y="206" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="11" fill="#94A3B8">Evidence[{source, reference}]</text>
+  <text x="42" y="223" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="11" fill="#94A3B8">Optional supersedes &amp; due</text>
+  <text x="42" y="240" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="11" fill="#94A3B8">Store never invents wall time</text>
+  <rect x="299" y="94" width="255" height="174" rx="10" fill="#1D1138" stroke="#A78BFA" stroke-width="1.8"/>
+  <text x="313" y="118" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="12.5" font-weight="700" fill="#A78BFA">2. Position-Bound Claim ID</text>
+  <text x="313" y="138" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="11" fill="#94A3B8">Canonical Form 1 payload:</text>
+  <text x="313" y="155" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="11" fill="#94A3B8">  {&quot;claim&quot;: body_no_id,</text>
+  <text x="313" y="172" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="11" fill="#94A3B8">   &quot;position&quot;: line_idx}</text>
+  <text x="313" y="189" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="11" fill="#94A3B8">SHA-256 hex digest[0..16]</text>
+  <text x="313" y="206" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="11" fill="#94A3B8">-&gt; &quot;claim-2946b699934e0f6b&quot;</text>
+  <text x="313" y="223" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="11" fill="#94A3B8">Binds content AND exact</text>
+  <text x="313" y="240" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="11" fill="#94A3B8">line index in JSONL!</text>
+  <rect x="590" y="94" width="422" height="174" rx="10" fill="#111827" stroke="#A78BFA" stroke-width="1.8"/>
+  <text x="604" y="118" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="12.5" font-weight="700" fill="#F8FAFC">3. O(N) Indexed Chains &amp; Conflict View</text>
+  <text x="604" y="138" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="11" fill="#94A3B8">Linear chain: claim-A  &lt;--supersedes--  claim-B (live head)</text>
+  <text x="604" y="155" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="11" fill="#94A3B8">Fork refusal: superseding an already-superseded claim exits 1</text>
+  <text x="604" y="172" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="11" fill="#94A3B8"></text>
+  <text x="604" y="189" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="11" fill="#94A3B8">Independent live heads on same subject (&#x27;deploy&#x27;):</text>
+  <text x="604" y="206" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="11" fill="#94A3B8">  1 live head  -&gt; {claim, chain}</text>
+  <text x="604" y="223" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="11" fill="#94A3B8">  &gt;=2 heads    -&gt; {&quot;conflict&quot;: true, &quot;subject&quot;: ..., &quot;claims&quot;: [...]}</text>
+  <line x1="263" y1="181" x2="297" y2="181" stroke="#A78BFA" stroke-width="2.2" marker-end="url(#arr)"/>
+  <line x1="554" y1="181" x2="588" y2="181" stroke="#A78BFA" stroke-width="2.2" marker-end="url(#arr)"/>
+  <rect x="28" y="298" width="480" height="160" rx="10" fill="#111827" stroke="#334155" stroke-width="1.8"/>
+  <text x="42" y="322" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="12.5" font-weight="700" fill="#F8FAFC">4. Five Query &amp; Verification Surfaces</text>
+  <text x="42" y="342" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="11" fill="#94A3B8">- add     : validate grammar, enforce linear supersession, append</text>
+  <text x="42" y="359" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="11" fill="#94A3B8">- get     : return {claim, chain} in O(N) via shared ID index</text>
+  <text x="42" y="376" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="11" fill="#94A3B8">- subject : return single retrieval or multi-claim conflict object</text>
+  <text x="42" y="393" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="11" fill="#94A3B8">- due     : list live heads whose due date &lt;= as_of + conflicts[]</text>
+  <text x="42" y="410" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="11" fill="#94A3B8">- check   : recompute every line&#x27;s position-bound ID &amp; links</text>
+  <rect x="532" y="298" width="480" height="160" rx="10" fill="#111827" stroke="#334155" stroke-width="1.8"/>
+  <text x="546" y="322" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="12.5" font-weight="700" fill="#F8FAFC">Integrity &amp; Library Embedding</text>
+  <text x="546" y="342" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="11" fill="#94A3B8">- Editing, inserting, or deleting any interior line shifts subsequent</text>
+  <text x="546" y="359" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="11" fill="#94A3B8">  positions and fails &#x27;onrecord check&#x27; by line (pair with head count</text>
+  <text x="546" y="376" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="11" fill="#94A3B8">  checkpoint to detect clean tail-line removal)</text>
+  <text x="546" y="393" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="11" fill="#94A3B8">- Consumed directly as a Rust library crate by sibling tool tetlock</text>
 </svg>

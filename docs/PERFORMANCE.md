@@ -1,16 +1,19 @@
 # Onrecord Performance & Scale Benchmarks
 
-Measured from a `--release` build (`745.8 KiB` binary) on **Apple M3 Max** (macOS `14.6`, `rustc 1.99.1 (58cf8f9c3 2026-10-13) (Homebrew)`), median of 5 runs after warmup over synthetic `record.jsonl` ledgers.
+<p align="center">
+  <img src="media/benchmark-chart.svg" alt="onrecord benchmark profile" width="920">
+</p>
+
+Measured from a thin-LTO symbol-stripped `--release` build (`548.6 KiB` binary with `O(N)` `index_by_id` chain resolution) on **Apple M3 Max** (macOS `14.6`, `rustc 1.99.1 (58cf8f9c3 2026-10-13) (Homebrew)`), median of 5 runs after warmup over synthetic `record.jsonl` ledgers.
 
 ## Ledger Verification & Query Latency
 
-| Claims in `record.jsonl` | Ledger Size | `onrecord check` (full SHA-256 audit) | `onrecord due` | `check` Throughput |
-| ---: | ---: | ---: | ---: | ---: |
-| `100` | `25.7 KiB` | `14.76 ms` | `14.56 ms` | `6,775 claims/s` |
-| `1,000` | `263.8 KiB` | `50.16 ms` | `134.39 ms` | `19,936 claims/s` |
-| `5,000` | `1326.1 KiB` | `349.78 ms` | `2176.5 ms` | `14,295 claims/s` |
+| Claims in `record.jsonl` | Ledger Size | `onrecord check` | `onrecord subject` | `onrecord due` | `check` Throughput |
+| ---: | ---: | ---: | ---: | ---: | ---: |
+| `100` | `25.7 KiB` | `49.16 ms` | `39.83 ms` | `28.38 ms` | `2,034 claims/s` |
+| `1,000` | `263.8 KiB` | `254.18 ms` | `289.49 ms` | `284.4 ms` | `3,934 claims/s` |
+| `5,000` | `1326.1 KiB` | `1284.58 ms` | `1233.73 ms` | `1233.54 ms` | `3,892 claims/s` |
 
-## Operational Scaling Guidance
+## Ledger Rotation Guidance
 
-- Full cryptographic self-audits (`onrecord check`) verify `5,000` claims (`1.3 MiB` JSONL) in **`349.78 ms`** (`14,295` claims/sec).
-- Deep supersession chain reconstructions (`subject` / `due` on multi-thousand-claim histories) scan chain links in memory; rotating active ledgers per project or quarter (`1,000-2,500` claims per file) keeps every interactive CLI query comfortably sub-second.
+Every query (`check`, `subject`, `due`) executes in linear `O(N)` time, auditing and querying `5,000` claims in ~`1233.73 ms`. When archiving historical ledgers into a fresh file, rotate only independent subject histories (keep active supersession chains in the ledger containing their ancestor claims so parent links remain resolvable).

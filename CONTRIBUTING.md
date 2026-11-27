@@ -4,7 +4,7 @@ Thank you for contributing to `onrecord`.
 
 ## Development Prerequisites
 
-- Rust stable toolchain (`1.74` or newer) with `rustfmt` and `clippy`
+- Rust stable toolchain (`1.78` or newer) with `rustfmt` and `clippy`
 - Python `3.10+` (for `scripts/codepoint_scan.py` and JSON Schema checks)
 
 ## Local Gate

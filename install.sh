@@ -1,23 +1,99 @@
 #!/bin/sh
-# Install a prebuilt onrecord release binary with SHA-256 verification.
+# Install prebuilt onrecord binary from GitHub Releases with SHA-256 verification.
+#
+# Options:
+#   --version TAG   Release tag such as v0.1.0 (default: latest GitHub release)
+#   --bin-dir DIR   Target directory (default: $HOME/.local/bin)
+#   -h, --help      Show usage and exit
+#
+# Environment variables:
+#   ONRECORD_INSTALL_DIR  Target directory (default: $HOME/.local/bin)
+#   ONRECORD_VERSION      Release tag (default: latest)
+#   ONRECORD_REPO         GitHub owner/repo (default: david-engelmann/onrecord)
+#   ONRECORD_BASE_URL     Override release download base URL (for offline mirrors/CI)
+
 set -eu
 
 REPO="${ONRECORD_REPO:-david-engelmann/onrecord}"
 INSTALL_DIR="${ONRECORD_INSTALL_DIR:-$HOME/.local/bin}"
 VERSION="${ONRECORD_VERSION:-latest}"
 
+usage() {
+    cat <<'EOF'
+usage: install.sh [--version vX.Y.Z] [--bin-dir DIR]
+
+Options:
+  --version TAG   Release tag to install (defaults to latest GitHub release)
+  --bin-dir DIR   Destination directory for the binary (default: $HOME/.local/bin)
+  -h, --help      Show this help message and exit
+EOF
+}
+
+err() {
+    printf 'onrecord-install: error: %s\n' "$1" >&2
+    exit 1
+}
+
+while [ "$#" -gt 0 ]; do
+    case "$1" in
+        --version)
+            [ "$#" -ge 2 ] || err "--version requires a tag argument"
+            VERSION="$2"
+            shift 2
+            ;;
+        --bin-dir)
+            [ "$#" -ge 2 ] || err "--bin-dir requires a directory argument"
+            INSTALL_DIR="$2"
+            shift 2
+            ;;
+        -h|--help)
+            usage
+            exit 0
+            ;;
+        *)
+            err "unknown argument: $1 (pass --help for usage)"
+            ;;
+    esac
+done
+
 need_cmd() {
-    if ! command -v "$1" >/dev/null 2>&1; then
-        echo "error: required command '$1' not found on PATH" >&2
-        exit 1
-    fi
+    command -v "$1" >/dev/null 2>&1 || err "required command not found: $1"
 }
 
 need_cmd uname
 need_cmd tar
+need_cmd awk
 need_cmd mktemp
 
-fetch() {
+detect_target() {
+    os_name="$(uname -s 2>/dev/null || echo unknown)"
+    arch_name="$(uname -m 2>/dev/null || echo unknown)"
+
+    case "$os_name" in
+        Linux)
+            if (ldd --version 2>&1 || true) | grep -qi musl || ls /lib/ld-musl-* >/dev/null 2>&1; then
+                err "musl Linux detected; prebuilt Linux archives target glibc (gnu). Install from source with: cargo install --git https://github.com/${REPO}.git --locked"
+            fi
+            os_part="unknown-linux-gnu"
+            ;;
+        Darwin)
+            os_part="apple-darwin"
+            ;;
+        *)
+            err "unsupported operating system: $os_name (use prebuilt Windows .zip or cargo install)"
+            ;;
+    esac
+
+    case "$arch_name" in
+        x86_64|amd64) arch_part="x86_64" ;;
+        aarch64|arm64) arch_part="aarch64" ;;
+        *) err "unsupported CPU architecture: $arch_name" ;;
+    esac
+
+    printf '%s-%s' "$arch_part" "$os_part"
+}
+
+download_file() {
     url="$1"
     dest="$2"
     if command -v curl >/dev/null 2>&1; then
@@ -25,82 +101,100 @@ fetch() {
     elif command -v wget >/dev/null 2>&1; then
         wget -qO "$dest" "$url"
     else
-        echo "error: curl or wget is required to download releases" >&2
-        exit 1
+        err "either curl or wget is required to download release archives"
     fi
 }
 
-sha256_file() {
+resolve_latest_tag() {
+    api_url="https://api.github.com/repos/${REPO}/releases/latest"
+    if command -v curl >/dev/null 2>&1; then
+        tag="$(curl -fsSL "$api_url" | awk -F'"' '/"tag_name"[[:space:]]*:/ { print $4; exit }')"
+    elif command -v wget >/dev/null 2>&1; then
+        tag="$(wget -qO- "$api_url" | awk -F'"' '/"tag_name"[[:space:]]*:/ { print $4; exit }')"
+    else
+        err "either curl or wget is required"
+    fi
+    [ -n "$tag" ] || err "could not resolve latest release tag from $api_url"
+    printf '%s' "$tag"
+}
+
+compute_sha256() {
     file="$1"
     if command -v sha256sum >/dev/null 2>&1; then
-        sha256sum "$file" | awk '{print $1}'
+        sha256sum "$file" | awk '{print tolower($1)}'
     elif command -v shasum >/dev/null 2>&1; then
-        shasum -a 256 "$file" | awk '{print $1}'
+        shasum -a 256 "$file" | awk '{print tolower($1)}'
     else
-        echo "error: sha256sum or shasum is required to verify SHA256SUMS" >&2
-        exit 1
+        err "either sha256sum or shasum is required to verify SHA256SUMS"
     fi
 }
 
-os_name="$(uname -s)"
-arch_name="$(uname -m)"
+TARGET="$(detect_target)"
+ARCHIVE="onrecord-${TARGET}.tar.gz"
 
-case "$os_name" in
-    Linux) os_part="unknown-linux-gnu" ;;
-    Darwin) os_part="apple-darwin" ;;
-    *)
-        echo "error: unsupported operating system '$os_name' (use Windows .zip release or build from source)" >&2
-        exit 1
-        ;;
-esac
-
-case "$arch_name" in
-    x86_64|amd64) arch_part="x86_64" ;;
-    aarch64|arm64) arch_part="aarch64" ;;
-    *)
-        echo "error: unsupported architecture '$arch_name'" >&2
-        exit 1
-        ;;
-esac
-
-target="${arch_part}-${os_part}"
-
-tmpdir="$(mktemp -d)"
-trap 'rm -rf "$tmpdir"' EXIT INT TERM
-
-if [ "$VERSION" = "latest" ]; then
-    api_json="$tmpdir/release.json"
-    fetch "https://api.github.com/repos/${REPO}/releases/latest" "$api_json"
-    tag="$(sed -n 's/.*"tag_name"[[:space:]]*:[[:space:]]*"\([^"]*\)".*/\1/p' "$api_json" | head -n 1)"
-    if [ -z "$tag" ]; then
-        echo "error: could not determine latest release tag from GitHub" >&2
-        exit 1
-    fi
+if [ -n "${ONRECORD_BASE_URL:-}" ]; then
+    BASE_URL="${ONRECORD_BASE_URL%/}"
 else
-    tag="$VERSION"
+    if [ "$VERSION" = "latest" ] || [ -z "$VERSION" ]; then
+        TAG="$(resolve_latest_tag)"
+    else
+        case "$VERSION" in
+            v*) TAG="$VERSION" ;;
+            *)  TAG="v$VERSION" ;;
+        esac
+    fi
+    BASE_URL="https://github.com/${REPO}/releases/download/${TAG}"
 fi
 
-archive="onrecord-${tag}-${target}.tar.gz"
-base_url="https://github.com/${REPO}/releases/download/${tag}"
+TMP_DIR="$(mktemp -d 2>/dev/null || mktemp -d -t onrecord-install)"
+STAGED_BIN=""
+cleanup() {
+    rm -rf "$TMP_DIR"
+    if [ -n "$STAGED_BIN" ] && [ -f "$STAGED_BIN" ]; then
+        rm -f "$STAGED_BIN"
+    fi
+}
+trap cleanup EXIT INT TERM
 
-fetch "${base_url}/${archive}" "${tmpdir}/${archive}"
-fetch "${base_url}/SHA256SUMS" "${tmpdir}/SHA256SUMS"
+printf 'Downloading %s/%s\n' "$BASE_URL" "$ARCHIVE"
+download_file "${BASE_URL}/${ARCHIVE}" "${TMP_DIR}/${ARCHIVE}"
+download_file "${BASE_URL}/SHA256SUMS" "${TMP_DIR}/SHA256SUMS"
 
-expected="$(awk -v name="$archive" '$2 == name || $2 == "*" name {print $1; exit}' "${tmpdir}/SHA256SUMS")"
-if [ -z "$expected" ]; then
-    echo "error: ${archive} not listed in SHA256SUMS" >&2
-    exit 1
+EXPECTED_SHA="$(awk -v name="$ARCHIVE" '
+    NF >= 2 {
+        file = $2
+        sub(/^\*/, "", file)
+        sub(/^\.\//, "", file)
+        if (file == name) {
+            print tolower($1)
+            exit
+        }
+    }
+' "${TMP_DIR}/SHA256SUMS")"
+
+[ -n "$EXPECTED_SHA" ] || err "archive ${ARCHIVE} not listed in SHA256SUMS"
+
+ACTUAL_SHA="$(compute_sha256 "${TMP_DIR}/${ARCHIVE}")"
+if [ "$ACTUAL_SHA" != "$EXPECTED_SHA" ]; then
+    err "SHA-256 mismatch for ${ARCHIVE}: expected ${EXPECTED_SHA}, got ${ACTUAL_SHA}"
 fi
 
-actual="$(sha256_file "${tmpdir}/${archive}")"
-if [ "$actual" != "$expected" ]; then
-    echo "error: SHA-256 mismatch for ${archive} (expected ${expected}, got ${actual})" >&2
-    exit 1
+mkdir -p "${TMP_DIR}/unpack"
+tar -xzf "${TMP_DIR}/${ARCHIVE}" -C "${TMP_DIR}/unpack"
+
+if [ -f "${TMP_DIR}/unpack/onrecord" ]; then
+    BIN_SRC="${TMP_DIR}/unpack/onrecord"
+elif [ -f "${TMP_DIR}/unpack/onrecord-${TARGET}/onrecord" ]; then
+    BIN_SRC="${TMP_DIR}/unpack/onrecord-${TARGET}/onrecord"
+else
+    err "onrecord binary not found inside ${ARCHIVE}"
 fi
 
-tar -xzf "${tmpdir}/${archive}" -C "$tmpdir"
 mkdir -p "$INSTALL_DIR"
-cp "${tmpdir}/onrecord-${tag}-${target}/onrecord" "${INSTALL_DIR}/onrecord"
-chmod 0755 "${INSTALL_DIR}/onrecord"
+STAGED_BIN="${INSTALL_DIR}/.onrecord.tmp.$$"
+cp "$BIN_SRC" "$STAGED_BIN"
+chmod 0755 "$STAGED_BIN"
+mv -f "$STAGED_BIN" "${INSTALL_DIR}/onrecord"
+STAGED_BIN=""
 
-echo "Installed onrecord ${tag} (${target}) to ${INSTALL_DIR}/onrecord"
+printf 'Verified SHA-256 (%s) and installed onrecord to %s/onrecord\n' "$ACTUAL_SHA" "$INSTALL_DIR"

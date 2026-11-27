@@ -11,26 +11,22 @@
   <line x1="80.7" y1="126.5" x2="123.3" y2="126.5" stroke="#A78BFA" stroke-width="2" opacity="0.6"/>
   <text x="160" y="104" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="38" font-weight="700" fill="#F8FAFC">onrecord</text>
   <text x="160" y="134" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="13" font-weight="600" fill="#A78BFA" letter-spacing="0.8">APPEND-ONLY CLAIM LEDGER  |  RECEIPT MEMORY</text>
-
   <text x="64" y="232" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, sans-serif" font-size="30" font-weight="700" fill="#F8FAFC">Cross-session agent memory where nothing</text>
   <text x="64" y="272" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, sans-serif" font-size="30" font-weight="700" fill="#F8FAFC">is stored as a bare fact.</text>
-
   <text x="64" y="332" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, sans-serif" font-size="18" fill="#94A3B8">Every claim carries asserter, timestamp, evidence,</text>
   <text x="64" y="360" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, sans-serif" font-size="18" fill="#94A3B8">linear supersession chain, and conflict detection.</text>
-
   <rect x="668" y="132" width="552" height="330" rx="14" fill="#070B12" stroke="#334155" stroke-width="1.8"/>
   <circle cx="692" cy="154" r="5.5" fill="#EF4444"/>
   <circle cx="710" cy="154" r="5.5" fill="#F59E0B"/>
   <circle cx="728" cy="154" r="5.5" fill="#10B981"/>
   <line x1="668" y1="172" x2="1220" y2="172" stroke="#1E293B" stroke-width="1"/>
   <text x="690" y="196" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="12.5" fill="#F8FAFC">$ onrecord subject examples/demo_record.jsonl deploy</text>
-  <text x="690" y="230" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="12.5" fill="#A78BFA">{ &quot;subject&quot;: &quot;deploy&quot;, &quot;conflict&quot;: true,</text>
-  <text x="690" y="264" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="12.5" fill="#E2E8F0">  &quot;live&quot;: [</text>
+  <text x="690" y="230" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="12.5" fill="#A78BFA">{ &quot;conflict&quot;: true, &quot;subject&quot;: &quot;deploy&quot;,</text>
+  <text x="690" y="264" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="12.5" fill="#E2E8F0">  &quot;claims&quot;: [</text>
   <text x="690" y="298" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="12.5" fill="#34D399">    { &quot;claim&quot;: { &quot;id&quot;: &quot;claim-f649cbd377931778&quot;, &quot;a...</text>
   <text x="690" y="332" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="12.5" fill="#CBD5E1">        &quot;text&quot;: &quot;Staging deploy v2.4.1 passed healt...</text>
   <text x="690" y="366" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="12.5" fill="#94A3B8">        &quot;supersedes&quot;: &quot;claim-32f4daa576031420&quot;, &quot;ev...</text>
   <text x="690" y="400" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="12.5" fill="#A78BFA">      &quot;chain&quot;: [&quot;claim-32f4daa576031420 -&gt; claim-f6...</text>
-
   <line x1="64" y1="528" x2="1216" y2="528" stroke="#1E293B" stroke-width="1.5"/>
   <text x="64" y="568" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="16" font-weight="600" fill="#E2E8F0">github.com/david-engelmann/onrecord</text>
   <text x="1216" y="568" text-anchor="end" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="15" font-weight="600" fill="#A78BFA">MIT License  |  Retrospective Line  |  32 / 100 rounds</text>

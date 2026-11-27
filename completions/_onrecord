@@ -13,7 +13,14 @@ _onrecord() {
         _describe -t commands 'onrecord subcommand' subcommands
         return
     fi
-    _arguments -s '--text' '--asserter' '--at' '--evidence' '--supersedes' '--subject' '--due' '-h' '--help' '*:file:_files'
+    case "${words[2]}" in
+        add) _arguments -s '--text=[value]:value:' '--asserter=[value]:value:' '--at=[value]:value:' '*--evidence=[evidence source:ref]:receipt:' '--supersedes=[value]:value:' '--subject=[value]:value:' '--due=[value]:value:' '-h[show help]' '--help[show help]' '*:file:_files' ;;
+        get) _arguments -s '-h[show help]' '--help[show help]' '*:file:_files' ;;
+        subject) _arguments -s '-h[show help]' '--help[show help]' '*:file:_files' ;;
+        due) _arguments -s '-h[show help]' '--help[show help]' '*:file:_files' ;;
+        check) _arguments -s '-h[show help]' '--help[show help]' '*:file:_files' ;;
+        *) _files ;;
+    esac
 }
 
 _onrecord "$@"

@@ -10,7 +10,7 @@ repository = "https://github.com/david-engelmann/onrecord"
 documentation = "https://docs.rs/onrecord"
 keywords = ["agents", "memory", "provenance", "audit", "jsonl"]
 categories = ["command-line-utilities", "database-implementations"]
-rust-version = "1.74"
+rust-version = "1.78"
 exclude = ["CONTRACT.md", "scripts/**", ".github/**", "tests/**", "book/**", "docs/media/*.gif", "docs/media/*.png"]
 
 [lib]
@@ -26,9 +26,14 @@ flighttape = { git = "https://github.com/david-engelmann/flighttape", rev = "74a
 sha2 = "0.10"
 
 [package.metadata.binstall]
-pkg-url = "{ repo }/releases/download/v{ version }/{ name }-v{ version }-{ target }.{ archive-format }"
-bin-dir = "{ name }-v{ version }-{ target }/{ bin }{ binary-ext }"
+pkg-url = "{ repo }/releases/download/v{ version }/{ name }-{ target }.{ archive-format }"
+bin-dir = "{ bin }{ binary-ext }"
 pkg-fmt = "tgz"
 
 [package.metadata.binstall.overrides.x86_64-pc-windows-msvc]
 pkg-fmt = "zip"
+
+[profile.release]
+lto = "thin"
+codegen-units = 1
+strip = "symbols"

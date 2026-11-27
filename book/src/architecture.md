@@ -10,7 +10,7 @@ Most "agent memory" stores flatten observations into unattributed vector chunks 
 
 1. **Position-Bound Content Addressing (`derive_id`)**:
    - Every claim's `id` (`claim-<16 lowercase hex>`) is the first 16 hex digits of the Canonical Form 1 SHA-256 digest over `{"claim": claim_without_id, "position": zero_based_line_index}`.
-   - Binding `position` into the hash means deleting, inserting, or reordering any line in `record.jsonl` invalidates every subsequent claim ID, allowing `onrecord check` to pinpoint tampering or truncation by exact 1-based line number.
+   - Binding `position` into the hash means editing, inserting, reordering, or deleting any interior line in `record.jsonl` invalidates subsequent claim IDs, and partial tail writes fail JSON parsing (`not JSON`). To also detect clean removal of the final complete line, pair `onrecord check` with an expected line count or head claim ID checkpoint.
 2. **Shared Grammar with `flighttape` (`OR-18`)**:
    - `onrecord` consumes `flighttape::timeparse` and Canonical Form 1 parsing directly from the `flighttape` crate rather than forking timestamp or JSON rules. The store never calls `SystemTime::now()`; every `asserted_at` timestamp is caller-supplied and grammar-checked.
 3. **Linear Supersession vs Explicit Subject Conflict**:

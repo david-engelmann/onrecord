@@ -22,7 +22,9 @@ Each line in `record.jsonl` is a standalone UTF-8 JSON object:
 
 ## 2. Query Views (`schema/views.schema.json`)
 
-- **`onrecord get <store> <id>`**: `{ "claim": {...}, "chain": [oldest, ..., target] }`.
-- **`onrecord subject <store> <subject>`**: `{ "subject": "...", "conflict": bool, "live": [{ "claim": {...}, "chain": [...] }] }`.
-- **`onrecord due <store> <YYYY-MM-DD>`**: `{ "as_of": "YYYY-MM-DD", "due": [{ "claim": {...}, "chain": [...] }] }` covering live heads whose `due <= as_of`.
+- **`onrecord get <store> <id>`**: Returns a retrieval object `{ "claim": {...}, "chain": [oldest, ..., target] }`.
+- **`onrecord subject <store> <subject>`**:
+  - When **1** live claim answers `<subject>`, returns the single retrieval object `{ "claim": {...}, "chain": [...] }`.
+  - When **2 or more** live claims answer `<subject>`, returns `{ "conflict": true, "subject": "<subject>", "claims": [{ "claim": {...}, "chain": [...] }, ...] }`.
+- **`onrecord due <store> <YYYY-MM-DD>`**: `{ "as_of": "YYYY-MM-DD", "due": [{ "claim": {...}, "chain": [...] }], "conflicts": [...] }` (`conflicts` included when multiple due heads share a subject).
 - **`onrecord check <store>`**: Prints `the record is sound` (exit `0`) or line-numbered defect diagnostics (exit `1`).
