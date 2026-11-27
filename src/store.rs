@@ -868,27 +868,37 @@ fn answers(claim: &Value, chain: &[Value]) -> Vec<Text> {
     out
 }
 
-fn build_chain(claims: &[Value], claim: &Value) -> Result<Vec<Value>, StoreError> {
-    let mut by_id: HashMap<Vec<u16>, &Value> = HashMap::new();
+fn index_by_id(claims: &[Value]) -> HashMap<&[u16], &Value> {
+    let mut by_id: HashMap<&[u16], &Value> = HashMap::with_capacity(claims.len());
     for item in claims {
         if let Some(Value::Str(cid)) = field(item, "id") {
-            by_id.insert(cid.units().to_vec(), item);
+            by_id.insert(cid.units(), item);
         }
     }
+    by_id
+}
+
+fn build_chain_indexed<'a>(
+    by_id: &HashMap<&[u16], &'a Value>,
+    claim: &'a Value,
+) -> Result<Vec<Value>, StoreError> {
     let mut chain = vec![claim.clone()];
-    let mut seen: HashSet<Vec<u16>> = HashSet::new();
+    let mut seen: HashSet<&[u16]> = HashSet::new();
     if let Some(Value::Str(cid)) = field(claim, "id") {
-        seen.insert(cid.units().to_vec());
+        seen.insert(cid.units());
     }
     let mut current = claim;
     while let Some(Value::Str(target)) = field(current, "supersedes") {
-        let parent = by_id.get(target.units()).ok_or(StoreError::Crash)?;
+        let parent = by_id
+            .get(target.units())
+            .copied()
+            .ok_or(StoreError::Crash)?;
         if let Some(Value::Str(pid)) = field(parent, "id") {
-            if !seen.insert(pid.units().to_vec()) {
+            if !seen.insert(pid.units()) {
                 break;
             }
         }
-        chain.push((*parent).clone());
+        chain.push(parent.clone());
         current = parent;
     }
     chain.reverse();
@@ -902,17 +912,17 @@ fn retrieval(claim: &Value, chain: Vec<Value>) -> Value {
     ])
 }
 
-fn superseded_set(claims: &[Value]) -> HashSet<Vec<u16>> {
-    let mut set = HashSet::new();
+fn superseded_set(claims: &[Value]) -> HashSet<&[u16]> {
+    let mut set = HashSet::with_capacity(claims.len());
     for claim in claims {
         if let Some(Value::Str(target)) = field(claim, "supersedes") {
-            set.insert(target.units().to_vec());
+            set.insert(target.units());
         }
     }
     set
 }
 
-fn is_superseded(set: &HashSet<Vec<u16>>, claim: &Value) -> bool {
+fn is_superseded(set: &HashSet<&[u16]>, claim: &Value) -> bool {
     match field(claim, "id") {
         Some(Value::Str(id)) => set.contains(id.units()),
         _ => false,
@@ -1109,25 +1119,25 @@ impl Store {
 
     pub fn get(&self, claim_id: &Text) -> Result<Value, StoreError> {
         let claims = self.load()?;
-        let claim = claims
-            .iter()
-            .find(|claim| {
-                matches!(field(claim, "id"), Some(Value::Str(id)) if id.units() == claim_id.units())
-            })
+        let by_id = index_by_id(&claims);
+        let claim = by_id
+            .get(claim_id.units())
+            .copied()
             .ok_or_else(|| named(msg_with("no claim with id ", claim_id, "")))?;
-        let chain = build_chain(&claims, claim)?;
+        let chain = build_chain_indexed(&by_id, claim)?;
         Ok(retrieval(claim, chain))
     }
 
     pub fn subject(&self, key: &Text) -> Result<Value, StoreError> {
         let claims = self.load()?;
+        let by_id = index_by_id(&claims);
         let superseded = superseded_set(&claims);
         let mut live: Vec<(&Value, Vec<Value>)> = Vec::new();
         for claim in &claims {
             if is_superseded(&superseded, claim) {
                 continue;
             }
-            let chain = build_chain(&claims, claim)?;
+            let chain = build_chain_indexed(&by_id, claim)?;
             if answers(claim, &chain)
                 .iter()
                 .any(|s| s.units() == key.units())
@@ -1170,6 +1180,7 @@ impl Store {
         // by name instead of answering empty.
         let (claims, defects) = load_record(&self.path, BUDGET_READ);
         require_sound(&defects)?;
+        let by_id = index_by_id(&claims);
         let superseded = superseded_set(&claims);
         let mut due: Vec<(&Text, usize, &Value)> = Vec::new();
         for (position, claim) in claims.iter().enumerate() {
@@ -1183,9 +1194,9 @@ impl Store {
             }
         }
         due.sort_by(|a, b| a.0.units().cmp(b.0.units()).then(a.1.cmp(&b.1)));
-        let mut documents = Vec::new();
+        let mut documents = Vec::with_capacity(due.len());
         for (_, _, claim) in &due {
-            let chain = build_chain(&claims, claim)?;
+            let chain = build_chain_indexed(&by_id, claim)?;
             documents.push(retrieval(claim, chain));
         }
         let mut counts: Vec<(Text, usize)> = Vec::new();
