@@ -11292,3 +11292,67 @@ c, each 21 blobs, a planted
 control counted first, zero
 U+2014 and zero U+2013 in
 either.
+
+OR-199. The realistic stands
+not completed at this round.
+Per OR-150's discipline the
+attempt ledger stands whole:
+three launches stand, each
+killed by a runtime restart,
+none reaching the harness's
+completed final accounting,
+and none counts. Attempt 1
+(one launch, begun
+2026-11-27T15:49:25Z, its
+harness root at or24-real-
+jemkq7b9, its own probe
+verifying /dev/full genuine
+before the harness started)
+queued in the slot for about
+twenty-five minutes and was
+killed mid-composition by a
+runtime restart at about
+17:25Z; its composition
+stands in its root at this
+hand: both big records at
+1,370 lines, 342,958 bytes,
+md5 d0cf72e653790760eaf3f0da
+82c9e49f, byte-identical.
+Attempt 2 (one launch, begun
+2026-11-27T17:30:00Z, its
+harness root at or24-real-
+ito2v1_o, its own probe
+verifying /dev/full genuine)
+queued in the slot for about
+fifteen minutes and was
+killed mid-composition by a
+runtime restart at about
+19:07Z; its composition
+stands at 1,154 lines on the
+rust side, 289,067 bytes,
+md5 8fcb068542d4df01daf14c5f
+16792363, and 1,153 lines on
+the oracle side, 288,826
+bytes, md5 4f149095fe54ea16b
+b1669eeaa7c2756, the one-line
+skew the kill's in-flight
+add, no split printed.
+Attempt 3 (one launch, begun
+2026-11-27T19:13:21Z, its
+harness root at or24-real-
+y80m116f, its own probe
+verifying /dev/full genuine)
+queued in the slot for about
+forty-five minutes behind
+sibling gates and was killed
+mid-composition by a runtime
+restart at about 21:34Z; its
+composition stands at 1,699
+lines on each side, 425,787
+bytes, md5 bdb0a2da1aa08e994
+bfac31d4d770bae, byte-
+identical, the deepest
+composition of the round. No
+fourth launch stands. The
+realistic's completion stands
+charged to Round 34.
