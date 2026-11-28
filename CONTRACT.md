@@ -11490,3 +11490,277 @@ correction. This record stands
 outside the Status range,
 which continues to run through
 OR-201.
+
+OR-203. PR 50 read back whole
+at this hand. PR 50 stands
+closed and merged: opened from
+refine/or-round33 on base 04e0
+ca550cc7f6f6bc8f1b9df69646d26e
+b9a57c, seven commits
+(fd6ef138, tree fa79edcc,
+contract 324,560 bytes;
+735100ef, tree 3c502244,
+contract 327,080; 8c445cb9,
+tree c344cd92, contract
+329,043; 764cb839, tree
+eb0b44d6, contract 330,745;
+d1e8d622, tree 93177b0f,
+contract 332,297; 6e5b65bf,
+tree 9362f13d, contract
+332,535; be4448ae, tree
+67974deb, contract 334,394),
+merged by the Trunk merge
+queue on 2026-11-28T14:23:29Z
+as 7c8cef53a82b6ec1cc1a60150be
+d6e6e4a232e62, a single-parent
+squash commit whose tree 67974
+debba0af70602b91a22868e41b6ef9
+d90bb is identical to the
+reviewed repair tree. Main
+stands at the merge commit,
+CONTRACT.md on main measures
+334,394 bytes, the Status
+range reads OR-1 to OR-201
+with OR-201 standing as the
+Round 33 closure record inside
+the range as its last item and
+OR-202 standing outside the
+range as the repair record,
+and the README rounds line
+reads 33 of 100. The body
+stands in its final form at
+13,136 chars, the release-
+notes appendix standing at its
+end from its opening marker at
+offset 12,565 spanning 571
+through its end marker,
+measured at this hand on the
+live body; the owner's gate
+record stands appended to the
+body at the landing, and its
+statements stand confirmed at
+this hand as they read: it
+corrects the body's repetition
+of OR-197's launch 7 clause to
+the verified distribution
+(nine of the eleven device
+cells at exit 1 where 120 was
+contracted, help_at_dev_full_e
+xits_120_with_the_dump at exit
+0 where 120 was contracted,
+and emit_with_stderr_closed_an
+d_stdout_full_exits_1 at exit
+0 where 1 was contracted),
+records the repair appended as
+OR-202 and the two delta
+verdicts sustaining it, names
+the repair head be4448ae as
+the head that merges, states
+the shell at 11,376 chars at
+the gate-record read with its
+true final form charged to
+this read-back, and states the
+body's final form at 13,136
+chars with the appendix at
+offset 12,565 spanning 571,
+the appendix preserved byte
+for byte. The final census of
+PR 50 stands at 3 issue
+comments, 0 reviews, and 0
+review comments: the Trunk
+note 7237461949 at 113 chars
+in its merged form, last
+edited 2026-11-28T14:23:32Z;
+the bot shell 7237463701; and
+the owner's enqueue comment
+7240537850 (12 chars, the
+trunk merge command) of
+2026-11-28T14:15:40Z standing
+last on the PR. The body as
+patched named the census at 2
+issue comments, the gate-time
+census stated in the gate
+record with the enqueue to
+follow; the live census reads
+3, the owner's enqueue having
+been added at the landing, and
+the correction stands
+recorded. No separate landing
+comment stands on the PR, and
+the PR's updated_at of
+2026-11-28T14:23:32Z is the
+Trunk note's merged-form edit.
+The Trunk queue PR 51 stands
+closed unmerged. The Round 33
+gate is graded in the open and
+stands clean on one repaired
+Minor: spec fidelity REPAIR on
+one Minor, F-1 (its report at
+10,314 bytes), that OR-197's
+clause overstated launch 7's
+eleven device-cell failures as
+every one an exit 1 where 120
+was contracted; standards
+APPROVE with no findings (its
+report at 4,831 bytes), one
+observation below severity
+standing in that report, that
+the shell had settled plus-two
+to 10,819 chars against the
+body's moment-bounded 10,817,
+exactly the motion the moment-
+bound and this read-back exist
+for; red team APPROVE with no
+findings (its report at 13,713
+bytes), every limb L1 to L9
+executed at its own hand and
+none untested. The repair
+stands appended as OR-202
+outside the Status range with
+OR-196 to OR-201 unrewritten,
+and the delta reviews sustain
+it at their own hands: spec
+delta PASS (its report at
+5,345 bytes), F-1 converted on
+the corrected figures, the
+repair lane's cell-by-cell
+recount having refuted the
+finding's own prescribed ten-
+and-one distribution, the log
+supporting nine, one, and one
+(nine cells at exit 1 where
+120 was contracted, eight in
+plain form and refusal_with_st
+derr_closed_and_stdout_full_ex
+its_120 as Some(1) against
+Some(120); the help cell at
+exit 0 where 120 was
+contracted; the emit cell at
+exit 0 where 1 was
+contracted), and the finding's
+gloss of the help cell stands
+corrected by the repair,
+stated so in the delta report;
+standards delta APPROVE with
+no findings (its report at
+6,151 bytes), its own recount
+sustaining nine, one, and one,
+one observation below severity
+standing in that report, that
+OR-202's gate summary omits
+the full standards review's
+below-severity observation,
+correct form, no action owed.
+The CodeRabbit shell
+7237463701 stands settled at
+its true final form at this
+hand: 11,378 chars, last
+edited 2026-11-28T14:15:09Z,
+before the merge, unmoved at
+this hand's read with its
+updated_at standing at that
+edit (10,817 at the build
+lane's Step 0 patch read;
+plus-two to 10,819 at the
+review axes' reads; re-
+rendered by the repair review
+to 11,376 at the owner's gate-
+record read; plus-two to
+11,378 at the owner's post-
+merge read; the settlings and
+the re-render the standing
+convention). Its recent-review
+panel reads that no actionable
+comments were generated in the
+recent review; its Run ID
+stands fa8e509d-4998-41ad-
+96f6-444c63595225 over the
+range 6e5b65bf to be4448ae
+with files selected for
+processing at 1, CONTRACT.md,
+and 1 skipped as similar to
+previous changes; its Merge
+Risk panel reads Minimal up to
+be444 with the coverage record
+naming source and covered
+commit both as the repair head
+be4448ae, kind reviewed; its
+pre-merge checks stand at 4
+passed, the Title check's full
+details observing that the
+title names the records OR-196
+to OR-200 while the PR also
+adds OR-201 and advances the
+README rounds count, so the
+title does not cover the full
+scope, graded on PR 50's body
+face as accurate and as the
+standing convention, the title
+following PR 46's title in
+form exactly, the family span
+with the closure record after
+it, no change owed, the
+check's own result PASS; the
+shell's walkthrough calls the
+appended records Round 32
+records under a Round 32
+closure heading, misnaming the
+round the closure item closes,
+Round 33, the same slip the
+Round 33 body noted of the
+shell's earlier render, noted
+here on the record; the review
+used the included allowance, 0
+remaining after it. The Step 0
+record in PR 50's body stands
+read back whole at this hand:
+its moment-bounded shell
+figure of 10,817 chars stands
+covered by its express charge
+to this read-back, and every
+other claim in it stands
+confirmed as it reads. PR 50's
+title stands at 43 chars in
+the form this round's PR title
+follows. Hosted CI stands
+verified at this hand on the
+repair head: the push run
+46140638703, the pull_request
+run 46140643746, and the
+dynamic run 46140639723 each
+completed success. The Round
+33 round ran in three build
+lanes and a repair lane: the
+original build lane ended on a
+database write admission
+timeout after banking OR-196;
+the first completion lane
+ended silently after its chain
+launch died in the restart
+wave at about
+2026-11-28T01:21Z; the second
+completion lane ran the base
+gate whole on launch 9 alone
+of the nine launches across
+the three lanes and completed
+the round; and the owner-
+seated repair lane appended
+OR-202 after the gate, the
+whole history disclosed
+plainly on PR 50's body and in
+the lanes' banked progress
+record. Checklist item 3
+stands passing outright, its
+repository-description home
+read live at this hand byte-
+identical to the README lede,
+the three homes graded whole
+at OR-205. The realistic
+stands not completed at Round
+33 on the three device-genuine
+restart-killed attempts OR-199
+records, its completion
+charged to this round as its
+first business and standing
+charged first among this
+round's family at OR-206.
