@@ -63,11 +63,14 @@ def main() -> None:
             lines.append(json.dumps(stored, separators=(",", ":")))
         rec.write_text("\n".join(lines) + "\n", encoding="utf-8")
 
+        check_ms = measure([str(bin_path), "check", str(rec)], runs=3)
         results = {
             "claims": args.claims,
-            "check_ms": measure([str(bin_path), "check", str(rec)], runs=3),
+            "store_kb": round(rec.stat().st_size / 1024.0, 1),
+            "check_ms": check_ms,
             "subject_ms": measure([str(bin_path), "subject", str(rec), "subj-49"], runs=3),
             "due_ms": measure([str(bin_path), "due", str(rec), "2026-12-31"], runs=3),
+            "claims_per_sec_check": round(args.claims / (max(check_ms, 0.001) / 1000.0)),
         }
 
     if args.json:

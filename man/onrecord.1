@@ -23,10 +23,9 @@ onrecord \- append-only self-verifying claim store for agent memory
 maintains an append-only JSONL ledger of attributed, timestamped,
 evidence-backed claims keyed by position-bound Canonical Form 1 IDs
 .RB ( claim-<16hex> ).
-Updates append superseding claims without overwriting history, forks are
-refused, and concurrent
+Updates append superseding claims without overwriting history, and supersession forks are refused (coordinate concurrent
 .B add
-calls serialize under an OS advisory file lock.
+writers externally until cross-platform file locking in PR #49 lands).
 .SH COMMANDS
 .TP
 .BI "add " "record.jsonl " "[required and optional flags]"
@@ -58,7 +57,7 @@ Validation defect, unknown ID/subject, supersession fork, or I/O refusal.
 Command-line usage error.
 .TP
 .B 120
-Standard output stream flush failure.
+Standard output or standard error stream flush failure.
 .SH EXAMPLES
 .nf
 onrecord check examples/demo_record.jsonl

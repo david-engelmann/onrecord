@@ -8,7 +8,7 @@ The format follows Keep a Changelog, and this project adheres to Semantic Versio
 
 ### Added
 
-- Crate packaging metadata in `Cargo.toml` (`repository`, `homepage`, `documentation`, `readme`, `keywords`, `categories`, `rust-version = "1.74"`, and `exclude`).
+- Crate packaging metadata in `Cargo.toml` (`repository`, `homepage`, `documentation`, `readme`, `keywords`, `categories`, `rust-version = "1.78"`, and `exclude`).
 - Least-privilege GitHub Actions permissions (`contents: read`) and non-persisted checkout credentials in `.github/workflows/ci.yml`.
 - Tag-triggered multi-platform release workflow (`.github/workflows/release.yml`) with `SHA256SUMS` generation and POSIX `install.sh` verifier.
 - Verified sample claim store (`examples/demo_record.jsonl`) demonstrating linear supersession, repeatable evidence, and subject conflict reporting.

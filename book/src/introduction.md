@@ -9,7 +9,7 @@
   <a href="https://github.com/david-engelmann/onrecord/actions/workflows/ci.yml"><img src="https://github.com/david-engelmann/onrecord/actions/workflows/ci.yml/badge.svg" alt="ci"></a>
   <a href="https://github.com/david-engelmann/onrecord/actions/workflows/clean-install.yml"><img src="https://github.com/david-engelmann/onrecord/actions/workflows/clean-install.yml/badge.svg" alt="clean-install"></a>
   <a href="https://github.com/david-engelmann/onrecord/actions/workflows/docs.yml"><img src="https://github.com/david-engelmann/onrecord/actions/workflows/docs.yml/badge.svg" alt="docs"></a>
-  <a href="LICENSE"><img src="https://img.shields.io/badge/license-MIT-blueviolet.svg" alt="MIT License"></a>
+  <a href="https://github.com/david-engelmann/onrecord/blob/main/LICENSE"><img src="https://img.shields.io/badge/license-MIT-blueviolet.svg" alt="MIT License"></a>
 </p>
 
 # onrecord
@@ -107,7 +107,7 @@ Measured on Apple M3 Max (`--release`, `745.8 KiB` binary; details in [docs/PERF
 
 ## Status
 
-The claim store is complete at its contracted scope and in daily use by its sibling tools. Closed perfection rounds, 32 of 100. A round counts only when a full cycle of work, audit, review, red team, and approval has closed.
+The claim store is complete at its contracted scope and in daily use by its sibling tools. Closed perfection rounds, 33 of 100. A round counts only when a full cycle of work, audit, review, red team, and approval has closed.
 
 ## License
 
