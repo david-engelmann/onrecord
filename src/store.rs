@@ -929,6 +929,205 @@ fn is_superseded(set: &HashSet<&[u16]>, claim: &Value) -> bool {
     }
 }
 
+// ---------- OR-L2: Multi-agent advisory exclusive locking ----------
+
+struct OsFileLock {
+    file: std::fs::File,
+}
+
+#[cfg(unix)]
+extern "C" {
+    fn flock(fd: i32, operation: i32) -> i32;
+}
+
+#[cfg(unix)]
+fn lock_file_exclusive(file: &std::fs::File) -> std::io::Result<()> {
+    use std::os::unix::io::AsRawFd;
+    const LOCK_EX: i32 = 2;
+    loop {
+        let rc = unsafe { flock(file.as_raw_fd(), LOCK_EX) };
+        if rc == 0 {
+            return Ok(());
+        }
+        let err = std::io::Error::last_os_error();
+        if err.kind() != std::io::ErrorKind::Interrupted {
+            return Err(err);
+        }
+    }
+}
+
+#[cfg(unix)]
+impl Drop for OsFileLock {
+    fn drop(&mut self) {
+        use std::os::unix::io::AsRawFd;
+        const LOCK_UN: i32 = 8;
+        let _ = unsafe { flock(self.file.as_raw_fd(), LOCK_UN) };
+    }
+}
+
+#[cfg(windows)]
+#[repr(C)]
+struct WinOverlapped {
+    internal: usize,
+    internal_high: usize,
+    offset: u32,
+    offset_high: u32,
+    h_event: *mut core::ffi::c_void,
+}
+
+#[cfg(windows)]
+extern "system" {
+    fn LockFileEx(
+        h_file: *mut core::ffi::c_void,
+        dw_flags: u32,
+        dw_reserved: u32,
+        n_number_of_bytes_to_lock_low: u32,
+        n_number_of_bytes_to_lock_high: u32,
+        lp_overlapped: *mut WinOverlapped,
+    ) -> i32;
+    fn UnlockFileEx(
+        h_file: *mut core::ffi::c_void,
+        dw_reserved: u32,
+        n_number_of_bytes_to_unlock_low: u32,
+        n_number_of_bytes_to_unlock_high: u32,
+        lp_overlapped: *mut WinOverlapped,
+    ) -> i32;
+}
+
+#[cfg(windows)]
+fn lock_file_exclusive(file: &std::fs::File) -> std::io::Result<()> {
+    use std::os::windows::io::AsRawHandle;
+    const LOCKFILE_EXCLUSIVE_LOCK: u32 = 0x0000_0002;
+    let mut overlapped = WinOverlapped {
+        internal: 0,
+        internal_high: 0,
+        offset: 0,
+        offset_high: 0,
+        h_event: core::ptr::null_mut(),
+    };
+    let ok = unsafe {
+        LockFileEx(
+            file.as_raw_handle() as *mut core::ffi::c_void,
+            LOCKFILE_EXCLUSIVE_LOCK,
+            0,
+            1,
+            0,
+            &mut overlapped,
+        )
+    };
+    if ok != 0 {
+        Ok(())
+    } else {
+        Err(std::io::Error::last_os_error())
+    }
+}
+
+#[cfg(windows)]
+impl Drop for OsFileLock {
+    fn drop(&mut self) {
+        use std::os::windows::io::AsRawHandle;
+        let mut overlapped = WinOverlapped {
+            internal: 0,
+            internal_high: 0,
+            offset: 0,
+            offset_high: 0,
+            h_event: core::ptr::null_mut(),
+        };
+        let _ = unsafe {
+            UnlockFileEx(
+                self.file.as_raw_handle() as *mut core::ffi::c_void,
+                0,
+                1,
+                0,
+                &mut overlapped,
+            )
+        };
+    }
+}
+
+#[cfg(not(any(unix, windows)))]
+fn lock_file_exclusive(_file: &std::fs::File) -> std::io::Result<()> {
+    Ok(())
+}
+
+#[cfg(not(any(unix, windows)))]
+impl Drop for OsFileLock {
+    fn drop(&mut self) {}
+}
+
+struct AddLockGuard {
+    _record_lock: Option<OsFileLock>,
+    _path_lock: Option<OsFileLock>,
+    _thread_guard: std::sync::MutexGuard<'static, ()>,
+}
+
+fn canonical_lock_key(path: &std::path::Path) -> String {
+    use sha2::Digest;
+    let abs = if path.is_absolute() {
+        path.to_path_buf()
+    } else {
+        std::env::current_dir()
+            .map(|cwd| cwd.join(path))
+            .unwrap_or_else(|_| path.to_path_buf())
+    };
+    let normalized = if let Ok(canon) = std::fs::canonicalize(&abs) {
+        canon
+    } else if let (Some(parent), Some(name)) = (abs.parent(), abs.file_name()) {
+        if let Ok(canon_parent) = std::fs::canonicalize(parent) {
+            canon_parent.join(name)
+        } else {
+            abs
+        }
+    } else {
+        abs
+    };
+    let digest = sha2::Sha256::digest(normalized.as_os_str().as_encoded_bytes());
+    digest.iter().take(16).map(|b| format!("{b:02x}")).collect()
+}
+
+fn acquire_add_lock(path: &std::path::Path) -> AddLockGuard {
+    use std::sync::{Arc, Mutex, OnceLock};
+    static TABLE: OnceLock<Mutex<HashMap<String, &'static Mutex<()>>>> = OnceLock::new();
+    let key = canonical_lock_key(path);
+    let mutex_ref: &'static Mutex<()> = {
+        let mut map = TABLE
+            .get_or_init(|| Mutex::new(HashMap::new()))
+            .lock()
+            .unwrap_or_else(|e| e.into_inner());
+        map.entry(key.clone())
+            .or_insert_with(|| Box::leak(Box::new(Mutex::new(()))))
+    };
+    let _ = Arc::<()>::new;
+    let thread_guard = mutex_ref.lock().unwrap_or_else(|e| e.into_inner());
+    let lock_path = std::env::temp_dir().join(format!("onrecord-add-{key}.lock"));
+    let path_lock = std::fs::OpenOptions::new()
+        .read(true)
+        .write(true)
+        .create(true)
+        .truncate(false)
+        .open(&lock_path)
+        .ok()
+        .and_then(|file| {
+            lock_file_exclusive(&file)
+                .ok()
+                .map(|()| OsFileLock { file })
+        });
+    let record_lock = std::fs::OpenOptions::new()
+        .read(true)
+        .open(path)
+        .ok()
+        .and_then(|file| {
+            lock_file_exclusive(&file)
+                .ok()
+                .map(|()| OsFileLock { file })
+        });
+    AddLockGuard {
+        _record_lock: record_lock,
+        _path_lock: path_lock,
+        _thread_guard: thread_guard,
+    }
+}
+
 pub struct AddClaim {
     pub text: Text,
     pub asserter: Text,
@@ -979,23 +1178,22 @@ impl Store {
         Ok(claims)
     }
 
+    /// Append one verified claim to the record under an exclusive advisory lock,
+    /// returning its position-bound `claim-<16hex>` identifier.
     pub fn add(&self, request: AddClaim) -> Result<String, StoreError> {
+        let _lock = acquire_add_lock(&self.path.os);
         let claims = self.load()?;
         if let Some(supersedes) = &request.supersedes {
-            let known = claims.iter().any(|claim| {
-                matches!(field(claim, "id"), Some(Value::Str(id)) if id.units() == supersedes.units())
-            });
-            if !known {
+            let by_id = index_by_id(&claims);
+            if !by_id.contains_key(supersedes.units()) {
                 return Err(named(msg_with(
                     "supersedes names no claim in the record, ",
                     supersedes,
                     "",
                 )));
             }
-            let already = claims.iter().any(|claim| {
-                matches!(field(claim, "supersedes"), Some(Value::Str(id)) if id.units() == supersedes.units())
-            });
-            if already {
+            let superseded = superseded_set(&claims);
+            if superseded.contains(supersedes.units()) {
                 return Err(named(msg_with(
                     "claim ",
                     supersedes,
