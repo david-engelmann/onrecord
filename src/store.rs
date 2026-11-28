@@ -1104,6 +1104,7 @@ fn acquire_add_lock(path: &std::path::Path) -> AddLockGuard {
                 .ok()
                 .map(|()| OsFileLock { file })
         });
+    #[cfg(unix)]
     let record_lock = std::fs::OpenOptions::new()
         .read(true)
         .open(path)
@@ -1113,6 +1114,8 @@ fn acquire_add_lock(path: &std::path::Path) -> AddLockGuard {
                 .ok()
                 .map(|()| OsFileLock { file })
         });
+    #[cfg(not(unix))]
+    let record_lock: Option<OsFileLock> = None;
     AddLockGuard {
         _record_lock: record_lock,
         _path_lock: path_lock,
