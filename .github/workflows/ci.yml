@@ -1,13 +1,22 @@
 name: ci
+
+permissions:
+  contents: read
+
 on:
   push:
   pull_request:
   merge_group:
+
 jobs:
   gate:
+    permissions:
+      contents: read
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
       - uses: dtolnay/rust-toolchain@stable
         with:
           components: rustfmt, clippy

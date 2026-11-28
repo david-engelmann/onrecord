@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 540" width="960" height="540" role="img" aria-label="onrecord terminal showcase">
+  <rect width="960" height="540" fill="#070B12"/>
+  <rect x="12" y="12" width="936" height="516" rx="14" fill="#0D131F" stroke="#1E293B" stroke-width="2"/>
+  <path d="M 26 12 H 934 A 14 14 0 0 1 948 26 V 50 H 12 V 26 A 14 14 0 0 1 26 12 Z" fill="#131C2E"/>
+  <line x1="12" y1="50" x2="948" y2="50" stroke="#1E293B" stroke-width="1"/>
+  <circle cx="32" cy="31" r="6" fill="#EF4444"/>
+  <circle cx="52" cy="31" r="6" fill="#F59E0B"/>
+  <circle cx="72" cy="31" r="6" fill="#10B981"/>
+  <text x="106" y="36" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="13" fill="#94A3B8">onrecord  --  verified CLI capture  (32 / 100 rounds)</text>
+  <rect x="24" y="68" width="912" height="25" rx="5" fill="#152036"/>
+  <text x="34" y="84" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="12.2" font-weight="600" fill="#F8FAFC">$ onrecord subject examples/demo_record.jsonl deploy</text>
+  <text x="34" y="115" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="12.2" font-weight="600" fill="#A78BFA">{ &quot;conflict&quot;: true, &quot;subject&quot;: &quot;deploy&quot;,</text>
+  <text x="34" y="146" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="12.2" fill="#E2E8F0">  &quot;claims&quot;: [</text>
+  <text x="34" y="177" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="12.2" font-weight="600" fill="#34D399">    { &quot;claim&quot;: { &quot;id&quot;: &quot;claim-f649cbd377931778&quot;, &quot;asserter&quot;: &quot;agent-ops&quot;,</text>
+  <text x="34" y="208" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="12.2" fill="#CBD5E1">        &quot;text&quot;: &quot;Staging deploy v2.4.1 passed health check after config rollback&quot;,</text>
+  <text x="34" y="239" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="12.2" fill="#94A3B8">        &quot;supersedes&quot;: &quot;claim-32f4daa576031420&quot;, &quot;evidence&quot;: [{&quot;source&quot;: &quot;trace&quot;, &quot;reference&quot;: &quot;run-108&quot;}] },</text>
+  <text x="34" y="270" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="12.2" fill="#A78BFA">      &quot;chain&quot;: [&quot;claim-32f4daa576031420 -&gt; claim-f649cbd377931778&quot;] },</text>
+  <text x="34" y="301" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="12.2" fill="#FBBF24">    { &quot;claim&quot;: { &quot;id&quot;: &quot;claim-6d14311a110300c3&quot;, &quot;asserter&quot;: &quot;agent-canary&quot;,</text>
+  <text x="34" y="332" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="12.2" fill="#CBD5E1">        &quot;text&quot;: &quot;Canary synthetic probe still reports elevated 502 rate on staging&quot;,</text>
+  <text x="34" y="363" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="12.2" fill="#94A3B8">        &quot;supersedes&quot;: null, &quot;evidence&quot;: [{&quot;source&quot;: &quot;metric&quot;, &quot;reference&quot;: &quot;probe-884&quot;}] } } ] }</text>
+  <rect x="24" y="378" width="912" height="25" rx="5" fill="#152036"/>
+  <text x="34" y="394" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="12.2" font-weight="600" fill="#F8FAFC">$ onrecord check examples/demo_record.jsonl</text>
+  <text x="34" y="425" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="12.2" font-weight="600" fill="#34D399">the record is sound</text>
+  <line x1="12" y1="492" x2="948" y2="492" stroke="#1E293B" stroke-width="1"/>
+  <circle cx="32" cy="510" r="4.5" fill="#10B981"/>
+  <text x="44" y="514" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="11.5" font-weight="600" fill="#A78BFA">EXIT 0  |  548.6 KiB LTO binary  |  5,000-claim subject: 1233.73 ms  |  check: 1284.58 ms</text>
+</svg>

@@ -1,0 +1,61 @@
+name: bench
+
+on:
+  push:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  bench:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: dtolnay/rust-toolchain@stable
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Build release binary
+        run: cargo build --release --locked
+      - name: Run onrecord benchmarks
+        shell: bash
+        run: |
+          python3 - <<'PY'
+          import json, os, pathlib, platform, subprocess
+          runs = []
+          for claims in (500, 2000, 5000):
+              out = subprocess.check_output(
+                  ["python3", "scripts/bench.py", "--bin", "target/release/onrecord", "--claims", str(claims), "--json"],
+                  text=True,
+              )
+              runs.append(json.loads(out))
+          size_bytes = pathlib.Path("target/release/onrecord").stat().st_size
+          cpu = ""
+          cpuinfo = pathlib.Path("/proc/cpuinfo")
+          if cpuinfo.exists():
+              for line in cpuinfo.read_text(encoding="utf-8", errors="ignore").splitlines():
+                  if line.startswith("model name"):
+                      cpu = line.split(":", 1)[1].strip()
+                      break
+          payload = {
+              "repo": "onrecord",
+              "headSha": subprocess.check_output(["git", "rev-parse", "HEAD"], text=True).strip(),
+              "runnerOs": platform.platform(),
+              "cpuModel": cpu,
+              "cpuCount": os.cpu_count(),
+              "rustc": subprocess.check_output(["rustc", "--version"], text=True).strip(),
+              "binaryBytes": size_bytes,
+              "binaryKiB": round(size_bytes / 1024.0, 1),
+              "runs": runs,
+          }
+          pathlib.Path("bench-results.json").write_text(json.dumps(payload, indent=2) + "\n", encoding="utf-8")
+          PY
+      - uses: actions/upload-artifact@v4
+        with:
+          name: bench-results
+          path: bench-results.json
+          if-no-files-found: error
+          retention-days: 14

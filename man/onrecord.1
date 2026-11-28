@@ -1,0 +1,68 @@
+.TH ONRECORD 1 "2026-11-27" "onrecord 0.1.0" "Retrospective Line"
+.SH NAME
+onrecord \- append-only self-verifying claim store for agent memory
+.SH SYNOPSIS
+.B onrecord add
+.I record.jsonl
+.B \-\-text
+.I TEXT
+.B \-\-asserter
+.I NAME
+.B \-\-at
+.I ISO8601
+.B \-\-evidence
+.I SRC:REF
+.RI [ options ]
+.br
+.B onrecord
+.BR get | subject | due | check
+.I record.jsonl
+.RI [ arg ]
+.SH DESCRIPTION
+.B onrecord
+maintains an append-only JSONL ledger of attributed, timestamped,
+evidence-backed claims keyed by position-bound Canonical Form 1 IDs
+.RB ( claim-<16hex> ).
+Updates append superseding claims without overwriting history, and supersession forks are refused (coordinate concurrent
+.B add
+writers externally until cross-platform file locking in PR #49 lands).
+.SH COMMANDS
+.TP
+.BI "add " "record.jsonl " "[required and optional flags]"
+Validate, derive position-bound ID, and append one claim line (optional
+.BR \-\-supersedes ,
+.BR \-\-subject ,
+.BR \-\-due ).
+.TP
+.BI "get " "record.jsonl claim_id"
+Return one claim and its full supersession chain as JSON.
+.TP
+.BI "subject " "record.jsonl subject_name"
+Return the live head claim and chain, or a conflict object.
+.TP
+.BI "due " "record.jsonl YYYY-MM-DD"
+List live claims whose due date is on or before the given date.
+.TP
+.BI "check " "record.jsonl"
+Recompute every claim ID and verify linear chain soundness from line 0.
+.SH EXIT STATUS
+.TP
+.B 0
+Command succeeded and record is sound.
+.TP
+.B 1
+Validation defect, unknown ID/subject, supersession fork, or I/O refusal.
+.TP
+.B 2
+Command-line usage error.
+.TP
+.B 120
+Standard output or standard error stream flush failure.
+.SH EXAMPLES
+.nf
+onrecord check examples/demo_record.jsonl
+onrecord subject examples/demo_record.jsonl deploy
+onrecord due examples/demo_record.jsonl 2026-06-01
+.fi
+.SH SEE ALSO
+https://github.com/david-engelmann/onrecord

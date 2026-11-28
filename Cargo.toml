@@ -4,6 +4,14 @@ version = "0.1.0"
 edition = "2021"
 description = "Cross-session memory where nothing is stored as a bare fact: every memory is a claim on the record, carrying who asserted it, when, the evidence behind it, and the chain of claims it superseded."
 license = "MIT"
+readme = "README.md"
+homepage = "https://github.com/david-engelmann/onrecord"
+repository = "https://github.com/david-engelmann/onrecord"
+documentation = "https://docs.rs/onrecord"
+keywords = ["agents", "memory", "provenance", "audit", "jsonl"]
+categories = ["command-line-utilities", "database-implementations"]
+rust-version = "1.78"
+exclude = ["CONTRACT.md", "scripts/**", ".github/**", "tests/**", "book/**", "docs/media/*.gif", "docs/media/*.png"]
 
 [lib]
 name = "onrecord"
@@ -16,3 +24,16 @@ path = "src/main.rs"
 [dependencies]
 flighttape = { git = "https://github.com/david-engelmann/flighttape", rev = "74a83298aeb31c82e62b9fb0c613f5bc8600799e" }
 sha2 = "0.10"
+
+[package.metadata.binstall]
+pkg-url = "{ repo }/releases/download/v{ version }/{ name }-{ target }.{ archive-format }"
+bin-dir = "{ bin }{ binary-ext }"
+pkg-fmt = "tgz"
+
+[package.metadata.binstall.overrides.x86_64-pc-windows-msvc]
+pkg-fmt = "zip"
+
+[profile.release]
+lto = "thin"
+codegen-units = 1
+strip = "symbols"

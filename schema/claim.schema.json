@@ -1,0 +1,83 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/david-engelmann/onrecord/blob/main/schema/claim.schema.json",
+  "title": "Onrecord Claim Line",
+  "description": "One newline-delimited JSON claim object stored in an onrecord JSONL record file.",
+  "type": "object",
+  "required": [
+    "id",
+    "text",
+    "asserter",
+    "asserted_at",
+    "evidence",
+    "supersedes"
+  ],
+  "properties": {
+    "id": {
+      "type": "string",
+      "pattern": "^claim-[0-9a-f]{16}$",
+      "description": "Position-bound claim identifier derived from the first 16 hex characters of SHA-256 over Canonical Form 1 of {\"claim\": <claim-without-id>, \"position\": <0-based-line-index>}."
+    },
+    "text": {
+      "type": "string",
+      "minLength": 1,
+      "description": "Non-empty statement of the asserted claim."
+    },
+    "asserter": {
+      "type": "string",
+      "minLength": 1,
+      "description": "Non-empty identifier of the agent, service, or operator making the claim."
+    },
+    "asserted_at": {
+      "type": "string",
+      "minLength": 1,
+      "description": "Caller-supplied ISO 8601 timestamp validated by flighttape::timeparse::parse_timestamp."
+    },
+    "evidence": {
+      "type": "array",
+      "minItems": 1,
+      "description": "Non-empty list of supporting evidence receipts.",
+      "items": {
+        "type": "object",
+        "required": [
+          "source",
+          "reference"
+        ],
+        "properties": {
+          "source": {
+            "type": "string",
+            "minLength": 1
+          },
+          "reference": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "additionalProperties": true
+      }
+    },
+    "supersedes": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "description": "ID of the immediate predecessor claim this entry replaces, or null for a root claim."
+    },
+    "subject": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "description": "Optional subject key grouping live claims and surfacing conflicts."
+    },
+    "due": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}$",
+      "description": "Optional ISO calendar date (YYYY-MM-DD) when the live claim comes due."
+    }
+  },
+  "additionalProperties": true
+}

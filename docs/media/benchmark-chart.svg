@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 980 288" width="980" height="288" role="img" aria-label="onrecord benchmark latency and throughput chart">
+  <rect width="980" height="288" rx="14" fill="#0B0F17" stroke="#1E293B" stroke-width="2"/>
+  <text x="28" y="36" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="15" font-weight="700" fill="#F8FAFC">onrecord  //  SYNTHETIC SCALE BENCHMARK PROFILE</text>
+  <text x="28" y="56" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif" font-size="12.5" fill="#94A3B8">Measured on Apple M3 Max  |  O(N) indexed chains  |  Stripped thin-LTO binary: 548.6 KiB</text>
+  <line x1="28" y1="72" x2="952" y2="72" stroke="#1E293B" stroke-width="1.2"/>
+  <text x="28" y="122" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="12.5" font-weight="600" fill="#E2E8F0">100 claims (25.7 KiB)</text>
+  <rect x="268" y="104" width="370" height="26" rx="6" fill="#131C2E" stroke="#1E293B" stroke-width="1"/>
+  <rect x="268" y="104" width="18" height="26" rx="6" fill="#A78BFA" opacity="0.88"/>
+  <text x="654" y="122" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="12" font-weight="600" fill="#A78BFA">39.83 ms subject  |  49.16 ms check (2,034/s)</text>
+  <text x="28" y="178" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="12.5" font-weight="600" fill="#E2E8F0">1,000 claims (263.8 KiB)</text>
+  <rect x="268" y="160" width="370" height="26" rx="6" fill="#131C2E" stroke="#1E293B" stroke-width="1"/>
+  <rect x="268" y="160" width="84" height="26" rx="6" fill="#A78BFA" opacity="0.88"/>
+  <text x="654" y="178" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="12" font-weight="600" fill="#A78BFA">289.49 ms subject  |  254.18 ms check (3,934/s)</text>
+  <text x="28" y="234" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="12.5" font-weight="600" fill="#E2E8F0">5,000 claims (1326.1 KiB)</text>
+  <rect x="268" y="216" width="370" height="26" rx="6" fill="#131C2E" stroke="#1E293B" stroke-width="1"/>
+  <rect x="268" y="216" width="360" height="26" rx="6" fill="#A78BFA" opacity="0.88"/>
+  <text x="654" y="234" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="12" font-weight="600" fill="#A78BFA">1233.73 ms subject  |  1284.58 ms check (3,892/s)</text>
+</svg>
