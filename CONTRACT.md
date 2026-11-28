@@ -11130,3 +11130,94 @@ completion charged to this
 round and standing charged
 first among this round's
 family at OR-199.
+
+OR-197. Base gate. The base
+gate was executed whole and
+fresh on the Round 32 base
+(main 04e0ca550cc7f6f6bc8f1b9d
+f69646d26eb9a57c, tree 88f0b46
+0ab1c47a96847c1fd87acbbc8783af
+e91) by the round's standing
+chain driver, every leg under
+the shared build slot for its
+whole lifetime, in the tree
+extracted fresh through the
+API at this round's target
+path. Nine launches of the
+chain stand behind the
+verdict, and eight of them
+count nowhere as a stage.
+Launches 1 to 5 were the
+original build lane's, across
+four runtime restarts: the
+first died in its test leg's
+slot queue at the restart near
+2026-11-27T15:20Z; the second
+completed test and clippy,
+both exit 0, and died queued
+for its format leg near
+17:25Z; the third completed
+test exit 0 and died in its
+clippy queue near 19:07Z; the
+fourth completed test exit 0
+and died in its clippy queue
+near 21:34Z; the fifth
+completed its test leg exit 0
+at 23:28:28Z and died with its
+lane's transport error near
+23:29Z, before clippy or
+format stood. Launch 6 was the
+first completion lane's re-
+execution, begun
+2026-11-27T23:36:23Z; its log
+never advanced past the
+stage's opening line, and it
+died in its test leg's queue
+in the restart wave near
+2026-11-28T01:21Z. Launch 7,
+this lane's first, ran in the
+boot that followed: its test
+leg failed with exactly the
+eleven device cells named in
+the round's ledger, the store
+suite's 50 passed and every
+failure an exit 1 where 120
+was contracted, because
+/dev/full did not stand
+genuine in that execution's
+tree; its clippy leg completed
+exit 0, and a service restart
+near 03:26Z killed the chain
+in its format leg's queue.
+Launch 8 was launched from a
+shell whose own child probe
+read /dev/full genuine, and
+its test leg failed with the
+same eleven cells regardless:
+a detached probe taken in the
+same boot read the device not
+genuine, the device property
+standing with the boot's
+detached view and not with any
+launching tree, and this lane
+killed that chain and its
+queued clippy flock once the
+test leg's verdict was beyond
+doubt, so no stale leg fired
+unattended. The verdict stands
+on launch 9 alone, launched
+2026-11-28T05:14:53Z in the
+boot that turned at 05:11:36Z,
+whose detached view a probe
+taken before the launch read
+genuine: BASEGATE_OK. Its
+legs: cargo test exit 0 with
+69 passed, 50 in the store
+suite and 19 in the streams
+suite, failed cells empty;
+cargo clippy with -D warnings
+exit 0; cargo fmt check exit
+0. The execution tree's own
+probe verified /dev/full as a
+genuine device before the legs
+ran.
