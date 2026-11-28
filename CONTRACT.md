@@ -11423,3 +11423,70 @@ OR-51, the Mach-O constructor
 arm, stands carried open by
 name, untouched again this
 round.
+
+OR-202. Repair record,
+appended after the Round 33
+gate reviews of the closure
+head, answering the spec
+axis's finding F-1 (Minor)
+against OR-197, with OR-197
+unrewritten. One clause stands
+corrected by this record:
+OR-197 states of launch 7's
+test leg that the store
+suite's 50 passed and 'every
+failure an exit 1 where 120
+was contracted'. The base-gate
+test log's two failing blocks,
+launch 7's and launch 8's
+alike, distribute the eleven
+device cells otherwise, re-
+verified cell by cell at this
+repair lane's hand: nine of
+the eleven cells stand at exit
+1 where 120 was contracted,
+eight asserting 1 against 120
+in plain form and refusal_with
+_stderr_closed_and_stdout_full
+_exits_120 asserting Some(1)
+against Some(120); help_at_dev
+_full_exits_120_with_the_dump
+stands at exit 0 where 120 was
+contracted, asserting 0
+against 120; and emit_with_std
+err_closed_and_stdout_full_exi
+ts_1 stands at exit 0 where 1
+was contracted, asserting
+Some(0) against Some(1). The
+clause's universal therefore
+misdescribes two of the eleven
+cells, the emit cell on both
+of its values and the help
+cell on its observed value
+alone. The count of eleven
+device cells, the device cause
+(/dev/full did not stand
+genuine in those executions'
+trees), and the test leg's
+disposition (failed, counted
+nowhere as a stage, the base-
+gate verdict standing on
+launch 9 alone) stand exactly
+as OR-197 states them, and no
+figure in any item changes on
+this correction. The gate's
+standing at this repair: the
+spec axis returned REPAIR on
+this finding alone, the
+standards axis APPROVE with no
+findings, and the red team
+APPROVE with every limb
+executed and none untested.
+OR-197 stands unrewritten in
+every other particular, and
+nothing else in this round's
+record is implicated by this
+correction. This record stands
+outside the Status range,
+which continues to run through
+OR-201.
