@@ -11,13 +11,13 @@ permissions:
   contents: read
 
 jobs:
-  verify-archive-and-smoke:
+  smoke:
     name: clean archive smoke (${{ matrix.os }})
     runs-on: ${{ matrix.os }}
     strategy:
       fail-fast: false
       matrix:
-        os: [ubuntu-latest]
+        os: ["ubuntu-latest"]
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
@@ -25,32 +25,56 @@ jobs:
           persist-credentials: false
       - name: Install Rust stable
         uses: dtolnay/rust-toolchain@stable
-      - name: Verify installer and shell completion syntax
-        shell: bash
-        run: |
-          set -euo pipefail
-          sh -n install.sh
-          bash -n "completions/onrecord.bash"
-      - name: Build release archive, verify SHA256SUMS, and run clean-room smoke check
+      - name: Build, package, verify install.sh (positive + tamper refusal), manpage, and completions
         shell: bash
         run: |
           set -euo pipefail
           cargo build --release --locked
-          STAGE_DIR="$RUNNER_TEMP/release-stage"
-          INSTALL_BIN="$RUNNER_TEMP/clean-bin"
-          mkdir -p "$STAGE_DIR" "$INSTALL_BIN"
-          cp "target/release/onrecord" "$STAGE_DIR/onrecord"
-          cp LICENSE README.md "$STAGE_DIR/"
-          cp -r completions "$STAGE_DIR/completions"
-          tar -C "$STAGE_DIR" -czf "$STAGE_DIR/onrecord-ci.tar.gz" "onrecord" LICENSE README.md completions
+          arch_name="$(uname -m)"
+          case "$arch_name" in
+            x86_64|amd64) arch_part="x86_64" ;;
+            aarch64|arm64) arch_part="aarch64" ;;
+          esac
+          case "$(uname -s)" in
+            Linux) target="${arch_part}-unknown-linux-gnu" ;;
+            Darwin) target="${arch_part}-apple-darwin" ;;
+          esac
+          WORK_DIR="$(mktemp -d)"
+          STAGE="$WORK_DIR/onrecord-${target}"
+          DIST="$WORK_DIR/dist"
+          BIN_DIR="$WORK_DIR/bin"
+          MAN_DIR="$WORK_DIR/man1"
+          mkdir -p "$STAGE" "$DIST"
+          cp "target/release/onrecord" "$STAGE/onrecord"
+          cp LICENSE README.md "$STAGE/"
+          cp -r completions "$STAGE/completions"
+          cp -r man "$STAGE/man"
+          tar -C "$STAGE" -czf "$DIST/onrecord-${target}.tar.gz" onrecord LICENSE README.md completions man
           if command -v sha256sum >/dev/null 2>&1; then
-            (cd "$STAGE_DIR" && sha256sum "onrecord-ci.tar.gz" > SHA256SUMS && sha256sum -c SHA256SUMS)
+            (cd "$DIST" && sha256sum "onrecord-${target}.tar.gz" > SHA256SUMS)
           else
-            (cd "$STAGE_DIR" && shasum -a 256 "onrecord-ci.tar.gz" > SHA256SUMS && shasum -a 256 -c SHA256SUMS)
+            (cd "$DIST" && shasum -a 256 "onrecord-${target}.tar.gz" > SHA256SUMS)
           fi
-          tar -xzf "$STAGE_DIR/onrecord-ci.tar.gz" -C "$INSTALL_BIN"
-          chmod 0755 "$INSTALL_BIN/onrecord"
-          export PATH="$INSTALL_BIN:$PATH"
-          command -v "onrecord"
-          "onrecord" --help >/dev/null
-          onrecord check examples/demo_record.jsonl && onrecord subject examples/demo_record.jsonl deploy >/dev/null
+          ONRECORD_BASE_URL="file://$DIST" sh ./install.sh --bin-dir "$BIN_DIR" --man-dir "$MAN_DIR"
+          test -x "$BIN_DIR/onrecord"
+          test -f "$MAN_DIR/onrecord.1"
+          "$BIN_DIR/onrecord" check examples/demo_record.jsonl && "$BIN_DIR/onrecord" subject examples/demo_record.jsonl deploy
+          # Negative tamper check: flip checksum and assert install.sh refuses
+          printf '0000000000000000000000000000000000000000000000000000000000000000  %s\n' "onrecord-${target}.tar.gz" > "$DIST/SHA256SUMS"
+          if ONRECORD_BASE_URL="file://$DIST" sh ./install.sh --bin-dir "$WORK_DIR/bad-bin" 2>/dev/null; then
+            echo "install.sh accepted tampered SHA256SUMS" >&2
+            exit 1
+          fi
+          bash -n "completions/onrecord.bash"
+          rm -rf "$WORK_DIR"
+      - name: Validate Windows install.ps1 and PowerShell completion AST via pwsh
+        shell: pwsh
+        run: |
+          $ErrorActionPreference = "Stop"
+          foreach ($File in @("install.ps1", "completions/onrecord.ps1")) {
+            $Errors = $null
+            [void][System.Management.Automation.Language.Parser]::ParseFile((Resolve-Path $File), [ref]$null, [ref]$Errors)
+            if ($Errors.Count -gt 0) {
+              throw "PowerShell syntax error in ${File}: $($Errors | Out-String)"
+            }
+          }

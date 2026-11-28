@@ -112,3 +112,7 @@ The claim store is complete at its contracted scope and in daily use by its sibl
 ## License
 
 MIT. See the [LICENSE](https://github.com/david-engelmann/onrecord/blob/main/LICENSE) file.
+
+## Rust Library API Reference
+
+Programmatic callers embedding `onrecord` as a Rust library crate can browse the hosted `rustdoc` reference at [`https://david-engelmann.github.io/onrecord/api/onrecord/index.html`](https://david-engelmann.github.io/onrecord/api/onrecord/index.html) (or run `cargo doc --no-deps --open` locally).

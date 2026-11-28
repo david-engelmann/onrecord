@@ -16,7 +16,7 @@ concurrency:
 
 jobs:
   build:
-    name: build mdBook
+    name: build mdBook and rustdoc
     runs-on: ubuntu-latest
     permissions:
       contents: read
@@ -26,18 +26,38 @@ jobs:
         uses: actions/checkout@v4
         with:
           persist-credentials: false
+      - name: Install Rust stable
+        uses: dtolnay/rust-toolchain@stable
       - name: Setup mdBook
         uses: peaceiris/actions-mdbook@v2
         with:
           mdbook-version: "0.4.40"
-      - name: Stage docs media and build handbook
+      - name: Build mdBook handbook and /api/ rustdoc reference
         shell: bash
+        env:
+          RUSTDOCFLAGS: "-D warnings"
         run: |
           set -euo pipefail
           mkdir -p book/src/media
           cp docs/media/* book/src/media/
           mdbook build book
           cp docs/media/social-card.png book/book/social-card.png
+          cargo doc --no-deps --locked
+          mkdir -p book/book/api
+          cp -r target/doc/* book/book/api/
+          cat > book/book/api/index.html <<'EOF'
+          <!DOCTYPE html>
+          <html lang="en">
+          <head>
+            <meta charset="utf-8">
+            <meta http-equiv="refresh" content="0; url=./onrecord/index.html">
+            <title>onrecord Rust API Reference</title>
+          </head>
+          <body>
+            <p>Redirecting to <a href="./onrecord/index.html">onrecord Rust API documentation</a>...</p>
+          </body>
+          </html>
+          EOF
       - name: Configure GitHub Pages
         if: github.event_name != 'pull_request'
         uses: actions/configure-pages@v5

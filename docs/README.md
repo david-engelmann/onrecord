@@ -25,3 +25,11 @@ Welcome to the documentation suite for `onrecord`, the append-only JSONL claim s
 
 - Schemas: [`../schema/claim.schema.json`](../schema/claim.schema.json), [`../schema/views.schema.json`](../schema/views.schema.json)
 - Runnable Example Ledger: [`../examples/demo_record.jsonl`](../examples/demo_record.jsonl)
+
+## Distribution, Containers, Manual Page, and Reproducible Benchmarks
+
+- **Unix Installer**: [`../install.sh`](../install.sh) (`curl -fsSL https://raw.githubusercontent.com/david-engelmann/onrecord/main/install.sh | sh`)
+- **Windows PowerShell Installer**: [`../install.ps1`](../install.ps1) (`irm https://raw.githubusercontent.com/david-engelmann/onrecord/main/install.ps1 | iex`)
+- **Manual Page**: [`../man/onrecord.1`](../man/onrecord.1) (`man ./man/onrecord.1`)
+- **Container Image**: [`../Dockerfile`](../Dockerfile) (`docker build -t onrecord:local .`)
+- **Reproducible Scale Benchmark**: [`../scripts/bench.py`](../scripts/bench.py) (`python3 scripts/bench.py`)

@@ -1,13 +1,15 @@
 #!/bin/sh
-# Install prebuilt onrecord binary from GitHub Releases with SHA-256 verification.
+# Install prebuilt onrecord binary (and optional manpage) from GitHub Releases with SHA-256 verification.
 #
 # Options:
 #   --version TAG   Release tag such as v0.1.0 (default: latest GitHub release)
-#   --bin-dir DIR   Target directory (default: $HOME/.local/bin)
+#   --bin-dir DIR   Target directory for binary (default: $HOME/.local/bin)
+#   --man-dir DIR   Optional directory for onrecord.1 manpage (e.g. $HOME/.local/share/man/man1)
 #   -h, --help      Show usage and exit
 #
 # Environment variables:
-#   ONRECORD_INSTALL_DIR  Target directory (default: $HOME/.local/bin)
+#   ONRECORD_INSTALL_DIR  Target directory for binary (default: $HOME/.local/bin)
+#   ONRECORD_MAN_DIR      Optional target directory for onrecord.1 manual page
 #   ONRECORD_VERSION      Release tag (default: latest)
 #   ONRECORD_REPO         GitHub owner/repo (default: david-engelmann/onrecord)
 #   ONRECORD_BASE_URL     Override release download base URL (for offline mirrors/CI)
@@ -16,15 +18,17 @@ set -eu
 
 REPO="${ONRECORD_REPO:-david-engelmann/onrecord}"
 INSTALL_DIR="${ONRECORD_INSTALL_DIR:-$HOME/.local/bin}"
+MAN_DIR="${ONRECORD_MAN_DIR:-}"
 VERSION="${ONRECORD_VERSION:-latest}"
 
 usage() {
     cat <<'EOF'
-usage: install.sh [--version vX.Y.Z] [--bin-dir DIR]
+usage: install.sh [--version vX.Y.Z] [--bin-dir DIR] [--man-dir DIR]
 
 Options:
   --version TAG   Release tag to install (defaults to latest GitHub release)
   --bin-dir DIR   Destination directory for the binary (default: $HOME/.local/bin)
+  --man-dir DIR   Optional destination directory for the man(1) page
   -h, --help      Show this help message and exit
 EOF
 }
@@ -44,6 +48,11 @@ while [ "$#" -gt 0 ]; do
         --bin-dir)
             [ "$#" -ge 2 ] || err "--bin-dir requires a directory argument"
             INSTALL_DIR="$2"
+            shift 2
+            ;;
+        --man-dir)
+            [ "$#" -ge 2 ] || err "--man-dir requires a directory argument"
+            MAN_DIR="$2"
             shift 2
             ;;
         -h|--help)
@@ -80,7 +89,7 @@ detect_target() {
             os_part="apple-darwin"
             ;;
         *)
-            err "unsupported operating system: $os_name (use prebuilt Windows .zip or cargo install)"
+            err "unsupported operating system: $os_name (on Windows run install.ps1)"
             ;;
     esac
 
@@ -196,5 +205,20 @@ cp "$BIN_SRC" "$STAGED_BIN"
 chmod 0755 "$STAGED_BIN"
 mv -f "$STAGED_BIN" "${INSTALL_DIR}/onrecord"
 STAGED_BIN=""
+
+if [ -n "$MAN_DIR" ]; then
+    if [ -f "${TMP_DIR}/unpack/man/onrecord.1" ]; then
+        MAN_SRC="${TMP_DIR}/unpack/man/onrecord.1"
+    elif [ -f "${TMP_DIR}/unpack/onrecord-${TARGET}/man/onrecord.1" ]; then
+        MAN_SRC="${TMP_DIR}/unpack/onrecord-${TARGET}/man/onrecord.1"
+    else
+        MAN_SRC=""
+    fi
+    if [ -n "$MAN_SRC" ]; then
+        mkdir -p "$MAN_DIR"
+        cp "$MAN_SRC" "${MAN_DIR}/onrecord.1"
+        chmod 0644 "${MAN_DIR}/onrecord.1"
+    fi
+fi
 
 printf 'Verified SHA-256 (%s) and installed onrecord to %s/onrecord\n' "$ACTUAL_SHA" "$INSTALL_DIR"
