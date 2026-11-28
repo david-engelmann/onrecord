@@ -11221,3 +11221,74 @@ exit 0; cargo fmt check exit
 probe verified /dev/full as a
 genuine device before the legs
 ran.
+
+OR-198. Verification family.
+The verification family was
+executed whole on the Round 32
+base, in the same single chain
+execution that carried the
+base gate. The pinned
+flighttape oracle 0c25a9aa703b
+38c7579f7928d61443a881a62465
+was verified whole against the
+tree extracted fresh through
+the API at this round's target
+path, 14 blobs, tree f88eb7504
+4f2e751915ab9a825426177972f2b5
+8, no mismatches. The
+differential battery stands at
+55 cells with 0 splits, 39
+stream cells and 16 budget
+cells: the reroute flip stands
+exact at 8,191, 8,192 and
+8,193 bytes and the refusal
+stands at capacity, and the
+read budget constants stand at
+(990, 988) and (989, 987) at
+src/store.rs lines 30 and 31
+of the base extraction. The
+pin 74a83298aeb31c82e62b9fb0c6
+13f5bc8600799e was verified
+whole, 50 blobs, and its suite
+sums to 241 passed across its
+own 19 result lines, the first
+line at 3 passed. The golden
+conversion of the synthetic
+Claude session reproduces the
+golden digest cc9c4e01fca418dc
+c33114caf75fae1f6bf0d401f297b5
+d61f6776903fa955a3 alone, the
+convert, digest and verify
+exits all 0. Provenance: the
+clean-rebuild pair stands
+equal, both builds at md5 3d92
+56bb209449632128f7e9cacf231b,
+the value scoped to this
+round's target path as the
+build path. Checklist items 6
+and 7 were executed whole at
+this hand: cargo install of
+the base extraction produced a
+binary of 873,584 bytes, the
+README quickstart's add
+printed
+claim-2946b699934e0f6b, its
+get view stands byte-identical
+to the README's printed view
+at 719 bytes, and its check
+reports the record sound.
+Storefront item 3 stands
+PASSING outright, the
+description byte-identical at
+the repository description,
+the README lede and the
+Cargo.toml description. The
+codepoint scans stand clean:
+the base tree 88f0b460ab1c47a9
+6847c1fd87acbbc8783afe91 and
+the OR-196 head tree fa79edccd
+e0325e1055edbe5a5f4a9e511ec7dc
+c, each 21 blobs, a planted
+control counted first, zero
+U+2014 and zero U+2013 in
+either.
