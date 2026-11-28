@@ -1007,7 +1007,7 @@ fn lock_file_exclusive(file: &std::fs::File) -> std::io::Result<()> {
     };
     let ok = unsafe {
         LockFileEx(
-            file.as_raw_handle() as *mut core::ffi::c_void,
+            file.as_raw_handle(),
             LOCKFILE_EXCLUSIVE_LOCK,
             0,
             1,
@@ -1033,15 +1033,7 @@ impl Drop for OsFileLock {
             offset_high: 0,
             h_event: core::ptr::null_mut(),
         };
-        let _ = unsafe {
-            UnlockFileEx(
-                self.file.as_raw_handle() as *mut core::ffi::c_void,
-                0,
-                1,
-                0,
-                &mut overlapped,
-            )
-        };
+        let _ = unsafe { UnlockFileEx(self.file.as_raw_handle(), 0, 1, 0, &mut overlapped) };
     }
 }
 
