@@ -1322,15 +1322,27 @@ fn a_name_past_the_os_limit_surfaces_its_os_error() {
     let path = tmp.path(&"x".repeat(300));
     let store = store_at(&path);
     let error = store.check().expect_err("check surfaces the OS error");
-    assert!(
-        error.text().starts_with("[Errno 36] File name too long"),
-        "{}",
-        error.text()
-    );
-    let error = store
-        .get(&text("claim-x"))
-        .expect_err("get surfaces it too");
-    assert!(error.text().starts_with("[Errno 36]"), "{}", error.text());
+    #[cfg(unix)]
+    {
+        let prefix = format!(
+            "[Errno {}] File name too long",
+            onrecord::util::ENAMETOOLONG
+        );
+        assert!(error.text().starts_with(&prefix), "{}", error.text());
+        let error = store
+            .get(&text("claim-x"))
+            .expect_err("get surfaces it too");
+        let code_prefix = format!("[Errno {}]", onrecord::util::ENAMETOOLONG);
+        assert!(error.text().starts_with(&code_prefix), "{}", error.text());
+    }
+    #[cfg(not(unix))]
+    {
+        assert!(error.text().starts_with("[Errno "), "{}", error.text());
+        let error = store
+            .get(&text("claim-x"))
+            .expect_err("get surfaces it too");
+        assert!(error.text().starts_with("[Errno "), "{}", error.text());
+    }
     // due never gates on exists: its load reports
     // the unreadable record as a defect instead.
     let error = store
@@ -1411,4 +1423,71 @@ fn an_append_through_a_popped_missing_link_is_refused() {
         !tmp.path("record.jsonl").exists(),
         "a record landed at the lexical location"
     );
+}
+
+#[test]
+fn concurrent_adds_across_threads_and_processes_preserve_sound_positions() {
+    let tmp = Tmp::new("concurrent-adds");
+    let path = tmp.path("shared.jsonl");
+    let bin = env!("CARGO_BIN_EXE_onrecord");
+
+    let mut children = Vec::new();
+    for idx in 0..8usize {
+        let child = std::process::Command::new(bin)
+            .arg("add")
+            .arg(&path)
+            .arg("--text")
+            .arg(format!("Process claim {idx}"))
+            .arg("--asserter")
+            .arg(format!("proc-{idx}"))
+            .arg("--at")
+            .arg("2026-03-15T10:00:00Z")
+            .arg("--evidence")
+            .arg("suite:concurrent-proc")
+            .arg("--subject")
+            .arg("concurrency-gate")
+            .stdout(std::process::Stdio::piped())
+            .stderr(std::process::Stdio::piped())
+            .spawn()
+            .expect("spawn child onrecord add");
+        children.push(child);
+    }
+
+    let mut threads = Vec::new();
+    for idx in 0..8usize {
+        let thread_path = path.clone();
+        threads.push(std::thread::spawn(move || {
+            let store = store_at(&thread_path);
+            add_ok(&store, |claim| {
+                claim.text = text(&format!("Thread claim {idx}"));
+                claim.asserter = text(&format!("thread-{idx}"));
+                claim.subject = Some(text("concurrency-gate"));
+            })
+        }));
+    }
+
+    for thread in threads {
+        let id = thread.join().expect("thread join");
+        assert!(id.starts_with("claim-"));
+    }
+    for child in children {
+        let output = child.wait_with_output().expect("wait child");
+        assert!(
+            output.status.success(),
+            "child failed: {}",
+            String::from_utf8_lossy(&output.stderr)
+        );
+    }
+
+    let store = store_at(&path);
+    let defects = store.check().expect("check concurrent store");
+    assert!(
+        defects.is_empty(),
+        "concurrent adds produced defects: {:?}",
+        defects
+            .iter()
+            .map(|d| d.render_stderr())
+            .collect::<Vec<_>>()
+    );
+    assert_eq!(lines(&path).len(), 16, "all 16 concurrent claims landed");
 }

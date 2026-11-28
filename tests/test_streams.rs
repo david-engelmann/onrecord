@@ -8,13 +8,19 @@
 //! the oracle in the same run.
 
 use std::path::{Path, PathBuf};
-use std::process::{Command, Stdio};
+use std::process::Command;
+#[cfg(target_os = "linux")]
+use std::process::Stdio;
 
+#[cfg(target_os = "linux")]
 use flighttape::value::{Text, Value};
+#[cfg(target_os = "linux")]
 use onrecord::emit::{dumps_line, Mode};
+#[cfg(target_os = "linux")]
 use onrecord::store::BUDGET_READ;
 
 const BIN: &str = env!("CARGO_BIN_EXE_onrecord");
+#[cfg(target_os = "linux")]
 const DUMP_28: &str = "Exception ignored in: <_io.TextIOWrapper \
     name='<stdout>' mode='w' encoding='utf-8'>\n\
     OSError: [Errno 28] No space left on device\n";
@@ -65,6 +71,7 @@ fn run(args: &[&str], cwd: &Path) -> Out {
 /// the binary, so the binary starts with the
 /// descriptor closed exactly as a launching parent
 /// would leave it.
+#[cfg(unix)]
 fn run_closed(args: &[&str], cwd: &Path, close1: bool, close2: bool) -> Out {
     let mut script = String::new();
     if close1 {
@@ -88,6 +95,7 @@ fn run_closed(args: &[&str], cwd: &Path, close1: bool, close2: bool) -> Out {
 }
 
 /// Run with one standard stream aimed at /dev/full.
+#[cfg(target_os = "linux")]
 fn run_full(args: &[&str], cwd: &Path, full1: bool) -> Out {
     let full = std::fs::OpenOptions::new()
         .write(true)
@@ -108,6 +116,7 @@ fn run_full(args: &[&str], cwd: &Path, full1: bool) -> Out {
     }
 }
 
+#[cfg(unix)]
 const ADD: &[&str] = &[
     "add",
     "r.jsonl",
@@ -121,6 +130,7 @@ const ADD: &[&str] = &[
     "trace:run-17",
 ];
 
+#[cfg(unix)]
 fn seed(tmp: &Tmp) -> String {
     let out = run(ADD, &tmp.0);
     assert_eq!(out.code, 0);
@@ -130,6 +140,7 @@ fn seed(tmp: &Tmp) -> String {
         .to_string()
 }
 
+#[cfg(unix)]
 #[test]
 fn help_with_stdout_closed_lands_on_stderr() {
     let tmp = Tmp::new("help-closed1");
@@ -139,6 +150,7 @@ fn help_with_stdout_closed_lands_on_stderr() {
     assert!(out.stdout.is_empty());
 }
 
+#[cfg(unix)]
 #[test]
 fn add_with_stdout_closed_exits_1_and_the_append_lands() {
     let tmp = Tmp::new("add-closed1");
@@ -152,6 +164,7 @@ fn add_with_stdout_closed_exits_1_and_the_append_lands() {
     assert_eq!(landed, std::fs::read(other.path("r.jsonl")).expect("twin"));
 }
 
+#[cfg(unix)]
 #[test]
 fn get_with_stdout_closed_exits_1_silent() {
     let tmp = Tmp::new("get-closed1");
@@ -161,6 +174,7 @@ fn get_with_stdout_closed_exits_1_silent() {
     assert!(out.stderr.is_empty());
 }
 
+#[cfg(unix)]
 #[test]
 fn check_with_stdout_closed_agrees_in_exit_only() {
     let tmp = Tmp::new("check-closed1");
@@ -175,6 +189,7 @@ fn check_with_stdout_closed_agrees_in_exit_only() {
     assert!(out.stderr.is_empty());
 }
 
+#[cfg(unix)]
 #[test]
 fn refusal_with_stderr_closed_lands_on_stdout() {
     let tmp = Tmp::new("refusal-closed2");
@@ -184,6 +199,7 @@ fn refusal_with_stderr_closed_lands_on_stdout() {
     assert_eq!(out.stdout, b"error, no claim with id claim-nope\n");
 }
 
+#[cfg(unix)]
 #[test]
 fn usage_with_stderr_closed_lands_on_stdout_without_the_error_line() {
     let tmp = Tmp::new("usage-closed2");
@@ -192,6 +208,7 @@ fn usage_with_stderr_closed_lands_on_stdout_without_the_error_line() {
     assert_eq!(out.stdout, onrecord::helptext::TOP_USAGE.as_bytes());
 }
 
+#[cfg(unix)]
 #[test]
 fn both_closed_keeps_the_exits() {
     let tmp = Tmp::new("closed12");
@@ -204,6 +221,7 @@ fn both_closed_keeps_the_exits() {
     assert_eq!(usage.code, 2);
 }
 
+#[cfg(target_os = "linux")]
 #[test]
 fn help_at_dev_full_exits_120_with_the_dump() {
     let tmp = Tmp::new("help-full1");
@@ -212,6 +230,7 @@ fn help_at_dev_full_exits_120_with_the_dump() {
     assert_eq!(out.stderr, DUMP_28.as_bytes());
 }
 
+#[cfg(target_os = "linux")]
 #[test]
 fn check_defect_at_dev_full_exits_120_with_the_dump() {
     let tmp = Tmp::new("check-full1");
@@ -224,6 +243,7 @@ fn check_defect_at_dev_full_exits_120_with_the_dump() {
     assert_eq!(out.stderr, DUMP_28.as_bytes());
 }
 
+#[cfg(target_os = "linux")]
 #[test]
 fn refusal_with_stderr_at_dev_full_exits_120() {
     let tmp = Tmp::new("refusal-full2");
@@ -233,6 +253,7 @@ fn refusal_with_stderr_at_dev_full_exits_120() {
     assert!(out.stdout.is_empty());
 }
 
+#[cfg(target_os = "linux")]
 #[test]
 fn emit_with_stderr_closed_and_stdout_full_exits_1() {
     // The nested posture on the emit path: the emit
@@ -263,6 +284,7 @@ fn emit_with_stderr_closed_and_stdout_full_exits_1() {
     assert_eq!(output.status.code(), Some(1));
 }
 
+#[cfg(target_os = "linux")]
 #[test]
 fn refusal_with_stderr_closed_and_stdout_full_exits_120() {
     // The nested posture: the refusal reroutes into
@@ -319,6 +341,7 @@ fn check_defect_echo_with_a_surrogate_id_exits_1_after_the_renderable_defects() 
     assert!(out.stderr.is_empty());
 }
 
+#[cfg(target_os = "linux")]
 #[test]
 fn boundary_at_dev_full() {
     // A record of K bogus lines renders six defect
@@ -347,6 +370,7 @@ fn boundary_at_dev_full() {
     }
 }
 
+#[cfg(target_os = "linux")]
 #[test]
 fn boundary_at_exact_capacity() {
     // The buffer law at its exact point, measured
@@ -386,6 +410,7 @@ fn boundary_at_exact_capacity() {
     }
 }
 
+#[cfg(target_os = "linux")]
 #[test]
 fn refusal_past_capacity_with_stderr_at_dev_full_exits_120() {
     // OR-56. A refusal whose joined defect message
@@ -418,8 +443,10 @@ fn refusal_past_capacity_with_stderr_at_dev_full_exits_120() {
     assert!(out.stdout.is_empty());
 }
 
+#[cfg(target_os = "linux")]
 const REFUSAL_PREFIX: &str = "error, the record has defects: \
     line 1: supersedes names no claim in the record, ";
+#[cfg(target_os = "linux")]
 const DEFECT_PREFIX: &str = "line 1: supersedes names no claim \
     in the record, ";
 
@@ -428,6 +455,7 @@ const DEFECT_PREFIX: &str = "line 1: supersedes names no claim \
 /// (prefix + target + newline) totals exactly
 /// `total` bytes. The claim's id is derived exactly,
 /// so the supersedes defect is the line's only one.
+#[cfg(target_os = "linux")]
 fn tuned_record(total: usize, prefix: &str) -> Vec<u8> {
     let fill = total - prefix.len() - 1;
     let target = "x".repeat(fill);
@@ -478,6 +506,7 @@ fn tuned_record(total: usize, prefix: &str) -> Vec<u8> {
 
 /// Run with descriptor 2 closed at launch and
 /// descriptor 1 aimed at /dev/full.
+#[cfg(target_os = "linux")]
 fn run_closed2_full1(args: &[&str], cwd: &Path) -> Out {
     let full = std::fs::OpenOptions::new()
         .write(true)
@@ -497,6 +526,7 @@ fn run_closed2_full1(args: &[&str], cwd: &Path) -> Out {
     }
 }
 
+#[cfg(target_os = "linux")]
 #[test]
 fn check_single_defect_at_the_exact_points() {
     // Round 10. One defect, printed by check on
@@ -523,6 +553,7 @@ fn check_single_defect_at_the_exact_points() {
     }
 }
 
+#[cfg(target_os = "linux")]
 #[test]
 fn refusal_single_defect_at_the_exact_points() {
     // Round 10. The single-print stderr refusal at
@@ -543,6 +574,7 @@ fn refusal_single_defect_at_the_exact_points() {
     }
 }
 
+#[cfg(target_os = "linux")]
 #[test]
 fn rerouted_refusal_flips_at_capacity() {
     // Round 10. The refusal rerouted into the stdout

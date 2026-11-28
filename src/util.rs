@@ -254,6 +254,60 @@ pub fn join_msgs(items: &[Msg], separator: &str) -> Msg {
     out
 }
 
+#[cfg(any(
+    target_os = "macos",
+    target_os = "ios",
+    target_os = "tvos",
+    target_os = "watchos",
+    target_os = "freebsd",
+    target_os = "openbsd",
+    target_os = "netbsd",
+    target_os = "dragonfly",
+))]
+pub const ENAMETOOLONG: i32 = 63;
+
+#[cfg(all(
+    unix,
+    not(any(
+        target_os = "macos",
+        target_os = "ios",
+        target_os = "tvos",
+        target_os = "watchos",
+        target_os = "freebsd",
+        target_os = "openbsd",
+        target_os = "netbsd",
+        target_os = "dragonfly",
+    ))
+))]
+pub const ENAMETOOLONG: i32 = 36;
+
+#[cfg(any(
+    target_os = "macos",
+    target_os = "ios",
+    target_os = "tvos",
+    target_os = "watchos",
+    target_os = "freebsd",
+    target_os = "openbsd",
+    target_os = "netbsd",
+    target_os = "dragonfly",
+))]
+pub const ELOOP: i32 = 62;
+
+#[cfg(all(
+    unix,
+    not(any(
+        target_os = "macos",
+        target_os = "ios",
+        target_os = "tvos",
+        target_os = "watchos",
+        target_os = "freebsd",
+        target_os = "openbsd",
+        target_os = "netbsd",
+        target_os = "dragonfly",
+    ))
+))]
+pub const ELOOP: i32 = 40;
+
 /// The bare strerror text for an OS error, as the
 /// Python's OSError.strerror reads. One table serves
 /// the store's phrases and the CLI's "[Errno N]"
@@ -261,29 +315,41 @@ pub fn join_msgs(items: &[Msg], separator: &str) -> Msg {
 /// to the standard library's rendering, a named
 /// deviation.
 pub fn strerror_text(err: &std::io::Error) -> String {
-    match err.raw_os_error() {
-        Some(errno) => {
-            let text = match errno {
-                1 => "Operation not permitted",
-                2 => "No such file or directory",
-                13 => "Permission denied",
-                20 => "Not a directory",
-                21 => "Is a directory",
-                24 => "Too many open files",
-                28 => "No space left on device",
-                30 => "Read-only file system",
-                32 => "Broken pipe",
-                36 => "File name too long",
-                40 => "Too many levels of symbolic links",
-                _ => "",
-            };
-            if text.is_empty() {
-                err.to_string()
-            } else {
-                text.to_string()
+    #[cfg(unix)]
+    {
+        match err.raw_os_error() {
+            Some(errno) => {
+                let text = match errno {
+                    1 => "Operation not permitted",
+                    2 => "No such file or directory",
+                    13 => "Permission denied",
+                    20 => "Not a directory",
+                    21 => "Is a directory",
+                    24 => "Too many open files",
+                    28 => "No space left on device",
+                    30 => "Read-only file system",
+                    32 => "Broken pipe",
+                    ENAMETOOLONG => "File name too long",
+                    ELOOP => "Too many levels of symbolic links",
+                    _ => "",
+                };
+                if text.is_empty() {
+                    err.to_string()
+                } else {
+                    text.to_string()
+                }
             }
+            None => err.to_string(),
         }
-        None => err.to_string(),
+    }
+    #[cfg(not(unix))]
+    {
+        match err.kind() {
+            std::io::ErrorKind::NotFound => "No such file or directory".to_string(),
+            std::io::ErrorKind::PermissionDenied => "Permission denied".to_string(),
+            std::io::ErrorKind::BrokenPipe => "Broken pipe".to_string(),
+            _ => err.to_string(),
+        }
     }
 }
 

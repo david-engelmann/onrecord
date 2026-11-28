@@ -37,7 +37,8 @@ extern "C" fn record_launch_fds() {
 
 #[cfg(unix)]
 #[used]
-#[link_section = ".init_array"]
+#[cfg_attr(target_os = "macos", link_section = "__DATA,__mod_init_func")]
+#[cfg_attr(all(unix, not(target_os = "macos")), link_section = ".init_array")]
 static RECORD_LAUNCH_FDS: extern "C" fn() = record_launch_fds;
 
 fn main() {

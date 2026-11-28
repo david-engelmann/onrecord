@@ -14,6 +14,7 @@
 //! bytes survive as the Python's do.
 
 use std::io::Write;
+#[cfg(unix)]
 use std::os::unix::io::FromRawFd;
 
 use flighttape::value::{Text, Value};
@@ -43,9 +44,26 @@ fn fd_closed_at_launch(fd: i32) -> bool {
 
 /// Write bytes to a raw standard descriptor, ignoring
 /// the descriptor's ownership.
+#[cfg(unix)]
 fn raw_write(fd: i32, bytes: &[u8]) -> std::io::Result<()> {
     let mut file = std::mem::ManuallyDrop::new(unsafe { std::fs::File::from_raw_fd(fd) });
     file.write_all(bytes)
+}
+
+#[cfg(not(unix))]
+fn raw_write(fd: i32, bytes: &[u8]) -> std::io::Result<()> {
+    match fd {
+        1 => {
+            let mut out = std::io::stdout().lock();
+            out.write_all(bytes)?;
+            out.flush()
+        }
+        _ => {
+            let mut err = std::io::stderr().lock();
+            err.write_all(bytes)?;
+            err.flush()
+        }
+    }
 }
 
 /// The interpreter's buffered writer capacity: a
@@ -260,21 +278,130 @@ impl Streams {
 /// dump prints for an OS error: the OSError subclass
 /// CPython selects by errno, OSError itself when no
 /// subclass applies.
+#[cfg(unix)]
 fn os_error_class(error: &std::io::Error) -> &'static str {
+    #[cfg(any(
+        target_os = "macos",
+        target_os = "ios",
+        target_os = "tvos",
+        target_os = "watchos",
+        target_os = "freebsd",
+        target_os = "openbsd",
+        target_os = "netbsd",
+        target_os = "dragonfly",
+    ))]
+    const EAGAIN_CODE: i32 = 35;
+    #[cfg(not(any(
+        target_os = "macos",
+        target_os = "ios",
+        target_os = "tvos",
+        target_os = "watchos",
+        target_os = "freebsd",
+        target_os = "openbsd",
+        target_os = "netbsd",
+        target_os = "dragonfly",
+    )))]
+    const EAGAIN_CODE: i32 = 11;
+
+    #[cfg(any(
+        target_os = "macos",
+        target_os = "ios",
+        target_os = "tvos",
+        target_os = "watchos",
+        target_os = "freebsd",
+        target_os = "openbsd",
+        target_os = "netbsd",
+        target_os = "dragonfly",
+    ))]
+    const ECONNABORTED_CODE: i32 = 53;
+    #[cfg(not(any(
+        target_os = "macos",
+        target_os = "ios",
+        target_os = "tvos",
+        target_os = "watchos",
+        target_os = "freebsd",
+        target_os = "openbsd",
+        target_os = "netbsd",
+        target_os = "dragonfly",
+    )))]
+    const ECONNABORTED_CODE: i32 = 103;
+
+    #[cfg(any(
+        target_os = "macos",
+        target_os = "ios",
+        target_os = "tvos",
+        target_os = "watchos",
+        target_os = "freebsd",
+        target_os = "openbsd",
+        target_os = "netbsd",
+        target_os = "dragonfly",
+    ))]
+    const ECONNRESET_CODE: i32 = 54;
+    #[cfg(not(any(
+        target_os = "macos",
+        target_os = "ios",
+        target_os = "tvos",
+        target_os = "watchos",
+        target_os = "freebsd",
+        target_os = "openbsd",
+        target_os = "netbsd",
+        target_os = "dragonfly",
+    )))]
+    const ECONNRESET_CODE: i32 = 104;
+
+    #[cfg(any(
+        target_os = "macos",
+        target_os = "ios",
+        target_os = "tvos",
+        target_os = "watchos",
+        target_os = "freebsd",
+        target_os = "openbsd",
+        target_os = "netbsd",
+        target_os = "dragonfly",
+    ))]
+    const ETIMEDOUT_CODE: i32 = 60;
+    #[cfg(not(any(
+        target_os = "macos",
+        target_os = "ios",
+        target_os = "tvos",
+        target_os = "watchos",
+        target_os = "freebsd",
+        target_os = "openbsd",
+        target_os = "netbsd",
+        target_os = "dragonfly",
+    )))]
+    const ETIMEDOUT_CODE: i32 = 110;
+
     match error.raw_os_error() {
         Some(2) => "FileNotFoundError",
         Some(3) => "ProcessLookupError",
         Some(4) => "InterruptedError",
         Some(10) => "ChildProcessError",
-        Some(11) => "BlockingIOError",
+        Some(EAGAIN_CODE) => "BlockingIOError",
         Some(1) | Some(13) => "PermissionError",
         Some(17) => "FileExistsError",
         Some(20) => "NotADirectoryError",
         Some(21) => "IsADirectoryError",
         Some(32) => "BrokenPipeError",
-        Some(103) => "ConnectionAbortedError",
-        Some(104) => "ConnectionResetError",
-        Some(110) => "TimeoutError",
+        Some(ECONNABORTED_CODE) => "ConnectionAbortedError",
+        Some(ECONNRESET_CODE) => "ConnectionResetError",
+        Some(ETIMEDOUT_CODE) => "TimeoutError",
+        _ => "OSError",
+    }
+}
+
+#[cfg(not(unix))]
+fn os_error_class(error: &std::io::Error) -> &'static str {
+    match error.kind() {
+        std::io::ErrorKind::NotFound => "FileNotFoundError",
+        std::io::ErrorKind::PermissionDenied => "PermissionError",
+        std::io::ErrorKind::AlreadyExists => "FileExistsError",
+        std::io::ErrorKind::BrokenPipe => "BrokenPipeError",
+        std::io::ErrorKind::WouldBlock => "BlockingIOError",
+        std::io::ErrorKind::Interrupted => "InterruptedError",
+        std::io::ErrorKind::ConnectionAborted => "ConnectionAbortedError",
+        std::io::ErrorKind::ConnectionReset => "ConnectionResetError",
+        std::io::ErrorKind::TimedOut => "TimeoutError",
         _ => "OSError",
     }
 }
